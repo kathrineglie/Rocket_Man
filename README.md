@@ -97,7 +97,10 @@ If you look at *Settings → Repository* in GitLab, you can protect branches –
 
 ## Credits
 ### Authors
-* *TODO: list team members*
+* Kathrine Lie
+* Vegard Slagstad
+* Sunniva Bratland
+* Elise Blekken
 
 ### Contributors
 * *TODO: did you include code from anyone else? Did you use AI/LLMs to generate or edit the code?*
