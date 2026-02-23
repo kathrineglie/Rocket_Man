@@ -15,6 +15,22 @@
 	Ideer om prosess
 	Kanban passer oss best fordi arbeidsflyten vår er kontinuerlig, og vi samarbeider tett i hverdagen uten behov for faste sprinter. Vi jobber ofte side om side og kan avklare spørsmål og fordele oppgaver fortløpende, noe som gjør at detaljert sprintplanlegging blir mindre nødvendig. Med Kanban får vi en tydelig oversikt over hva som gjenstår, hva som er under arbeid og hva som er ferdig, og vi kan enkelt justere prioriteringer dersom det dukker opp nye behov eller endringer.
 
+    MVP
+    1 spillbar karakter som kan:
+        - stå på bakken
+        - holde inne for å fly opp (jetpack) og slippe for å falle (tyngdekraft)
+    Endeløs scrolling-bane (bakgrunn som beveger seg, kamera/verdensflyt)
+    1 type hinder (f.eks. laser eller missil) som:
+        - spawner jevnt/tilfeldig
+        - kan kollideres med
+    Kollisjon + tap
+        - treff hinder → “game over”
+        - restart-knapp / trykk for å prøve igjen
+    Score
+        - f.eks. avstand over tid (teller opp mens du lever)
+    En enkel start/intro
+        - “Trykk for å starte”, så du kommer inn i gameplay-loop’en
+
 	Brukerhistorier
 	- Som spiller vil jeg kunne starte spillet fra en startskjerm, slik at jeg skjønner når en runde begynner.
 	- Som spiller vil jeg kunne styre figuren opp og ned med en enkel kontroll, slik at spillet er lett å lære.
