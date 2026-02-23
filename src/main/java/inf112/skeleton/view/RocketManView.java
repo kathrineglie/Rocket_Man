@@ -12,13 +12,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 
 import inf112.skeleton._example.view.Painter;
-
-
+import inf112.skeleton.grid.IGrid;
 
 
 public class RocketManView implements Painter {
@@ -150,19 +148,20 @@ public class RocketManView implements Painter {
 		batch.begin();
 		// The projection matrix translates from world to view coordinates.
 		batch.setProjectionMatrix(viewport.getCamera().combined);
-		font.draw(batch, "Hello, World!", 200, 200);
+		// font.draw(batch, "Hello, World!", 200, 200);
 		try {
 			drawCommands.accept(this);
 		} finally {
 			batch.end(); // if you forget this, resources will leak!
 		}
 
-		// It's also possible to draw simple shapes
-		shape.begin(ShapeType.Filled);
-		shape.setProjectionMatrix(viewport.getCamera().combined);
-		shape.setColor(Color.BLUE);
-		shape.box(100, 100, 0, 100, 100, 0);
-		shape.end();
+
+		// // It's also possible to draw simple shapes
+		// shape.begin(ShapeType.Filled);
+		// shape.setProjectionMatrix(viewport.getCamera().combined);
+		// shape.setColor(Color.BLUE);
+		// shape.box(100, 100, 0, 100, 100, 0);
+		// shape.end();
 	}
 
 	public void resize(int width, int height) {
@@ -185,5 +184,10 @@ public class RocketManView implements Painter {
 		return viewport.getWorldHeight();
 	}
 
+	public void renderGrid(IGrid grid, GridRenderer renderer){
+		shape.setProjectionMatrix(viewport.getCamera().combined);
+		shape.setColor(Color.LIGHT_GRAY);
+		renderer.draw(shape, grid);
+	}
     
 }
