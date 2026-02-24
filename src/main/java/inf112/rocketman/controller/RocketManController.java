@@ -16,19 +16,6 @@ public class RocketManController implements ApplicationListener {
     private GameBoard board;
     private GridRenderer gridRenderer;
 
-    //testing adding movement of player
-    private float playerX = 100f;
-    private float playerY = 300f;
-    private float playerVY = 0f;
-
-    private final float PLAYER_W = 64f;
-    private final float PLAYER_H = 64f;
-
-    private final float GRAVITY = -1000f;
-    private final float THRUST = 3000f;
-    private final float MAX_VY = 700f;
-
-
     @Override
     public void create() {
         board = new GameBoard(20, 20, null);

@@ -1,5 +1,6 @@
 package inf112.rocketman.model;
 
+import com.badlogic.gdx.Game;
 import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.view.ViewableRocketManModel;
 
@@ -15,9 +16,16 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float PLAYER_H = 64;
 
     private float worldHeight;
+    private  GameBoard board;
 
     public GameModel(float worldHeight) {
         this.worldHeight = worldHeight;
+        this.board = new GameBoard(20,20,null);
+    }
+
+    @Override
+    public GameBoard getBoard() {
+        return board;
     }
 
     public  void update (float dt, boolean thrusting) {
