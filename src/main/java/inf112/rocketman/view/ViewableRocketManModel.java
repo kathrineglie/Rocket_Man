@@ -7,5 +7,9 @@ public interface ViewableRocketManModel {
     float getPlayerX();
     float getPlayerY();
 
+    float getPlayerWidth();
+
+    float getPlayerHeight();
+
     IGrid getGrid();
 }

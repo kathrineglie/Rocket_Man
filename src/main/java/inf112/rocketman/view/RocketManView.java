@@ -156,7 +156,7 @@ public class RocketManView implements Painter {
 		batch.setProjectionMatrix(viewport.getCamera().combined);
 
 		draw(0, 0, worldW, worldH, "background.png");
-		draw(model.getPlayerX(), model.getPlayerY(), 64, 64, "tevje.png");
+		draw(model.getPlayerX(), model.getPlayerY(), model.getPlayerWidth(), model.getPlayerHeight(), "tevje.png");
 
 		batch.end();
 		// font.draw(batch, "Hello, World!", 200, 200);
@@ -212,5 +212,4 @@ public class RocketManView implements Painter {
 		return viewport.getWorldHeight();
 	}
 
-    
 }

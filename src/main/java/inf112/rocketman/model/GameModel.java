@@ -14,6 +14,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float THRUST = 3000f;
     private final float MAX_VY = 700f;
     private final float PLAYER_H = 64;
+    private final float PLAYER_W = 64;
 
     private float worldHeight;
     private  GameBoard board;
@@ -53,4 +54,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public IGrid getGrid() {
         return board;
     }
+
+    @Override
+    public float getPlayerWidth() {return PLAYER_W; }
+
+    @Override
+    public float getPlayerHeight() {return PLAYER_H; }
 }
