@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import inf112.rocketman.model.GameBoard;
+import inf112.rocketman.model.GameModel;
 import inf112.rocketman.view.GridRenderer;
 import inf112.rocketman.view.RocketManView;
 
@@ -13,14 +14,15 @@ import inf112.rocketman.view.RocketManView;
 public class RocketManController implements ApplicationListener {
 
     private RocketManView view;
-    private GameBoard board;
+    private GameModel model;
     private GridRenderer gridRenderer;
 
     @Override
     public void create() {
-        board = new GameBoard(20, 20, null);
         view = new RocketManView();
         view.create(1000, 800);
+
+        model = new GameModel(view.getWorldHeight());
 
         gridRenderer = new GridRenderer(0f, 0f, true);
 
@@ -29,39 +31,23 @@ public class RocketManController implements ApplicationListener {
 
     @Override
     public void render() {
-        float worldW = view.getWorldWidth();
-        float worldH = view.getWorldHeight();
-
         float dt = Gdx.graphics.getDeltaTime();
-
         boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
 
-        float ay = GRAVITY + (space ? THRUST : 0f);
-
-        playerVY += ay * dt;
-
-        if (playerVY > MAX_VY) playerVY = MAX_VY;
-        if (playerVY < -MAX_VY) playerVY = -MAX_VY;
-
-        playerY += playerVY * dt;
-
-        if (playerY < 0) {
-            playerY = 0;
-            playerVY = 0;
-        }
-        if (playerY > worldH - PLAYER_H) {
-            playerY = worldH - PLAYER_H;
-            playerVY = 0;
-        }
-
-        view.renderGrid(board, gridRenderer);
+        model.update(dt, space);
 
         view.render(painter -> {
-            painter.draw(0, 0, worldW, worldH, "background.png");
-            painter.draw(playerX, playerY, PLAYER_W, PLAYER_H, "tevje.png");
+            painter.draw(0,0,
+                    view.getWorldWidth(),
+                    view.getWorldHeight(),
+                    "background.png");
+
+            painter.draw(model.getPlayerX(),
+                    model.getPlayerY(),
+                    64,
+                    64,
+                    "tevje.png");
         });
-
-
     }
 
     /*@Override
