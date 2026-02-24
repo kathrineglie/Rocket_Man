@@ -12,6 +12,7 @@ public class RocketManController implements ApplicationListener {
 
     private RocketManView view;
     private GameBoard board;
+    private GridRenderer gridRenderer;
 
     @Override
     public void create() {
@@ -19,10 +20,18 @@ public class RocketManController implements ApplicationListener {
         view = new RocketManView();
         view.create(1000, 800);
 
+        gridRenderer = new GridRenderer(0f, 0f, true);
+
         Gdx.graphics.setForegroundFPS(60);
     }
 
     @Override
+    public void render() {
+        view.render(painter -> {});
+        view.renderGrid(board, gridRenderer);
+    }
+
+    /*@Override
     public void render() {
         view.render(painter -> {});
 
@@ -46,7 +55,7 @@ public class RocketManController implements ApplicationListener {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-    }
+    }*/
 
     @Override public void resize(int width, int height) { view.resize(width, height); }
     @Override public void pause() {}

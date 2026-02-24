@@ -187,7 +187,10 @@ public class RocketManView implements Painter {
 	public void renderGrid(IGrid grid, GridRenderer renderer){
 		shape.setProjectionMatrix(viewport.getCamera().combined);
 		shape.setColor(Color.LIGHT_GRAY);
-		renderer.draw(shape, grid);
+
+		float worldW = viewport.getWorldWidth();
+		float worldH = viewport.getWorldHeight();
+		renderer.draw(shape, grid, worldW, worldH);
 	}
     
 }
