@@ -9,13 +9,10 @@ import inf112.rocketman.model.GameModel;
 import inf112.rocketman.view.GridRenderer;
 import inf112.rocketman.view.RocketManView;
 
-
-
 public class RocketManController implements ApplicationListener {
 
     private RocketManView view;
     private GameModel model;
-    private GridRenderer gridRenderer;
 
     @Override
     public void create() {
@@ -24,9 +21,7 @@ public class RocketManController implements ApplicationListener {
 
         model = new GameModel(view.getWorldHeight());
 
-        gridRenderer = new GridRenderer(0f, 0f, true);
-
-        Gdx.graphics.setForegroundFPS(60);
+        //Gdx.graphics.setForegroundFPS(60);
     }
 
     @Override

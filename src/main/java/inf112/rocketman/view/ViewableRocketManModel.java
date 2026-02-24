@@ -3,5 +3,8 @@ package inf112.rocketman.view;
 import inf112.rocketman.model.GameBoard;
 
 public interface ViewableRocketManModel {
-    GameBoard getBoard();
+    float getPlayerX();
+    float getPlayerY();
+
+    IGrid getGrid
 }

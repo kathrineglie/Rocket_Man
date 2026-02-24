@@ -27,7 +27,9 @@ public class RocketManView implements Painter {
 	private BitmapFont font; // used for writing
 	private ShapeRenderer shape; // used for drawing shapes
 	private Map<String, Texture> textures = new HashMap<>();
-	private Sound blippSound; // unused
+	private Sound blippSound;
+	private GridRenderer gridRenderer;
+	// unused
 
 	public void create(double worldWidth, double worldHeight) {
 
@@ -39,6 +41,7 @@ public class RocketManView implements Painter {
 		this.batch = new SpriteBatch();
 		this.shape = new ShapeRenderer();
 		this.blippSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
+		this.gridRenderer = new GridRenderer(0f, 0f, true);
 
 		this.font = new BitmapFont();
 		font.setColor(Color.RED);
@@ -143,6 +146,13 @@ public class RocketManView implements Painter {
 		// Start with a blank screen
 
 		ScreenUtils.clear(Color.WHITE);
+
+		float worldW = viewport.getWorldWidth();
+		float worldH = viewport.getWorldHeight();
+
+		shape.setProjectionMatrix(viewport.getCamera().combined);
+		shape.setColor(Color.LIGHT_GRAY);
+		gridRenderer.draw(shape, model.getGrid(), );
 
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
