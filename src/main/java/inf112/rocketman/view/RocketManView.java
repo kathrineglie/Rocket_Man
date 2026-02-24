@@ -140,30 +140,31 @@ public class RocketManView implements Painter {
 	 * 
 	 * @param drawCommands
 	 */
-	public void render(Consumer<Painter> drawCommands) {
-		// Called when the application should draw a new frame (many times per second).
-
-		// Start with a blank screen
+	public void render(ViewableRocketManModel model) {
 
 		ScreenUtils.clear(Color.WHITE);
 
 		float worldW = viewport.getWorldWidth();
 		float worldH = viewport.getWorldHeight();
 
-		shape.setProjectionMatrix(viewport.getCamera().combined);
-		shape.setColor(Color.LIGHT_GRAY);
-		gridRenderer.draw(shape, model.getGrid(), );
+		//draws grid
+		renderGrid(model.getGrid(), gridRenderer);
 
 		// Draw calls should be wrapped in batch.begin() ... batch.end()
 		batch.begin();
 		// The projection matrix translates from world to view coordinates.
 		batch.setProjectionMatrix(viewport.getCamera().combined);
+
+		draw(0, 0, worldW, worldH, "background.png");
+		draw(model.getPlayerX(), model.getPlayerY(), 64, 64, "tevje.png");
+
+		batch.end();
 		// font.draw(batch, "Hello, World!", 200, 200);
-		try {
-			drawCommands.accept(this);
-		} finally {
-			batch.end(); // if you forget this, resources will leak!
-		}
+		//try {
+		//	drawCommands.accept(this);
+		//} finally {
+		//	batch.end(); // if you forget this, resources will leak!
+		//}
 
 
 		// // It's also possible to draw simple shapes

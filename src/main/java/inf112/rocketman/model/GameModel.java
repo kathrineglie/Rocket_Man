@@ -2,6 +2,7 @@ package inf112.rocketman.model;
 
 import com.badlogic.gdx.Game;
 import inf112.rocketman.controller.ControllableRocketManModel;
+import inf112.rocketman.grid.IGrid;
 import inf112.rocketman.view.ViewableRocketManModel;
 
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
@@ -12,7 +13,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float GRAVITY = -1000f;
     private final float THRUST = 3000f;
     private final float MAX_VY = 700f;
-
     private final float PLAYER_H = 64;
 
     private float worldHeight;
@@ -23,10 +23,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         this.board = new GameBoard(20,20,null);
     }
 
-    @Override
-    public GameBoard getBoard() {
-        return board;
-    }
 
     public  void update (float dt, boolean thrusting) {
         float ay = GRAVITY + (thrusting ? THRUST : 0f);
@@ -47,7 +43,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             playerVY = 0;
         }
     }
-
+    @Override
     public  float getPlayerX() {return playerX; }
+
+    @Override
     public float getPlayerY() {return playerY; }
+
+    @Override
+    public IGrid getGrid() {
+        return board;
+    }
 }

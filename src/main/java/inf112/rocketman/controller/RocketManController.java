@@ -8,18 +8,23 @@ import inf112.rocketman.model.GameBoard;
 import inf112.rocketman.model.GameModel;
 import inf112.rocketman.view.GridRenderer;
 import inf112.rocketman.view.RocketManView;
+import inf112.rocketman.view.ViewableRocketManModel;
 
 public class RocketManController implements ApplicationListener {
 
     private RocketManView view;
-    private GameModel model;
+    private ControllableRocketManModel model;
+    private ViewableRocketManModel viewModel;
 
     @Override
     public void create() {
         view = new RocketManView();
         view.create(1000, 800);
 
-        model = new GameModel(view.getWorldHeight());
+        GameModel gameModel = new GameModel(view.getWorldHeight());
+
+        model = gameModel;
+        viewModel = gameModel;
 
         //Gdx.graphics.setForegroundFPS(60);
     }
@@ -31,18 +36,20 @@ public class RocketManController implements ApplicationListener {
 
         model.update(dt, space);
 
-        view.render(painter -> {
-            painter.draw(0,0,
-                    view.getWorldWidth(),
-                    view.getWorldHeight(),
-                    "background.png");
+        view.render(viewModel);
 
-            painter.draw(model.getPlayerX(),
-                    model.getPlayerY(),
-                    64,
-                    64,
-                    "tevje.png");
-        });
+        //view.render(painter -> {
+        //    painter.draw(0,0,
+        //            view.getWorldWidth(),
+        //            view.getWorldHeight(),
+        //            "background.png");
+
+        //    painter.draw(model.getPlayerX(),
+        //            model.getPlayerY(),
+        //            64,
+        //            64,
+        //            "tevje.png");
+        //});
     }
 
     /*@Override
