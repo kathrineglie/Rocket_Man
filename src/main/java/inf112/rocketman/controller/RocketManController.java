@@ -2,16 +2,31 @@ package inf112.rocketman.controller;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 
 import inf112.rocketman.model.GameBoard;
 import inf112.rocketman.view.GridRenderer;
 import inf112.rocketman.view.RocketManView;
+
+
 
 public class RocketManController implements ApplicationListener {
 
     private RocketManView view;
     private GameBoard board;
     private GridRenderer gridRenderer;
+
+    //testing adding movement of player
+    private float playerX = 100f;
+    private float playerY = 300f;
+    private float playerVY = 0f;
+
+    private final float PLAYER_W = 64f;
+    private final float PLAYER_H = 64f;
+
+    private final float GRAVITY = -1000f;
+    private final float THRUST = 3000f;
+    private final float MAX_VY = 700f;
 
 
     @Override
@@ -30,11 +45,33 @@ public class RocketManController implements ApplicationListener {
         float worldW = view.getWorldWidth();
         float worldH = view.getWorldHeight();
 
+        float dt = Gdx.graphics.getDeltaTime();
+
+        boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+
+        float ay = GRAVITY + (space ? THRUST : 0f);
+
+        playerVY += ay * dt;
+
+        if (playerVY > MAX_VY) playerVY = MAX_VY;
+        if (playerVY < -MAX_VY) playerVY = -MAX_VY;
+
+        playerY += playerVY * dt;
+
+        if (playerY < 0) {
+            playerY = 0;
+            playerVY = 0;
+        }
+        if (playerY > worldH - PLAYER_H) {
+            playerY = worldH - PLAYER_H;
+            playerVY = 0;
+        }
+
         view.renderGrid(board, gridRenderer);
 
         view.render(painter -> {
             painter.draw(0, 0, worldW, worldH, "background.png");
-            painter.draw(100, 100, 64, 64, "obligator.png");
+            painter.draw(playerX, playerY, PLAYER_W, PLAYER_H, "tevje.png");
         });
 
 

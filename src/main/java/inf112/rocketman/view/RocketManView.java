@@ -52,7 +52,7 @@ public class RocketManView implements Painter {
 	 * Loading everything at startup prevents glitches later on.
 	 */
 	private void preloadTextures() {
-		for (String fileName : List.of("obligator.png", "background.png")) {
+		for (String fileName : List.of("tevje.png", "background.png")) {
 			getTexture(fileName);
 		}
 	}
