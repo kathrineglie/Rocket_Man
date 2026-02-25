@@ -33,7 +33,7 @@ public class RocketManView implements Painter {
 
 	public void create(double worldWidth, double worldHeight) {
 
-		this.viewport = new FillViewport((float) worldWidth, (float) worldHeight);
+		this.viewport = new FitViewport((float) worldWidth, (float) worldHeight);
 		this.batch = new SpriteBatch();
 		this.shape = new ShapeRenderer();
 		this.blippSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
