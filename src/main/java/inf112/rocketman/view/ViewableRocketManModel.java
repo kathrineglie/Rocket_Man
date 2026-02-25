@@ -6,10 +6,7 @@ import inf112.rocketman.model.GameBoard;
 public interface ViewableRocketManModel {
     float getPlayerX();
     float getPlayerY();
-
     float getPlayerWidth();
-
     float getPlayerHeight();
-
-    IGrid getGrid();
+    float getBackgroundScrollX();
 }
