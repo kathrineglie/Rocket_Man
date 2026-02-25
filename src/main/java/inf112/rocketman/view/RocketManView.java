@@ -19,17 +19,16 @@ import inf112.rocketman._example.view.Painter;
 import inf112.rocketman.grid.IGrid;
 
 
-public class RocketManView implements Painter {
-
-   
+public class RocketManView implements Painter, TextureProvider{
     private Viewport viewport; // defines screen / world size, aspect ratio and camera
 	private SpriteBatch batch; // used for drawing images / textures
 	private BitmapFont font; // used for writing
 	private ShapeRenderer shape; // used for drawing shapes
 	private Map<String, Texture> textures = new HashMap<>();
 	private Sound blippSound;
-	private GridRenderer gridRenderer;
-	// unused
+
+	private BackgroundRenderer backgroundRenderer;
+	private PlayerRenderer playerRenderer;
 
 	public void create(double worldWidth, double worldHeight) {
 
@@ -37,12 +36,13 @@ public class RocketManView implements Painter {
 		this.batch = new SpriteBatch();
 		this.shape = new ShapeRenderer();
 		this.blippSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
-		this.gridRenderer = new GridRenderer(0f, 0f, true);
-
 		this.font = new BitmapFont();
 		font.setColor(Color.RED);
 
 		preloadTextures();
+
+		backgroundRenderer = new BackgroundRenderer(this);
+		playerRenderer = new PlayerRenderer(this);
 
 		Gdx.graphics.setForegroundFPS(60);
 	}
@@ -69,7 +69,7 @@ public class RocketManView implements Painter {
 	 * 
 	 * @return
 	 */
-	private Texture getTexture(String name) {
+	public Texture getTexture(String name) {
 		if (!textures.containsKey(name)) {
 			FileHandle file = Gdx.files.internal(name);
 			if (file != null)
@@ -129,26 +129,21 @@ public class RocketManView implements Painter {
 	 * @param drawCommands
 	 */
 	public void render(ViewableRocketManModel model) {
-
 		ScreenUtils.clear(Color.WHITE);
 
-		float worldW = viewport.getWorldWidth();
-		float worldH = viewport.getWorldHeight();
-
-		renderGrid(model.getGrid(), gridRenderer);
-
-		batch.begin();
+		viewport.apply();
+		viewport.getCamera().update();
 
 		batch.setProjectionMatrix(viewport.getCamera().combined);
+		batch.begin();
 
-		draw(0, 0, worldW, worldH, "background.png");
-		draw(model.getPlayerX(), model.getPlayerY(), model.getPlayerWidth(), model.getPlayerHeight(), "tevje.png");
+		backgroundRenderer.render(batch, viewport, model);
+		playerRenderer.render(batch, model);
 
 		batch.end();
 	}
 
 	public void resize(int width, int height) {
-
 		viewport.update(width, height, true);
 	}
 
@@ -158,15 +153,6 @@ public class RocketManView implements Painter {
 
 	public double worldHeight() {
 		return viewport.getWorldHeight();
-	}
-
-	public void renderGrid(IGrid grid, GridRenderer renderer){
-		shape.setProjectionMatrix(viewport.getCamera().combined);
-		shape.setColor(Color.LIGHT_GRAY);
-
-		float worldW = viewport.getWorldWidth();
-		float worldH = viewport.getWorldHeight();
-		renderer.draw(shape, grid, worldW, worldH);
 	}
 
 	public float getWorldWidth(){
