@@ -5,76 +5,51 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import inf112.rocketman.model.GameBoard;
+import inf112.rocketman.model.GameModel;
 import inf112.rocketman.view.GridRenderer;
 import inf112.rocketman.view.RocketManView;
-
-
+import inf112.rocketman.view.ViewableRocketManModel;
 
 public class RocketManController implements ApplicationListener {
 
     private RocketManView view;
-    private GameBoard board;
-    private GridRenderer gridRenderer;
-
-    //testing adding movement of player
-    private float playerX = 100f;
-    private float playerY = 300f;
-    private float playerVY = 0f;
-
-    private final float PLAYER_W = 64f;
-    private final float PLAYER_H = 64f;
-
-    private final float GRAVITY = -1000f;
-    private final float THRUST = 3000f;
-    private final float MAX_VY = 700f;
-
+    private ControllableRocketManModel model;
+    private ViewableRocketManModel viewModel;
 
     @Override
     public void create() {
-        board = new GameBoard(20, 20, null);
         view = new RocketManView();
         view.create(1000, 800);
 
-        gridRenderer = new GridRenderer(0f, 0f, true);
+        GameModel gameModel = new GameModel(view.getWorldHeight());
 
-        Gdx.graphics.setForegroundFPS(60);
+        model = gameModel;
+        viewModel = gameModel;
+
+        //Gdx.graphics.setForegroundFPS(60);
     }
 
     @Override
     public void render() {
-        float worldW = view.getWorldWidth();
-        float worldH = view.getWorldHeight();
-
         float dt = Gdx.graphics.getDeltaTime();
-
         boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
 
-        float ay = GRAVITY + (space ? THRUST : 0f);
+        model.update(dt, space);
 
-        playerVY += ay * dt;
+        view.render(viewModel);
 
-        if (playerVY > MAX_VY) playerVY = MAX_VY;
-        if (playerVY < -MAX_VY) playerVY = -MAX_VY;
+        //view.render(painter -> {
+        //    painter.draw(0,0,
+        //            view.getWorldWidth(),
+        //            view.getWorldHeight(),
+        //            "background.png");
 
-        playerY += playerVY * dt;
-
-        if (playerY < 0) {
-            playerY = 0;
-            playerVY = 0;
-        }
-        if (playerY > worldH - PLAYER_H) {
-            playerY = worldH - PLAYER_H;
-            playerVY = 0;
-        }
-
-        view.renderGrid(board, gridRenderer);
-
-        view.render(painter -> {
-            painter.draw(0, 0, worldW, worldH, "background.png");
-            painter.draw(playerX, playerY, PLAYER_W, PLAYER_H, "tevje.png");
-        });
-
-
+        //    painter.draw(model.getPlayerX(),
+        //            model.getPlayerY(),
+        //            64,
+        //            64,
+        //            "tevje.png");
+        //});
     }
 
     /*@Override

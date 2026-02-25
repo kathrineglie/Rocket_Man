@@ -27,18 +27,17 @@ public class RocketManView implements Painter {
 	private BitmapFont font; // used for writing
 	private ShapeRenderer shape; // used for drawing shapes
 	private Map<String, Texture> textures = new HashMap<>();
-	private Sound blippSound; // unused
+	private Sound blippSound;
+	private GridRenderer gridRenderer;
+	// unused
 
 	public void create(double worldWidth, double worldHeight) {
 
-		// To preserve aspect ratio, use FitViewport, ExtendViewport or FillViewport.
-		// FitViewport keeps aspect by leaving empty space.
-		// ExtendViewport keeps aspect by extending the world size in one direction.
-		// FillViewport keeps aspect by hiding part of the world in the other direction.
 		this.viewport = new FillViewport((float) worldWidth, (float) worldHeight);
 		this.batch = new SpriteBatch();
 		this.shape = new ShapeRenderer();
 		this.blippSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
+		this.gridRenderer = new GridRenderer(0f, 0f, true);
 
 		this.font = new BitmapFont();
 		font.setColor(Color.RED);
@@ -82,15 +81,7 @@ public class RocketManView implements Painter {
 	}
 
 	public void dispose() {
-		// Called at shutdown
 
-		// Graphics and sound resources aren't managed by Java's garbage collector, so
-		// they must generally be disposed of manually when no longer needed. But,
-		// any remaining resources are typically cleaned up automatically when the
-		// application exits, so these aren't strictly necessary here.
-		// (We might need to do something like this when loading a new game level in
-		// a large game, for instance, or if the user switches to another application
-		// temporarily (e.g., incoming phone call on a phone, or something).
 		batch.dispose();
 		shape.dispose();
 		blippSound.dispose();
@@ -137,45 +128,30 @@ public class RocketManView implements Painter {
 	 * 
 	 * @param drawCommands
 	 */
-	public void render(Consumer<Painter> drawCommands) {
-		// Called when the application should draw a new frame (many times per second).
-
-		// Start with a blank screen
+	public void render(ViewableRocketManModel model) {
 
 		ScreenUtils.clear(Color.WHITE);
 
-		// Draw calls should be wrapped in batch.begin() ... batch.end()
+		float worldW = viewport.getWorldWidth();
+		float worldH = viewport.getWorldHeight();
+
+		renderGrid(model.getGrid(), gridRenderer);
+
 		batch.begin();
-		// The projection matrix translates from world to view coordinates.
+
 		batch.setProjectionMatrix(viewport.getCamera().combined);
-		// font.draw(batch, "Hello, World!", 200, 200);
-		try {
-			drawCommands.accept(this);
-		} finally {
-			batch.end(); // if you forget this, resources will leak!
-		}
 
+		draw(0, 0, worldW, worldH, "background.png");
+		draw(model.getPlayerX(), model.getPlayerY(), model.getPlayerWidth(), model.getPlayerHeight(), "tevje.png");
 
-		// // It's also possible to draw simple shapes
-		// shape.begin(ShapeType.Filled);
-		// shape.setProjectionMatrix(viewport.getCamera().combined);
-		// shape.setColor(Color.BLUE);
-		// shape.box(100, 100, 0, 100, 100, 0);
-		// shape.end();
+		batch.end();
 	}
 
 	public void resize(int width, int height) {
-		// Called whenever the window is resized (including with its original size at
-		// startup)
 
 		viewport.update(width, height, true);
-		// System.out.printf("%dx%d, %fx%f%n", viewport.getScreenWidth(),
-		// viewport.getScreenHeight(),
-		// viewport.getWorldWidth(), viewport.getWorldHeight());
 	}
 
-	// If we use ExtendViewport, the world size might change when the window is
-	// resize, so the controller needs access to this information
 	public double worldWidth() {
 		return viewport.getWorldWidth();
 	}
@@ -201,5 +177,4 @@ public class RocketManView implements Painter {
 		return viewport.getWorldHeight();
 	}
 
-    
 }
