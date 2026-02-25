@@ -4,9 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import inf112.rocketman.model.GameBoard;
 import inf112.rocketman.model.GameModel;
-import inf112.rocketman.view.GridRenderer;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
 
@@ -21,7 +19,7 @@ public class RocketManController implements ApplicationListener {
         view = new RocketManView();
         view.create(1000, 800);
 
-        GameModel gameModel = new GameModel(view.getWorldHeight());
+        GameModel gameModel = new GameModel(view.getWorldHeight(), view.getWorldWidth());
 
         model = gameModel;
         viewModel = gameModel;
