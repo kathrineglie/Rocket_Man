@@ -1,15 +1,12 @@
 package inf112.rocketman.model.Obstacles.Rockets;
 
-import java.util.Iterator;
+import inf112.rocketman.model.Obstacles.Obstacle;
 
-import inf112.rocketman.grid.GridCell;
+public class Rocket extends Obstacle {
 
-public class Rocket implements Iterable<GridCell> {
-
-    @Override
-    public Iterator<GridCell> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+    protected Rocket(float x, float y, float width, float height, float vx, float vy) {
+        super(x, y, width, height, vx, vy);
     }
-    
+
+
 }

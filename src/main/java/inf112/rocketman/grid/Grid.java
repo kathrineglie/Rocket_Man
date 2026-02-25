@@ -14,7 +14,7 @@ public class Grid implements IGrid {
         this(rows, cols, null);
     }
 
-    public Grid(int rows, int cols, Character defaulValue) {
+    public Grid(int rows, int cols, Character defaultValue) {
         this.rows = rows;
         this.cols = cols;
 
@@ -22,7 +22,7 @@ public class Grid implements IGrid {
         for (int i = 0; i < rows; i++) {
             List<Character> innerList = new ArrayList<>();
             for (int j = 0; j < cols; j++) {
-                innerList.add(defaulValue);
+                innerList.add(defaultValue);
             }
             cells.add(innerList);
         }

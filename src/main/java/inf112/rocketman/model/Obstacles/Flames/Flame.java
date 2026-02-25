@@ -1,15 +1,13 @@
 package inf112.rocketman.model.Obstacles.Flames;
-
 import java.util.Iterator;
 
 import inf112.rocketman.grid.GridCell;
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Obstacles.Obstacle;
 
-public class Flame implements Iterable<GridCell> {
+public class Flame extends Obstacle {
 
-    @Override
-    public Iterator<GridCell> iterator() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+    protected Flame(float x, float y, float width, float height, float vx, float vy) {
+        super(x, y, width, height, vx, vy);
     }
-    
 }
