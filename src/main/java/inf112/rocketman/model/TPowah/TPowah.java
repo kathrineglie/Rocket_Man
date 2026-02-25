@@ -7,8 +7,4 @@ public class TPowah {
     public TPowah (Rectangle size) {
 
     }
-
-    public getSize() {
-
-    }
 }
