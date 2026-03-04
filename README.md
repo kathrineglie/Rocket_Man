@@ -20,12 +20,26 @@
 * Sunniva Bratland
 * Elise Blekken
 
+## Project 
+* When starting the game, you load into a dangerous world as the character _TPowah_.
+* The aim of the game is to progress as far as you can while collecting coins. 
+* Along the way you have to avoid various obstacles, such as lazers, rockets and flames.
+* PowerUps can be attained and used to assist along the dangerous journey.
+* The space bar is used to activate the character's pink jetpack, which propels him upwards.
+
+## How to run the game
+* To run the game, clone the repository from git. 
+* Then you can either run the Main class in a compatible IDE or compile the project using maven commands:
+  * mvn clean compile
+  * mvn exec:java
+
+
+
 ### Contributors
 * *TODO: did you include code from anyone else? Did you use AI/LLMs to generate or edit the code?*
 
 ### Sound and Graphics
-* `src/main/resources/obligator.png` – Ingrid Næss Johansen
-* `src/main/resources/blipp.ogg`– Dr. Richard Boulanger et al (CC-BY-3.0)
+* `src/main/resources/*` - All illustrations in this folder created by Kathrine Lie
 
 *(You should probably delete these if you don't need them! If possible, include link to where you found them. Many resources come with instructions on how to cite properly.)*
 
