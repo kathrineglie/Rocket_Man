@@ -2,6 +2,7 @@ package inf112.rocketman.view;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.rocketman.model.Character.TPowah;
 
 public class PlayerRenderer {
     private final TextureProvider textures;
@@ -11,8 +12,9 @@ public class PlayerRenderer {
     }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model){
-        Texture player = textures.getTexture("tevje.png");
+        Texture player_img = textures.getTexture("tevje.png");
+        TPowah player = model.getPlayer();
 
-        batch.draw(player, model.getPlayerX(), model.getPlayerY(), model.getPlayerWidth(), model.getPlayerHeight());
+        batch.draw(player_img, player.getX(), player.getY(), player.getWidth(), player.getHeight());
     }
 }

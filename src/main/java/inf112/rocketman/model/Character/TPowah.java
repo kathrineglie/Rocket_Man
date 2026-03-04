@@ -1,4 +1,4 @@
-package inf112.rocketman.model.TPowah;
+package inf112.rocketman.model.Character;
 import com.badlogic.gdx.math.Rectangle;
 
 public class TPowah {
@@ -29,15 +29,13 @@ public class TPowah {
         }
     }
 
-    public Rectangle getBounds() {
-        return bounds;
-    }
+    public Rectangle getBounds() {return bounds; }
 
-    public float getY() {
-        return bounds.y;
-    }
+    public float getY() {return bounds.y;}
 
-    public float getX() {
-        return bounds.x;
-    }
+    public float getX() {return bounds.x;}
+
+    public float getWidth() {return bounds.width;}
+
+    public float getHeight() {return bounds.height; }
 }
