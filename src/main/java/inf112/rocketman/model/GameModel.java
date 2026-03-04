@@ -27,7 +27,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float worldHeight;
     private final float worldWidth;
     private final float margin = 0;
-    private GameState gameState = GameState.ACTIVE_GAME;
+    private GameState gameState = GameState.PLAYING;
 
     private float bgScrollX = 0f;
 
