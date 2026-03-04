@@ -1,14 +1,19 @@
 package inf112.rocketman.view;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
 public class GameScreen implements Screen {
+    private final Main game;
     private RocketManController controller;
 
     public  GameScreen(Main game) {
-        controller = new RocketManController();
+        this.game = game;
+        controller = new RocketManController(game);
+
     }
     @Override
     public void show() {
@@ -18,6 +23,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         controller.render();
+
     }
 
     @Override

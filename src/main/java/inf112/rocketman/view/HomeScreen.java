@@ -9,15 +9,18 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.rocketman.Main;
+import inf112.rocketman.controller.RocketManController;
 
 public class HomeScreen implements Screen {
 
     private final Main game;
+    private RocketManController controller;
     private SpriteBatch batch;
     private BitmapFont font;
 
-    public HomeScreen(Main game) {
+    public HomeScreen(Main game, RocketManController controller) {
         this.game = game;
+        this.controller = controller;
     }
 
     @Override
@@ -35,9 +38,7 @@ public class HomeScreen implements Screen {
         font.draw(batch, "Press ENTER to start", 350, 450);
         batch.end();
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            game.setScreen(new GameScreen(game));
-        }
+        controller.homeInput();
     }
 
     @Override

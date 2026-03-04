@@ -7,9 +7,17 @@ import inf112.rocketman.controller.RocketManController;
 import inf112.rocketman.view.HomeScreen;
 
 public class Main extends Game {
+    private RocketManController controller;
+
     @Override
     public void create() {
-        setScreen(new HomeScreen(this));
+        controller = new RocketManController(this);
+        setScreen(new HomeScreen(this, controller));
+
+    }
+
+    public RocketManController getController() {
+        return controller;
     }
 
     public static void main(String[] args) {
