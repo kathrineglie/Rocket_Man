@@ -16,18 +16,14 @@ public class RocketManController {
     private ViewableRocketManModel viewableModel;
     private Main game;
 
-    public RocketManController(Main game) {
-        game = game;
+    public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {
+        this.controllableModel = controllableRocketManModel;
+        this.viewableModel = viewableModel;
     }
 
     public void create() {
         view = new RocketManView();
-        view.create(1000, 800);
-
-        GameModel gameModel = new GameModel(view.getWorldHeight(), view.getWorldWidth());
-
-        controllableModel = gameModel;
-        viewableModel = gameModel;
+        view.create(controllableModel.getWorldWidth(), controllableModel.getWorldHeight());
     }
 
 

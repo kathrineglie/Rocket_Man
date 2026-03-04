@@ -7,6 +7,9 @@ public interface ControllableRocketManModel {
 
     GameState getGameState();
 
+    float getWorldHeight();
+    float getWorldWidth();
+
     void startGame();
     void goToHomescreen();
     void pauseGame();

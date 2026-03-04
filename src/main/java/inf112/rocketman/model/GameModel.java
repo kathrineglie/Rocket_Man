@@ -32,10 +32,20 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float rocketTimer = 0f;
     private float rocketSpawnInteval = 1.5f;
 
-    public GameModel(float worldHeight, float worldWidth) {
+    public GameModel(float worldWidth, float worldHeight) {
         player = new TPowah(50f, 0f, 64f, 64f);
-        this.worldHeight = worldHeight;
         this.worldWidth = worldWidth;
+        this.worldHeight = worldHeight;
+    }
+
+    @Override
+    public float getWorldHeight(){
+        return worldHeight;
+    }
+
+    @Override
+    public float getWorldWidth(){
+        return worldWidth;
     }
 
     public  void update (float dt, boolean thrusting) {
