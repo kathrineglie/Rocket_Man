@@ -22,7 +22,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float worldHeight;
     private final float worldWidth;
     private final float margin = 0;
-    private GameState gameState = GameState.PLAYING;
+    private GameState gameState = GameState.HOME_SCREEN;
 
     private float bgScrollX = 0f;
 
@@ -39,9 +39,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     public  void update (float dt, boolean thrusting) {
-        if (gameState == GameState.GAME_OVER) {
+        if (gameState != GameState.PLAYING){
             return;
         }
+
         player.update(dt, thrusting, worldHeight, THRUST, GRAVITY, MAX_VY);
         updateBackground(dt);
         updateRocket(dt);
@@ -108,5 +109,28 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public TPowah getPlayer() {
         return player;
     }
+
+    @Override
+    public GameState getGameState(){
+        return gameState;
+    }
+
+    @Override
+    public void startGame(){
+        gameState = GameState.PLAYING;
+    }
+
+    @Override
+    public void goToHomescreen(){
+        gameState = gameState.HOME_SCREEN;
+    }
+
+    @Override
+    public void pauseGame(){}
+    @Override
+    public void resumeGame(){}
+
+    @Override
+    public void endGame(){}
 
 }

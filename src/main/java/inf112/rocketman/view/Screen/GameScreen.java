@@ -1,7 +1,5 @@
-package inf112.rocketman.view;
+package inf112.rocketman.view.Screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;

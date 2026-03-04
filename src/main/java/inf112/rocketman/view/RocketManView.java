@@ -10,6 +10,9 @@ import com.badlogic.gdx.utils.viewport.*;
 
 import inf112.rocketman._example.view.Painter;
 import inf112.rocketman.view.assets.RocketManAssets;
+import inf112.rocketman.view.rendering.BackgroundRenderer;
+import inf112.rocketman.view.rendering.ObstacleRenderer;
+import inf112.rocketman.view.rendering.PlayerRenderer;
 
 
 public class RocketManView implements Painter {
@@ -33,6 +36,8 @@ public class RocketManView implements Painter {
 
 		backgroundRenderer = new BackgroundRenderer(assets);
 		playerRenderer = new PlayerRenderer(assets);
+		obstacleRenderer = new ObstacleRenderer(assets);
+
 
 		Gdx.graphics.setForegroundFPS(60);
 	}
