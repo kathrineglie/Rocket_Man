@@ -14,3 +14,4 @@ public interface ViewableRocketManModel {
     float getBackgroundScrollX();
     List<IObstacle> getObstacles();
 }
+

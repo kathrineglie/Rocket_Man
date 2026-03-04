@@ -29,7 +29,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float margin = 0;
     private GameState gameState = GameState.ACTIVE_GAME;
 
-    //background:
     private float bgScrollX = 0f;
 
     // obstacles
@@ -120,6 +119,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             bgScrollX = 0;
         }
     }
+
     @Override
     public  float getPlayerX() {return playerX; }
 
