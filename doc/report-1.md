@@ -5,7 +5,7 @@
 * Sunniva Bratland
 * Elise Blekken 
 
-## Innlevering 1
+ ## Innlevering 1
 	Teamorganisering
 	- Alle gruppemedlemmer er lagt til i repository.
 
