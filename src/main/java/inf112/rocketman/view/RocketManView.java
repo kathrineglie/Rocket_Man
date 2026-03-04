@@ -29,6 +29,7 @@ public class RocketManView implements Painter, TextureProvider{
 
 	private BackgroundRenderer backgroundRenderer;
 	private PlayerRenderer playerRenderer;
+	private ObstacleRenderer obstacleRenderer;
 
 	public void create(double worldWidth, double worldHeight) {
 
@@ -43,6 +44,7 @@ public class RocketManView implements Painter, TextureProvider{
 
 		backgroundRenderer = new BackgroundRenderer(this);
 		playerRenderer = new PlayerRenderer(this);
+		obstacleRenderer = new ObstacleRenderer(this);
 
 		Gdx.graphics.setForegroundFPS(60);
 	}
@@ -51,7 +53,7 @@ public class RocketManView implements Painter, TextureProvider{
 	 * Loading everything at startup prevents glitches later on.
 	 */
 	private void preloadTextures() {
-		for (String fileName : List.of("tevje.png", "background.png")) {
+		for (String fileName : List.of("tevje.png", "background.png", "active_rocket.png", "warning_rocket.png")) {
 			getTexture(fileName);
 		}
 	}
@@ -139,6 +141,7 @@ public class RocketManView implements Painter, TextureProvider{
 
 		backgroundRenderer.render(batch, viewport, model);
 		playerRenderer.render(batch, model);
+		obstacleRenderer.render(batch, model);
 
 		batch.end();
 	}
