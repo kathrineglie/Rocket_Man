@@ -18,7 +18,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float worldHeight;
     private final float worldWidth;
 
-    //background:
     private float bgScrollX = 0f;
 
     public GameModel(float worldHeight, float worldWidth) {
@@ -61,6 +60,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             bgScrollX = 0;
         }
     }
+
     @Override
     public  float getPlayerX() {return playerX; }
 

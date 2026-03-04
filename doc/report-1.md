@@ -30,6 +30,8 @@
         - f.eks. avstand over tid (teller opp mens du lever)
     En enkel start/intro
         - “Trykk for å starte”, så du kommer inn i gameplay-loop’en
+    Lyd
+        - Lyd når man flyr 
 
 	Brukerhistorier
 	- Som spiller vil jeg kunne starte spillet fra en startskjerm, slik at jeg skjønner når en runde begynner.
