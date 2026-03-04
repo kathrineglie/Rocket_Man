@@ -4,17 +4,25 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+import inf112.rocketman.Main;
 import inf112.rocketman.model.GameModel;
+import inf112.rocketman.model.GameState;
+import inf112.rocketman.view.GameScreen;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
 
-public class RocketManController implements ApplicationListener {
+public class RocketManController {
 
     private RocketManView view;
     private ControllableRocketManModel model;
     private ViewableRocketManModel viewModel;
+    private Main game;
+    private GameState currentState = GameState.HOME_SCREEN;
 
-    @Override
+    public RocketManController(Main game) {
+        this.game = game;
+    }
+
     public void create() {
         view = new RocketManView();
         view.create(1000, 800);
@@ -24,10 +32,8 @@ public class RocketManController implements ApplicationListener {
         model = gameModel;
         viewModel = gameModel;
 
-        //Gdx.graphics.setForegroundFPS(60);
     }
 
-    @Override
     public void render() {
         float dt = Gdx.graphics.getDeltaTime();
         boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
@@ -36,55 +42,32 @@ public class RocketManController implements ApplicationListener {
 
         view.render(viewModel);
 
-        //view.render(painter -> {
-        //    painter.draw(0,0,
-        //            view.getWorldWidth(),
-        //            view.getWorldHeight(),
-        //            "background.png");
-
-        //    painter.draw(model.getPlayerX(),
-        //            model.getPlayerY(),
-        //            64,
-        //            64,
-        //            "tevje.png");
-        //});
     }
 
-    /*@Override
-    public void render() {
-        view.render(painter -> {});
-
-        int rows = board.rows();
-        int cols = board.cols();
-
-        float worldW = (float) view.worldWidth();
-        float worldH = (float) view.worldHeight();
-
-        float cellSize = Math.min(worldW / cols, worldH / rows);
-
-        float gridW = cols * cellSize;
-        float gridH = rows * cellSize;
-
-        float originX = (worldW - gridW) / 2f;
-        float originY = (worldH - gridH) / 2f;
-
-        GridRenderer renderer = new GridRenderer(cellSize, originX, originY, true);
-        view.renderGrid(board, renderer);
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
-    }*/
-
-    @Override public void resize(int width, int height) {
+    public void resize(int width, int height) {
         view.resize(width, height);
     }
 
-    @Override public void pause() {}
-    @Override public void resume() {}
-
-    @Override
     public void dispose() {
         view.dispose();
+    }
+
+    public  void handleInput() {
+        if (currentState == GameState.HOME_SCREEN) {
+            if (Gdx.input.isKeyJustPressed((Input.Keys.SPACE))) {
+                currentState = GameState.PLAYING;
+            }
+        }
+
+        else if (currentState == GameState.PLAYING) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                currentState = GameState.HOME_SCREEN;
+            }
+        }
+
+    }
+
+    public GameState getState() {
+        return currentState;
     }
 }
