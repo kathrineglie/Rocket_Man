@@ -41,8 +41,8 @@ public class Obstacle implements IObstacle {
     //
     @Override
     public void update(float dt) {
-        x = vx * dt;
-        y = vy * dt;
+        x += vx * dt;
+        y += vy * dt;
     }
 
     @Override

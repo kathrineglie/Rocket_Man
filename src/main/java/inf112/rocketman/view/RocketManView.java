@@ -21,6 +21,7 @@ public class RocketManView implements Painter {
 
 	private BackgroundRenderer backgroundRenderer;
 	private PlayerRenderer playerRenderer;
+	private ObstacleRenderer obstacleRenderer;
 
 	public void create(double worldWidth, double worldHeight) {
 		this.viewport = new FitViewport((float) worldWidth, (float) worldHeight);
@@ -85,6 +86,7 @@ public class RocketManView implements Painter {
 
 		backgroundRenderer.render(batch, viewport, model);
 		playerRenderer.render(batch, model);
+		obstacleRenderer.render(batch, model);
 
 		batch.end();
 	}
