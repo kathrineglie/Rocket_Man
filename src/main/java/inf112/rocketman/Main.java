@@ -3,10 +3,12 @@ package inf112.rocketman;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.controller.RocketManController;
+import inf112.rocketman.model.GameModel;
 import inf112.rocketman.model.GameState;
-import inf112.rocketman.view.GameScreen;
-import inf112.rocketman.view.HomeScreen;
+import inf112.rocketman.view.Screen.GameScreen;
+import inf112.rocketman.view.Screen.HomeScreen;
 
 public class Main extends Game {
     private RocketManController controller;
@@ -16,7 +18,10 @@ public class Main extends Game {
 
     @Override
     public void create() {
-        controller = new RocketManController(this);
+        GameModel model = new GameModel(1000, 800);
+
+        controller = new RocketManController(model, model);
+        controller.create();
 
         homeScreen = new HomeScreen(this, controller);
         gameScreen = new GameScreen(this,controller);

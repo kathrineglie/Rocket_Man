@@ -1,46 +1,39 @@
 package inf112.rocketman.controller;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import inf112.rocketman.Main;
 import inf112.rocketman.model.GameModel;
 import inf112.rocketman.model.GameState;
-import inf112.rocketman.view.GameScreen;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
 
 public class RocketManController {
 
     private RocketManView view;
-    private ControllableRocketManModel model;
-    private ViewableRocketManModel viewModel;
+    private ControllableRocketManModel controllableModel;
+    private ViewableRocketManModel viewableModel;
     private Main game;
-    private GameState currentState = GameState.HOME_SCREEN;
 
-    public RocketManController(Main game) {
-        this.game = game;
+    public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {
+        this.controllableModel = controllableRocketManModel;
+        this.viewableModel = viewableModel;
     }
 
     public void create() {
         view = new RocketManView();
-        view.create(1000, 800);
-
-        GameModel gameModel = new GameModel(view.getWorldHeight(), view.getWorldWidth());
-
-        model = gameModel;
-        viewModel = gameModel;
-
+        view.create(controllableModel.getWorldWidth(), controllableModel.getWorldHeight());
     }
+
 
     public void render() {
         float dt = Gdx.graphics.getDeltaTime();
         boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
 
-        model.update(dt, space);
+        controllableModel.update(dt, space);
 
-        view.render(viewModel);
+        view.render(viewableModel);
 
     }
 
@@ -53,21 +46,22 @@ public class RocketManController {
     }
 
     public  void handleInput() {
+        GameState currentState = controllableModel.getGameState();
         if (currentState == GameState.HOME_SCREEN) {
             if (Gdx.input.isKeyJustPressed((Input.Keys.SPACE))) {
-                currentState = GameState.PLAYING;
+                controllableModel.startGame();
             }
         }
 
         else if (currentState == GameState.PLAYING) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                currentState = GameState.HOME_SCREEN;
+                controllableModel.goToHomescreen();
             }
         }
 
     }
 
     public GameState getState() {
-        return currentState;
+        return controllableModel.getGameState();
     }
 }

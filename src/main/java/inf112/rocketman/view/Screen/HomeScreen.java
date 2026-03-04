@@ -1,8 +1,5 @@
-package inf112.rocketman.view;
+package inf112.rocketman.view.Screen;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -35,7 +32,7 @@ public class HomeScreen implements Screen {
 
         batch.begin();
         font.draw(batch, "ROCKET MAN", 400, 500);
-        font.draw(batch, "Press ENTER to start", 350, 450);
+        font.draw(batch, "Press SPACE to start", 350, 450);
         batch.end();
 
         controller.handleInput();

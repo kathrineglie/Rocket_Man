@@ -19,7 +19,7 @@ public class RocketManAssets implements TextureProvider {
     public void create(){
         font = new BitmapFont();
 
-        preloadTextures(List.of("tevje.png", "background.png"));
+        preloadTextures(List.of("TPowah/TPowah.png", "TPowah/TPowahFlames.png", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning_rocket.png"));
         preloadSounds(List.of("blipp.ogg"));
     }
 
