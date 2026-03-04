@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 
 import inf112.rocketman.Main;
 import inf112.rocketman.model.GameModel;
+import inf112.rocketman.model.GameState;
 import inf112.rocketman.view.GameScreen;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
@@ -16,6 +17,7 @@ public class RocketManController {
     private ControllableRocketManModel model;
     private ViewableRocketManModel viewModel;
     private Main game;
+    private GameState currentState = GameState.HOME_SCREEN;
 
     public RocketManController(Main game) {
         this.game = game;
@@ -50,9 +52,22 @@ public class RocketManController {
         view.dispose();
     }
 
-    public  void homeInput() {
-        if (Gdx.input.isKeyJustPressed((Input.Keys.SPACE))) {
-            game.setScreen(new GameScreen(game));
+    public  void handleInput() {
+        if (currentState == GameState.HOME_SCREEN) {
+            if (Gdx.input.isKeyJustPressed((Input.Keys.SPACE))) {
+                currentState = GameState.PLAYING;
+            }
         }
+
+        else if (currentState == GameState.PLAYING) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                currentState = GameState.HOME_SCREEN;
+            }
+        }
+
+    }
+
+    public GameState getState() {
+        return currentState;
     }
 }

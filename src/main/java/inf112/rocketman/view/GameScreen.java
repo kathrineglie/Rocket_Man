@@ -10,9 +10,9 @@ public class GameScreen implements Screen {
     private final Main game;
     private RocketManController controller;
 
-    public  GameScreen(Main game) {
+    public  GameScreen(Main game, RocketManController controller) {
         this.game = game;
-        controller = new RocketManController(game);
+        this.controller = controller;
 
     }
     @Override
@@ -22,6 +22,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        controller.handleInput();
         controller.render();
 
     }

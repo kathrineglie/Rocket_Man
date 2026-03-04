@@ -38,7 +38,7 @@ public class HomeScreen implements Screen {
         font.draw(batch, "Press ENTER to start", 350, 450);
         batch.end();
 
-        controller.homeInput();
+        controller.handleInput();
     }
 
     @Override
