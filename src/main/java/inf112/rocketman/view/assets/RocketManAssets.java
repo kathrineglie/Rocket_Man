@@ -1,0 +1,101 @@
+package inf112.rocketman.view.assets;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import inf112.rocketman.view.TextureProvider;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class RocketManAssets implements TextureProvider {
+    private Map<String, Texture> textures = new HashMap<>();
+    private Map<String, Sound> sounds = new HashMap<>();
+    private BitmapFont font;
+
+    public void create(){
+        font = new BitmapFont();
+
+        preloadTextures(List.of("tevje.png", "background.png"));
+        preloadSounds(List.of("blipp.ogg"));
+    }
+
+    private void preloadTextures(List<String> names) {
+        for (String fileName : names) {
+            getTexture(fileName);
+        }
+    }
+
+    private void preloadSounds(List<String> names){
+        for(String soundName : names){
+            getSound(soundName);
+        }
+    }
+
+    /*
+     * Example: load textures only once, and save them in a hash map.
+     *
+     * You should do the same with sounds and other resources. LibGDX has a built-in
+     * AssetManager that can help with this.
+     *
+     * If you do new Texture() every time you draw, you'll slow the game down and
+     * fill up memory.
+     *
+     * @param name
+     *
+     * @return
+     */
+    @Override
+    public Texture getTexture(String name) {
+        if (!textures.containsKey(name)) {
+            FileHandle file = Gdx.files.internal(name);
+            if (file != null) {
+                textures.put(name, new Texture(file));
+            } else {
+                textures.put(name, null);
+            }
+        }
+        return textures.get(name);
+    }
+
+    private Sound getSound(String name){
+        if (!sounds.containsKey(name)){
+            FileHandle file = Gdx.files.internal(name);
+            if (file != null) {
+                sounds.put(name, Gdx.audio.newSound(file));
+            } else {
+                sounds.put(name, null);
+            }
+        }
+        return sounds.get(name);
+    }
+
+    public BitmapFont getFont(){
+        return font;
+    }
+
+
+    public void playSound(String soundName) {
+        Sound sou = getSound(soundName);
+        if (sou != null){
+            sou.play();
+        }
+    }
+
+    public void dispose(){
+        sounds.values().forEach(sou -> {
+            if (sou != null)
+                sou.dispose();
+        });
+        textures.values().forEach(tex -> {
+            if (tex != null)
+                tex.dispose();
+        });
+        if (font != null){
+            font.dispose();
+        }
+    }
+}

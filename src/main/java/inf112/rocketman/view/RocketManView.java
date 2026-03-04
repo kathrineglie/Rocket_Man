@@ -1,100 +1,51 @@
 package inf112.rocketman.view;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 
 import inf112.rocketman._example.view.Painter;
-import inf112.rocketman.grid.IGrid;
+import inf112.rocketman.view.assets.RocketManAssets;
 
 
-public class RocketManView implements Painter, TextureProvider{
+public class RocketManView implements Painter {
     private Viewport viewport; // defines screen / world size, aspect ratio and camera
 	private SpriteBatch batch; // used for drawing images / textures
-	private BitmapFont font; // used for writing
 	private ShapeRenderer shape; // used for drawing shapes
-	private Map<String, Texture> textures = new HashMap<>();
-	private Sound blippSound;
+
+	private RocketManAssets assets;
 
 	private BackgroundRenderer backgroundRenderer;
 	private PlayerRenderer playerRenderer;
 
 	public void create(double worldWidth, double worldHeight) {
-
 		this.viewport = new FitViewport((float) worldWidth, (float) worldHeight);
 		this.batch = new SpriteBatch();
 		this.shape = new ShapeRenderer();
-		this.blippSound = Gdx.audio.newSound(Gdx.files.internal("blipp.ogg"));
-		this.font = new BitmapFont();
-		font.setColor(Color.RED);
 
-		preloadTextures();
+		assets = new RocketManAssets();
+		assets.create();
 
-		backgroundRenderer = new BackgroundRenderer(this);
-		playerRenderer = new PlayerRenderer(this);
+		backgroundRenderer = new BackgroundRenderer(assets);
+		playerRenderer = new PlayerRenderer(assets);
 
 		Gdx.graphics.setForegroundFPS(60);
 	}
 
-	/*
-	 * Loading everything at startup prevents glitches later on.
-	 */
-	private void preloadTextures() {
-		for (String fileName : List.of("tevje.png", "background.png")) {
-			getTexture(fileName);
-		}
-	}
-
-	/*
-	 * Example: load textures only once, and save them in a hash map.
-	 * 
-	 * You should do the same with sounds and other resources. LibGDX has a built-in
-	 * AssetManager that can help with this.
-	 * 
-	 * If you do new Texture() every time you draw, you'll slow the game down and
-	 * fill up memory.
-	 * 
-	 * @param name
-	 * 
-	 * @return
-	 */
-	public Texture getTexture(String name) {
-		if (!textures.containsKey(name)) {
-			FileHandle file = Gdx.files.internal(name);
-			if (file != null)
-				textures.put(name, new Texture(file));
-			else
-				textures.put(name, null);
-		}
-		return textures.get(name);
-	}
 
 	public void dispose() {
-
 		batch.dispose();
 		shape.dispose();
-		blippSound.dispose();
-		font.dispose();
-		textures.values().forEach(tex -> {
-			if (tex != null)
-				tex.dispose();
-		});
+		assets.dispose();
 	}
 
 	@Override
 	public void draw(double x, double y, double w, double h, String textureName) {
-		Texture texture = getTexture(textureName);
+		Texture texture = assets.getTexture(textureName);
 		if (texture != null) {
 			batch.draw(texture, //
 					(float) x, //
@@ -102,11 +53,6 @@ public class RocketManView implements Painter, TextureProvider{
 					(float) w, //
 					(float) h);
 		}
-	}
-
-	public void playSound() {
-		// TODO: play different sounds
-		blippSound.play();
 	}
 
 	/**
