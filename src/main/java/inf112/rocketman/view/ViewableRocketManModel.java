@@ -10,3 +10,4 @@ public interface ViewableRocketManModel {
     float getPlayerHeight();
     float getBackgroundScrollX();
 }
+
