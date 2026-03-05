@@ -18,10 +18,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float THRUST = 4000f;
     private final float MAX_VY = 700f;
     private final float GRAVITY = -1000f;
+    private final float PLAYER_X = 150f;
 
     private final float worldHeight;
     private final float worldWidth;
     private final float margin = 0;
+
     private GameState gameState = GameState.HOME_SCREEN;
 
     private float bgScrollX = 0f;
@@ -33,7 +35,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float rocketSpawnInteval = 1.5f;
 
     public GameModel(float worldWidth, float worldHeight) {
-        player = new TPowah(50f, 0f, 64f, 64f);
+        float pWidth = worldWidth/13;
+        float pHeight= worldHeight/7;
+        player = new TPowah(PLAYER_X, 0, pWidth, pHeight);
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
     }
