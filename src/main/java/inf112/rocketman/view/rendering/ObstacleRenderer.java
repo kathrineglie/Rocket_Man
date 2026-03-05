@@ -21,7 +21,7 @@ public class ObstacleRenderer {
                 if (rocket.isActive()) {
                     texture = textures.getTexture("Obstacles/Rocket.png");
                 } else {
-                    texture = textures.getTexture("Obstacles/warning_rocket.png");
+                    texture = textures.getTexture("Obstacles/warning.png");
                 }
                 batch.draw(texture, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
             }
