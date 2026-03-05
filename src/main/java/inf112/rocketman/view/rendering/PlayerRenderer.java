@@ -14,9 +14,17 @@ public class PlayerRenderer {
     }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model){
-        Texture player_img = textures.getTexture("TPowah/TPowah.png");
+
         TPowah player = model.getPlayer();
 
-        batch.draw(player_img, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        String playerImg;
+
+        if (model.isThrusting()){
+            playerImg = "TPowah/TPowahFlames.png";
+        } else{
+            playerImg = "TPowah/TPowah.png";
+        }
+
+        batch.draw(textures.getTexture(playerImg), player.getX(), player.getY(), player.getWidth(), player.getHeight());
     }
 }

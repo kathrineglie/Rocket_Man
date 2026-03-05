@@ -4,9 +4,12 @@ import com.badlogic.gdx.math.Rectangle;
 public class TPowah {
     private final Rectangle bounds;
     private float vy = 0;
+    private float groundY = 120f;
 
     public TPowah (float x, float y, float width, float height) {
+
         this.bounds = new Rectangle(x, y, width, height);
+        this.groundY = 170f;
     }
 
     public void update(float dt, boolean thrusting, float worldHeight, float thrust, float gravity, float maxVY) {
@@ -18,9 +21,8 @@ public class TPowah {
 
         bounds.y += vy * dt;
 
-        // Bounds
-        if (bounds.y < 0) {
-            bounds.y = 0;
+        if (bounds.y < groundY) {
+            bounds.y = groundY;
             vy = 0;
         }
         if (bounds.y > worldHeight - bounds.height) {
@@ -38,4 +40,5 @@ public class TPowah {
     public float getWidth() {return bounds.width;}
 
     public float getHeight() {return bounds.height; }
+
 }

@@ -90,6 +90,7 @@ public class RocketManView implements Painter {
 		batch.begin();
 
 		backgroundRenderer.render(batch, viewport, model);
+
 		playerRenderer.render(batch, model);
 		obstacleRenderer.render(batch, model);
 
