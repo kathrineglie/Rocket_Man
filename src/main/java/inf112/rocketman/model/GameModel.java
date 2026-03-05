@@ -18,7 +18,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float THRUST = 4000f;
     private final float MAX_VY = 700f;
     private final float GRAVITY = -1000f;
-    private final float PLAYER_X = 150f;
+    private final float PLAYER_X = 100f;
+    private final float PLAYER_Y = 100f;
+    private boolean thrusting;
 
     private final float worldHeight;
     private final float worldWidth;
@@ -37,7 +39,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public GameModel(float worldWidth, float worldHeight) {
         float pWidth = worldWidth/13;
         float pHeight= worldHeight/7;
-        player = new TPowah(PLAYER_X, 0, pWidth, pHeight);
+        player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight);
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
     }
@@ -52,11 +54,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return worldWidth;
     }
 
-    public  void update (float dt, boolean thrusting) {
+    public  void update (float dt, boolean thrustingInput) {
         if (gameState != GameState.PLAYING){
             return;
         }
 
+        thrusting = thrustingInput;
         player.update(dt, thrusting, worldHeight, THRUST, GRAVITY, MAX_VY);
         updateBackground(dt);
         updateRocket(dt);
@@ -117,6 +120,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     public Rectangle getPlayerHitbox() {
         return new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+    }
+
+    @Override
+    public boolean isThrusting(){
+        return thrusting;
     }
 
     @Override
