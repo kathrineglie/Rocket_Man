@@ -61,12 +61,12 @@ public class RocketManController {
                 controllableModel.goToHomescreen();
             }
 
-            boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
+            boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.SPACE);
 
-            if (spaceHeld &&!jetpackPlaying){
+            if (spaceHeld && !jetpackPlaying){
                 jetpackSoundId = view.playSound(JETPACK_SOUND);
                 jetpackPlaying = true;
-            } else if (!spaceHeld&& jetpackPlaying){
+            } else if (!spaceHeld && jetpackPlaying){
                 view.stopSound(JETPACK_SOUND, jetpackSoundId);
                 jetpackPlaying = false;
                 jetpackSoundId =-1;
