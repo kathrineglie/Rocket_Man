@@ -72,6 +72,10 @@ public class RocketManController {
 
     }
 
+    public RocketManView getView() {
+        return view;
+    }
+
     public GameState getState() {
         return controllableModel.getGameState();
     }

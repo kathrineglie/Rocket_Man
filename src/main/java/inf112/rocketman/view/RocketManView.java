@@ -90,11 +90,14 @@ public class RocketManView implements Painter {
 		batch.begin();
 
 		backgroundRenderer.render(batch, viewport, model);
-
 		playerRenderer.render(batch, model);
 		obstacleRenderer.render(batch, model);
 
 		batch.end();
+	}
+
+	public RocketManAssets getAssets() {
+		return assets;
 	}
 
 	public long playSound(String name){
