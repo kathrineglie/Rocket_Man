@@ -33,6 +33,8 @@ public class RocketManAssets implements TextureProvider {
 
         preloadTextures(List.of("TPowah/TPowah.png", "TPowah/TPowahFlames.png", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning_rocket.png"));
         preloadSounds(List.of("blipp.ogg"));
+        preloadTextures(List.of("TPowah/TPowah.png", "TPowah/TPowahFlames.png", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning.png"));
+        preloadSounds(List.of("Sounds/Teleport/MP3/Teleport.mp3"));
     }
 
     private void preloadTextures(List<String> names) {
@@ -90,10 +92,18 @@ public class RocketManAssets implements TextureProvider {
     }
 
 
-    public void playSound(String soundName) {
+    public long playSound(String soundName) {
         Sound sou = getSound(soundName);
         if (sou != null){
-            sou.play();
+            return sou.play();
+        }
+        return -1;
+    }
+
+    public void stopSound(String soundName, long soundId){
+        Sound s = getSound(soundName);
+        if (s!=null && soundId !=-1){
+            s.stop(soundId);
         }
     }
 

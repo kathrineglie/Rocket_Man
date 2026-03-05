@@ -53,6 +53,6 @@ public class Obstacle implements IObstacle {
 
     @Override
     public boolean isOfScreen(float worldWidth, float worldHeight) {
-        return (x + width < 0 || x > worldWidth || y + height < 0 || y > worldHeight);
+        return (x + width < 0 || x > worldWidth || y + height < 170f || y > worldHeight);
     }
 }

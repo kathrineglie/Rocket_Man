@@ -100,6 +100,14 @@ public class RocketManView implements Painter {
 		return assets;
 	}
 
+	public long playSound(String name){
+		return assets.playSound(name);
+	}
+
+	public void stopSound(String name, long id){
+		assets.stopSound(name, id);
+	}
+
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
 	}
