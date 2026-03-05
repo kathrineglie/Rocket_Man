@@ -40,6 +40,8 @@
 
 ### Sound and Graphics
 * `src/main/resources/*` - All illustrations in this folder created by Kathrine Lie
+* `src/main/resources/Sounds` - Have used "Teleport" from "Sounds" by phoenix1291 (CC0) 
+  * Source: https://opengameart.org/content/sound-effects-mini-pack15
 
 *(You should probably delete these if you don't need them! If possible, include link to where you found them. Many resources come with instructions on how to cite properly.)*
 

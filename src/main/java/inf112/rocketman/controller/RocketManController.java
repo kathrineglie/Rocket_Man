@@ -3,12 +3,9 @@ package inf112.rocketman.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-import inf112.rocketman.Main;
-import inf112.rocketman.model.GameModel;
 import inf112.rocketman.model.GameState;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
-import inf112.rocketman.view.assets.RocketManAssets;
 
 public class RocketManController {
 
@@ -18,7 +15,7 @@ public class RocketManController {
 
     private boolean jetpackPlaying = false;
     private long jetpackSoundId = -1;
-    private static final String JETPACK_SOUND = "Sound effects Mini Pack1.5/Teleport/MP3/Teleport.mp3";
+    private static final String JETPACK_SOUND = "Sounds/Teleport/MP3/Teleport.mp3";
 
     public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {
         this.controllableModel = controllableRocketManModel;
