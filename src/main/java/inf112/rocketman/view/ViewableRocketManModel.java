@@ -6,13 +6,47 @@ import inf112.rocketman.model.Character.TPowah;
 
 import java.util.List;
 
+/**
+ * A read-only interface representing the parts of the rocketMan game model
+ * that are visible to the view components.
+ * This interface follows the principle of least privilege, ensuring that
+ * renderers can access game data for drawing purposes without being able
+ * to modify the game state
+ */
 public interface ViewableRocketManModel {
+
+    /**
+     * @return the current horizontal scroll position of the backgorund.
+     */
     float getBackgroundScrollX();
+
+    /**
+     * Retrieves the list of all active obstacles currently in the game world.
+     *
+     * @return a list of objects implementing {@link IObstacle}.
+     */
     List<IObstacle> getObstacles();
+
+    /**
+     * Retrieves the player character object.
+     *
+     * @return the {@link TPowah} player instance.
+     */
     TPowah getPlayer();
 
+    /**
+     * Retrieves the current state of the game (e.g., HOME_SCREEN, PLAYING, GAME_OVER).
+     *
+     * @return the current {@link GameState}
+     */
     GameState getGameState();
 
+    /**
+     * Checks if the player is currently activating the rocket's thrust.
+     * this can be used by renderers to decide whether to draw engine flames.
+     *
+     * @return true if the rocket is thrusting, false otherwise.
+     */
     boolean isThrusting();
 }
 
