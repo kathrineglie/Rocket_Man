@@ -1,0 +1,2111 @@
+###############################################
+OpenGameArt.org automatically generated credits file notice:
+
+THIS FILE IS FOR INFORMATIONAL PURPOSES ONLY.  NO WARRANTY OF ANY KIND IS EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL OPENGAMEART.ORG BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE USE OF THIS FILE OR THE INFORMATION IN IT.
+
+In plain English:  This credits file is automatically generated to the best of our ability, but it remains YOUR RESPONSIBILITY as a game developer to ensure that the art you use is attributed properly.  That is, we can't be held liable even if all of the information in this file is completely wrong.   In addition, some of the art listed in this file may have SPECIAL ATTRIBUTION INSTRUCTIONS that ask that you credit the artist in a particular way, rather than a verbatim copyright notice.  In those cases, you will probably need to hand-edit this file to comply with their instructions.  In some older art, attribution instructions may be included in the art description itself.  Please check the art page to be sure.
+
+We recommend that you delete this notice when you're sure the information here is correct and the attribution instructions are properly followed.  If you aren't the game developer and you're seeing this notice here in the credits, it probably means that the developer hasn't properly verified the attribution information contained herein even though it said they were supposed to do it right on the page where they downloaded this file.  
+###############################################
+
+Title:
+    8-Bit Sound Effect Pack
+
+Author:
+    OwlishMedia
+
+URL:
+    https://opengameart.org/content/8-bit-sound-effect-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Game_SFX_by_OwlishMedia.zip
+
+----------------------------------------
+
+Title:
+    100 CC0 SFX
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/100-cc0-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 100-CC0-SFX.zip
+
+----------------------------------------
+
+Title:
+    Some animal noise
+
+Author:
+    mikeask
+
+URL:
+    https://opengameart.org/content/some-animal-noise
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    it&#039;s yours
+
+File(s):
+    * some animal noise.wav
+
+----------------------------------------
+
+Title:
+    Jay The Doggo - Sound Effects
+
+Author:
+    Spring Spring
+
+URL:
+    https://opengameart.org/content/jay-the-doggo-sound-effects
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * sfx-land.wav
+    * sfx-jump.wav
+    * sfx-footstep.wav
+    * sfx-trip.wav
+    * sfx-death jingle.wav
+    * sfx-alarm.wav
+    * sfx-collect a nice big strawberry.wav
+    * sfx-gift wrapping opens.wav
+    * sfx-collect wpn.wav
+    * sfx-throw.wav
+    * sfx-block.wav
+    * sfx-enemyhit.wav
+    * sfx-frog.wav
+    * sfx-spit.wav
+    * sfx-checkpoint.wav
+    * sfx-1up.wav
+
+----------------------------------------
+
+Title:
+    Monster
+
+Author:
+    mikeask
+
+URL:
+    https://opengameart.org/content/monster-5
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    it&#039;s yours!
+
+File(s):
+    * Monster.wav
+
+----------------------------------------
+
+Title:
+    Reversing Time / Stuck in Time
+
+Author:
+    isaiah658
+
+URL:
+    https://opengameart.org/content/reversing-time-stuck-in-time
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit to isaiah658 is not required, but is appreciated.
+
+File(s):
+    * Reverse-Time-Loop-isaiah658.ogg
+    * Reverse-Time-Loop-isaiah658.wav
+
+----------------------------------------
+
+Title:
+    Time Slow
+
+Author:
+    MidFag
+
+URL:
+    https://opengameart.org/content/time-slow
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * time_stop.mp3
+
+----------------------------------------
+
+Title:
+    Kitten Mew
+
+Author:
+    AntumDeluge
+
+URL:
+    https://opengameart.org/content/kitten-mew
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * kitten_mew-1.ogg
+    * kitten_mew-1.wav
+
+----------------------------------------
+
+Title:
+    Witch Cackle
+
+Author:
+    AntumDeluge
+
+URL:
+    https://opengameart.org/content/witch-cackle
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * witch_cackle-1.ogg
+
+----------------------------------------
+
+Title:
+    Mutant Frog
+
+Author:
+    AntumDeluge
+
+URL:
+    https://opengameart.org/content/mutant-frog
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * mutant_frog.zip
+
+----------------------------------------
+
+Title:
+    Scrapes
+
+Author:
+    AntumDeluge
+
+URL:
+    https://opengameart.org/content/scrapes
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * scrapes.zip
+
+----------------------------------------
+
+Title:
+    Seamless Energy Emission Loop
+
+Author:
+    zeroisnotnull
+
+URL:
+    https://opengameart.org/content/seamless-energy-emission-loop
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * movingshield_sound.ogg
+
+----------------------------------------
+
+Title:
+    Ambient Alien Light sfx
+
+Author:
+    Dr. Neptune
+
+URL:
+    https://opengameart.org/content/ambient-alien-light-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Alien light.ogg
+
+----------------------------------------
+
+Title:
+    SFX: The Ultimate 2017 16 bit Mini pack
+
+Author:
+    phoenix1291
+
+URL:
+    https://opengameart.org/content/sfx-the-ultimate-2017-16-bit-mini-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit "phoenix1291" or "SwissArcadeGameEntertainment", this is not mandatory.
+
+File(s):
+    * SFX- The Ultimate 2017 16 bit Mini pack.zip
+
+----------------------------------------
+
+Title:
+    SFX: The Ultimate 2017 8 bit Mini pack
+
+Author:
+    phoenix1291
+
+URL:
+    https://opengameart.org/content/sfx-the-ultimate-2017-8-bit-mini-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit "phoenix1291" or "SwissArcadeGameEntertainment", this is not mandatory.
+
+File(s):
+    * SFX- The Ultimate 2017 8 bit Mini pack.zip
+
+----------------------------------------
+
+Title:
+    Sound effects Pack 2
+
+Author:
+    phoenix1291
+
+URL:
+    https://opengameart.org/content/sound-effects-pack-2
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit "phoenix1291" or "SwissArcadeGameEntertainment", this is not mandatory.
+
+File(s):
+    * Sound effects Pack 2.zip
+
+----------------------------------------
+
+Title:
+    Bell Arpeggio 24
+
+Author:
+    cynicmusic
+
+URL:
+    https://opengameart.org/content/bell-arpeggio-24
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    OPTIONAL ATTRIBUTION: The Cynic Project / cynicmusic.com / pixelsphere.org
+
+File(s):
+    * 24.wav
+
+----------------------------------------
+
+Title:
+    Various sound effects pack 1
+
+Author:
+    phoenix1291
+
+URL:
+    https://opengameart.org/content/various-sound-effects-pack-1
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit "phoenix1291" or "SwissArcadeGameEntertainment", this is not mandatory.
+
+File(s):
+    * Various sound effects - Free mini pack.zip
+
+----------------------------------------
+
+Title:
+    Sound effects Mini Pack1.5
+
+Author:
+    phoenix1291
+
+URL:
+    https://opengameart.org/content/sound-effects-mini-pack15
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit "phoenix1291" or "SwissArcadeGameEntertainment", this is not mandatory.
+
+File(s):
+    * Sound effects Mini Pack1.5.zip
+
+----------------------------------------
+
+Title:
+    Fast Hammer SFX
+
+Author:
+    themightyglider
+
+Collaborators:
+    bart
+
+URL:
+    https://opengameart.org/content/fast-hammer-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * craft.ogg
+
+----------------------------------------
+
+Title:
+    Voiceover Pack: Fighter (40+ taunts)
+
+Author:
+    Kenney
+
+URL:
+    https://opengameart.org/content/voiceover-pack-fighter-40-taunts
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit "Kenney.nl" or "www.kenney.nl", this is not mandatory.
+
+File(s):
+    * kenney_voiceoverFighter.zip
+
+----------------------------------------
+
+Title:
+    58 Random Sound Effects
+
+Author:
+    TokyoGeisha
+
+URL:
+    https://opengameart.org/content/58-random-sound-effects
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Feel free to use it anyway you want. No credit necessary.
+
+File(s):
+    * Sound Effects.zip
+
+----------------------------------------
+
+Title:
+    Machine shutting down
+
+Author:
+    Cough-E
+
+URL:
+    https://opengameart.org/content/machine-shutting-down
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Use however you want, even commercially. No credit needed
+
+File(s):
+    * MachinePowerOff.ogg
+
+----------------------------------------
+
+Title:
+    50 Free SciFi SoundFX - 192kHz, 64-bit 24,576kbps WAV
+
+Author:
+    blacklodgegames
+
+URL:
+    https://opengameart.org/content/50-free-scifi-soundfx-192khz-64-bit-24576kbps-wav
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 50-Free-SciFi-SFX-blacklodgegames.com_.zip
+
+----------------------------------------
+
+Title:
+    Camera
+
+Author:
+    themightyglider
+
+URL:
+    https://opengameart.org/content/camera
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * photo.ogg
+
+----------------------------------------
+
+Title:
+    Robot Voice Pack
+
+Author:
+    Cough-E
+
+URL:
+    https://opengameart.org/content/robot-voice-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    I waive all of my rights to these sound files.
+
+File(s):
+    * Voices.zip
+
+----------------------------------------
+
+Title:
+    Ambient Bird Sounds
+
+Author:
+    isaiah658
+
+URL:
+    https://opengameart.org/content/ambient-bird-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit to isaiah658 is not needed but is appreciated.
+
+File(s):
+    * birds-isaiah658.ogg
+
+----------------------------------------
+
+Title:
+    Book Flip Sounds
+
+Author:
+    Voltiment555
+
+URL:
+    https://opengameart.org/content/book-flip-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * BookFlip_SFX.zip
+
+----------------------------------------
+
+Title:
+    Superpowers assets sound effects
+
+Author:
+    MedicineStorm
+
+URL:
+    https://opengameart.org/content/superpowers-assets-sound-effects
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Creative Commons Zero: http://creativecommons.org/publicdomain/zero/1.0/
+Attribution is not required but appreciated. Placing a link to http://superpowers-html5.com/ somewhere would be awesome :)
+
+File(s):
+    * superpowers-asset-packs-soundeffects.zip
+
+----------------------------------------
+
+Title:
+    Hurt / Death sound effect for character
+
+Author:
+    Badre-Eddine
+
+URL:
+    https://opengameart.org/content/hurt-death-sound-effect-for-character
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * death sound effect.zip
+
+----------------------------------------
+
+Title:
+    8-Bit Sound Effect Pack (Vol. 001)
+
+Author:
+    Deva
+
+URL:
+    https://opengameart.org/content/8-bit-sound-effect-pack-vol-001
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 8-bit Sound Effects Pack 001.zip
+    * DEMO.mp3
+
+----------------------------------------
+
+Title:
+    8bit SFX
+
+Author:
+    celestialghost8
+
+URL:
+    https://opengameart.org/content/8bit-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * sfx.zip
+    * 1.wav
+    * 2.wav
+    * 3.wav
+    * 4.wav
+    * 5.wav
+    * 6.wav
+    * 7.wav
+    * 8.wav
+    * 9.wav
+    * 10.wav
+    * 11.wav
+    * 12.wav
+
+----------------------------------------
+
+Title:
+    7 Space Sounds
+
+Author:
+    Joth
+
+URL:
+    https://opengameart.org/content/7-space-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 7 Space Sounds.mp3
+
+----------------------------------------
+
+Title:
+    512 Sound Effects (8-bit style)
+
+Author:
+    SubspaceAudio
+
+URL:
+    https://opengameart.org/content/512-sound-effects-8-bit-style
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * The Essential Retro Video Game Sound Effects Collection [512 sounds].zip
+
+----------------------------------------
+
+Title:
+    Rain (loopable)
+
+Author:
+    Ylmir
+
+URL:
+    https://opengameart.org/content/rain-loopable
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Rain MP3.zip
+    * Rain OGG.zip
+
+----------------------------------------
+
+Title:
+    Siclone Sound Effects
+
+Author:
+    krial
+
+URL:
+    https://opengameart.org/content/siclone-sound-effects
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * siclone_audio.zip
+    * siclone_audio.ogg
+
+----------------------------------------
+
+Title:
+    Little Girl saying Game Over
+
+Author:
+    freestockimages
+
+URL:
+    https://opengameart.org/content/little-girl-saying-game-over
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Attribution is not necessary but is always appreciated.
+
+File(s):
+    * horror-go.mp3
+
+----------------------------------------
+
+Title:
+    Demon voice Game Over
+
+Author:
+    freestockimages
+
+URL:
+    https://opengameart.org/content/demon-voice-game-over
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Attribution is not necessary but is appreciated when possible :)
+
+File(s):
+    * demon-go.mp3
+
+----------------------------------------
+
+Title:
+    Fantasy Accessory SFX Library
+
+Author:
+    Vehicle
+
+URL:
+    https://opengameart.org/content/fantasy-accessory-sfx-library
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    CC0. https://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * accessory.zip
+
+----------------------------------------
+
+Title:
+    Fantasy Weapons and Apparel SFX Library
+
+Author:
+    Vehicle
+
+URL:
+    https://opengameart.org/content/fantasy-weapons-and-apparel-sfx-library
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    CC0. https://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * weapons-apparel.zip
+
+----------------------------------------
+
+Title:
+    Fantasy Sound Effects (Tinysized SFX)
+
+Author:
+    Vehicle
+
+URL:
+    https://opengameart.org/content/fantasy-sound-effects-tinysized-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    CC0.
+https://creativecommons.org/publicdomain/zero/1.0/
+
+File(s):
+    * tinysized.zip
+
+----------------------------------------
+
+Title:
+    Teleport
+
+Author:
+    fins
+
+URL:
+    https://opengameart.org/content/teleport
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 172206__fins__teleport.wav
+
+----------------------------------------
+
+Title:
+    Fireball
+
+Author:
+    Julien Matthey
+
+URL:
+    https://opengameart.org/content/fireball-1
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 105016__julien-matthey__jm-fx-fireball-01.wav
+
+----------------------------------------
+
+Title:
+    Rage Mode
+
+Author:
+    Till Behrend
+
+URL:
+    https://opengameart.org/content/rage-mode
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * rage.wav
+
+----------------------------------------
+
+Title:
+    Level up, power up, Coin get (13 Sounds)
+
+Author:
+    wobbleboxx
+
+URL:
+    https://opengameart.org/content/level-up-power-up-coin-get-13-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    This pack is released under the public domain CC0 license.
+If you want to give credit (not required): "WobbleBoxx Workshop"
+
+File(s):
+    * SoundPack01.zip
+
+----------------------------------------
+
+Title:
+    Loopable Dungeon Ambience
+
+Author:
+    JaggedStone
+
+URL:
+    https://opengameart.org/content/loopable-dungeon-ambience
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * dungeon_ambient_1.ogg
+
+----------------------------------------
+
+Title:
+    Magic Spell SFX
+
+Author:
+    JaggedStone
+
+URL:
+    https://opengameart.org/content/magic-spell-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    None needed
+
+File(s):
+    * magical_1.ogg
+    * magical_2.ogg
+    * magical_3.ogg
+    * magical_4.ogg
+    * magical_5.ogg
+    * magical_6.ogg
+    * magical_7.ogg
+
+----------------------------------------
+
+Title:
+    5 Hit Sounds + Dying
+
+Author:
+    TinyWorlds
+
+URL:
+    https://opengameart.org/content/5-hit-sounds-dying
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    You don&#039;t need to attribute me.
+Feel free to check out my site with more free resources (e.g. generators and gameart experiments): http://tinyworlds.org/
+
+File(s):
+    * 5Hit_Sounds.zip
+    * Audacity_source.zip
+
+----------------------------------------
+
+Title:
+    Zombie Pain
+
+Author:
+    Vinrax
+
+Collaborators:
+    Vinrax
+
+URL:
+    https://opengameart.org/content/zombie-pain
+
+License(s):
+    * CC-BY 3.0 ( http://creativecommons.org/licenses/by/3.0/legalcode )
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * zombie_pain.mp3
+    * zombie_pain.wav
+    * zombie_pain.ogg
+    * zombie_pain.flac
+
+----------------------------------------
+
+Title:
+    Coin Drop
+
+Author:
+    Vinrax
+
+Collaborators:
+    Vinrax
+
+URL:
+    https://opengameart.org/content/coin-drop
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * coin_drop.wav
+    * coin_drop.mp3
+    * coin_drop.ogg
+    * coin_drop.flac
+
+----------------------------------------
+
+Title:
+    Wooden dice on wodden table roll
+
+Author:
+    Wuzzy
+
+URL:
+    https://opengameart.org/content/wooden-dice-on-wodden-table-roll
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Holzwürfel_auf_Holztisch_1.flac
+    * Holzwürfel_auf_Holztisch_2.flac
+    * Holzwürfel_auf_Holztisch_3.flac
+    * Holzwürfel_auf_Holztisch_4.flac
+
+----------------------------------------
+
+Title:
+    3 Pop Sounds
+
+Author:
+    wubitog
+
+URL:
+    https://opengameart.org/content/3-pop-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    No Attribution Required.
+
+File(s):
+    * 3pops.zip
+
+----------------------------------------
+
+Title:
+    50 RPG sound effects
+
+Author:
+    Kenney
+
+URL:
+    https://opengameart.org/content/50-rpg-sound-effects
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+SPECIAL ATTRIBUTION INSTRUCTIONS:
+    Credit "Kenney.nl" or "www.kenney.nl", this is not mandatory.
+
+File(s):
+    * RPGsounds_Kenney.zip
+
+----------------------------------------
+
+Title:
+    The Free Firearm Sound Library
+
+Author:
+    Ben Jaszczak, et al.
+
+URL:
+    https://opengameart.org/content/the-free-firearm-sound-library
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+SPECIAL ATTRIBUTION INSTRUCTIONS:
+    These sounds were created and recorded by Ben Jaszczak, Brian Nelson, Kevin Heras, and Matthew Nanney
+
+File(s):
+    * Prepared SFX Library.7z
+
+----------------------------------------
+
+Title:
+    Fantozzi&#039;s Footsteps (Grass/Sand & Stone)
+
+Author:
+    Fantozzi
+
+URL:
+    https://opengameart.org/content/fantozzis-footsteps-grasssand-stone
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Fantozzi-footsteps.7z
+
+----------------------------------------
+
+Title:
+    Beep Sound
+
+Author:
+    Test User
+
+URL:
+    https://opengameart.org/content/beep-sound
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * beep.ogg
+
+----------------------------------------
+
+Title:
+    Man hurt sounds
+
+Author:
+    Aharabada
+
+Collaborators:
+    Aharabada
+
+URL:
+    https://opengameart.org/content/man-hurt-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    If you want to, you can credit me with my real name: Simon Lübeß
+
+File(s):
+    * ManHurt.ogg
+
+----------------------------------------
+
+Title:
+    Punch
+
+Author:
+    qubodup
+
+URL:
+    https://opengameart.org/content/punch
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+SPECIAL ATTRIBUTION INSTRUCTIONS:
+    Punch by Iwan &#039;qubodup&#039; Gabovitch http://opengameart.org/users/qubodup
+
+File(s):
+    * qubodupPunch.7z
+
+----------------------------------------
+
+Title:
+    Get ruby SE
+
+Author:
+    mieki256
+
+URL:
+    https://opengameart.org/content/get-ruby-se
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * getruby.flac
+
+----------------------------------------
+
+Title:
+    2 dice roll (29 throws)
+
+Author:
+    RPG
+
+URL:
+    https://opengameart.org/content/2-dice-roll-29-throws
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Dice sound.7z
+
+----------------------------------------
+
+Title:
+    Zipper
+
+Author:
+    AntumDeluge
+
+URL:
+    https://opengameart.org/content/zipper
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * zipper-1.ogg
+    * zipper-1.wav
+
+----------------------------------------
+
+Title:
+    Sound Effects from Monster RPG 2
+
+Author:
+    troutsneeze
+
+URL:
+    https://opengameart.org/content/sound-effects-from-monster-rpg-2
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Monster RPG 2 Sound Effects - OGG - revised.tar.gz
+    * Monster RPG 2 Sound Effects - OGG.zip
+
+----------------------------------------
+
+Title:
+    Earth Element Magic Spell
+
+Author:
+    qubodup
+
+URL:
+    https://opengameart.org/content/earth-element-magic-spell
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Earth Element Magic Spell.flac
+    * Earth Element Magic Spell.ogg
+
+----------------------------------------
+
+Title:
+    54 Casino sound effects (cards, dice, chips)
+
+Author:
+    Kenney
+
+URL:
+    https://opengameart.org/content/54-casino-sound-effects-cards-dice-chips
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+SPECIAL ATTRIBUTION INSTRUCTIONS:
+    Credit "Kenney.nl" or "www.kenney.nl", this is not mandatory.
+
+File(s):
+    * kenney_casino-audio.zip
+
+----------------------------------------
+
+Title:
+    Ghost Monster Voice Moaning & Growling
+
+Author:
+    qubodup
+
+URL:
+    https://opengameart.org/content/ghost-monster-voice-moaning-growling
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * qubodup-GhostMoans.zip
+
+----------------------------------------
+
+Title:
+    Steam release sounds
+
+Author:
+    bart
+
+URL:
+    https://opengameart.org/content/steam-release-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * steam_hisses.zip
+
+----------------------------------------
+
+Title:
+    Steam whistle
+
+Author:
+    bart
+
+URL:
+    https://opengameart.org/content/steam-whistle
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * steamwhistle_0.wav
+    * steam_whistle.wav
+
+----------------------------------------
+
+Title:
+    Squeak toy sounds
+
+Author:
+    bart
+
+URL:
+    https://opengameart.org/content/squeak-toy-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * squeak_toy.zip
+
+----------------------------------------
+
+Title:
+    Freeze Spell
+
+Author:
+    artisticdude
+
+URL:
+    https://opengameart.org/content/freeze-spell-0
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * freeze.wav
+
+----------------------------------------
+
+Title:
+    Swishes Sound Pack
+
+Author:
+    artisticdude
+
+URL:
+    https://opengameart.org/content/swishes-sound-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * swishes.zip
+
+----------------------------------------
+
+Title:
+    Ghost
+
+Author:
+    Ogrebane
+
+URL:
+    https://opengameart.org/content/ghost
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * ghost.wav
+
+----------------------------------------
+
+Title:
+    Monster Sound Effects Pack
+
+Author:
+    Ogrebane
+
+URL:
+    https://opengameart.org/content/monster-sound-effects-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * monster_sfx_pack.zip
+
+----------------------------------------
+
+Title:
+    Monster Sound Effects 2
+
+Author:
+    Ogrebane
+
+URL:
+    https://opengameart.org/content/monster-sound-effects-2
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * monster_sfx_pack_2.zip
+
+----------------------------------------
+
+Title:
+    Silent beast growls(4)
+
+Author:
+    pauliuw
+
+URL:
+    https://opengameart.org/content/silent-beast-growls4
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * silent_beast_growl.mp3
+    * silent_beast_growl_1.mp3
+    * silent_beast_growl_2.mp3
+    * silent_beast_growl_3.mp3
+
+----------------------------------------
+
+Title:
+    Small pest alien/creature
+
+Author:
+    Brandon Morris
+
+URL:
+    https://opengameart.org/content/small-pest-aliencreature
+
+License(s):
+    * OGA-BY 3.0 ( http://static.opengameart.org/OGA-BY-3.0.txt )
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * level.zip
+
+----------------------------------------
+
+Title:
+    Monster or beast sounds
+
+Author:
+    pauliuw
+
+URL:
+    https://opengameart.org/content/monster-or-beast-sounds
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * monsters_or_beasts.7z
+
+----------------------------------------
+
+Title:
+    Dog Grunt
+
+Author:
+    qubodup
+
+URL:
+    https://opengameart.org/content/dog-grunt
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * dog-frieda-grunt-96khz-01.flac
+
+----------------------------------------
+
+Title:
+    Monster Sound Pack, Volume 1
+
+Author:
+    Ogrebane
+
+URL:
+    https://opengameart.org/content/monster-sound-pack-volume-1
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * monster-sounds-volume-2.zip
+
+----------------------------------------
+
+Title:
+    Peacock scream
+
+Author:
+    popthebubbles4
+
+URL:
+    https://opengameart.org/content/peacock-scream
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * peacockscream.flac
+
+----------------------------------------
+
+Title:
+    Evil creature
+
+Author:
+    A New Room
+
+URL:
+    https://opengameart.org/content/evil-creature
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * ambient sound fx.zip
+
+----------------------------------------
+
+Title:
+    Teleport Spell
+
+Author:
+    Ogrebane
+
+URL:
+    https://opengameart.org/content/teleport-spell
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * teleport.wav
+
+----------------------------------------
+
+Title:
+    20 Rustles of dry leaves
+
+Author:
+    qubodup
+
+URL:
+    https://opengameart.org/content/20-rustles-dry-leaves
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * qubodup-rustle.7z
+
+----------------------------------------
+
+Title:
+    Wood and Metal Sound Effects: Volume 2
+
+Author:
+    Ogrebane
+
+URL:
+    https://opengameart.org/content/wood-and-metal-sound-effects-volume-2
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * wood_and_metal_vol.2_0.zip
+
+----------------------------------------
+
+Title:
+    Atmospheric Interaction Sound Pack
+
+Author:
+    legoluft
+
+URL:
+    https://opengameart.org/content/atmospheric-interaction-sound-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * krank_sounds.7z
+
+----------------------------------------
+
+Title:
+    Door Open, Door Close Set
+
+Author:
+    qubodup
+
+URL:
+    https://opengameart.org/content/door-open-door-close-set
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+SPECIAL ATTRIBUTION INSTRUCTIONS:
+    qubodup
+
+File(s):
+    * qubodup-DoorSet.7z
+
+----------------------------------------
+
+Title:
+    Sand spell
+
+Author:
+    qubodup
+
+URL:
+    https://opengameart.org/content/sand-spell
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * sand-spell.flac
+
+----------------------------------------
+
+Title:
+    growl
+
+URL:
+    https://opengameart.org/content/growl
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * growl_0.flac
+
+----------------------------------------
+
+Title:
+    Interface beeps
+
+Author:
+    bart
+
+URL:
+    https://opengameart.org/content/interface-beeps
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * beeps.zip
+
+----------------------------------------
+
+Title:
+    Ice spells
+
+Author:
+    bart
+
+URL:
+    https://opengameart.org/content/ice-spells
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * icespells.zip
+
+----------------------------------------
+
+Title:
+    37 hits/punches
+
+Author:
+    Independent.nu
+
+URL:
+    https://opengameart.org/content/37-hitspunches
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * independent_nu_ljudbank-hits_and_punches.7z
+
+----------------------------------------
+
+Title:
+    Swish - bamboo stick weapon swhoshes
+
+Author:
+    qubodup
+
+URL:
+    https://opengameart.org/content/swish-bamboo-stick-weapon-swhoshes
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    [optional]
+qubodup
+
+File(s):
+    * swoshes.7z
+
+----------------------------------------
+
+Title:
+    80 CC0 creature SFX
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/80-cc0-creature-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 80-CC0-creature-SFX.zip
+
+----------------------------------------
+
+Title:
+    80 CC0 RPG SFX
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/80-cc0-rpg-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 80-CC0-RPG-SFX.zip
+
+----------------------------------------
+
+Title:
+    30 CC0 SFX loops
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/30-cc0-sfx-loops
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * sfx_loops.zip
+
+----------------------------------------
+
+Title:
+    50 CC0 Sci-Fi SFX
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/50-cc0-sci-fi-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * sci-fi-sfx.zip
+
+----------------------------------------
+
+Title:
+    Sound Effects Pack
+
+Author:
+    OwlishMedia
+
+URL:
+    https://opengameart.org/content/sound-effects-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Owlish Media Sound Effects.zip
+
+----------------------------------------
+
+Title:
+    RPG Sound Pack
+
+Author:
+    artisticdude
+
+URL:
+    https://opengameart.org/content/rpg-sound-pack
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * rpg_sound_pack.zip
+
+----------------------------------------
+
+Title:
+    40 CC0 water / splash / slime SFX
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/40-cc0-water-splash-slime-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * water-splash-slime-sfx.zip
+
+----------------------------------------
+
+Title:
+    8-Bit Sound Effects
+
+Author:
+    ctske
+
+URL:
+    https://opengameart.org/content/8-bit-sound-effects-0
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    Credit isn&#039;t necessary. If you want to give credit anyway, it can be attributed to "Ctskelgysth Inauaruat", "Ctskelgysth", or just "Ctske" depending on space limitations and what works best for your project.
+
+File(s):
+    * sounds.zip
+
+----------------------------------------
+
+Title:
+    Pleasing Bell Sound Effect
+
+Author:
+    Spring Spring
+
+URL:
+    https://opengameart.org/content/pleasing-bell-sound-effect
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * pleasing-bell.wav
+
+----------------------------------------
+
+Title:
+    Buzzsaw Sound Effect
+
+Author:
+    Spring Spring
+
+URL:
+    https://opengameart.org/content/buzzsaw-sound-effect
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * saw.wav
+
+----------------------------------------
+
+Title:
+    100 CC0 metal and wood SFX
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/100-cc0-metal-and-wood-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 100-CC0-wood-metal-SFX.zip
+
+----------------------------------------
+
+Title:
+    Breathing Tired
+
+Author:
+    mikeask
+
+URL:
+    https://opengameart.org/content/breathing-tired
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    it&#039;s yours
+
+File(s):
+    * breathing tired.wav
+
+----------------------------------------
+
+Title:
+    Steps in wood floor
+
+Author:
+    mikeask
+
+URL:
+    https://opengameart.org/content/steps-in-wood-floor
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    it&#039;s yours
+
+File(s):
+    * steps in wood floor.wav
+
+----------------------------------------
+
+Title:
+    Missile sound
+
+Author:
+    mikeask
+
+URL:
+    https://opengameart.org/content/missile-sound
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    free for use in your project, don&#039;t worry about license.
+
+File(s):
+    * missile.wav
+
+----------------------------------------
+
+Title:
+    Car acceleration
+
+Author:
+    mikeask
+
+URL:
+    https://opengameart.org/content/car-acceleration
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+Copyright/Attribution Notice:
+    it&#039;s yours
+
+File(s):
+    * car acceleration.wav
+
+----------------------------------------
+
+Title:
+    80 CC0 creture SFX #2
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/80-cc0-creture-sfx-2
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 80-CC0-creature-sfx-2.zip
+
+----------------------------------------
+
+Title:
+    87 Clickety Clips
+
+Author:
+    OwlishMedia
+
+URL:
+    https://opengameart.org/content/87-clickety-clips
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * Click_Clips.zip
+
+----------------------------------------
+
+Title:
+    202 More Sound Effects
+
+Author:
+    OwlishMedia
+
+URL:
+    https://opengameart.org/content/202-more-sound-effects
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * MoreSounds.zip
+
+----------------------------------------
+
+Title:
+    25 CC0 mud sfx
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/25-cc0-mud-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 25-CC0-mud-sfx.zip
+
+----------------------------------------
+
+Title:
+    A Kinda Cool Sound Effect
+
+Author:
+    Spring Spring
+
+URL:
+    https://opengameart.org/content/a-kinda-cool-sound-effect
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * sound 21.ogg
+
+----------------------------------------
+
+Title:
+    30 weird CC0 SFX
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/30-weird-cc0-sfx
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * 30-cc0-weird-sfx.zip
+
+----------------------------------------
+
+Title:
+    100 CC0 SFX #2
+
+Author:
+    rubberduck
+
+URL:
+    https://opengameart.org/content/100-cc0-sfx-2
+
+License(s):
+    * CC0 ( http://creativecommons.org/publicdomain/zero/1.0/legalcode )
+
+File(s):
+    * sfx_100_v2.zip
+
+----------------------------------------
+
+
