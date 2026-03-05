@@ -96,6 +96,10 @@ public class RocketManView implements Painter {
 		batch.end();
 	}
 
+	public RocketManAssets getAssets() {
+		return assets;
+	}
+
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
 	}

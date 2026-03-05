@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import inf112.rocketman.view.TextureProvider;
 
 import java.util.HashMap;
@@ -15,9 +16,20 @@ public class RocketManAssets implements TextureProvider {
     private Map<String, Texture> textures = new HashMap<>();
     private Map<String, Sound> sounds = new HashMap<>();
     private BitmapFont font;
+    private BitmapFont titleFont;
 
     public void create(){
         font = new BitmapFont();
+
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/font.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.size = 90;
+        parameter.magFilter = Texture.TextureFilter.Linear;
+        parameter.minFilter = Texture.TextureFilter.Linear;
+        this.titleFont = generator.generateFont(parameter);
+
+        generator.dispose();
 
         preloadTextures(List.of("TPowah/TPowah.png", "TPowah/TPowahFlames.png", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning_rocket.png"));
         preloadSounds(List.of("blipp.ogg"));
@@ -97,5 +109,14 @@ public class RocketManAssets implements TextureProvider {
         if (font != null){
             font.dispose();
         }
+
+        if (titleFont != null) {
+            titleFont.dispose();
+        }
+
     }
+    public BitmapFont getTitleFont() {
+        return titleFont;
+    }
+
 }
