@@ -31,8 +31,6 @@ public class RocketManAssets implements TextureProvider {
 
         generator.dispose();
 
-        preloadTextures(List.of("TPowah/TPowah.png", "TPowah/TPowahFlames.png", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning_rocket.png"));
-        preloadSounds(List.of("blipp.ogg"));
         preloadTextures(List.of("TPowah/TPowah.png", "TPowah/TPowahFlames.png", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning.png"));
         preloadSounds(List.of("Sounds/Teleport/MP3/Teleport.mp3"));
     }
