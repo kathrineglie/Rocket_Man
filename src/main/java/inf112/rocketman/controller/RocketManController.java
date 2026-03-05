@@ -8,13 +8,17 @@ import inf112.rocketman.model.GameModel;
 import inf112.rocketman.model.GameState;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
+import inf112.rocketman.view.assets.RocketManAssets;
 
 public class RocketManController {
 
     private RocketManView view;
     private ControllableRocketManModel controllableModel;
     private ViewableRocketManModel viewableModel;
-    private Main game;
+
+    private boolean jetpackPlaying = false;
+    private long jetpackSoundId = -1;
+    private static final String JETPACK_SOUND = "Sound effects Mini Pack1.5/Teleport/MP3/Teleport.mp3";
 
     public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {
         this.controllableModel = controllableRocketManModel;
@@ -34,7 +38,6 @@ public class RocketManController {
         controllableModel.update(dt, space);
 
         view.render(viewableModel);
-
     }
 
     public void resize(int width, int height) {
@@ -56,6 +59,17 @@ public class RocketManController {
         else if (currentState == GameState.PLAYING) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 controllableModel.goToHomescreen();
+            }
+
+            boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
+
+            if (spaceHeld &&!jetpackPlaying){
+                jetpackSoundId = view.playSound(JETPACK_SOUND);
+                jetpackPlaying = true;
+            } else if (!spaceHeld&& jetpackPlaying){
+                view.stopSound(JETPACK_SOUND, jetpackSoundId);
+                jetpackPlaying = false;
+                jetpackSoundId =-1;
             }
         }
 
