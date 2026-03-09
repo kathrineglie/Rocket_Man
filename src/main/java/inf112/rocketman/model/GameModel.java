@@ -107,6 +107,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private boolean checkCollisions() {
         Rectangle playerHitbox = getPlayerHitbox();
         for (IObstacle obstacle : obstacles) {
+            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3) {
+                continue;
+            }
             Rectangle obstacleHitbox = obstacle.getHitBox();
             if (obstacleHitbox == null) {
                 continue;
