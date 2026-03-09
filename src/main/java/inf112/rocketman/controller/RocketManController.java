@@ -1,5 +1,6 @@
 package inf112.rocketman.controller;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
@@ -76,6 +77,12 @@ public class RocketManController {
             }
         }
 
+        else if (currentState == GameState.INSTRUCTIONS) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                controllableModel.goToHomescreen();
+            }
+        }
+
     }
 
     public RocketManView getView() {
@@ -84,5 +91,9 @@ public class RocketManController {
 
     public GameState getState() {
         return controllableModel.getGameState();
+    }
+
+    public void showInstruction() {
+        controllableModel.showInstructions();
     }
 }

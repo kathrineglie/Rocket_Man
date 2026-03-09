@@ -59,4 +59,6 @@ public interface ControllableRocketManModel {
      */
     void endGame();
 
+    void showInstructions();
+
 }
