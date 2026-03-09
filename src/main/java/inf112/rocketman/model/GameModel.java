@@ -1,8 +1,13 @@
 package inf112.rocketman.model;
 
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
+import inf112.rocketman.model.Obstacles.Flames.Flame;
+import inf112.rocketman.model.Obstacles.Flames.FlameFactory;
+import inf112.rocketman.model.Obstacles.Flames.RandomFlameFactory;
 import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Obstacles.Lazers.Lazer;
 import inf112.rocketman.model.Obstacles.Lazers.LazerFactory;
@@ -26,13 +31,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float THRUST = 4000f;
     private final float MAX_VY = 700f;
     private final float GRAVITY = -1000f;
-    private final float PLAYER_X = 100f;
+    private final float PLAYER_X = 150f;
     private final float PLAYER_Y = 100f;
     private boolean thrusting;
 
     private final float worldHeight;
     private final float worldWidth;
-    private final float margin = 0;
+    private final float margin = 5;
+    private final float BG_SPEED = 120f;
 
     private GameState gameState = GameState.HOME_SCREEN;
 
@@ -41,6 +47,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     List<IObstacle> obstacles = new ArrayList<>();
     private RocketFactory rocketFactory = new RandomRocketFactory();
     private LazerFactory lazerFactory = new RandomLazerFactory();
+    private FlameFactory flameFactory = new RandomFlameFactory();
+
     private float obstacleTimer = 0f;
     private float obstacleSpawnInteval = 1.5f;
 
@@ -111,6 +119,31 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 continue;
             }
 
+            if (obstacle instanceof Flame) {
+                float x = activeHitbox.getX();
+                float y = activeHitbox.getY();
+                float width = activeHitbox.getWidth();
+                float height = activeHitbox.getHeight();
+
+                Polygon polyHitBox = new Polygon(new float[] {
+                    x, y,
+                    x, y + height,
+                    x + width, y + height,
+                    x + width, y});
+
+                if (Intersector.overlapConvexPolygons(((Flame) obstacle).getPolygon(), polyHitBox)) {
+                    if (birdActive) {
+                        deactivateBirdPowerUp();
+                        iterator.remove();
+                    } else {
+                        gameState = GameState.GAME_OVER;
+                    }
+                    return;
+                }
+
+                continue;
+            }
+
             Rectangle obstacleHitbox = obstacle.getHitBox();
             if (obstacleHitbox == null) {
                 continue;
@@ -132,11 +165,13 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         obstacleTimer -= dt;
         if (obstacleTimer <= 0) {
             Random random = new Random();
-            int randomNumber = random.nextInt(3);
+            int randomNumber = random.nextInt(4);
             if (randomNumber == 1) {
                 obstacles.add(rocketFactory.newRocket(worldWidth, worldHeight, margin));
             } else if (randomNumber == 2) {
                 obstacles.add(lazerFactory.newLazer(worldWidth, worldHeight, margin));
+            } else if (randomNumber == 3) {
+                obstacles.add(flameFactory.newFlame(worldWidth, worldHeight, margin, BG_SPEED));
             }
             obstacleTimer = obstacleSpawnInteval;
         }
@@ -151,6 +186,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() == 4) {
                 iterator.remove();
             }
+            // if (obstacle instanceof Flame && obstacle.isOfScreen(worldWidth, worldHeight)) {
+            //     iterator.remove();
+            // }
         }
      }
 
@@ -217,7 +255,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
 
     private void updateBackground(float dt) {
-        float BG_SPEED = 120f;
         bgScrollX += BG_SPEED * dt;
         if (worldWidth > 0) {
             bgScrollX = bgScrollX % worldWidth;

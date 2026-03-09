@@ -2,6 +2,7 @@ package inf112.rocketman.view.rendering;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.rocketman.model.Obstacles.Flames.Flame;
 import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Obstacles.Lazers.Lazer;
 import inf112.rocketman.model.Obstacles.Rockets.Rocket;
@@ -37,6 +38,25 @@ public class ObstacleRenderer {
                     texture = textures.getTexture("Obstacles/activeLazer.png");
                 }
                 batch.draw(texture, lazer.getX(), lazer.getY(), lazer.getWidth(), lazer.getHeight());
+            }
+            if (obstacle instanceof Flame flame) {
+                Texture texture;
+                texture = textures.getTexture("Obstacles/flame.png");
+
+                batch.draw(texture,
+                        flame.getX() - flame.getHeight()/2f,
+                        flame.getY() - flame.getWidth()/2f,
+                        flame.getWidth()/2f,
+                        flame.getHeight()/2f,
+                        flame.getHeight(),
+                        flame.getWidth(),
+                        1, 1,
+                        flame.getAngle(),
+                        0, 0,
+                        texture.getWidth(),
+                        texture.getHeight(),
+                        false, false
+                        );
             }
         }
     }

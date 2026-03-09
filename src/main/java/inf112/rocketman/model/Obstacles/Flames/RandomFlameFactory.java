@@ -12,21 +12,21 @@ public class RandomFlameFactory implements FlameFactory {
     public Flame newFlame(float worldWidth, float worldHeight, float margin, float vx) {
         // Calculates random length of the lazer
         float minNum = Math.min(worldWidth, worldHeight);
-        int minLength = (int) minNum/10;
-        int maxLength = (int) minNum/5;
+        int minLength = (int) minNum/7;
+        int maxLength = (int) minNum/3;
         int length = rand.nextInt(minLength, maxLength);
 
         // Calculates random angle of the lazer
-        int width = (int) minNum/50;
-        float randAngle = angles[rand.nextInt(4)];
+        int width = (int) minNum/20;
+        float randAngle = rand.nextInt(361);
 
-        float halfLength = length /2;
-        float halfWidth = width/2;
+        float halfLength = length/2f;
+        float halfWidth = width/2f;
 
         float radius = (float) Math.sqrt(halfLength * halfLength + halfWidth * halfWidth);
 
         float centerY = MathUtils.random(margin + radius, worldHeight - margin - radius);
-        float centerX = worldWidth + margin;
+        float centerX = worldWidth + margin + radius;
 
         return new Flame(centerX, centerY, width, length, vx, 0, randAngle);
     }

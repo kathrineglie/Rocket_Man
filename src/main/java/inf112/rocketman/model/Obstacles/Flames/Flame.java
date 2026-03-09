@@ -27,9 +27,15 @@ public class Flame extends Obstacle {
     }
 
     @Override
+    public Rectangle getHitBox() {
+        return null;
+    }
+
+    @Override
     public void update(float dt) {
-        x += vx * dt;
+        x += -vx * dt;
         polygon.setPosition(x, y);
+        polygon.setRotation(angle);
     }
 
     public float getAngle() {
