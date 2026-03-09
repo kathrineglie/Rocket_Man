@@ -85,7 +85,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         updateObstacle(dt);
         updatePowerUp(dt);
         checkPowerUpCollision();
-        if (checkCollisions()) {
+        if (checkCollisions() && !birdActive) {
             gameState = GameState.GAME_OVER;
         }
     }
