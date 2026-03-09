@@ -33,7 +33,7 @@ public class RocketManAssets implements TextureProvider {
 
         preloadTextures(List.of("TPowah/TPowah.png", "TPowah/TPowahFlames.png", "Background/background.png",
                 "Obstacles/Rocket.png", "Obstacles/warning.png",
-                "activeLazer.png", "harmlessLazer.png", "inactiveLazer.png"));
+                "Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png"));
         preloadSounds(List.of("Sounds/Teleport/MP3/Teleport.mp3"));
     }
 
