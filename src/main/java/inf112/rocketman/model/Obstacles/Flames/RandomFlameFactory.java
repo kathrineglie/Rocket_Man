@@ -18,12 +18,16 @@ public class RandomFlameFactory implements FlameFactory {
 
         // Calculates random angle of the lazer
         int width = (int) minNum/50;
-        int randNum = rand.nextInt(4);
-        float randAngle = angles[randNum];
+        float randAngle = angles[rand.nextInt(4)];
 
-        float x = worldWidth + length; // Sets starting point for the object outside the board.
-        float y = MathUtils.random(margin + length, worldHeight - margin - length); // Makes sure the object is not outside the board on the y-axis
+        float halfLength = length /2;
+        float halfWidth = width/2;
 
-        return new Flame(x, y, width, length, vx, 0, randAngle);
+        float radius = (float) Math.sqrt(halfLength * halfLength + halfWidth * halfWidth);
+
+        float centerY = MathUtils.random(margin + radius, worldHeight - margin - radius);
+        float centerX = worldWidth + margin;
+
+        return new Flame(centerX, centerY, width, length, vx, 0, randAngle);
     }
 }

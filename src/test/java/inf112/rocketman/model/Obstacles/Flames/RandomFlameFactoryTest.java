@@ -36,8 +36,8 @@ public class RandomFlameFactoryTest {
                 float px = vertices[j];
                 float py = vertices[j + 1];
 
-                assertTrue(py >= margin + flame.getHeight());
-                assertTrue(py <= worldHeight - flame.getHeight() - margin);
+                assertTrue(py >= margin, "py too low: " + py + " margin: " + margin + " worldheight: " + worldHeight);
+                assertTrue(py <= worldHeight - margin, "py too high: " + py + " margin: " + margin + " worldheight: " +worldHeight);
             }
         }
     }
