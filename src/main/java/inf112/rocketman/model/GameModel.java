@@ -85,8 +85,46 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         updateObstacle(dt);
         updatePowerUp(dt);
         checkPowerUpCollision();
-        if (checkCollisions() && !birdActive) {
-            gameState = GameState.GAME_OVER;
+        handleCollisions();
+    }
+
+    private void checkPowerUpCollision() {
+        if (powerUp == null) {
+            return;
+        }
+
+        Rectangle playerHitbox = getPlayerHitbox();
+        if (playerHitbox.overlaps(powerUp.getHitBox())) {
+            activateBirdPowerUp();
+            powerUp = null;
+        }
+    }
+
+    private void handleCollisions() {
+        Rectangle activeHitbox = getActiveCharacterHitbox();
+
+        Iterator<IObstacle> iterator = obstacles.iterator();
+        while (iterator.hasNext()) {
+            IObstacle obstacle = iterator.next();
+
+            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3) {
+                continue;
+            }
+
+            Rectangle obstacleHitbox = obstacle.getHitBox();
+            if (obstacleHitbox == null) {
+                continue;
+            }
+
+            if (activeHitbox.overlaps(obstacleHitbox)) {
+                if (birdActive) {
+                    deactivateBirdPowerUp();
+                    iterator.remove();
+                } else {
+                    gameState = GameState.GAME_OVER;
+                }
+                return;
+            }
         }
     }
 
@@ -147,16 +185,15 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
-    private void checkPowerUpCollision() {
-        if (powerUp == null) {
-            return;
+    private void deactivateBirdPowerUp() {
+        if (bird != null) {
+            player.setX(bird.getX());
+            player.setY(bird.getY());
+            player.setVy(0);
         }
 
-        Rectangle playerHitbox = getPlayerHitbox();
-        if (playerHitbox.overlaps(powerUp.getHitBox())) {
-            activateBirdPowerUp();
-            powerUp = null;
-        }
+        bird = null;
+        birdActive = false;
     }
 
     private void activateBirdPowerUp() {
@@ -177,24 +214,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
     }
 
-
-
-    private boolean checkCollisions() {
-        Rectangle playerHitbox = getActiveCharacterHitbox();
-        for (IObstacle obstacle : obstacles) {
-            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3) {
-                continue;
-            }
-            Rectangle obstacleHitbox = obstacle.getHitBox();
-            if (obstacleHitbox == null) {
-                continue;
-            }
-            if (playerHitbox.overlaps(obstacleHitbox)) {
-                return true;
-            }
-        }
-        return false;
-     }
 
 
     private void updateBackground(float dt) {
