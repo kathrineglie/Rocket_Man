@@ -3,11 +3,11 @@ package inf112.rocketman.model.Obstacles;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Obstacle implements IObstacle {
-    private float x, y;
-    private float width, height;
-    private float vx, vy; // the velocity of the object
+    protected float x, y;
+    protected float width, height;
+    protected float vx, vy; // the velocity of the object
 
-    private Rectangle hitbox = new Rectangle();
+    protected Rectangle hitbox = new Rectangle();
 
     protected Obstacle (float x, float y,
                      float width, float height,
