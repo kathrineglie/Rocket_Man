@@ -61,6 +61,20 @@ public class HomeScreen implements Screen {
         smallFont.setColor(Color.WHITE);
         font.getData().setScale(1.0f);
 
+        float qMarkX = width - 60;
+        float qMarkY = height - 60;
+
+        font.draw(batch, "?", qMarkX, qMarkY);
+
+        if (Gdx.input.justTouched()) {
+            float mouseX = Gdx.input.getX();
+            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+            if (mouseX > qMarkX - 20 && mouseX < qMarkX + 40 && mouseY > qMarkY - 40 && mouseY < qMarkY + 20) {
+                controller.showInstruction();
+            }
+        }
+
         batch.end();
 
         controller.handleInput();

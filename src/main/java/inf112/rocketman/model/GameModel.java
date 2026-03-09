@@ -271,4 +271,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     @Override
     public void endGame(){}
 
+    @Override
+    public void showInstructions() {
+        gameState = gameState.INSTRUCTIONS;
+    }
+
 }
