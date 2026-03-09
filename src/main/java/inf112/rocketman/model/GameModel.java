@@ -3,7 +3,11 @@ package inf112.rocketman.model;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.model.Obstacles.IObstacle;
+import inf112.rocketman.model.Obstacles.Lazers.Lazer;
+import inf112.rocketman.model.Obstacles.Lazers.LazerFactory;
+import inf112.rocketman.model.Obstacles.Lazers.RandomLazerFactory;
 import inf112.rocketman.model.Obstacles.Rockets.RandomRocketFactory;
+import inf112.rocketman.model.Obstacles.Rockets.Rocket;
 import inf112.rocketman.model.Obstacles.Rockets.RocketFactory;
 import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.view.ViewableRocketManModel;
@@ -11,6 +15,7 @@ import inf112.rocketman.view.ViewableRocketManModel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
     private final TPowah player;
@@ -33,8 +38,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     // obstacles
     List<IObstacle> obstacles = new ArrayList<>();
     private RocketFactory rocketFactory = new RandomRocketFactory();
-    private float rocketTimer = 0f;
-    private float rocketSpawnInteval = 1.5f;
+    private LazerFactory lazerFactory = new RandomLazerFactory();
+    private float obstacleTimer = 0f;
+    private float obstacleSpawnInteval = 1.5f;
 
     public GameModel(float worldWidth, float worldHeight) {
         float pWidth = worldWidth/13;
@@ -62,24 +68,33 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         thrusting = thrustingInput;
         player.update(dt, thrusting, worldHeight, THRUST, GRAVITY, MAX_VY);
         updateBackground(dt);
-        updateRocket(dt);
+        updateObstacle(dt);
         if (checkCollisions()) {
             gameState = GameState.GAME_OVER;
         }
     }
 
-    private void updateRocket(float dt) {
-        rocketTimer -= dt;
-        if (rocketTimer <= 0) {
-            obstacles.add(rocketFactory.newRocket(worldWidth, worldHeight, margin));
-            rocketTimer = rocketSpawnInteval;
+    private void updateObstacle(float dt) {
+        obstacleTimer -= dt;
+        if (obstacleTimer <= 0) {
+            Random random = new Random();
+            int randomNumber = random.nextInt(3);
+            if (randomNumber == 1) {
+                obstacles.add(rocketFactory.newRocket(worldWidth, worldHeight, margin));
+            } else if (randomNumber == 2) {
+                obstacles.add(lazerFactory.newLazer(worldWidth, worldHeight, margin));
+            }
+            obstacleTimer = obstacleSpawnInteval;
         }
 
         Iterator<IObstacle> iterator = obstacles.iterator();
         while (iterator.hasNext()) {
             IObstacle obstacle = iterator.next();
             obstacle.update(dt);
-            if (obstacle.isOfScreen(worldWidth, worldHeight)) {
+            if (obstacle instanceof Rocket && obstacle.isOfScreen(worldWidth, worldHeight)) {
+                iterator.remove();
+            }
+            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() == 4) {
                 iterator.remove();
             }
         }
