@@ -3,6 +3,8 @@ package inf112.rocketman.view;
 import inf112.rocketman.model.GameState;
 import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Character.TPowah;
+import inf112.rocketman.model.PowerUps.Bird;
+import inf112.rocketman.model.PowerUps.PowerUp;
 
 import java.util.List;
 
@@ -48,5 +50,11 @@ public interface ViewableRocketManModel {
      * @return true if the rocket is thrusting, false otherwise.
      */
     boolean isThrusting();
+
+    PowerUp getPowerUp();
+
+    boolean hasBirdPowerUp();
+
+    Bird getBird();
 }
 

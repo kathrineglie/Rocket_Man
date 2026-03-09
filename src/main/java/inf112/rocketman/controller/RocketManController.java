@@ -32,7 +32,14 @@ public class RocketManController {
         float dt = Gdx.graphics.getDeltaTime();
         boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
 
-        controllableModel.update(dt, space);
+        boolean input;
+        if (viewableModel.hasBirdPowerUp()) {
+            input = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        } else {
+            input = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        }
+
+        controllableModel.update(dt, input);
 
         view.render(viewableModel);
     }

@@ -13,6 +13,7 @@ import inf112.rocketman.view.assets.RocketManAssets;
 import inf112.rocketman.view.rendering.BackgroundRenderer;
 import inf112.rocketman.view.rendering.ObstacleRenderer;
 import inf112.rocketman.view.rendering.PlayerRenderer;
+import inf112.rocketman.view.rendering.PowerUpRenderer;
 
 
 public class RocketManView implements Painter {
@@ -25,6 +26,7 @@ public class RocketManView implements Painter {
 	private BackgroundRenderer backgroundRenderer;
 	private PlayerRenderer playerRenderer;
 	private ObstacleRenderer obstacleRenderer;
+	private PowerUpRenderer powerUpRenderer;
 
 	public void create(double worldWidth, double worldHeight) {
 		this.viewport = new FitViewport((float) worldWidth, (float) worldHeight);
@@ -37,6 +39,7 @@ public class RocketManView implements Painter {
 		backgroundRenderer = new BackgroundRenderer(assets);
 		playerRenderer = new PlayerRenderer(assets);
 		obstacleRenderer = new ObstacleRenderer(assets);
+		powerUpRenderer = new PowerUpRenderer(assets);
 
 
 		Gdx.graphics.setForegroundFPS(60);
@@ -92,6 +95,7 @@ public class RocketManView implements Painter {
 		backgroundRenderer.render(batch, viewport, model);
 		playerRenderer.render(batch, model);
 		obstacleRenderer.render(batch, model);
+		powerUpRenderer.render(batch, model);
 
 		batch.end();
 	}

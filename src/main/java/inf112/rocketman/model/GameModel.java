@@ -1,12 +1,15 @@
 package inf112.rocketman.model;
 
+
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Obstacles.Rockets.RandomRocketFactory;
 import inf112.rocketman.model.Obstacles.Rockets.RocketFactory;
 import inf112.rocketman.model.Character.TPowah;
+import inf112.rocketman.model.PowerUps.PowerUp;
 import inf112.rocketman.view.ViewableRocketManModel;
+import inf112.rocketman.model.PowerUps.Bird;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,11 +33,17 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private float bgScrollX = 0f;
 
-    // obstacles
     List<IObstacle> obstacles = new ArrayList<>();
     private RocketFactory rocketFactory = new RandomRocketFactory();
     private float rocketTimer = 0f;
     private float rocketSpawnInteval = 1.5f;
+
+    private Bird bird;
+    private boolean birdActive = false;
+    private PowerUp powerUp;
+    private float powerUpTimer = 0f;
+    private float powerUpSpawnInterval = 8f;
+
 
     public GameModel(float worldWidth, float worldHeight) {
         float pWidth = worldWidth/13;
@@ -60,9 +69,17 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
 
         thrusting = thrustingInput;
-        player.update(dt, thrusting, worldHeight, THRUST, GRAVITY, MAX_VY);
+        if (birdActive && bird != null) {
+            bird.update(dt, thrustingInput, worldHeight);
+        } else {
+            player.update(dt, thrustingInput, worldHeight, THRUST, GRAVITY, MAX_VY);
+        }
+
         updateBackground(dt);
         updateRocket(dt);
+        updatePowerUp(dt);
+        checkPowerUpCollision();
+
         if (checkCollisions()) {
             gameState = GameState.GAME_OVER;
         }
@@ -85,12 +102,62 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
      }
 
-     public List<IObstacle> getObstacles() {
+     private void updatePowerUp(float dt){
+        if (birdActive){
+            return;
+        }
+
+        powerUpTimer -= dt;
+
+         if (powerUp == null && powerUpTimer <= 0) {
+             float width = 60f;
+             float height = 60f;
+             float x = worldWidth;
+             float y = 250f + (float)Math.random() * (worldHeight - 400f);
+             float vx = -250f;
+
+             powerUp = new PowerUp(x, y, width, height, vx);
+             powerUpTimer = powerUpSpawnInterval;
+         }
+
+         if (powerUp != null) {
+             powerUp.update(dt);
+
+             if (powerUp.isOfScreen(worldWidth, worldHeight)) {
+                 powerUp = null;
+             }
+         }
+     }
+
+    public List<IObstacle> getObstacles() {
         return obstacles;
      }
 
-    private boolean checkCollisions() {
+    private void checkPowerUpCollision() {
+        if (powerUp == null) {
+            return;
+        }
+
         Rectangle playerHitbox = getPlayerHitbox();
+        if (playerHitbox.overlaps(powerUp.getHitBox())) {
+            activateBirdPowerUp();
+            powerUp = null;
+        }
+    }
+
+    private void activateBirdPowerUp() {
+        bird = new Bird(
+                player.getX(),
+                player.getY(),
+                player.getWidth(),
+                player.getHeight(),
+                170f
+        );
+        birdActive = true;
+    }
+
+    private boolean checkCollisions() {
+        Rectangle playerHitbox = getActiveCharacterHitbox();
         for (IObstacle obstacle : obstacles) {
             Rectangle obstacleHitbox = obstacle.getHitBox();
             if (obstacleHitbox == null) {
@@ -101,7 +168,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             }
         }
         return false;
-     }
+    }
+
+    private Rectangle getActiveCharacterHitbox() {
+        if (birdActive && bird != null) {
+            return new Rectangle(bird.getX(), bird.getY(), bird.getWidth(), bird.getHeight());
+        }
+        return new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+    }
 
     private void updateBackground(float dt) {
         float BG_SPEED = 120f;
@@ -125,6 +199,21 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     @Override
     public boolean isThrusting(){
         return thrusting;
+    }
+
+    @Override
+    public PowerUp getPowerUp() {
+        return powerUp;
+    }
+
+    @Override
+    public boolean hasBirdPowerUp() {
+        return birdActive;
+    }
+
+    @Override
+    public Bird getBird() {
+        return bird;
     }
 
     @Override
@@ -154,5 +243,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public void endGame(){}
+
 
 }
