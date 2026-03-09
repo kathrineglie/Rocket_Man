@@ -10,11 +10,13 @@ import inf112.rocketman.model.GameState;
 import inf112.rocketman.view.Screen.GameOverScreen;
 import inf112.rocketman.view.Screen.GameScreen;
 import inf112.rocketman.view.Screen.HomeScreen;
+import inf112.rocketman.view.Screen.InstructionScreen;
 
 public class Main extends Game {
     private RocketManController controller;
     private HomeScreen homeScreen;
     private GameScreen gameScreen;
+    private InstructionScreen instructionScreen;
     private GameState lastState;
 
     @Override
@@ -26,6 +28,7 @@ public class Main extends Game {
 
         homeScreen = new HomeScreen(this, controller);
         gameScreen = new GameScreen(this,controller);
+        instructionScreen = new InstructionScreen(this, controller);
 
         setScreen(new HomeScreen(this, controller));
     }
@@ -40,6 +43,7 @@ public class Main extends Game {
                 case HOME_SCREEN -> setScreen(homeScreen);
                 case PLAYING -> setScreen(gameScreen);
                 case GAME_OVER -> setScreen(new GameOverScreen(this, controller));
+                case INSTRUCTIONS -> setScreen(instructionScreen);
             }
             lastState = current;
         }
