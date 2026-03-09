@@ -139,11 +139,18 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public void startGame(){
+        obstacles.clear();
+
+        player.setX(PLAYER_X);
+        player.setY(PLAYER_Y);
+        player.setVy(0);
+
         gameState = GameState.PLAYING;
     }
 
     @Override
     public void goToHomescreen(){
+        obstacles.clear();
         gameState = gameState.HOME_SCREEN;
     }
 

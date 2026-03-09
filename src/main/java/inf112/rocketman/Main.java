@@ -7,6 +7,7 @@ import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.controller.RocketManController;
 import inf112.rocketman.model.GameModel;
 import inf112.rocketman.model.GameState;
+import inf112.rocketman.view.Screen.GameOverScreen;
 import inf112.rocketman.view.Screen.GameScreen;
 import inf112.rocketman.view.Screen.HomeScreen;
 
@@ -38,6 +39,7 @@ public class Main extends Game {
             switch (controller.getState()) {
                 case HOME_SCREEN -> setScreen(homeScreen);
                 case PLAYING -> setScreen(gameScreen);
+                case GAME_OVER -> setScreen(new GameOverScreen(this, controller));
             }
             lastState = current;
         }

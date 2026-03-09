@@ -41,4 +41,10 @@ public class TPowah {
 
     public float getHeight() {return bounds.height; }
 
+    public void setX(float x) {this.bounds.x = x; }
+
+    public void setY(float y) {this.bounds.y = y; }
+
+    public void setVy(float vy) {this.vy = vy;}
+
 }

@@ -70,6 +70,12 @@ public class RocketManController {
             }
         }
 
+        else if (currentState == GameState.GAME_OVER) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                controllableModel.goToHomescreen();
+            }
+        }
+
     }
 
     public RocketManView getView() {
