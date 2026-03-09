@@ -30,11 +30,11 @@ public class ObstacleRenderer {
             if (obstacle instanceof Lazer lazer) {
                 Texture texture;
                 if (lazer.getProgressionLevel() == 1) {
-                    texture = textures.getTexture("inactiveLazer.PNG");
+                    texture = textures.getTexture("inactiveLazer.png");
                 } else if (lazer.getProgressionLevel() == 2) {
-                    texture = textures.getTexture("harmlessLazer.PNG");
+                    texture = textures.getTexture("harmlessLazer.png");
                 } else {
-                    texture = textures.getTexture("activeLazer.PNG");
+                    texture = textures.getTexture("activeLazer.png");
                 }
                 batch.draw(texture, lazer.getX(), lazer.getY(), lazer.getWidth(), lazer.getHeight());
             }
