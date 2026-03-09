@@ -16,12 +16,12 @@ public class Flame extends Obstacle {
 
         this.polygon = new Polygon(new float[] {
                 0, 0,
-                height, 0,
-                height, width,
-                0, width
+                0, height,
+                width, height,
+                width, 0
         });
 
-        this.polygon.setOrigin(height/2f, width/2f);
+        this.polygon.setOrigin(width/2f, height/2f);
         this.polygon.setPosition(x, y);
         this.polygon.setRotation(angle);
     }
@@ -29,7 +29,6 @@ public class Flame extends Obstacle {
     @Override
     public void update(float dt) {
         x = vx * dt;
-        polygon.setPosition(x, y);
     }
 
     public float getAngle() {

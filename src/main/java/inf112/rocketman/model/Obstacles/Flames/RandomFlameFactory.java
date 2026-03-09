@@ -21,8 +21,8 @@ public class RandomFlameFactory implements FlameFactory {
         int randNum = rand.nextInt(4);
         float randAngle = angles[randNum];
 
-        float x = MathUtils.random(margin, worldWidth - margin - length);
-        float y = MathUtils.random(margin, worldHeight - margin - width);
+        float x = worldWidth + length; // Sets starting point for the object outside the board.
+        float y = MathUtils.random(margin + length, worldHeight - margin - length); // Makes sure the object is not outside the board on the y-axis
 
         return new Flame(x, y, width, length, vx, 0, randAngle);
     }
