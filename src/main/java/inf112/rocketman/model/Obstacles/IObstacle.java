@@ -27,4 +27,14 @@ public interface IObstacle {
      */
     boolean isOfScreen(float worldWidth, float worldHeight);
 
+    float getOffSet();
+
+    float getX();
+
+    float getY();
+
+    float getWidth();
+
+    float getHeight();
+
 }

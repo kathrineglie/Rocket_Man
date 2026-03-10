@@ -6,6 +6,8 @@ public class Obstacle implements IObstacle {
     protected float x, y;
     protected float width, height;
     protected float vx, vy; // the velocity of the object
+    protected float HITBOX_OFFSET = 3;
+    protected float GROUND = 170f;
 
     protected Rectangle hitbox = new Rectangle();
 
@@ -18,7 +20,38 @@ public class Obstacle implements IObstacle {
         this.height = height;
         this.vx = vx;
         this.vy = vy;
-        this.hitbox.set(x, y, width, height);
+
+        this.hitbox.set(x + HITBOX_OFFSET,
+                y + HITBOX_OFFSET,
+                width - 2*HITBOX_OFFSET,
+                height - 2*HITBOX_OFFSET);
+    }
+
+    //
+    @Override
+    public void update(float dt) {
+        x += vx * dt;
+        y += vy * dt;
+
+        hitbox.set(x + HITBOX_OFFSET,
+                y + HITBOX_OFFSET,
+                width - 2*HITBOX_OFFSET,
+                height - 2*HITBOX_OFFSET);
+    }
+
+    @Override
+    public Rectangle getHitBox() {
+        return hitbox;
+    }
+
+    @Override
+    public boolean isOfScreen(float worldWidth, float worldHeight) {
+        return (x + width < 0 || y + height < GROUND || y > worldHeight);
+    }
+
+    @Override
+    public float getOffSet() {
+        return HITBOX_OFFSET;
     }
 
     // Get methods:
@@ -36,23 +69,5 @@ public class Obstacle implements IObstacle {
 
     public float getHeight() {
         return height;
-    }
-
-    //
-    @Override
-    public void update(float dt) {
-        x += vx * dt;
-        y += vy * dt;
-    }
-
-    @Override
-    public Rectangle getHitBox() {
-        hitbox.set(x, y, width, height);
-        return hitbox;
-    }
-
-    @Override
-    public boolean isOfScreen(float worldWidth, float worldHeight) {
-        return (x + width < 0 || x > worldWidth || y + height < 170f || y > worldHeight);
     }
 }

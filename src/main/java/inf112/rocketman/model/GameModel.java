@@ -12,6 +12,7 @@ import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Obstacles.Lazers.Lazer;
 import inf112.rocketman.model.Obstacles.Lazers.LazerFactory;
 import inf112.rocketman.model.Obstacles.Lazers.RandomLazerFactory;
+import inf112.rocketman.model.Obstacles.Obstacle;
 import inf112.rocketman.model.Obstacles.Rockets.RandomRocketFactory;
 import inf112.rocketman.model.Obstacles.Rockets.Rocket;
 import inf112.rocketman.model.Obstacles.Rockets.RocketFactory;
@@ -67,16 +68,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         this.worldHeight = worldHeight;
     }
 
-    @Override
-    public float getWorldHeight(){
-        return worldHeight;
-    }
-
-    @Override
-    public float getWorldWidth(){
-        return worldWidth;
-    }
-
+    /**
+     * Updates all of the characters, the background, the gamestate. Everything that has to do with the gamelogic
+     *
+     * @param dt The delta dime (seconds) since last update.
+     * @param thrustingInput True if the player is currently applying thrust to the rocket.
+     */
     public  void update (float dt, boolean thrustingInput) {
         if (gameState != GameState.PLAYING){
             return;
@@ -91,9 +88,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
         updateBackground(dt);
         updateObstacle(dt);
-        updatePowerUp(dt);
-        checkPowerUpCollision();
-        handleCollisions();
+        //updatePowerUp(dt);
+        //checkPowerUpCollision();
+        handleObstacleCollision();
     }
 
     private void checkPowerUpCollision() {
@@ -108,71 +105,78 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
-    private void handleCollisions() {
-        Rectangle activeHitbox = getActiveCharacterHitbox();
+    /**
+     * Handles collision of the differnt objects and powerups
+     */
+
+    private void handleObstacleCollision() {
+        Rectangle playerHitbox = player.getHitBox();
 
         Iterator<IObstacle> iterator = obstacles.iterator();
         while (iterator.hasNext()) {
             IObstacle obstacle = iterator.next();
-
-            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3) {
+            if (isNonActiveLazer(obstacle)) {
                 continue;
             }
 
-            if (obstacle instanceof Flame) {
-                float x = activeHitbox.getX();
-                float y = activeHitbox.getY();
-                float width = activeHitbox.getWidth();
-                float height = activeHitbox.getHeight();
+            if (!(obstacle instanceof Flame)) {
+                Rectangle obstacleHitbox = obstacle.getHitBox();
 
-                Polygon polyHitBox = new Polygon(new float[] {
-                    x, y,
-                    x, y + height,
-                    x + width, y + height,
-                    x + width, y});
+                if (obstacleHitbox == null) {
+                    continue;
+                }
 
-                if (Intersector.overlapConvexPolygons(((Flame) obstacle).getPolygon(), polyHitBox)) {
+                if (player.getHitBox().overlaps(obstacleHitbox)) {
                     if (birdActive) {
-                        deactivateBirdPowerUp();
+                        //deactivateBirdPowerUp();
                         iterator.remove();
                     } else {
+
                         gameState = GameState.GAME_OVER;
                     }
                     return;
                 }
-
-                continue;
+            } else {
+                handleFlameCollision(obstacle);
             }
+        }
 
-            Rectangle obstacleHitbox = obstacle.getHitBox();
-            if (obstacleHitbox == null) {
-                continue;
-            }
+    }
 
-            if (activeHitbox.overlaps(obstacleHitbox)) {
-                if (birdActive) {
-                    deactivateBirdPowerUp();
-                    iterator.remove();
-                } else {
-                    gameState = GameState.GAME_OVER;
-                }
-                return;
+    /**
+     * Handles collision for flame object
+     * @param obstacle
+     */
+    public void handleFlameCollision(IObstacle obstacle) {
+        if (!(obstacle instanceof Flame)) {
+            return;
+        }
+
+        Polygon polyHitBox = player.getPolyHitBox();
+
+        if (Intersector.overlapConvexPolygons(((Flame) obstacle).getPolygon(), polyHitBox)) {
+            if (birdActive) {
+                //deactivateBirdPowerUp();
+            } else {
+                gameState = GameState.GAME_OVER;
             }
         }
     }
 
+    public boolean isNonActiveLazer(IObstacle obstacle) {
+        return obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3;
+    }
+
+    /**
+     * Checks if the obstacles are off-screen and removes them if they are
+     *
+     * @param dt
+     */
     private void updateObstacle(float dt) {
         obstacleTimer -= dt;
+
         if (obstacleTimer <= 0) {
-            Random random = new Random();
-            int randomNumber = random.nextInt(4);
-            if (randomNumber == 1) {
-                obstacles.add(rocketFactory.newRocket(worldWidth, worldHeight, margin));
-            } else if (randomNumber == 2) {
-                obstacles.add(lazerFactory.newLazer(worldWidth, worldHeight, margin));
-            } else if (randomNumber == 3) {
-                obstacles.add(flameFactory.newFlame(worldWidth, worldHeight, margin, BG_SPEED));
-            }
+            obstacles.add(getRandomObstacle());
             obstacleTimer = obstacleSpawnInteval;
         }
 
@@ -180,18 +184,40 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         while (iterator.hasNext()) {
             IObstacle obstacle = iterator.next();
             obstacle.update(dt);
+
             if (obstacle instanceof Rocket && obstacle.isOfScreen(worldWidth, worldHeight)) {
                 iterator.remove();
             }
             if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() == 4) {
                 iterator.remove();
             }
-            // if (obstacle instanceof Flame && obstacle.isOfScreen(worldWidth, worldHeight)) {
-            //     iterator.remove();
-            // }
+            if (obstacle instanceof Flame && obstacle.isOfScreen(worldWidth, worldHeight)) {
+                iterator.remove();
+            }
         }
-     }
+    }
 
+    /**
+     * This method gets a random obstacle of the ones listed in the cases
+     *
+     * @return returns a random obstacle of the specified obstacles
+     */
+    private Obstacle getRandomObstacle() {
+        Random random = new Random();
+        int randNum = random.nextInt(1, 4);
+        return switch (randNum) {
+            case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, margin);
+            case 2 -> lazerFactory.newLazer(worldWidth, worldHeight, margin);
+            case 3 -> flameFactory.newFlame(worldWidth, worldHeight, margin, BG_SPEED);
+            default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
+        };
+    }
+
+    /**
+     * Gets a list of the obstacles
+     *
+     * @return
+     */
      public List<IObstacle> getObstacles() {
         return obstacles;
      }
@@ -245,14 +271,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         birdActive = true;
     }
 
-    private Rectangle getActiveCharacterHitbox() {
-        if (birdActive && bird != null) {
-            return new Rectangle(bird.getX(), bird.getY(), bird.getWidth(), bird.getHeight());
-        }
-        return new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-    }
-
-
+    // private Rectangle getActiveCharacterHitbox() {
+    //     if (birdActive && bird != null) {
+    //         return new Rectangle(bird.getX(), bird.getY(), bird.getWidth(), bird.getHeight());
+    //     }
+    //     return new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+    // }
 
     private void updateBackground(float dt) {
         bgScrollX += BG_SPEED * dt;
@@ -264,12 +288,22 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     @Override
+    public float getWorldHeight(){
+        return worldHeight;
+    }
+
+    @Override
+    public float getWorldWidth(){
+        return worldWidth;
+    }
+
+    @Override
     public float getBackgroundScrollX() {
         return bgScrollX;
     }
 
     public Rectangle getPlayerHitbox() {
-        return new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        return player.getHitBox();
     }
 
     @Override

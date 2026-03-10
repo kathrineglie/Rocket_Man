@@ -42,10 +42,6 @@ public class Bird {
         }
     }
 
-    public Rectangle getHitBox() {
-        return new Rectangle(bounds);
-    }
-
     public float getX() { return bounds.x; }
     public float getY() { return bounds.y; }
     public float getWidth() { return bounds.width; }
