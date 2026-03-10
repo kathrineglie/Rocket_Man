@@ -98,6 +98,7 @@ public class RocketManView implements Painter {
 		powerUpRenderer.render(batch, model);
 
 		batch.end();
+		playerRenderer.renderDebug(batch, model);
 	}
 
 	public RocketManAssets getAssets() {

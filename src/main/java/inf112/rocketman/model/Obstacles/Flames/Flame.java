@@ -15,13 +15,13 @@ public class Flame extends Obstacle {
         this.angle = angle;
 
         this.polygon = new Polygon(new float[] {
-                -height/2f, -width/2f,
-                height/2f, -width/2f,
-                height/2f, width/2f,
-                -height/2f, width/2f
+                0, 0,
+                height, 0,
+                height, width,
+                0, width
         });
 
-        this.polygon.setOrigin(0, 0);
+        this.polygon.setOrigin(width/2f, height/2f);
         this.polygon.setPosition(x, y);
         this.polygon.setRotation(angle);
     }
@@ -34,6 +34,7 @@ public class Flame extends Obstacle {
     @Override
     public void update(float dt) {
         x += -vx * dt;
+        y += vy * dt;
         polygon.setPosition(x, y);
         polygon.setRotation(angle);
     }
