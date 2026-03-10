@@ -5,6 +5,7 @@ public class TPowah {
     private final Rectangle bounds;
     private float vy = 0;
     private float groundY = 120f;
+    private static final int HITBOX_OFFSET = 10;
 
     public TPowah (float x, float y, float width, float height) {
 
@@ -32,6 +33,13 @@ public class TPowah {
     }
 
     public Rectangle getBounds() {return bounds; }
+
+    public Rectangle getHitBox() {
+        return new Rectangle(bounds.getX() + HITBOX_OFFSET,
+                bounds.getY() + HITBOX_OFFSET,
+                bounds.getWidth() - HITBOX_OFFSET*2,
+                bounds.getHeight() - HITBOX_OFFSET*2);
+    }
 
     public float getY() {return bounds.y;}
 
