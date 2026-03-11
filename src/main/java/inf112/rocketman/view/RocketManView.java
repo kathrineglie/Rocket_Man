@@ -3,6 +3,7 @@ package inf112.rocketman.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -83,6 +84,13 @@ public class RocketManView {
 		playerRenderer.render(batch, model);
 		obstacleRenderer.render(batch, model);
 		powerUpRenderer.render(batch, model);
+
+		BitmapFont mainFont = assets.getFont();
+		mainFont.getData().setScale(2.5f);
+		float pauseX = (float) (worldWidth() - 60);
+		float pauseY = (float) (worldHeight() - 60);
+		assets.getFont().draw(batch, "||", pauseX, pauseY);
+		mainFont.getData().setScale(1.0f);
 
 		batch.end();
 		playerRenderer.renderDebug(batch, model);
