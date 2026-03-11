@@ -1,5 +1,7 @@
 package inf112.rocketman.model.PowerUps;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class RandomPowerUpFactory implements PowerUpFactory{
@@ -19,6 +21,15 @@ public class RandomPowerUpFactory implements PowerUpFactory{
 
     private PowerUpType getRandomType(){
         PowerUpType[] types = PowerUpType.values();
-        return types[random.nextInt(types.length)];
+
+        List<PowerUpType> availableTypes = new ArrayList<>();
+
+        for (PowerUpType type : types) {
+            if (type != PowerUpType.NORMAL) {
+                availableTypes.add(type);
+            }
+        }
+
+        return availableTypes.get(random.nextInt(availableTypes.size()));
     }
 }
