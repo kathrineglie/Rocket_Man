@@ -32,7 +32,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float THRUST = 4000f;
     private final float MAX_VY = 700f;
     private final float GRAVITY = -1000f;
-    private final float PLAYER_X = 150f;
+    private final float PLAYER_X = 300f;
     private final float PLAYER_Y = 100f;
     private boolean thrusting;
 
@@ -51,7 +51,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private FlameFactory flameFactory = new RandomFlameFactory();
 
     private float obstacleTimer = 0f;
-    private float obstacleSpawnInteval = 1.5f;
+    private float obstacleSpawnInteval = 2.5f;
 
     private Bird bird;
     private boolean birdActive = false;
@@ -140,7 +140,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 handleFlameCollision(obstacle);
             }
         }
-
     }
 
     /**
@@ -176,6 +175,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         obstacleTimer -= dt;
 
         if (obstacleTimer <= 0) {
+
             obstacles.add(getRandomObstacle());
             obstacleTimer = obstacleSpawnInteval;
         }
