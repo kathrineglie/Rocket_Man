@@ -34,8 +34,13 @@ public class RandomFlameFactoryTest {
                 float px = vertices[j];
                 float py = vertices[j + 1];
 
-                //assertTrue(py >= margin, "py too low: " + py + " margin: " + margin + " worldheight: " + worldHeight);
-                //assertTrue(py <= worldHeight - margin, "py too high: " + py + " margin: " + margin + " worldheight: " +worldHeight);
+
+                System.out.println("Worldheight: " + worldHeight + "Worldwidth: " + worldWidth);
+                System.out.println(("Polygon px: " + px + "Polygon py " + py));
+
+                assertTrue(py >= margin, "py too low: " + py + " margin: " + margin + " worldheight: " + worldHeight);
+                assertTrue(py <= worldHeight - margin, "py too high: " + py + " margin: " + margin + " worldheight: " +worldHeight);
+
             }
         }
     }

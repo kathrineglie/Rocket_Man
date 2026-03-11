@@ -11,7 +11,6 @@ public class TPowah {
     public TPowah (float x, float y, float width, float height) {
 
         this.bounds = new Rectangle(x, y, width, height);
-        this.groundY = 170f;
     }
 
     public void update(float dt, boolean thrusting, float worldHeight, float thrust, float gravity, float maxVY) {
