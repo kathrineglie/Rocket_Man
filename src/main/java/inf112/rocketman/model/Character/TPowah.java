@@ -1,38 +1,83 @@
 package inf112.rocketman.model.Character;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.PowerUps.PowerUpType;
 
 public class TPowah {
-    private final Rectangle bounds;
-    private float vy = 0;
-    private float groundY = 120f;
+    private static final float GROUND_Y = 120f;
     private static final int HITBOX_OFFSET = 10;
 
-    public TPowah (float x, float y, float width, float height) {
+    private final Rectangle bounds;
+    private float vy = 0;
 
+    private PowerUpType activePowerUp = PowerUpType.NORMAL;
+
+    private static final float NORMAL_THRUST = 4000f;
+    private static final float NORMAL_GRAVITY = -1000f;
+    private static final float NORMAL_MAX_VY = 700f;
+
+    private static final float BIRD_FLAP_STRENGTH = 550f;
+    private static final float BIRD_GRAVITY = -1000f;
+    private static final float BIRD_MAX_FALL_SPEED = 900f;
+
+
+    public TPowah (float x, float y, float width, float height) {
         this.bounds = new Rectangle(x, y, width, height);
-        this.groundY = 170f;
     }
 
-    public void update(float dt, boolean thrusting, float worldHeight, float thrust, float gravity, float maxVY) {
-        float ay = gravity + (thrusting ? thrust : 0f);
+    public void update(float dt, boolean movementInput, float worldHeight) {
+        if (activePowerUp == PowerUpType.BIRD) {
+            updateBird(dt, movementInput, worldHeight);
+        } else {
+            updateNormal(dt, movementInput, worldHeight);
+        }
+    }
+
+    private void updateNormal(float dt, boolean thrusting, float worldHeight){
+        float ay = NORMAL_GRAVITY + (thrusting ? NORMAL_THRUST : 0f);
         vy += ay * dt;
 
-        if (vy > maxVY) vy = maxVY;
-        if (vy < -maxVY) vy = -maxVY;
+        if (vy > NORMAL_MAX_VY) vy = NORMAL_MAX_VY;
+        if (vy < - NORMAL_MAX_VY) vy = -NORMAL_MAX_VY;
 
         bounds.y += vy * dt;
 
-        if (bounds.y < groundY) {
-            bounds.y = groundY;
+        keepPlayerInsideBounds(worldHeight);
+    }
+
+    private void updateBird(float dt, boolean flap, float worldHeight){
+        if (flap){
+            vy = BIRD_FLAP_STRENGTH;
+        }
+
+        vy  += BIRD_GRAVITY * dt;
+
+        if (vy < -BIRD_MAX_FALL_SPEED){
+            vy = -BIRD_MAX_FALL_SPEED;
+        }
+
+        bounds.y += vy * dt;
+        keepPlayerInsideBounds(worldHeight);
+    }
+
+
+    private void keepPlayerInsideBounds(float worldHeight){
+        if (bounds.y < GROUND_Y) {
+            bounds.y = GROUND_Y;
             vy = 0;
         }
         if (bounds.y > worldHeight - bounds.height) {
             bounds.y = worldHeight - bounds.height;
             vy = 0;
         }
+    }
 
+    public void setPowerUp(PowerUpType powerUp){
+        this.activePowerUp = powerUp;
+    }
 
+    public PowerUpType getActivePowerUp(){
+        return activePowerUp;
     }
 
     /**
@@ -87,5 +132,4 @@ public class TPowah {
     public void setY(float y) {this.bounds.y = y; }
 
     public void setVy(float vy) {this.vy = vy;}
-
 }
