@@ -22,7 +22,7 @@ public class BackgroundRenderer {
         x = x % worldW;
 
         Texture bg = textures.getTexture("Background/background.png");
-        batch.draw(bg, -x,0, worldW, worldH);
-        batch.draw(bg, -x+worldW, 0, worldW, worldH);
+        batch.draw(bg, x,0, worldW, worldH);
+        batch.draw(bg, x+worldW, 0, worldW, worldH);
     }
 }
