@@ -33,7 +33,7 @@ public class Flame extends Obstacle {
 
     @Override
     public void update(float dt) {
-        this.x += -vx * dt;
+        this.x += vx * dt;
         this.y += vy * dt;
         polygon.setPosition(this.x - width/2f, this.y - height/2f);
         polygon.setRotation(angle);
