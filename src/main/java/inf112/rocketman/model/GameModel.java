@@ -137,7 +137,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 handleFlameCollision(obstacle);
             }
         }
-
     }
 
     /**
@@ -303,13 +302,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     @Override
     public void startGame(){
         obstacles.clear();
-        powerUp = null;
-        powerUpTimer = 0f;
 
         player.setX(PLAYER_X);
         player.setY(PLAYER_Y);
         player.setVy(0);
-        player.setPowerUp(PowerUpType.NORMAL);
 
         gameState = GameState.PLAYING;
     }

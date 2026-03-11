@@ -44,12 +44,12 @@ public class ObstacleRenderer {
                 texture = textures.getTexture("Obstacles/flame.png");
 
                 batch.draw(texture,
-                        flame.getX(),
-                        flame.getY(),
+                        flame.getX() - flame.getWidth()/2f,
+                        flame.getY() - flame.getHeight()/2f,
                         flame.getWidth()/2f,
                         flame.getHeight()/2f,
-                        flame.getHeight(),
                         flame.getWidth(),
+                        flame.getHeight(),
                         1, 1,
                         flame.getAngle(),
                         0, 0,
