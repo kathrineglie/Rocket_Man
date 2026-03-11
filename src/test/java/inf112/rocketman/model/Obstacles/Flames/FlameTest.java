@@ -9,11 +9,11 @@ public class FlameTest {
 
     @Test
     void flameUpdate() {
-        Flame flame = new Flame(100, 200, 20, 30, -50, 0, 0);
+        Flame flame = new Flame(100, 200, 20, 30, 50, 0, 0);
 
         flame.update(1f);
 
-        //assertEquals(50, flame.getX());
+        assertEquals(50, flame.getX());
     }
 
     @Test
