@@ -29,6 +29,8 @@ public class Main extends Game {
         instructionScreen = new InstructionScreen(this, controller);
         pauseScreen= new PauseScreen(this, controller);
 
+        pauseScreen.show();
+
         setScreen(homeScreen);
         lastState = GameState.HOME_SCREEN;
 
@@ -44,13 +46,16 @@ public class Main extends Game {
                 case PLAYING -> setScreen(gameScreen);
                 case GAME_OVER -> setScreen(new GameOverScreen(this, controller));
                 case INSTRUCTIONS -> setScreen(instructionScreen);
-                case PAUSE -> setScreen(pauseScreen);
+                //case PAUSE -> setScreen(pauseScreen);
             }
             lastState = current;
         }
         super.render();
     }
 
+    public PauseScreen getPauseScreen() {
+        return pauseScreen;
+    }
 
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();

@@ -3,6 +3,7 @@ package inf112.rocketman.view.Screen;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
@@ -13,6 +14,7 @@ public abstract class AbstractMenuScreen implements Screen {
     protected SpriteBatch batch;
     protected BitmapFont font;
     protected BitmapFont smallFont;
+    protected ShapeRenderer shapeRenderer;
 
     protected AbstractMenuScreen(Main game, RocketManController controller) {
         this.game = game;
@@ -22,6 +24,7 @@ public abstract class AbstractMenuScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
+        shapeRenderer = new ShapeRenderer();
         this.font = controller.getView().getAssets().getTitleFont();
         this.smallFont = controller.getView().getAssets().getFont();
     }

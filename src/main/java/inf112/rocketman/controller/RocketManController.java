@@ -133,4 +133,8 @@ public class RocketManController {
     public void showInstruction() {
         controllableModel.showInstructions();
     }
+
+    public ViewableRocketManModel getViewableModel() {
+        return viewableModel;
+    }
 }
