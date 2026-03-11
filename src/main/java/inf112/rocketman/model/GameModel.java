@@ -354,9 +354,13 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     @Override
-    public void pauseGame(){}
+    public void pauseGame(){
+         this.gameState = GameState.PAUSE;
+    }
     @Override
-    public void resumeGame(){}
+    public void resumeGame(){
+         this.gameState = GameState.PLAYING;
+    }
 
     @Override
     public void endGame(){}

@@ -1,42 +1,38 @@
 package inf112.rocketman.view.Screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
-public class InstructionScreen extends AbstractMenuScreen {
+public class PauseScreen extends AbstractMenuScreen {
 
-    public InstructionScreen(Main game, RocketManController controller) {
+    public PauseScreen(Main game, RocketManController controller) {
         super(game, controller);
     }
 
     @Override
     public void render(float v) {
-        ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1);
-        batch.begin();
+        ScreenUtils.clear(0,0,0.2f,1);
 
+        batch.begin();
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         float centerX = width / 2f;
 
-        drawCentered(font, "HOW TO PLAY", width / 2f, height - 150);
+        font.setColor(3f, 1, 1, 2f);
+        drawCentered(font, "PAUSED", centerX, height / 2f + 100);
 
-        drawCentered(smallFont, "Avoid rockets and survive as long as possible", centerX, height - 250);
-
-        drawCentered(smallFont, "CONTROLS", centerX, height - 350);
-
-        drawCentered(smallFont, "SPACE- hold to activate jetpack", centerX, height -420);
-        drawCentered(smallFont, "ESC- return to main menu", centerX, height - 470);
-        drawCentered(smallFont, "ENTER- restart after crashing", centerX, height-520);
-
+        smallFont.setColor(Color.WHITE);
+        drawCentered(smallFont, "Press P to resume", centerX, height / 2f);
+        drawCentered(smallFont, "Press ESC to QUIT to Menu", centerX, height / 2f - 80);
         batch.end();
 
         controller.handleInput();
+
     }
 
     private void drawCentered(BitmapFont font, String text, float centerX, float y) {

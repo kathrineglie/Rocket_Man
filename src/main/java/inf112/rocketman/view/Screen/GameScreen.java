@@ -8,11 +8,11 @@ public class GameScreen implements Screen {
     private final Main game;
     private RocketManController controller;
 
-    public  GameScreen(Main game, RocketManController controller) {
+    public GameScreen(Main game, RocketManController controller) {
         this.game = game;
         this.controller = controller;
-
     }
+
     @Override
     public void show() {
         controller.create();
@@ -22,31 +22,11 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         controller.handleInput();
         controller.render();
-
     }
 
-    @Override
-    public void resize(int width, int height) {
-        controller.resize(width,height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        controller.dispose();
-    }
+    @Override public void resize(int width, int height) { controller.resize(width, height); }
+    @Override public void dispose() { controller.dispose(); }
+    @Override public void pause() {}
+    @Override public void resume() {}
+    @Override public void hide() {}
 }

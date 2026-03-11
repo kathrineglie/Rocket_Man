@@ -55,41 +55,71 @@ public class RocketManController {
 
     public  void handleInput() {
         GameState currentState = controllableModel.getGameState();
-        if (currentState == GameState.HOME_SCREEN) {
-            if (Gdx.input.isKeyJustPressed((Input.Keys.SPACE))) {
-                controllableModel.startGame();
-            }
+
+        switch (currentState) {
+            case HOME_SCREEN -> handleHomeScreenInput();
+            case PLAYING -> handlePlayingInput();
+            case PAUSE -> handlePauseInput();
+            case GAME_OVER -> handleGameOverInput();
+            case INSTRUCTIONS -> handleInstructionInput();
         }
 
-        else if (currentState == GameState.PLAYING) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                controllableModel.goToHomescreen();
+    }
+
+    private void handleHomeScreenInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            controllableModel.startGame();
+        }
+    }
+
+    private void handlePlayingInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            controllableModel.pauseGame();
+        }
+        if (Gdx.input.justTouched()) {
+            float mouseX = Gdx.input.getX();
+            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+            float pauseX = controllableModel.getWorldWidth() - 60;
+            float pauseY = controllableModel.getWorldHeight() - 60;
+
+            if (Math.abs(mouseX - pauseX) < 50 && Math.abs(mouseY - pauseY) < 50) {
+                controllableModel.pauseGame();
             }
 
-            boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.SPACE);
-
-            if (spaceHeld && !jetpackPlaying){
-                jetpackSoundId = view.playSound(JETPACK_SOUND);
-                jetpackPlaying = true;
-            } else if (!spaceHeld && jetpackPlaying){
-                view.stopSound(JETPACK_SOUND, jetpackSoundId);
-                jetpackPlaying = false;
-                jetpackSoundId =-1;
-            }
         }
 
-        else if (currentState == GameState.GAME_OVER) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                controllableModel.goToHomescreen();
-            }
-        }
+        boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.SPACE);
 
-        else if (currentState == GameState.INSTRUCTIONS) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-                controllableModel.goToHomescreen();
-            }
+        if (spaceHeld && !jetpackPlaying){
+            jetpackSoundId = view.playSound(JETPACK_SOUND);
+            jetpackPlaying = true;
+        } else if (!spaceHeld && jetpackPlaying){
+            view.stopSound(JETPACK_SOUND, jetpackSoundId);
+            jetpackPlaying = false;
+            jetpackSoundId =-1;
         }
+    }
 
+    private void handlePauseInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+            controllableModel.resumeGame();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            controllableModel.goToHomescreen();
+        }
+    }
+
+    private void handleGameOverInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            controllableModel.goToHomescreen();
+        }
+    }
+
+    private void handleInstructionInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            controllableModel.goToHomescreen();
+        }
     }
 
     public RocketManView getView() {
