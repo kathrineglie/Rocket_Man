@@ -177,7 +177,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private void updateCoins(float dt) {
         coinTimer -= dt;
         if (coinTimer <= 0) {
-            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, margin));
+            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, MARGIN));
             coinTimer = coinSpwanTimer;
         }
         Iterator<Coin> iterator = coinList.iterator();
