@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
+import inf112.rocketman.model.Coins.Coin;
+import inf112.rocketman.model.Coins.CoinFactory;
+import inf112.rocketman.model.Coins.RandomCoinFactory;
 import inf112.rocketman.model.Obstacles.Flames.Flame;
 import inf112.rocketman.model.Obstacles.Flames.FlameFactory;
 import inf112.rocketman.model.Obstacles.Flames.RandomFlameFactory;
@@ -49,9 +52,15 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private RocketFactory rocketFactory = new RandomRocketFactory();
     private LazerFactory lazerFactory = new RandomLazerFactory();
     private FlameFactory flameFactory = new RandomFlameFactory();
+    private CoinFactory coinFactory = new RandomCoinFactory();
 
     private float obstacleTimer = 0f;
     private float obstacleSpawnInteval = 1.5f;
+    private float coinTimer = 10f;
+    private float coinSpwanTimer = 10f;
+    private float coinCount = 0f;
+    List<Coin> coinList = new ArrayList<>();
+    private float GameScore = 0;
 
     private Bird bird;
     private boolean birdActive = false;
@@ -91,6 +100,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         //updatePowerUp(dt);
         //checkPowerUpCollision();
         handleObstacleCollision();
+        updateCoins(dt);
+
     }
 
     private void checkPowerUpCollision() {
@@ -165,6 +176,32 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     public boolean isNonActiveLazer(IObstacle obstacle) {
         return obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3;
+    }
+
+    private void updateCoins(float dt) {
+        coinTimer -= dt;
+        if (coinTimer <= 0) {
+            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, margin));
+            coinTimer = coinSpwanTimer;
+        }
+        Iterator<Coin> iterator = coinList.iterator();
+        while (iterator.hasNext()) {
+            Coin coin = iterator.next();
+            coin.update(dt);
+            if (getPlayerHitbox().overlaps(coin.getHitbox())) {
+                iterator.remove();
+                GameScore += 50;
+                continue;
+            }
+            if (coin.isOfScreen(worldWidth, worldHeight)) {
+                iterator.remove();
+            }
+        }
+    }
+
+
+    public List<Coin> getCoinList() {
+        return coinList;
     }
 
     /**
