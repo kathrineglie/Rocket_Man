@@ -1,5 +1,6 @@
 package inf112.rocketman.view;
 
+import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.GameState;
 import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Character.TPowah;
@@ -47,5 +48,6 @@ public interface ViewableRocketManModel {
 
     boolean hasBirdPowerUp();
 
+    List<Coin> getCoinList();
 }
 

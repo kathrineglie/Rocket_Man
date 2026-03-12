@@ -10,10 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 
 import inf112.rocketman.view.assets.RocketManAssets;
-import inf112.rocketman.view.rendering.BackgroundRenderer;
-import inf112.rocketman.view.rendering.ObstacleRenderer;
-import inf112.rocketman.view.rendering.PlayerRenderer;
-import inf112.rocketman.view.rendering.PowerUpRenderer;
+import inf112.rocketman.view.rendering.*;
 
 
 public class RocketManView {
@@ -27,6 +24,7 @@ public class RocketManView {
 	private PlayerRenderer playerRenderer;
 	private ObstacleRenderer obstacleRenderer;
 	private PowerUpRenderer powerUpRenderer;
+	private CoinRenderer coinRenderer;
 
 	public void create(double worldWidth, double worldHeight) {
 		this.viewport = new FitViewport((float) worldWidth, (float) worldHeight);
@@ -36,6 +34,7 @@ public class RocketManView {
 		assets = new RocketManAssets();
 		assets.create();
 
+		coinRenderer = new CoinRenderer(assets);
 		backgroundRenderer = new BackgroundRenderer(assets);
 		playerRenderer = new PlayerRenderer(assets);
 		obstacleRenderer = new ObstacleRenderer(assets);
@@ -84,6 +83,7 @@ public class RocketManView {
 		playerRenderer.render(batch, model);
 		obstacleRenderer.render(batch, model);
 		powerUpRenderer.render(batch, model);
+		coinRenderer.render(batch, model);
 
 		BitmapFont mainFont = assets.getFont();
 		mainFont.getData().setScale(2.5f);
