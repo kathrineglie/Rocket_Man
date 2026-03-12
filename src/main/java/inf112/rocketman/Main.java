@@ -7,17 +7,15 @@ import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.controller.RocketManController;
 import inf112.rocketman.model.GameModel;
 import inf112.rocketman.model.GameState;
-import inf112.rocketman.view.Screen.GameOverScreen;
-import inf112.rocketman.view.Screen.GameScreen;
-import inf112.rocketman.view.Screen.HomeScreen;
-import inf112.rocketman.view.Screen.InstructionScreen;
+import inf112.rocketman.view.Screen.*;
 
 public class Main extends Game {
     private RocketManController controller;
     private HomeScreen homeScreen;
     private GameScreen gameScreen;
     private InstructionScreen instructionScreen;
-    private GameState lastState;
+    private PauseScreen pauseScreen;
+    private GameState lastState = null;
 
     @Override
     public void create() {
@@ -29,12 +27,16 @@ public class Main extends Game {
         homeScreen = new HomeScreen(this, controller);
         gameScreen = new GameScreen(this,controller);
         instructionScreen = new InstructionScreen(this, controller);
+        pauseScreen= new PauseScreen(this, controller);
 
-        setScreen(new HomeScreen(this, controller));
+        pauseScreen.show();
+
+        setScreen(homeScreen);
+        lastState = GameState.HOME_SCREEN;
+
     }
 
     public void render() {
-        controller.handleInput();
 
         GameState current = controller.getState();
 
@@ -44,12 +46,16 @@ public class Main extends Game {
                 case PLAYING -> setScreen(gameScreen);
                 case GAME_OVER -> setScreen(new GameOverScreen(this, controller));
                 case INSTRUCTIONS -> setScreen(instructionScreen);
+                //case PAUSE -> setScreen(pauseScreen);
             }
             lastState = current;
         }
         super.render();
     }
 
+    public PauseScreen getPauseScreen() {
+        return pauseScreen;
+    }
 
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();

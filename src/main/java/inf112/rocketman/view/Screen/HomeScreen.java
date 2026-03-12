@@ -12,24 +12,10 @@ import com.badlogic.gdx.utils.TimeUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
-public class HomeScreen implements Screen {
-
-    private final Main game;
-    private RocketManController controller;
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private BitmapFont smallFont;
+public class HomeScreen extends AbstractMenuScreen {
 
     public HomeScreen(Main game, RocketManController controller) {
-        this.game = game;
-        this.controller = controller;
-    }
-
-    @Override
-    public void show() {
-        batch = new SpriteBatch();
-        this.font = controller.getView().getAssets().getTitleFont();
-        this.smallFont = controller.getView().getAssets().getFont();
+        super(game, controller);
     }
 
     @Override
@@ -79,31 +65,5 @@ public class HomeScreen implements Screen {
 
         controller.handleInput();
 
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        batch.dispose();
-        //font.dispose();
     }
 }
