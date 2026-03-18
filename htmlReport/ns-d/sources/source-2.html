@@ -1,0 +1,125 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ViewableRocketManModel</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.view</a>
+</div>
+
+<h1>Coverage Summary for Class: ViewableRocketManModel (inf112.rocketman.view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ViewableRocketManModel</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.view;
+&nbsp;
+&nbsp;import inf112.rocketman.model.Coins.Coin;
+&nbsp;import inf112.rocketman.model.GameState;
+&nbsp;import inf112.rocketman.model.Obstacles.IObstacle;
+&nbsp;import inf112.rocketman.model.Character.TPowah;
+&nbsp;import inf112.rocketman.model.PowerUps.PowerUp;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;/**
+&nbsp; * A read-only interface representing the parts of the rocketMan game model
+&nbsp; * that are visible to the view components.
+&nbsp; * This interface follows the principle of least privilege, ensuring that
+&nbsp; * renderers can access game data for drawing purposes without being able
+&nbsp; * to modify the game state
+&nbsp; */
+&nbsp;public interface ViewableRocketManModel {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * @return the current horizontal scroll position of the backgorund.
+&nbsp;     */
+&nbsp;    float getBackgroundScrollX();
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the list of all active obstacles currently in the game world.
+&nbsp;     *
+&nbsp;     * @return a list of objects implementing {@link IObstacle}.
+&nbsp;     */
+&nbsp;    List&lt;IObstacle&gt; getObstacles();
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the player character object.
+&nbsp;     *
+&nbsp;     * @return the {@link TPowah} player instance.
+&nbsp;     */
+&nbsp;    TPowah getPlayer();
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Checks if the player is currently activating the rocket&#39;s thrust.
+&nbsp;     * this can be used by renderers to decide whether to draw engine flames.
+&nbsp;     *
+&nbsp;     * @return true if the rocket is thrusting, false otherwise.
+&nbsp;     */
+&nbsp;    boolean isMovingUp();
+&nbsp;
+&nbsp;    PowerUp getPowerUp();
+&nbsp;
+&nbsp;    boolean hasBirdPowerUp();
+&nbsp;
+&nbsp;    List&lt;Coin&gt; getCoinList();
+&nbsp;
+&nbsp;    int getCoinCount();
+&nbsp;
+&nbsp;    int getGameScore();
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 13:47</div>
+</div>
+</body>
+</html>

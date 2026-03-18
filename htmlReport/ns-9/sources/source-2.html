@@ -1,0 +1,130 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > RandomFlameFactory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.model.Obstacles.Flames</a>
+</div>
+
+<h1>Coverage Summary for Class: RandomFlameFactory (inf112.rocketman.model.Obstacles.Flames)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RandomFlameFactory</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.model.Obstacles.Flames;
+&nbsp;
+&nbsp;import com.badlogic.gdx.math.MathUtils;
+&nbsp;
+&nbsp;import java.util.Random;
+&nbsp;
+<b class="fc">&nbsp;public class RandomFlameFactory implements FlameFactory {</b>
+<b class="fc">&nbsp;    private final Random rand = new Random();</b>
+<b class="fc">&nbsp;    private float[] angles = {0f, 90f, 45f, 135f};</b>
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Flame newFlame(float worldWidth, float worldHeight, float margin, float vx) {
+&nbsp;        // Calculates random length of the lazer
+<b class="fc">&nbsp;        float minNum = Math.min(worldWidth, worldHeight);</b>
+&nbsp;
+<b class="fc">&nbsp;        float length = rand.nextInt((int) minNum/7, (int) minNum/3);</b>
+<b class="fc">&nbsp;        float thickness = minNum / 20f;</b>
+&nbsp;
+<b class="fc">&nbsp;        float randAngle = rand.nextFloat(360f);</b>
+&nbsp;
+<b class="fc">&nbsp;        float centerX = worldWidth + margin + length; // Spawns the flame outside of the screen</b>
+<b class="fc">&nbsp;        float centerY = MathUtils.random(margin + length, worldHeight - margin - length);</b>
+&nbsp;
+<b class="fc">&nbsp;        return new Flame(centerX, centerY, thickness, length, vx, 0, randAngle);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 13:47</div>
+</div>
+</body>
+</html>

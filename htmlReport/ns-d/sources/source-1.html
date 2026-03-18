@@ -1,0 +1,235 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > RocketManView</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.view</a>
+</div>
+
+<h1>Coverage Summary for Class: RocketManView (inf112.rocketman.view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RocketManView</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/41)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.view;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+&nbsp;import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+&nbsp;import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+&nbsp;import com.badlogic.gdx.utils.ScreenUtils;
+&nbsp;import com.badlogic.gdx.utils.viewport.*;
+&nbsp;
+&nbsp;import inf112.rocketman.view.assets.RocketManAssets;
+&nbsp;import inf112.rocketman.view.rendering.*;
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;public class RocketManView {</b>
+&nbsp;    private Viewport viewport; // defines screen / world size, aspect ratio and camera
+&nbsp;	private SpriteBatch batch; // used for drawing images / textures
+&nbsp;	private ShapeRenderer shape; // used for drawing shapes
+&nbsp;
+&nbsp;	private RocketManAssets assets;
+&nbsp;
+&nbsp;	private BackgroundRenderer backgroundRenderer;
+&nbsp;	private PlayerRenderer playerRenderer;
+&nbsp;	private ObstacleRenderer obstacleRenderer;
+&nbsp;	private PowerUpRenderer powerUpRenderer;
+&nbsp;	private CoinRenderer coinRenderer;
+&nbsp;
+&nbsp;	public void create(double worldWidth, double worldHeight) {
+<b class="nc">&nbsp;		this.viewport = new FitViewport((float) worldWidth, (float) worldHeight);</b>
+<b class="nc">&nbsp;		this.batch = new SpriteBatch();</b>
+<b class="nc">&nbsp;		this.shape = new ShapeRenderer();</b>
+&nbsp;
+<b class="nc">&nbsp;		assets = new RocketManAssets();</b>
+<b class="nc">&nbsp;		assets.create();</b>
+&nbsp;
+<b class="nc">&nbsp;		coinRenderer = new CoinRenderer(assets);</b>
+<b class="nc">&nbsp;		backgroundRenderer = new BackgroundRenderer(assets);</b>
+<b class="nc">&nbsp;		playerRenderer = new PlayerRenderer(assets);</b>
+<b class="nc">&nbsp;		obstacleRenderer = new ObstacleRenderer(assets);</b>
+<b class="nc">&nbsp;		powerUpRenderer = new PowerUpRenderer(assets);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;		Gdx.graphics.setForegroundFPS(60);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;	public void dispose() {
+<b class="nc">&nbsp;		batch.dispose();</b>
+<b class="nc">&nbsp;		shape.dispose();</b>
+<b class="nc">&nbsp;		assets.dispose();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Example:
+&nbsp;	 *
+&nbsp;	 * {@snippet :
+&nbsp;	 * appView.render(painter -&gt; {
+&nbsp;	 * 	painter.draw(x, y, w, h, tex1);
+&nbsp;	 * 	painter.draw(x, y, w, h, tex2);
+&nbsp;	 * });
+&nbsp;	 * }
+&nbsp;	 *
+&nbsp;	 * TODO: probably easier to just accept a list of objects to draw.
+&nbsp;	 *
+&nbsp;	 * See lectures for better examples.
+&nbsp;	 *
+&nbsp;	 * Doing it this way has the advantage of making sure that SpriteBatch&#39;s begin()
+&nbsp;	 * and end() methods are called properly.
+&nbsp;	 *
+&nbsp;	 * @param model
+&nbsp;	 */
+&nbsp;	public void render(ViewableRocketManModel model) {
+<b class="nc">&nbsp;		ScreenUtils.clear(Color.WHITE);</b>
+&nbsp;
+<b class="nc">&nbsp;		viewport.apply();</b>
+<b class="nc">&nbsp;		viewport.getCamera().update();</b>
+&nbsp;
+<b class="nc">&nbsp;		batch.setProjectionMatrix(viewport.getCamera().combined);</b>
+<b class="nc">&nbsp;		batch.begin();</b>
+&nbsp;
+<b class="nc">&nbsp;		backgroundRenderer.render(batch, viewport, model);</b>
+<b class="nc">&nbsp;		playerRenderer.render(batch, model);</b>
+<b class="nc">&nbsp;		obstacleRenderer.render(batch, model);</b>
+<b class="nc">&nbsp;		powerUpRenderer.render(batch, model);</b>
+<b class="nc">&nbsp;		coinRenderer.render(batch, viewport,model);</b>
+&nbsp;
+<b class="nc">&nbsp;		BitmapFont mainFont = assets.getFont();</b>
+<b class="nc">&nbsp;		mainFont.getData().setScale(2.5f);</b>
+<b class="nc">&nbsp;		float pauseX = (float) (worldWidth() - 60);</b>
+<b class="nc">&nbsp;		float pauseY = (float) (worldHeight() - 60);</b>
+<b class="nc">&nbsp;		assets.getFont().draw(batch, &quot;||&quot;, pauseX, pauseY);</b>
+<b class="nc">&nbsp;		mainFont.getData().setScale(1.0f);</b>
+&nbsp;
+<b class="nc">&nbsp;		batch.end();</b>
+<b class="nc">&nbsp;		playerRenderer.renderDebug(batch, model);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public RocketManAssets getAssets() {
+<b class="nc">&nbsp;		return assets;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public long playSound(String name){
+<b class="nc">&nbsp;		return assets.playSound(name);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public void stopSound(String name, long id){
+<b class="nc">&nbsp;		assets.stopSound(name, id);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public void resize(int width, int height) {
+<b class="nc">&nbsp;		viewport.update(width, height, true);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public double worldWidth() {
+<b class="nc">&nbsp;		return viewport.getWorldWidth();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public double worldHeight() {
+<b class="nc">&nbsp;		return viewport.getWorldHeight();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public float getWorldWidth(){
+<b class="nc">&nbsp;		return viewport.getWorldWidth();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	public float getWorldHeight(){
+<b class="nc">&nbsp;		return viewport.getWorldHeight();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 13:47</div>
+</div>
+</body>
+</html>

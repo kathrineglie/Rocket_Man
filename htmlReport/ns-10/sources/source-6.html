@@ -1,0 +1,156 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > PauseScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.view.screen</a>
+</div>
+
+<h1>Coverage Summary for Class: PauseScreen (inf112.rocketman.view.screen)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">PauseScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.view.screen;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.GL20;
+&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+&nbsp;import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+&nbsp;import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+&nbsp;import inf112.rocketman.Main;
+&nbsp;import inf112.rocketman.controller.RocketManController;
+&nbsp;
+&nbsp;public class PauseScreen extends AbstractMenuScreen {
+&nbsp;
+&nbsp;    public PauseScreen(Main game, RocketManController controller) {
+<b class="nc">&nbsp;        super(game, controller);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void render(float v) {
+&nbsp;        //ScreenUtils.clear(0,0,0.2f,1);
+&nbsp;
+<b class="nc">&nbsp;        Gdx.gl.glEnable(GL20.GL_BLEND);</b>
+<b class="nc">&nbsp;        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);</b>
+&nbsp;
+<b class="nc">&nbsp;        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);</b>
+<b class="nc">&nbsp;        shapeRenderer.setColor(0,0,0,0.5f);</b>
+<b class="nc">&nbsp;        shapeRenderer.rect(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());</b>
+<b class="nc">&nbsp;        shapeRenderer.end();</b>
+&nbsp;
+<b class="nc">&nbsp;        Gdx.gl.glDisable(GL20.GL_BLEND);</b>
+&nbsp;
+<b class="nc">&nbsp;        batch.begin();</b>
+&nbsp;
+<b class="nc">&nbsp;        float width = Gdx.graphics.getWidth();</b>
+<b class="nc">&nbsp;        float height = Gdx.graphics.getHeight();</b>
+<b class="nc">&nbsp;        float centerX = width / 2f;</b>
+&nbsp;
+<b class="nc">&nbsp;        font.setColor(3f, 1, 1, 2f);</b>
+<b class="nc">&nbsp;        drawCentered(font, &quot;PAUSED&quot;, centerX, height / 2f + 100);</b>
+&nbsp;
+<b class="nc">&nbsp;        smallFont.setColor(Color.WHITE);</b>
+<b class="nc">&nbsp;        drawCentered(smallFont, &quot;Press P to resume&quot;, centerX, height / 2f);</b>
+<b class="nc">&nbsp;        drawCentered(smallFont, &quot;Press ESC to QUIT to Menu&quot;, centerX, height / 2f - 80);</b>
+<b class="nc">&nbsp;        batch.end();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private void drawCentered(BitmapFont font, String text, float centerX, float y) {
+<b class="nc">&nbsp;        GlyphLayout layout = new GlyphLayout(font, text);</b>
+<b class="nc">&nbsp;        font.draw(batch, layout, centerX - layout.width / 2f, y);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 13:47</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > TextureProvider</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.view</a>
+</div>
+
+<h1>Coverage Summary for Class: TextureProvider (inf112.rocketman.view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">TextureProvider</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.view;
+&nbsp;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import org.w3c.dom.Text;
+&nbsp;
+&nbsp;/**
+&nbsp; * Interface for providing textures to the view components.
+&nbsp; * This allows for a decoupled architecture where the renderer does not need
+&nbsp; * to know how textures are loaded or stored.
+&nbsp; */
+&nbsp;public interface TextureProvider {
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves a texture based on its file path or identifier.
+&nbsp;     * Implementation should ideally cache textures to avoid redundant
+&nbsp;     * disk I/O and memory consumption.
+&nbsp;     *
+&nbsp;     * @param name the internal path tp the texture asset (e.g., &quot;Obstacles/Rocket.png&quot;)
+&nbsp;     * @return the {@link Texture} associated with the given name,
+&nbsp;     * or null if the texture could not be found
+&nbsp;     */
+&nbsp;    Texture getTexture(String name);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 13:47</div>
+</div>
+</body>
+</html>
