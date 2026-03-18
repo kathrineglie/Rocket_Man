@@ -36,6 +36,10 @@ public class Lazer extends Obstacle {
         }
     }
 
+    public void setProgressionLevel(int level) {
+        progression = level;
+    }
+
     public int getProgressionLevel() {
         return progression;
     }
