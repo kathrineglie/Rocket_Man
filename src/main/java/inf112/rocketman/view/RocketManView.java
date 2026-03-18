@@ -2,7 +2,6 @@ package inf112.rocketman.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -68,7 +67,7 @@ public class RocketManView {
 	 * Doing it this way has the advantage of making sure that SpriteBatch's begin()
 	 * and end() methods are called properly.
 	 *
-	 * @param drawCommands
+	 * @param model
 	 */
 	public void render(ViewableRocketManModel model) {
 		ScreenUtils.clear(Color.WHITE);
@@ -83,7 +82,7 @@ public class RocketManView {
 		playerRenderer.render(batch, model);
 		obstacleRenderer.render(batch, model);
 		powerUpRenderer.render(batch, model);
-		coinRenderer.render(batch, model);
+		coinRenderer.render(batch, viewport,model);
 
 		BitmapFont mainFont = assets.getFont();
 		mainFont.getData().setScale(2.5f);
@@ -127,5 +126,6 @@ public class RocketManView {
 	public float getWorldHeight(){
 		return viewport.getWorldHeight();
 	}
+
 
 }
