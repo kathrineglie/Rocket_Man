@@ -58,9 +58,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float obstacleSpawnInteval = 1.5f;
     private float coinTimer = 10f;
     private float coinSpwanTimer = 10f;
-    private float coinCount = 0f;
+    private int coinCount = 0;
     List<Coin> coinList = new ArrayList<>();
-    private float GameScore = 0;
+    private int gameScore = 0;
+    private float gameTimer = 0.5f;
+    private float gameScoreTimer = 0.5f;
 
     private Bird bird;
     private boolean birdActive = false;
@@ -101,7 +103,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         //checkPowerUpCollision();
         handleObstacleCollision();
         updateCoins(dt);
-
+        if (gameTimer <= 0f) {
+            gameScore++;
+            gameTimer = gameScoreTimer;
+        } else {
+            gameTimer -= dt;
+        }
     }
 
     private void checkPowerUpCollision() {
@@ -144,6 +151,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                     } else {
 
                         gameState = GameState.GAME_OVER;
+                        gameScore = 0;
+                        coinCount = 0;
                     }
                     return;
                 }
@@ -170,6 +179,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 //deactivateBirdPowerUp();
             } else {
                 gameState = GameState.GAME_OVER;
+                gameScore = 0;
+                coinCount = 0;
             }
         }
     }
@@ -190,7 +201,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             coin.update(dt);
             if (getPlayerHitbox().overlaps(coin.getHitbox())) {
                 iterator.remove();
-                GameScore += 50;
+                coinCount += 1;
                 continue;
             }
             if (coin.isOfScreen(worldWidth, worldHeight)) {
@@ -388,6 +399,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public void goToHomescreen(){
         obstacles.clear();
         gameState = gameState.HOME_SCREEN;
+        gameScore = 0;
     }
 
     @Override
@@ -403,4 +415,13 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         gameState = gameState.INSTRUCTIONS;
     }
 
+    @Override
+    public int getGameScore() {
+         return gameScore;
+    }
+
+    @Override
+    public int getCoinCount() {
+         return coinCount;
+    }
 }

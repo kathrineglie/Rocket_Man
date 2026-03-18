@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 
 import inf112.rocketman._example.view.Painter;
+import inf112.rocketman.model.GameModel;
 import inf112.rocketman.view.assets.RocketManAssets;
 import inf112.rocketman.view.rendering.*;
 
@@ -95,7 +96,7 @@ public class RocketManView implements Painter {
 		playerRenderer.render(batch, model);
 		obstacleRenderer.render(batch, model);
 		powerUpRenderer.render(batch, model);
-		coinRenderer.render(batch, model);
+		coinRenderer.render(batch, viewport,model);
 
 		batch.end();
 		playerRenderer.renderDebug(batch, model);
@@ -132,5 +133,6 @@ public class RocketManView implements Painter {
 	public float getWorldHeight(){
 		return viewport.getWorldHeight();
 	}
+
 
 }

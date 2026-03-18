@@ -59,5 +59,9 @@ public interface ViewableRocketManModel {
     Bird getBird();
 
     List<Coin> getCoinList();
+
+    int getCoinCount();
+
+    int getGameScore();
 }
 
