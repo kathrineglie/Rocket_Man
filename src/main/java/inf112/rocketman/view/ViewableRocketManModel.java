@@ -53,5 +53,9 @@ public interface ViewableRocketManModel {
     int getCoinCount();
 
     int getGameScore();
+
+    boolean didCollectPowerUpThisFrame();
+
+    boolean didCollectCoinThisFrame();
 }
 

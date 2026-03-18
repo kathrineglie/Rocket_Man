@@ -18,7 +18,7 @@ public class Main extends Game {
 
     @Override
     public void create() {
-        GameModel model = new GameModel(1000, 800);
+        GameModel model = new GameModel(1200, 800);
 
         controller = new RocketManController(model, model);
         controller.create();

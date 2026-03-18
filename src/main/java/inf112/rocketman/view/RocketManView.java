@@ -103,6 +103,26 @@ public class RocketManView {
 		return assets.playSound(name);
 	}
 
+	public long loopSound(String name) {
+		return assets.loopSound(name);
+	}
+
+	public void playMusic(String name) {
+		assets.playMusic(name);
+	}
+
+	public void stopMusic(String name) {
+		assets.stopMusic(name);
+	}
+
+	public void stopAllMusic() {
+		assets.stopAllMusic();
+	}
+
+	public void playExclusiveMusic(String name) {
+		assets.playExclusiveMusic(name);
+	}
+
 	public void stopSound(String name, long id){
 		assets.stopSound(name, id);
 	}
