@@ -1,23 +1,58 @@
 package inf112.rocketman.view.rendering;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.rocketman.model.Coins.Coin;
-import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
+import inf112.rocketman.view.assets.RocketManAssets;
 
 public class CoinRenderer {
-    private final TextureProvider textures;
-    public CoinRenderer(TextureProvider textures) {
-        this.textures = textures;
+
+    private final Texture coinTexture;
+    private final BitmapFont font;
+    private final GlyphLayout layout;
+
+    public CoinRenderer(RocketManAssets assets) {
+        this.coinTexture = assets.getTexture("TCoin.png");
+        this.font = assets.getTitleFont();
+        this.layout = new GlyphLayout();
     }
 
-    public void render(SpriteBatch batch, ViewableRocketManModel model) {
-        Texture texture;
-        texture = textures.getTexture("TCoin.png");
+    public void render(SpriteBatch batch, Viewport viewport, ViewableRocketManModel model) {
+        drawCoins(batch, model);
+        drawHud(batch, viewport, model);
+    }
+
+    private void drawCoins(SpriteBatch batch, ViewableRocketManModel model) {
         for (Coin coin : model.getCoinList()) {
-                batch.draw(texture, coin.getX(), coin.getY(), coin.getWidth(), coin.getWidth());
+            batch.draw(coinTexture, coin.getX(), coin.getY(), coin.getWidth(), coin.getHeight()
+            );
         }
     }
-}
 
+    private void drawHud(SpriteBatch batch, Viewport viewport, ViewableRocketManModel model) {
+        font.getData().setScale(0.5f);
+        font.setColor(Color.WHITE);
+
+        float margin = 15f;
+        float worldWidth = viewport.getWorldWidth();
+        float worldHeight = viewport.getWorldHeight();
+
+        String scoreText = "Score: " + model.getGameScore() + "M";
+        layout.setText(font, scoreText);
+        float scoreX = worldWidth - layout.width - margin;
+        float scoreY = worldHeight - margin;
+        font.draw(batch, layout, scoreX, scoreY);
+
+        font.setColor(Color.GOLD);
+        String coinText = "Coins: " + model.getCoinCount();
+        layout.setText(font, coinText);
+        float coinX = worldWidth - layout.width - margin;
+        float coinY = worldHeight - margin - 40f;
+        font.draw(batch, layout, coinX, coinY);
+    }
+}

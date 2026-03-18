@@ -32,6 +32,7 @@ public class GameOverScreen extends AbstractMenuScreen{
 
         font.draw(batch, layout, titleX, titleY );
 
+
         smallFont.setColor(Color.WHITE);
 
         GlyphLayout smallLayout = new GlyphLayout(smallFont, "PRESS ENTER TO RESTART");
