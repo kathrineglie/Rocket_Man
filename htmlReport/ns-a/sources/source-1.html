@@ -48,34 +48,34 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">Lazer</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    100%
   </span>
   <span class="absValue">
-    (0/1)
+    (1/1)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    75%
   </span>
   <span class="absValue">
-    (0/4)
+    (3/4)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    42,9%
   </span>
   <span class="absValue">
-    (0/14)
+    (6/14)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    65%
   </span>
   <span class="absValue">
-    (0/20)
+    (13/20)
   </span>
 </td>
 </tr>
@@ -95,24 +95,24 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import inf112.rocketman.model.Obstacles.Obstacle;
 &nbsp;
 &nbsp;public class Lazer extends Obstacle {
-<b class="nc">&nbsp;    private float harmlessLazerCount = 1.5f;</b>
-<b class="nc">&nbsp;    private float warningLazerCount = 1.5f;</b>
-<b class="nc">&nbsp;    private float activeLazerCount = 2f;</b>
-<b class="nc">&nbsp;    private int progression = 1;</b>
+<b class="fc">&nbsp;    private float harmlessLazerCount = 1.5f;</b>
+<b class="fc">&nbsp;    private float warningLazerCount = 1.5f;</b>
+<b class="fc">&nbsp;    private float activeLazerCount = 2f;</b>
+<b class="fc">&nbsp;    private int progression = 1;</b>
 &nbsp;    protected Lazer(float x, float y, float width, float height, float vx, float vy) {
-<b class="nc">&nbsp;        super(x, y, width, height, vx, vy);</b>
+<b class="fc">&nbsp;        super(x, y, width, height, vx, vy);</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @Override
 &nbsp;    public void update(float dt) {
-<b class="nc">&nbsp;        if (progression == 1) {</b>
-<b class="nc">&nbsp;            harmlessLazerCount -= dt;</b>
-<b class="nc">&nbsp;            if (harmlessLazerCount &lt;= 0) {</b>
-<b class="nc">&nbsp;                progression = 2;</b>
+<b class="fc">&nbsp;        if (progression == 1) {</b>
+<b class="fc">&nbsp;            harmlessLazerCount -= dt;</b>
+<b class="fc">&nbsp;            if (harmlessLazerCount &lt;= 0) {</b>
+<b class="fc">&nbsp;                progression = 2;</b>
 &nbsp;            }
-<b class="nc">&nbsp;        } else if (progression == 2) {</b>
-<b class="nc">&nbsp;            warningLazerCount -= dt;</b>
-<b class="nc">&nbsp;            if (warningLazerCount &lt;= 0) {</b>
+<b class="pc">&nbsp;        } else if (progression == 2) {</b>
+<b class="fc">&nbsp;            warningLazerCount -= dt;</b>
+<b class="pc">&nbsp;            if (warningLazerCount &lt;= 0) {</b>
 <b class="nc">&nbsp;                progression = 3;</b>
 &nbsp;            }
 <b class="nc">&nbsp;        } else if (progression == 3) {</b>
@@ -126,7 +126,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public int getProgressionLevel() {
-<b class="nc">&nbsp;        return progression;</b>
+<b class="fc">&nbsp;        return progression;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public boolean isFinished() {
@@ -156,7 +156,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2026-03-18 12:21</div>
+    <div style="float:right;">generated on 2026-03-18 14:25</div>
 </div>
 </body>
 </html>

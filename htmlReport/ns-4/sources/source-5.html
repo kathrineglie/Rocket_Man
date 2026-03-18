@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
-  <title>Coverage Report > IGrid</title>
+  <title>Coverage Report > GridDimension</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -22,14 +22,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">inf112.rocketman.grid</a>
 </div>
 
-<h1>Coverage Summary for Class: IGrid (inf112.rocketman.grid)</h1>
+<h1>Coverage Summary for Class: GridDimension (inf112.rocketman.grid)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">IGrid</td>
+  <td class="name">GridDimension</td>
 </tr>
 
 </table>
@@ -41,31 +41,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.grid;
 &nbsp;
-&nbsp;public interface IGrid extends GridDimension, Iterable&lt;GridCell&gt; {
+&nbsp;public interface GridDimension {
+&nbsp;    /** Number of rows in the grid */
+&nbsp;    int rows();
 &nbsp;
-&nbsp;    /**
-&nbsp;     * Sets the value of a position in the grid
-&nbsp;     * 
-&nbsp;     * @param pos the position on the grid where the symbol is stored 
-&nbsp;     * @param symbol the new value
-&nbsp;     */
-&nbsp;    void set(CellPosition pos, Character symbol);
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Gets the symbol from the position you specify
-&nbsp;     * 
-&nbsp;     * @param pos  the position to get a value from
-&nbsp;     * @return
-&nbsp;     */
-&nbsp;    Character get(CellPosition pos);
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Checks if the position is on the grid
-&nbsp;     * 
-&nbsp;     * @param pos The position you check
-&nbsp;     * @return
-&nbsp;     */
-&nbsp;    boolean positionIsOnGrid(CellPosition pos);
+&nbsp;    /** Number of columns in the grid */
+&nbsp;    int cols();
 &nbsp;}
 </code>
 </pre>
@@ -90,7 +71,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2026-03-18 12:21</div>
+    <div style="float:right;">generated on 2026-03-18 14:25</div>
 </div>
 </body>
 </html>

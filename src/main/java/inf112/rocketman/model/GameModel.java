@@ -357,6 +357,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         player.setVy(0);
 
         gameState = GameState.PLAYING;
+        gameScore = 0;
+        coinCount = 0;
     }
 
     @Override

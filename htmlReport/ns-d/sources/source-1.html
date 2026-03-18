@@ -79,7 +79,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;import com.badlogic.gdx.Gdx;
 &nbsp;import com.badlogic.gdx.graphics.Color;
-&nbsp;import com.badlogic.gdx.graphics.Texture;
 &nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
 &nbsp;import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 &nbsp;import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -145,7 +144,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;	 * Doing it this way has the advantage of making sure that SpriteBatch&#39;s begin()
 &nbsp;	 * and end() methods are called properly.
 &nbsp;	 *
-&nbsp;	 * @param drawCommands
+&nbsp;	 * @param model
 &nbsp;	 */
 &nbsp;	public void render(ViewableRocketManModel model) {
 <b class="nc">&nbsp;		ScreenUtils.clear(Color.WHITE);</b>
@@ -160,7 +159,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;		playerRenderer.render(batch, model);</b>
 <b class="nc">&nbsp;		obstacleRenderer.render(batch, model);</b>
 <b class="nc">&nbsp;		powerUpRenderer.render(batch, model);</b>
-<b class="nc">&nbsp;		coinRenderer.render(batch, model);</b>
+<b class="nc">&nbsp;		coinRenderer.render(batch, viewport,model);</b>
 &nbsp;
 <b class="nc">&nbsp;		BitmapFont mainFont = assets.getFont();</b>
 <b class="nc">&nbsp;		mainFont.getData().setScale(2.5f);</b>
@@ -205,6 +204,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;		return viewport.getWorldHeight();</b>
 &nbsp;	}
 &nbsp;
+&nbsp;
 &nbsp;}
 </code>
 </pre>
@@ -229,7 +229,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2026-03-18 12:21</div>
+    <div style="float:right;">generated on 2026-03-18 14:25</div>
 </div>
 </body>
 </html>
