@@ -1,0 +1,181 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > HomeScreen</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.view.screen</a>
+</div>
+
+<h1>Coverage Summary for Class: HomeScreen (inf112.rocketman.view.screen)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HomeScreen</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/28)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.view.screen;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.graphics.Color;
+&nbsp;import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+&nbsp;import com.badlogic.gdx.utils.ScreenUtils;
+&nbsp;import com.badlogic.gdx.utils.TimeUtils;
+&nbsp;import inf112.rocketman.Main;
+&nbsp;import inf112.rocketman.controller.RocketManController;
+&nbsp;
+&nbsp;public class HomeScreen extends AbstractMenuScreen {
+&nbsp;
+&nbsp;    public HomeScreen(Main game, RocketManController controller) {
+<b class="nc">&nbsp;        super(game, controller);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void render(float delta) {
+&nbsp;
+<b class="nc">&nbsp;        ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1); // mørk blå bakgrunn</b>
+&nbsp;
+<b class="nc">&nbsp;        float width = Gdx.graphics.getWidth();</b>
+<b class="nc">&nbsp;        float height = Gdx.graphics.getHeight();</b>
+&nbsp;
+<b class="nc">&nbsp;        batch.begin();</b>
+&nbsp;
+<b class="nc">&nbsp;        GlyphLayout titleLayout = new GlyphLayout(font, &quot;ROCKET MAN&quot;);</b>
+<b class="nc">&nbsp;        float titleX = width / 2f - titleLayout.width / 2f;</b>
+<b class="nc">&nbsp;        float titleY = height / 2f + 140;</b>
+&nbsp;
+<b class="nc">&nbsp;        font.setColor(0,0,0,0.5f);</b>
+<b class="nc">&nbsp;        font.draw(batch, titleLayout, titleX + 2, titleY - 2);</b>
+&nbsp;
+<b class="nc">&nbsp;        font.setColor(Color.WHITE);</b>
+<b class="nc">&nbsp;        font.draw(batch, titleLayout, titleX, titleY);</b>
+&nbsp;
+<b class="nc">&nbsp;        float alpha = (float) Math.abs(Math.sin(TimeUtils.millis() / 400.0));</b>
+<b class="nc">&nbsp;        smallFont.setColor(1, 1, 1, alpha);</b>
+&nbsp;
+<b class="nc">&nbsp;        GlyphLayout subLayout = new GlyphLayout(smallFont, &quot;Press SPACE to start&quot;);</b>
+<b class="nc">&nbsp;        smallFont.draw(batch, subLayout, width / 2f - subLayout.width / 2f, height / 2f);</b>
+&nbsp;
+<b class="nc">&nbsp;        smallFont.setColor(Color.WHITE);</b>
+<b class="nc">&nbsp;        font.getData().setScale(1.0f);</b>
+&nbsp;
+<b class="nc">&nbsp;        float qMarkX = width - 60;</b>
+<b class="nc">&nbsp;        float qMarkY = height - 60;</b>
+&nbsp;
+<b class="nc">&nbsp;        font.draw(batch, &quot;?&quot;, qMarkX, qMarkY);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (Gdx.input.justTouched()) {</b>
+<b class="nc">&nbsp;            float mouseX = Gdx.input.getX();</b>
+<b class="nc">&nbsp;            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();</b>
+&nbsp;
+<b class="nc">&nbsp;            if (mouseX &gt; qMarkX - 20 &amp;&amp; mouseX &lt; qMarkX + 40 &amp;&amp; mouseY &gt; qMarkY - 40 &amp;&amp; mouseY &lt; qMarkY + 20) {</b>
+<b class="nc">&nbsp;                controller.showInstruction();</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        batch.end();</b>
+&nbsp;
+<b class="nc">&nbsp;        controller.handleInput();</b>
+&nbsp;
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 13:47</div>
+</div>
+</body>
+</html>

@@ -2,19 +2,26 @@ package inf112.rocketman.model.Obstacles.Flames;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FlameTest {
 
-//    @Test
-//    void flameUpdate() {
-//        Flame flame = new Flame(100, 200, 20, 30, 50, 0, 0);
-//
-//        flame.update(1f);
-//
-//        assertEquals(50, flame.getX());
-//    }
+    @Test
+    void flameUpdate() {
+        Flame flame = new Flame(100, 200, 20, 30, 50, 0, 0);
+
+        flame.update(1f);
+
+        assertEquals(150, flame.getX());
+        assertEquals(200, flame.getY());
+    }
+
+    @Test
+    void rectangleNull() {
+        Flame flame = new Flame(100, 200, 20, 30, 50, 0, 0);
+
+        assertNull(flame.getHitBox());
+    }
 
     @Test
     void testPolygonNotNull() {
@@ -23,5 +30,10 @@ public class FlameTest {
         assertNotNull(flame.getPolygon());
     }
 
+    @Test
+    void getAngleTest() {
+        Flame flame = new Flame(100, 200, 20, 30, -50, 0, 45);
 
+        assertEquals(45, flame.getAngle());
+    }
 }
