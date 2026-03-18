@@ -196,4 +196,26 @@ public class GameModelTest {
         assertEquals(initialScroll, model.getBackgroundScrollX(), "Background should not move while showing instructions");
     }
 
+    @Test
+    public void testGameOverOnCollision() {
+        GameModel model = new GameModel(1000, 800);
+        model.startGame();
+
+        int timeout = 0;
+        while (model.getObstacles().isEmpty() && timeout < 100) {
+            model.update(1.5f, false);
+            model.update(0.1f, false); // For å flytte fra pending-liste
+            timeout++;
+        }
+
+        if (!model.getObstacles().isEmpty()) {
+            var obstacle = model.getObstacles().get(0);
+            model.getPlayer().setX(obstacle.getX());
+            model.getPlayer().setY(obstacle.getY());
+
+            model.update(0.01f, false);
+            assertEquals(GameState.GAME_OVER, model.getGameState());
+        }
+    }
+
 }
