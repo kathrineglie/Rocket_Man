@@ -4,5 +4,6 @@ public enum GameState {
     HOME_SCREEN,
     PLAYING,
     GAME_OVER,
-    INSTRUCTIONS
+    INSTRUCTIONS,
+    PAUSE
 }

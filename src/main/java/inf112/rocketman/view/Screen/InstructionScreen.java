@@ -9,23 +9,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
-public class InstructionScreen implements Screen {
-    private final Main game;
-    private RocketManController controller;
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private BitmapFont smallFont;
+public class InstructionScreen extends AbstractMenuScreen {
 
     public InstructionScreen(Main game, RocketManController controller) {
-        this.game = game;
-        this.controller = controller;
-    }
-
-    @Override
-    public void show() {
-        batch = new SpriteBatch();
-        this.font = controller.getView().getAssets().getTitleFont();
-        this.smallFont = controller.getView().getAssets().getFont();
+        super(game, controller);
     }
 
     @Override
@@ -50,31 +37,6 @@ public class InstructionScreen implements Screen {
         batch.end();
 
         controller.handleInput();
-    }
-
-    @Override
-    public void resize(int i, int i1) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-        batch.dispose();
     }
 
     private void drawCentered(BitmapFont font, String text, float centerX, float y) {

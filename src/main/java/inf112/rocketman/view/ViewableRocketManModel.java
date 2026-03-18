@@ -4,7 +4,6 @@ import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.GameState;
 import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Character.TPowah;
-import inf112.rocketman.model.PowerUps.Bird;
 import inf112.rocketman.model.PowerUps.PowerUp;
 
 import java.util.List;
@@ -38,25 +37,16 @@ public interface ViewableRocketManModel {
     TPowah getPlayer();
 
     /**
-     * Retrieves the current state of the game (e.g., HOME_SCREEN, PLAYING, GAME_OVER).
-     *
-     * @return the current {@link GameState}
-     */
-    GameState getGameState();
-
-    /**
      * Checks if the player is currently activating the rocket's thrust.
      * this can be used by renderers to decide whether to draw engine flames.
      *
      * @return true if the rocket is thrusting, false otherwise.
      */
-    boolean isThrusting();
+    boolean isMovingUp();
 
     PowerUp getPowerUp();
 
     boolean hasBirdPowerUp();
-
-    Bird getBird();
 
     List<Coin> getCoinList();
 

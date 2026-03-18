@@ -1,16 +1,15 @@
 package inf112.rocketman.view.rendering;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.Obstacles.Flames.Flame;
 import inf112.rocketman.model.Obstacles.IObstacle;
+import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
-import inf112.rocketman.model.PowerUps.Bird;
 
 public class PlayerRenderer {
     private final TextureProvider textures;
@@ -21,27 +20,15 @@ public class PlayerRenderer {
     }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model){
-        if (model.hasBirdPowerUp()) {
-            Bird bird = model.getBird();
-            if (bird != null) {
-                batch.draw(
-                        textures.getTexture("PowerUps/Bird.png"),
-                        bird.getX(),
-                        bird.getY(),
-                        bird.getWidth(),
-                        bird.getHeight()
-                );
-            }
-            return;
-        }
-
         TPowah player = model.getPlayer();
 
         String playerImg;
 
-        if (model.isThrusting()){
-            playerImg = "TPowah/TPowahFlames.png";
-        } else{
+        if (player.getActivePowerUp() == PowerUpType.BIRD) {
+            playerImg = "PowerUps/Bird.png";
+        } else if (model.isMovingUp()){
+            playerImg = "TPowah/TpowahFlames.png";
+        } else {
             playerImg = "TPowah/TPowah.png";
         }
 

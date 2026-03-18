@@ -2,19 +2,17 @@ package inf112.rocketman.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 
-import inf112.rocketman._example.view.Painter;
-import inf112.rocketman.model.GameModel;
 import inf112.rocketman.view.assets.RocketManAssets;
 import inf112.rocketman.view.rendering.*;
 
 
-public class RocketManView implements Painter {
+public class RocketManView {
     private Viewport viewport; // defines screen / world size, aspect ratio and camera
 	private SpriteBatch batch; // used for drawing images / textures
 	private ShapeRenderer shape; // used for drawing shapes
@@ -52,36 +50,24 @@ public class RocketManView implements Painter {
 		assets.dispose();
 	}
 
-	@Override
-	public void draw(double x, double y, double w, double h, String textureName) {
-		Texture texture = assets.getTexture(textureName);
-		if (texture != null) {
-			batch.draw(texture, //
-					(float) x, //
-					(float) y, //
-					(float) w, //
-					(float) h);
-		}
-	}
-
 	/**
 	 * Example:
-	 * 
+	 *
 	 * {@snippet :
 	 * appView.render(painter -> {
 	 * 	painter.draw(x, y, w, h, tex1);
 	 * 	painter.draw(x, y, w, h, tex2);
 	 * });
 	 * }
-	 * 
+	 *
 	 * TODO: probably easier to just accept a list of objects to draw.
-	 * 
+	 *
 	 * See lectures for better examples.
-	 * 
+	 *
 	 * Doing it this way has the advantage of making sure that SpriteBatch's begin()
 	 * and end() methods are called properly.
-	 * 
-	 * @param drawCommands
+	 *
+	 * @param model
 	 */
 	public void render(ViewableRocketManModel model) {
 		ScreenUtils.clear(Color.WHITE);
@@ -97,6 +83,13 @@ public class RocketManView implements Painter {
 		obstacleRenderer.render(batch, model);
 		powerUpRenderer.render(batch, model);
 		coinRenderer.render(batch, viewport,model);
+
+		BitmapFont mainFont = assets.getFont();
+		mainFont.getData().setScale(2.5f);
+		float pauseX = (float) (worldWidth() - 60);
+		float pauseY = (float) (worldHeight() - 60);
+		assets.getFont().draw(batch, "||", pauseX, pauseY);
+		mainFont.getData().setScale(1.0f);
 
 		batch.end();
 		playerRenderer.renderDebug(batch, model);
