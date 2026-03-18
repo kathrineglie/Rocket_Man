@@ -71,6 +71,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float powerUpTimer = 0f;
     private static final float POWER_UP_SPAWN_INTERVAL = 8f;
 
+    private boolean collectedPowerUpThisFrame = false;
+    private boolean collectedCoinThisFrame = false;
+
 
     public GameModel(float worldWidth, float worldHeight) {
         float pWidth = worldWidth/13;
@@ -94,6 +97,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         movingUp = movingUpward;
         player.update(dt, movingUp, worldHeight);
 
+        collectedPowerUpThisFrame = false;
+        collectedCoinThisFrame = false;
         updateBackground(dt);
         updateObstacle(dt);
         updatePowerUp(dt);
@@ -116,6 +121,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         Rectangle playerHitbox = player.getHitBox();
         if (playerHitbox.overlaps(powerUp.getHitBox())) {
             player.setPowerUp(powerUp.getType());
+            collectedPowerUpThisFrame = true;
             player.setVy(0);
             powerUp = null;
         }
@@ -197,6 +203,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             Coin coin = iterator.next();
             coin.update(dt);
             if (getPlayerHitbox().overlaps(coin.getHitbox())) {
+                collectedCoinThisFrame = true;
                 iterator.remove();
                 coinCount += 1;
                 continue;
@@ -393,4 +400,16 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public int getCoinCount() {
          return coinCount;
     }
+
+    @Override
+    public boolean didCollectPowerUpThisFrame() {
+        return collectedPowerUpThisFrame;
+    }
+
+    @Override
+    public boolean didCollectCoinThisFrame() {
+        return collectedCoinThisFrame;
+    }
+
+
 }

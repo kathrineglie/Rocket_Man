@@ -17,7 +17,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        controller.create();
+        //controller.create();
     }
 
     @Override
