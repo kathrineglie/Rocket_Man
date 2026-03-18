@@ -1,4 +1,4 @@
-package inf112.rocketman.view.Screen;
+package inf112.rocketman.view.screen;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

@@ -1,10 +1,9 @@
-package inf112.rocketman.view.Screen;
+package inf112.rocketman.view.screen;
 
 import com.badlogic.gdx.Screen;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 import inf112.rocketman.model.GameState;
-import inf112.rocketman.view.ViewableRocketManModel;
 
 public class GameScreen implements Screen {
     private final Main game;
