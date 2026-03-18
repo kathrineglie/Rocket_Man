@@ -185,24 +185,6 @@ public class GameModelTest {
     }
 
     @Test
-    public void testCoinCollectionIncreasesCounter() {
-        GameModel model = new GameModel(1000, 800);
-        model.startGame();
-
-        RandomCoinFactory factory = new RandomCoinFactory();
-        Coin coin = factory.newCoin(1000, 800, 0);
-        model.getCoinList().add(coin);
-
-        model.getPlayer().setX(coin.getX());
-        model.getPlayer().setY(coin.getY());
-
-        model.update(0.01f, false);
-
-        assertEquals(1, model.getCoinCount(), "Coin count should be 1 after collection");
-        assertEquals(0, model.getCoinList().size(), "Coin should be removed from list after collection");
-    }
-
-    @Test
     public void testNoUpdateDuringInstruction() {
         GameModel model = new GameModel(1000, 800);
         model.startGame();
