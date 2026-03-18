@@ -1,0 +1,251 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > TPowah</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.model.Character</a>
+</div>
+
+<h1>Coverage Summary for Class: TPowah (inf112.rocketman.model.Character)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TPowah</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/17)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87,5%
+  </span>
+  <span class="absValue">
+    (14/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    97,7%
+  </span>
+  <span class="absValue">
+    (43/44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.model.Character;
+&nbsp;import com.badlogic.gdx.math.Polygon;
+&nbsp;import com.badlogic.gdx.math.Rectangle;
+&nbsp;import inf112.rocketman.model.PowerUps.PowerUpType;
+&nbsp;
+&nbsp;public class TPowah {
+&nbsp;    private static final float GROUND_Y = 120f;
+&nbsp;    private static final int HITBOX_OFFSET = 10;
+&nbsp;
+&nbsp;    private final Rectangle bounds;
+<b class="fc">&nbsp;    private float vy = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;    private PowerUpType activePowerUp = PowerUpType.NORMAL;</b>
+&nbsp;
+&nbsp;    private static final float NORMAL_THRUST = 4000f;
+&nbsp;    private static final float NORMAL_GRAVITY = -1000f;
+&nbsp;    private static final float NORMAL_MAX_VY = 700f;
+&nbsp;
+&nbsp;    private static final float BIRD_FLAP_STRENGTH = 550f;
+&nbsp;    private static final float BIRD_GRAVITY = -1000f;
+&nbsp;    private static final float BIRD_MAX_FALL_SPEED = 900f;
+&nbsp;
+&nbsp;
+<b class="fc">&nbsp;    public TPowah (float x, float y, float width, float height) {</b>
+<b class="fc">&nbsp;        this.bounds = new Rectangle(x, y, width, height);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void update(float dt, boolean movementInput, float worldHeight) {
+<b class="fc">&nbsp;        if (activePowerUp == PowerUpType.BIRD) {</b>
+<b class="fc">&nbsp;            updateBird(dt, movementInput, worldHeight);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            updateNormal(dt, movementInput, worldHeight);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void updateNormal(float dt, boolean thrusting, float worldHeight){
+<b class="fc">&nbsp;        float ay = NORMAL_GRAVITY + (thrusting ? NORMAL_THRUST : 0f);</b>
+<b class="fc">&nbsp;        vy += ay * dt;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (vy &gt; NORMAL_MAX_VY) vy = NORMAL_MAX_VY;</b>
+<b class="fc">&nbsp;        if (vy &lt; - NORMAL_MAX_VY) vy = -NORMAL_MAX_VY;</b>
+&nbsp;
+<b class="fc">&nbsp;        bounds.y += vy * dt;</b>
+&nbsp;
+<b class="fc">&nbsp;        keepPlayerInsideBounds(worldHeight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void updateBird(float dt, boolean flap, float worldHeight){
+<b class="pc">&nbsp;        if (flap){</b>
+<b class="fc">&nbsp;            vy = BIRD_FLAP_STRENGTH;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        vy  += BIRD_GRAVITY * dt;</b>
+&nbsp;
+<b class="pc">&nbsp;        if (vy &lt; -BIRD_MAX_FALL_SPEED){</b>
+<b class="nc">&nbsp;            vy = -BIRD_MAX_FALL_SPEED;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        bounds.y += vy * dt;</b>
+<b class="fc">&nbsp;        keepPlayerInsideBounds(worldHeight);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private void keepPlayerInsideBounds(float worldHeight){
+<b class="fc">&nbsp;        if (bounds.y &lt; GROUND_Y) {</b>
+<b class="fc">&nbsp;            bounds.y = GROUND_Y;</b>
+<b class="fc">&nbsp;            vy = 0;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (bounds.y &gt; worldHeight - bounds.height) {</b>
+<b class="fc">&nbsp;            bounds.y = worldHeight - bounds.height;</b>
+<b class="fc">&nbsp;            vy = 0;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setPowerUp(PowerUpType powerUp){
+<b class="fc">&nbsp;        this.activePowerUp = powerUp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public PowerUpType getActivePowerUp(){
+<b class="fc">&nbsp;        return activePowerUp;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * The actual size of the character
+&nbsp;     *
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public Rectangle getBounds() {
+<b class="fc">&nbsp;        return bounds;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the hitbox for the character which is a bit smaller due to hitbox offset
+&nbsp;     *
+&nbsp;     * @return
+&nbsp;     */
+&nbsp;    public Rectangle getHitBox() {
+<b class="fc">&nbsp;        return new Rectangle(bounds.getX() + HITBOX_OFFSET,</b>
+<b class="fc">&nbsp;                bounds.getY() + HITBOX_OFFSET,</b>
+<b class="fc">&nbsp;                bounds.getWidth() - HITBOX_OFFSET*2,</b>
+<b class="fc">&nbsp;                bounds.getHeight() - HITBOX_OFFSET*2);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Returns the hitbox as a polygon
+&nbsp;     *
+&nbsp;     * @return the hitbox for the player as a polygon
+&nbsp;     */
+&nbsp;    public Polygon getPolyHitBox() {
+<b class="fc">&nbsp;        float[] vertices = new float[] {</b>
+&nbsp;                0, 0,
+&nbsp;                0, bounds.height,
+&nbsp;                bounds.width, bounds.height,
+&nbsp;                bounds.width, 0
+&nbsp;        };
+&nbsp;
+<b class="fc">&nbsp;        Polygon polygon = new Polygon(vertices);</b>
+<b class="fc">&nbsp;        polygon.setPosition(bounds.x, bounds.y);</b>
+<b class="fc">&nbsp;        return polygon;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    public float getY() {return bounds.y;}</b>
+&nbsp;
+<b class="fc">&nbsp;    public float getX() {return bounds.x;}</b>
+&nbsp;
+<b class="fc">&nbsp;    public float getWidth() {return bounds.width;}</b>
+&nbsp;
+<b class="fc">&nbsp;    public float getHeight() {return bounds.height; }</b>
+&nbsp;
+<b class="fc">&nbsp;    public void setX(float x) {this.bounds.x = x; }</b>
+&nbsp;
+<b class="fc">&nbsp;    public void setY(float y) {this.bounds.y = y; }</b>
+&nbsp;
+<b class="fc">&nbsp;    public void setVy(float vy) {this.vy = vy;}</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 12:21</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > BackgroundRenderer</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.view.rendering</a>
+</div>
+
+<h1>Coverage Summary for Class: BackgroundRenderer (inf112.rocketman.view.rendering)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BackgroundRenderer</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.view.rendering;
+&nbsp;
+&nbsp;import com.badlogic.gdx.graphics.Texture;
+&nbsp;import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+&nbsp;import com.badlogic.gdx.utils.viewport.Viewport;
+&nbsp;import inf112.rocketman.view.TextureProvider;
+&nbsp;import inf112.rocketman.view.ViewableRocketManModel;
+&nbsp;
+&nbsp;public class BackgroundRenderer {
+&nbsp;
+&nbsp;    private final TextureProvider textures;
+&nbsp;
+<b class="nc">&nbsp;    public BackgroundRenderer(TextureProvider textures){</b>
+<b class="nc">&nbsp;        this.textures = textures;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void render(SpriteBatch batch, Viewport viewPort, ViewableRocketManModel model){
+<b class="nc">&nbsp;        float worldW = viewPort.getWorldWidth();</b>
+<b class="nc">&nbsp;        float worldH = viewPort.getWorldHeight();</b>
+&nbsp;
+<b class="nc">&nbsp;        float x = model.getBackgroundScrollX();</b>
+<b class="nc">&nbsp;        x = x % worldW;</b>
+&nbsp;
+<b class="nc">&nbsp;        Texture bg = textures.getTexture(&quot;Background/background.png&quot;);</b>
+<b class="nc">&nbsp;        batch.draw(bg, x,0, worldW, worldH);</b>
+<b class="nc">&nbsp;        batch.draw(bg, x+worldW, 0, worldW, worldH);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 12:21</div>
+</div>
+</body>
+</html>
