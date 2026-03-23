@@ -1,7 +1,10 @@
 package inf112.rocketman.view.rendering;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
 import inf112.rocketman.model.Character.TPowah;
@@ -15,25 +18,46 @@ public class PlayerRenderer {
     private final TextureProvider textures;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
+    float stateTime;
+
+    private final Animation<TextureRegion> runAnimation;
+
+
     public PlayerRenderer(TextureProvider textures){
         this.textures = textures;
+
+        TextureRegion[] runFrames = new TextureRegion[] {
+                new TextureRegion(textures.getTexture("TPowah/run1.png")),
+                new TextureRegion(textures.getTexture("TPowah/run2.png")),
+                new TextureRegion(textures.getTexture("TPowah/run3.png")),
+                new TextureRegion(textures.getTexture("TPowah/run4.png"))
+        };
+
+        runAnimation = new Animation<>(0.1f, runFrames);
     }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model){
         TPowah player = model.getPlayer();
+        TextureRegion region = null;
+        String playerImg = null;
 
-        String playerImg;
+        stateTime += Gdx.graphics.getDeltaTime();
 
         if (player.getActivePowerUp() == PowerUpType.BIRD) {
-            playerImg = "PowerUps/Bird.png";
-        } else if (model.isMovingUp()){
-            playerImg = "TPowah/TpowahFlames.png";
+            playerImg = "PowerUps/bird.png";
+        } else if (model.usingJetpack()){
+            playerImg = "TPowah/jetpack_flames.png";
+        } else if (model.onGround()) {
+            region = runAnimation.getKeyFrame(stateTime, true);
         } else {
-            playerImg = "TPowah/TPowah.png";
+            playerImg = "TPowah/jetpack.png";
         }
 
-        batch.draw(textures.getTexture(playerImg), player.getX(), player.getY(), player.getWidth(), player.getHeight());
-
+        if (region != null) {
+            batch.draw(region, player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        } else {
+            batch.draw(textures.getTexture(playerImg), player.getX(), player.getY(), player.getWidth(), player.getHeight());
+        }
     }
 
     public void renderDebug(SpriteBatch batch, ViewableRocketManModel model) {

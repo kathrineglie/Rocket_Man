@@ -35,8 +35,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final TPowah player;
 
     private static final float PLAYER_X = 150f;
-    private static final float PLAYER_Y = 100f;
-    private boolean movingUp;
+    private static final float PLAYER_Y = 120f;
+    private static final float GROUND_Y = 120f;
+    private boolean usingJetpack;
 
     private static final float MARGIN = 5f;
     private static final float BG_SPEED = -120f;
@@ -94,8 +95,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             return;
         }
 
-        movingUp = movingUpward;
-        player.update(dt, movingUp, worldHeight);
+        usingJetpack = movingUpward;
+        player.update(dt, usingJetpack, worldHeight);
 
         collectedPowerUpThisFrame = false;
         collectedCoinThisFrame = false;
@@ -330,11 +331,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     @Override
-    public boolean isMovingUp(){
-        return movingUp;
-    }
-
-    @Override
     public PowerUp getPowerUp() {
         return powerUp;
     }
@@ -348,6 +344,16 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     @Override
     public TPowah getPlayer() {
         return player;
+    }
+
+    @Override
+    public boolean usingJetpack() {
+        return usingJetpack;
+    }
+
+    @Override
+    public boolean onGround() {
+        return player.getY() == GROUND_Y;
     }
 
     @Override
