@@ -69,17 +69,6 @@ public class PlayerRenderer {
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.RED);
-
-        // Tegn spillerens hitbox
-        Polygon pPoly = model.getPlayer().getPolyHitBox();
-        shapeRenderer.polygon(pPoly.getTransformedVertices());
-
-        // Tegn flammene sine hitboxer
-        for (IObstacle obs : model.getObstacles()) {
-            if (obs instanceof Flame) {
-                shapeRenderer.polygon(((Flame) obs).getPolygon().getTransformedVertices());
-            }
-        }
         shapeRenderer.end();
     }
 }
