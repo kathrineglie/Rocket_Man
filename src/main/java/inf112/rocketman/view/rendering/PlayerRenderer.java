@@ -1,6 +1,7 @@
 package inf112.rocketman.view.rendering;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,19 +22,22 @@ public class PlayerRenderer {
     float stateTime;
 
     private final Animation<TextureRegion> runAnimation;
+    private final Animation<TextureRegion> birdAnimation;
 
 
     public PlayerRenderer(TextureProvider textures){
         this.textures = textures;
 
-        TextureRegion[] runFrames = new TextureRegion[] {
+        runAnimation = new Animation<>(0.1f,
                 new TextureRegion(textures.getTexture("TPowah/run1.png")),
                 new TextureRegion(textures.getTexture("TPowah/run2.png")),
                 new TextureRegion(textures.getTexture("TPowah/run3.png")),
-                new TextureRegion(textures.getTexture("TPowah/run4.png"))
-        };
+                new TextureRegion(textures.getTexture("TPowah/run4.png")));
 
-        runAnimation = new Animation<>(0.1f, runFrames);
+        birdAnimation = new Animation<>(0.2f,
+                new TextureRegion(textures.getTexture("PowerUps/bird.png")),
+                new TextureRegion(textures.getTexture("PowerUps/birdUP.png"))
+                );
     }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model){
@@ -41,10 +45,11 @@ public class PlayerRenderer {
         TextureRegion region = null;
         String playerImg = null;
 
+        boolean spacePressed = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
         stateTime += Gdx.graphics.getDeltaTime();
 
         if (player.getActivePowerUp() == PowerUpType.BIRD) {
-            playerImg = "PowerUps/bird.png";
+            region = birdAnimation.getKeyFrame(stateTime, true);
         } else if (model.usingJetpack()){
             playerImg = "TPowah/jetpack_flames.png";
         } else if (model.onGround()) {
