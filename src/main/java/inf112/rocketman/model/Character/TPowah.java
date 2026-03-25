@@ -28,7 +28,10 @@ public class TPowah {
     public void update(float dt, boolean movementInput, float worldHeight) {
         if (activePowerUp == PowerUpType.BIRD) {
             updateBird(dt, movementInput, worldHeight);
-        } else {
+        } else if (activePowerUp == PowerUpType.ROBOT) {
+
+        }
+        else {
             updateNormal(dt, movementInput, worldHeight);
         }
     }

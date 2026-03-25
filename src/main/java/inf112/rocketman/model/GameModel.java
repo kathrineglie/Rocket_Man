@@ -41,7 +41,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private static final float PLAYER_Y = 120f;
     private static final float GROUND = 120f;
     private boolean usingJetpack;
-    private Random random = new Random();
+    private final Random random = new Random();
     private static final float MARGIN = 5f;
 
     private final float worldHeight;
@@ -87,8 +87,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float flameTimer = 0f;
     private float lazerTimer = 0f;
     private float rocketTimer = 0f;
-
-
 
     public GameModel(float worldWidth, float worldHeight) {
         float pWidth = worldWidth/13;
@@ -199,8 +197,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 }
 
                 if (playerHitbox.overlaps(obstacleHitbox)) {
-                    if (player.getActivePowerUp() == PowerUpType.BIRD) {
-                        deactivateBirdPowerUp();
+                    if (player.hasActivePowerUp()) {
+                        deactivatePowerUp();
                         iterator.remove();
                     } else {
 
