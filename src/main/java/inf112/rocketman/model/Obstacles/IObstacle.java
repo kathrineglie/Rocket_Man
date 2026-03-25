@@ -37,4 +37,8 @@ public interface IObstacle {
 
     float getHeight();
 
+    float getVX();
+
+    void setVX(float bgSpeed);
+
 }

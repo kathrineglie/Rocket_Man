@@ -70,4 +70,11 @@ public class Obstacle implements IObstacle {
     public float getHeight() {
         return height;
     }
+
+    public float getVX() {return vx; }
+
+    @Override
+    public void setVX(float bgSpeed) {
+        vx = bgSpeed;
+    }
 }

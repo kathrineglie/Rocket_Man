@@ -44,8 +44,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final Random random = new Random();
     private static final float MARGIN = 5f;
 
-    private double bgSpeed = -120;
-    private double MAX_BG_SPEED = 80;
+    private float bgSpeed = -400f;
+    private float MAX_BG_SPEED = -1000f;
+    private float rocketSpeed = -500f;
+    private static final float MAX_ROCKET_SPEED = - 1200f;
 
     private final float worldHeight;
     private final float worldWidth;
@@ -54,6 +56,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private float bgScrollX = 0f;
 
+    private static final int NUM_OBSTACLES = 3;
+
     private final List<IObstacle> obstacles = new ArrayList<>();
     private final RocketFactory rocketFactory = new RandomRocketFactory();
     private final LazerFactory lazerFactory = new RandomLazerFactory();
@@ -61,9 +65,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final PowerUpFactory powerUpFactory = new RandomPowerUpFactory();
     private final CoinFactory coinFactory = new RandomCoinFactory();
 
-    private double obstacleTimer = 0f; // Timer that counts down until the next obstacle can spawn
-    private double obstacleSpawnInterval = 2.5f; // The time it takes before the next object spawns
-    private double FINAL_OBSTACLE_SPAWN_INTERVAL = 2f; // The final time it can take between new obstacles to spawn
+    private float obstacleTimer = 0f; // Timer that counts down until the next obstacle can spawn
+    private float obstacleSpawnInterval = 2.5f; // The time it takes before the next object spawns
+    private float FINAL_OBSTACLE_SPAWN_INTERVAL = 2f; // The final time it can take between new obstacles to spawn
 
     private static final float MIN_LAZER_VERTICAL_DISTANCE = 80f;
     private float coinTimer = 10f;
@@ -110,7 +114,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         if (gameState != GameState.PLAYING){
             return;
         }
-
+        updateDifficulty();
         usingJetpack = movingUpward;
         player.update(dt, usingJetpack, worldHeight);
 
@@ -171,7 +175,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                         deactivatePowerUp();
                         iterator.remove();
                     } else {
-
                         gameState = GameState.GAME_OVER;
                         gameScore = 0;
                         coinCount = 0;
@@ -287,8 +290,18 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
     private void increaseDifficulty() {
-        obstacleSpawnInterval = Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleSpawnInterval - 0.1);
-        bgSpeed = Math.max(MAX_BG_SPEED, bgSpeed - 0.1);
+        obstacleSpawnInterval = (float) Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleSpawnInterval - 0.4);
+        bgSpeed = (float) Math.max(MAX_BG_SPEED, bgSpeed - 10);
+        rocketSpeed = (float) Math.max(MAX_ROCKET_SPEED, rocketSpeed - 10);
+
+        for (IObstacle obstacle : obstacles) {
+            if (obstacle instanceof Flame) {
+                obstacle.setVX(bgSpeed);
+            } else if (obstacle instanceof Rocket) {
+                obstacle.setVX(rocketSpeed);
+            }
+        }
+
         difficulty ++;
     }
 
@@ -296,8 +309,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * This method updates the obstacle timer depending on how far you are in the game
      */
     private void updateDifficulty() {
-
-        if (gameScore > difficulty * 20 && difficulty != MAX_DIFFICULTY) {
+        if (gameScore > difficulty * 10 && difficulty != MAX_DIFFICULTY) {
             increaseDifficulty();
         }
 
@@ -309,18 +321,18 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * @return returns a random obstacle of the specified obstacles
      */
     private Obstacle getRandomObstacle() {
-        int randNum = random.nextInt(1, 4);
+        int randNum = random.nextInt(0, Math.min(difficulty, NUM_OBSTACLES));
 
         return switch (randNum) {
-            case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);
+            case 0 -> flameFactory.newFlame(worldWidth, worldHeight, GROUND, MARGIN, (float) bgSpeed);
+            case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN, rocketSpeed);
             case 2 -> {
                 Lazer lazer = getNonOverlappingLazer();
                 if (lazer != null) {
                     yield lazer;
                 } else {
-                    yield rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);}
+                    yield rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN, rocketSpeed);}
             }
-            case 3 -> flameFactory.newFlame(worldWidth, worldHeight, GROUND, MARGIN, (float) bgSpeed);
             default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
         };
     }
@@ -366,7 +378,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         powerUpTimer -= dt;
 
         if (powerUp == null && powerUpTimer <= 0){
-            powerUp = powerUpFactory.newPowerUp(worldWidth, worldHeight);
+            powerUp = powerUpFactory.newPowerUp(worldWidth, worldHeight, GROUND, MARGIN, bgSpeed);
             powerUpTimer = POWER_UP_SPAWN_INTERVAL;
         }
 
