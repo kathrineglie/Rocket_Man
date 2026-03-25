@@ -10,6 +10,7 @@ public class Lazer extends Obstacle {
     private float warningLazerCount = 1.5f;
     private float activeLazerCount = 2f;
     private int progression = 1;
+
     protected Lazer(float x, float y, float width, float height, float vx, float vy) {
         super(x, y, width, height, vx, vy);
     }

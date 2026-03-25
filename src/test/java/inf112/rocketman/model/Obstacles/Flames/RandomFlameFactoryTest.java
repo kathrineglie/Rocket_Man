@@ -13,10 +13,11 @@ public class RandomFlameFactoryTest {
         float worldWidth = 1000f;
         float worldHeight = 800f;
         float margin = 20f;
+        float ground = 120;
         float vx = 0.1f;
 
         for (int i = 0; i < 1000; i++) {
-            Flame flame = factory.newFlame(worldWidth, worldHeight, margin, vx);
+            Flame flame = factory.newFlame(worldWidth, worldHeight, ground, margin, vx);
 
             assertNotNull(flame); // Checks that the flame is not null
 

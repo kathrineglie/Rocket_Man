@@ -9,7 +9,7 @@ public class RandomFlameFactory implements FlameFactory {
     private float[] angles = {0f, 90f, 45f, 135f};
 
     @Override
-    public Flame newFlame(float worldWidth, float worldHeight, float margin, float vx) {
+    public Flame newFlame(float worldWidth, float worldHeight, float ground, float margin, float vx) {
         // Calculates random length of the lazer
         float minNum = Math.min(worldWidth, worldHeight);
 

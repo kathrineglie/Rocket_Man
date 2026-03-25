@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Coin {
     private Rectangle hitbox;
     private float x, y, width, height, vx;
-    private float GROUND = 170f;
+
     protected Coin(float x, float y, float width, float height, float vx) {
         this.hitbox = new Rectangle(x,y,width,height);
         this.x = x;
@@ -24,8 +24,8 @@ public class Coin {
         return hitbox;
     }
 
-    public boolean isOfScreen(float worldWidth, float worldHeight) {
-        return (x + width < 0 || y + height < GROUND || y > worldHeight);
+    public boolean isOfScreen(float worldHeight, float margin) {
+        return (x + width < margin || y < margin || y + height > worldHeight - margin);
     }
 
     public float getX() {
