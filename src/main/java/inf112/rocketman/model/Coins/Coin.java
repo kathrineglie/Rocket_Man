@@ -20,10 +20,6 @@ public class Coin {
         hitbox.set(x,y,width,height);
     }
 
-    public void setSpeed(float speed){
-        this.vx = speed;
-    }
-
     public Rectangle getHitbox() {
         return hitbox;
     }
