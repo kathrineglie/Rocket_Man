@@ -4,12 +4,11 @@ import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 
 public class TPowah {
-    private static final float GROUND_Y = 120f;
     private static final int HITBOX_OFFSET = 10;
 
     private final Rectangle bounds;
     private float vy = 0;
-
+    private final float ground;
     private PowerUpType activePowerUp = PowerUpType.NORMAL;
 
     private static final float NORMAL_THRUST = 4000f;
@@ -20,23 +19,35 @@ public class TPowah {
     private static final float BIRD_GRAVITY = -1000f;
     private static final float BIRD_MAX_FALL_SPEED = 900f;
 
+    private boolean robotIsJumping = false;
+    private boolean robotNeedsRelease = false;
+    private float robotJumpTime = 0f;
 
-    public TPowah (float x, float y, float width, float height) {
+    private static final float ROBOT_BOOST = 50f;
+    private static final float ROBOT_MIN_JUMP = 400f;
+    private static final float ROBOT_SLOW_GRAVITY = -150f;
+    private static final float ROBOT_GRAVITY = -800f;
+    private static final float ROBOT_MAX_FALL_SPEED = 800;
+
+
+
+    public TPowah (float x, float y, float width, float height, float ground) {
         this.bounds = new Rectangle(x, y, width, height);
+        this.ground = ground;
     }
 
     public void update(float dt, boolean movementInput, float worldHeight) {
         if (activePowerUp == PowerUpType.BIRD) {
             updateBird(dt, movementInput, worldHeight);
         } else if (activePowerUp == PowerUpType.ROBOT) {
-
+            updateRobot(dt, movementInput, worldHeight);
         }
         else {
             updateNormal(dt, movementInput, worldHeight);
         }
     }
 
-    private void updateNormal(float dt, boolean thrusting, float worldHeight){
+    private void updateNormal(float dt, boolean thrusting, float worldHeight) {
         float ay = NORMAL_GRAVITY + (thrusting ? NORMAL_THRUST : 0f);
         vy += ay * dt;
 
@@ -63,10 +74,39 @@ public class TPowah {
         keepPlayerInsideBounds(worldHeight);
     }
 
+    private void updateRobot(float dt, boolean movementInput, float worldHeight) {
+        if (!movementInput && onGround()) {
+            robotIsJumping = false;
+            robotNeedsRelease = false;
+        }
+
+        if (movementInput && onGround() && !robotIsJumping && !robotNeedsRelease) {
+            vy = ROBOT_MIN_JUMP;
+            robotIsJumping = true;
+        }
+
+        if (movementInput && !onGround() && robotIsJumping && !robotNeedsRelease) {
+            vy += ROBOT_BOOST;
+        }
+
+        if (!movementInput && robotIsJumping || bounds.y + bounds.height == worldHeight ) {
+            robotNeedsRelease = true;
+        }
+
+        if (movementInput && robotNeedsRelease && robotIsJumping) {
+            vy  += ROBOT_SLOW_GRAVITY * dt;
+        } else {
+            vy  += ROBOT_GRAVITY * dt;
+        }
+
+        bounds.y += vy * dt;
+        keepPlayerInsideBounds(worldHeight);
+    }
+
 
     private void keepPlayerInsideBounds(float worldHeight){
-        if (bounds.y < GROUND_Y) {
-            bounds.y = GROUND_Y;
+        if (bounds.y < ground) {
+            bounds.y = ground;
             vy = 0;
         }
         if (bounds.y > worldHeight - bounds.height) {
@@ -122,8 +162,12 @@ public class TPowah {
         return polygon;
     }
 
+    public boolean hasPowerUp() {
+        return activePowerUp != PowerUpType.NORMAL;
+    }
+
     public boolean onGround() {
-        return vy == GROUND_Y;
+        return bounds.y == ground;
     }
 
     public float getY() {return bounds.y;}

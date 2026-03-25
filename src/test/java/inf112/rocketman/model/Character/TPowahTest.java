@@ -12,7 +12,7 @@ public class TPowahTest {
 
     @Test
     public void testGravityPullsPlayerDown() {
-        TPowah player = new TPowah(100, 500, 50, 50);
+        TPowah player = new TPowah(100, 500, 50, 50, 50);
         float initialY = player.getY();
 
         player.update(0.1f, false, 800);
@@ -22,7 +22,7 @@ public class TPowahTest {
 
     @Test
     public void testHitboxIsSmallerThanBounds() {
-        TPowah player = new TPowah(100, 100, 50, 50);
+        TPowah player = new TPowah(100, 100, 50, 50, 50);
         Rectangle bounds = player.getBounds();
         Rectangle hitBox = player.getHitBox();
 
@@ -33,7 +33,7 @@ public class TPowahTest {
 
     @Test
     public void testBirdPowerUpFlap() {
-        TPowah player = new TPowah(100, 300, 50, 50);
+        TPowah player = new TPowah(100, 300, 50, 50, 50);
         player.setPowerUp(PowerUpType.BIRD);
 
         player.update(0.1f, true, 800);
@@ -45,19 +45,19 @@ public class TPowahTest {
 
     @Test
     public void testPlayerCannotGoBelowGround() {
-        TPowah player = new TPowah(100, 125, 50, 50);
+        TPowah player = new TPowah(100, 125, 50, 50, 50);
 
         for (int i = 0; i < 100; i++) {
             player.update(0.1f, false, 800);
         }
 
-        assertEquals(120f, player.getY(), 0.01f, "Player should stop at GROUND_Y (120");
+        assertEquals(50f, player.getY(), 0.01f, "Player should stop at GROUND_Y (120");
     }
 
     @Test
     public void testPlayerCannotGoAboveCeiling() {
         float worldHeight = 800f;
-        TPowah player = new TPowah(100, 750, 50, 50);
+        TPowah player = new TPowah(100, 750, 50, 50, 50);
 
         for (int i = 0; i < 50; i ++) {
             player.update(0.1f, true, worldHeight);
@@ -69,7 +69,7 @@ public class TPowahTest {
 
     @Test
     public void testTerminalVelocity() {
-        TPowah player = new TPowah(100, 500, 50, 50);
+        TPowah player = new TPowah(100, 500, 50, 50, 50);
 
         for (int i = 0; i < 100; i++) {
             player.update(0.1f, true, 800);
@@ -85,18 +85,18 @@ public class TPowahTest {
 
     @Test
     public void testVelocityResetsOnGround() {
-        TPowah player = new TPowah(100, 120, 50, 50);
+        TPowah player = new TPowah(100, 120, 50, 50, 50);
 
         player.update(1.0f, false, 800);
 
         player.update(0.01f, true, 800);
 
-        assertTrue(player.getY() > 120f, "Player should lift off immediately if velocity was reset on ground");
+        assertTrue(player.getY() > 50f, "Player should lift off immediately if velocity was reset on ground");
     }
 
     @Test
     public void testCollisionDetection() {
-        TPowah player = new TPowah(100, 100, 50, 50);
+        TPowah player = new TPowah(100, 100, 50, 50, 50);
         Rectangle obstacle = new Rectangle(110, 110, 50, 50);
 
         assertTrue(player.getHitBox().overlaps(obstacle), "Hitbox should overlap with the obstacle");
@@ -104,7 +104,7 @@ public class TPowahTest {
 
     @Test
     public void testXPositionIsConstant() {
-        TPowah player = new TPowah(100, 400, 50, 50);
+        TPowah player = new TPowah(100, 400, 50, 50, 50);
         player.update(0.1f, true, 800);
         player.update(0.1f, false, 800);
 
@@ -113,7 +113,7 @@ public class TPowahTest {
 
     @Test
     public void testPowerUpSwitching() {
-        TPowah player = new TPowah(100, 400, 50, 50);
+        TPowah player = new TPowah(100, 400, 50, 50, 50);
 
         player.setPowerUp(PowerUpType.BIRD);
         assertEquals(PowerUpType.BIRD, player.getActivePowerUp());
@@ -124,7 +124,7 @@ public class TPowahTest {
 
     @Test
     public void testPolyHitBoxFollowsPlayer() {
-        TPowah player = new TPowah(100, 100, 50, 50);
+        TPowah player = new TPowah(100, 100, 50, 50, 50);
         player.setY(200);
 
         float polyY = player.getPolyHitBox().getY();
@@ -133,8 +133,8 @@ public class TPowahTest {
 
     @Test
     public void testMovementScaleWithDeltaTime() {
-        TPowah player1 = new TPowah(100, 400, 50, 50);
-        TPowah player2 = new TPowah(100, 400, 50, 50);
+        TPowah player1 = new TPowah(100, 400, 50, 50, 50);
+        TPowah player2 = new TPowah(100, 400, 50, 50, 50);
 
         player1.update(0.01f, true, 800);
         player2.update(0.02f, true, 800);
@@ -149,7 +149,7 @@ public class TPowahTest {
     public void testPlayerSizeIsConstantDuringUpdate() {
         float width = 50f;
         float height = 60f;
-        TPowah player = new TPowah(100, 400, width, height);
+        TPowah player = new TPowah(100, 400, width, height, 50);
 
         player.update(0.1f, true, 800);
 

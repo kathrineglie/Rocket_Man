@@ -34,6 +34,8 @@ import java.util.Random;
 
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
     private final TPowah player;
+    private int difficulty = 1;
+    private static final int MAX_DIFFICULTY = 5;
 
     private static final float PLAYER_X = 150f;
     private static final float PLAYER_Y = 120f;
@@ -41,7 +43,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private boolean usingJetpack;
     private final Random random = new Random();
     private static final float MARGIN = 5f;
-    private static final float BG_SPEED = -120f;
+
+    private double bgSpeed = -120;
+    private double MAX_BG_SPEED = 80;
 
     private final float worldHeight;
     private final float worldWidth;
@@ -57,8 +61,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final PowerUpFactory powerUpFactory = new RandomPowerUpFactory();
     private final CoinFactory coinFactory = new RandomCoinFactory();
 
-    private float obstacleTimer = 0f;
-    private static final float OBSTACLE_SPAWN_INTERVAL = 1.5f;
+    private double obstacleTimer = 0f; // Timer that counts down until the next obstacle can spawn
+    private double obstacleSpawnInterval = 2.5f; // The time it takes before the next object spawns
+    private double FINAL_OBSTACLE_SPAWN_INTERVAL = 2f; // The final time it can take between new obstacles to spawn
+
     private static final float MIN_LAZER_VERTICAL_DISTANCE = 80f;
     private float coinTimer = 10f;
     private int coinCount = 0;
@@ -87,7 +93,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public GameModel(float worldWidth, float worldHeight) {
         float pWidth = worldWidth/13;
         float pHeight= worldHeight/7;
-        player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight);
+        player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight, GROUND);
+        player.setPowerUp(PowerUpType.NORMAL);
+
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
     }
@@ -111,9 +119,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         updateBackground(dt);
         updateObstacle(dt);
         updatePowerUp(dt);
+
         checkPowerUpCollision();
         handleObstacleCollision();
         updateCoins(dt);
+
         if (gameTimer <= 0f) {
             gameScore++;
             gameTimer = gameScoreTimer;
@@ -157,8 +167,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 }
 
                 if (playerHitbox.overlaps(obstacleHitbox)) {
-                    if (player.getActivePowerUp() == PowerUpType.BIRD) {
-                        deactivateBirdPowerUp();
+                    if (player.hasPowerUp()) {
+                        deactivatePowerUp();
                         iterator.remove();
                     } else {
 
@@ -177,7 +187,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     /**
-     * Handles collision for flame object
+     * Handles collision for flame object seperate since it is a polygon
      * @param obstacle
      */
     private boolean flameCollision(IObstacle obstacle) {
@@ -188,8 +198,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         Polygon polyHitBox = player.getPolyHitBox();
 
         if (Intersector.overlapConvexPolygons(((Flame) obstacle).getPolygon(), polyHitBox)) {
-            if (player.getActivePowerUp() == PowerUpType.BIRD) {
-                deactivateBirdPowerUp();
+            if (player.hasPowerUp()) {
+                deactivatePowerUp();
             } else {
                 gameState = GameState.GAME_OVER;
                 gameScore = 0;
@@ -200,26 +210,46 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return false;
     }
 
+    /**
+     * Updates coins
+     *
+     * @param dt
+     */
     private void updateCoins(float dt) {
         coinTimer -= dt;
         if (coinTimer <= 0) {
-            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, GROUND, MARGIN, BG_SPEED));
+            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, GROUND, MARGIN, (float) bgSpeed));
             coinTimer = random.nextFloat(3f, 10f);
         }
         Iterator<Coin> iterator = coinList.iterator();
         while (iterator.hasNext()) {
             Coin coin = iterator.next();
             coin.update(dt);
-            if (getPlayerHitbox().overlaps(coin.getHitbox())) {
-                collectedCoinThisFrame = true;
+
+            if (handleCoinCollision(coin)) {
                 iterator.remove();
-                coinCount += 1;
-                continue;
             }
+
             if (coin.isOfScreen(worldHeight, MARGIN)) {
                 iterator.remove();
             }
         }
+
+    }
+
+    /**
+     * Handles the collision of a coin and the player.
+     *
+     * @param coin takes a coin in and checks if it overlaps with the player hitbox
+     * @return true if the coin and player hitbox overlaps
+     */
+    private boolean handleCoinCollision(Coin coin) {
+        if (getPlayerHitbox().overlaps(coin.getHitbox())) {
+            collectedCoinThisFrame = true;
+            coinCount += 1;
+            return true;
+        }
+        return false;
     }
 
 
@@ -237,7 +267,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
         if (obstacleTimer <= 0) {
             obstacles.add(getRandomObstacle());
-            obstacleTimer = OBSTACLE_SPAWN_INTERVAL;
+            obstacleTimer = obstacleSpawnInterval;
         }
 
         Iterator<IObstacle> iterator = obstacles.iterator();
@@ -255,6 +285,22 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 iterator.remove();
             }
         }
+    }
+    private void increaseDifficulty() {
+        obstacleSpawnInterval = Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleSpawnInterval - 0.1);
+        bgSpeed = Math.max(MAX_BG_SPEED, bgSpeed - 0.1);
+        difficulty ++;
+    }
+
+    /**
+     * This method updates the obstacle timer depending on how far you are in the game
+     */
+    private void updateDifficulty() {
+
+        if (gameScore > difficulty * 20 && difficulty != MAX_DIFFICULTY) {
+            increaseDifficulty();
+        }
+
     }
 
     /**
@@ -274,7 +320,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 } else {
                     yield rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);}
             }
-            case 3 -> flameFactory.newFlame(worldWidth, worldHeight, GROUND, MARGIN, BG_SPEED);
+            case 3 -> flameFactory.newFlame(worldWidth, worldHeight, GROUND, MARGIN, (float) bgSpeed);
             default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
         };
     }
@@ -333,14 +379,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
-    private void deactivateBirdPowerUp(){
+    private void deactivatePowerUp(){
          player.setPowerUp(PowerUpType.NORMAL);
          player.setVy(0);
     }
 
 
     private void updateBackground(float dt) {
-        bgScrollX += BG_SPEED * dt;
+        bgScrollX += bgSpeed * dt;
         if (worldWidth > 0) {
             bgScrollX = bgScrollX % worldWidth;
         } else {
