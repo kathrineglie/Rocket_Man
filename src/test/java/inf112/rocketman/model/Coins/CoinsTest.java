@@ -44,8 +44,10 @@ public class CoinsTest {
         float worldW = 800f;
         float worldH = 600f;
         float margin = 50f;
+        float ground = 50f;
+        float backGroundSpeed = -120f;
 
-        Coin spawnedCoin = factory.newCoin(worldW, worldH, margin);
+        Coin spawnedCoin = factory.newCoin(worldW, worldH, ground, margin, backGroundSpeed);
 
         assertNotNull(spawnedCoin);
 
