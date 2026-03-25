@@ -7,6 +7,9 @@ import java.util.List;
 public record DifficultySettings(
         int level,
         float scrollSpeed,
-        float spawnInterval,
+        float flameSpawnInterval,
+        float lazerSpawnInterval,
+        float rocketSpawnInterval,
+        int maxObstacles,
         List<PatternType> allowedPatterns
 ) { }
