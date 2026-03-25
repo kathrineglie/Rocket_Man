@@ -6,6 +6,8 @@ public class Rocket extends Obstacle {
 
     private static boolean active = false;
     private float spawnTimer = 1.5f;
+    private float extraSpeed = 140f;
+
     protected Rocket(float x, float y, float width, float height, float vx, float vy) {
         super(x, y, width, height, vx, vy);
     }
@@ -20,6 +22,11 @@ public class Rocket extends Obstacle {
         } else {
             super.update(dt);
         }
+    }
+
+
+    public void setSpeed(float backgroundSpeed){
+        this.vx = backgroundSpeed - extraSpeed ;
     }
 
     public static void setState(boolean state) {

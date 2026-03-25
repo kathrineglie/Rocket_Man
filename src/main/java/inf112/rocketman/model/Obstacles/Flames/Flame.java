@@ -26,6 +26,10 @@ public class Flame extends Obstacle {
         this.polygon.setRotation(angle);
     }
 
+    public void setSpeed(float speed){
+        this.vx = speed;
+    }
+
     @Override
     public Rectangle getHitBox() {
         return null;
