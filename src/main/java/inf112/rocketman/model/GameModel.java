@@ -49,8 +49,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private float bgScrollX = 0f;
 
-    private final Random random = new Random();
-
     private final List<IObstacle> obstacles = new ArrayList<>();
     private final RocketFactory rocketFactory = new RandomRocketFactory();
     private final LazerFactory lazerFactory = new RandomLazerFactory();
@@ -64,6 +62,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float coinSpwanTimer = 10f;
     private int coinCount = 0;
     List<Coin> coinList = new ArrayList<>();
+
     private int gameScore = 0;
     private float gameTimer = 0.5f;
     private float gameScoreTimer = 0.5f;
@@ -74,7 +73,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private boolean collectedPowerUpThisFrame = false;
     private boolean collectedCoinThisFrame = false;
-
 
     public GameModel(float worldWidth, float worldHeight) {
         float pWidth = worldWidth/13;
@@ -193,9 +191,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     private void updateCoins(float dt) {
+
         coinTimer -= dt;
         if (coinTimer <= 0) {
-            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, MARGIN, BG_SPEED));
+            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, GROUND, MARGIN, BG_SPEED));
             coinTimer = coinSpwanTimer;
         }
         Iterator<Coin> iterator = coinList.iterator();
@@ -208,7 +207,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 coinCount += 1;
                 continue;
             }
-            if (coin.isOfScreen(worldWidth, worldHeight)) {
+            if (coin.isOfScreen(worldHeight, MARGIN)) {
                 iterator.remove();
             }
         }
@@ -255,7 +254,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * @return returns a random obstacle of the specified obstacles
      */
     private Obstacle getRandomObstacle() {
-        int randNum = random.nextInt(1, 4);
+        Random rand = new Random();
+        int randNum = rand.nextInt(1, 4);
         return switch (randNum) {
             case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);
             case 2 -> lazerFactory.newLazer(worldWidth, worldHeight, GROUND, MARGIN);
@@ -269,7 +269,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      *
      * @return
      */
-     public List<IObstacle> getObstacles() {
+    public List<IObstacle> getObstacles() {
         return obstacles;
      }
 
@@ -293,7 +293,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             }
         }
     }
-
 
     private void deactivateBirdPowerUp(){
          player.setPowerUp(PowerUpType.NORMAL);
