@@ -24,11 +24,11 @@ public class TPowah {
     private float robotJumpTime = 0f;
     private boolean movementInput = false;
 
-    private static final float ROBOT_BOOST = 50f;
-    private static final float ROBOT_MIN_JUMP = 400f;
-    private static final float ROBOT_SLOW_GRAVITY = -150f;
+    private static final float ROBOT_BOOST = 20f;
+    private static final float ROBOT_MIN_JUMP = 200f;
+    private static final float ROBOT_SLOW_GRAVITY = -100f;
     private static final float ROBOT_GRAVITY = -800f;
-    private static final float ROBOT_MAX_FALL_SPEED = 800;
+    private static final float MAX_ROBOT_BOOST = 30f;
 
 
 
@@ -88,7 +88,7 @@ public class TPowah {
         }
 
         if (movementInput && !onGround() && robotIsJumping && !robotNeedsRelease) {
-            vy += ROBOT_BOOST;
+            vy += Math.min(ROBOT_BOOST, MAX_ROBOT_BOOST);
         }
 
         if (!movementInput && robotIsJumping || bounds.y + bounds.height == worldHeight ) {

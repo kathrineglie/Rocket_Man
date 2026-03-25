@@ -31,7 +31,7 @@ public class RandomPowerUpFactory implements PowerUpFactory{
                 availableTypes.add(type);
             }
         }
-         return PowerUpType.ROBOT;
-        //return availableTypes.get(random.nextInt(availableTypes.size()));
+
+        return availableTypes.get(random.nextInt(availableTypes.size()));
     }
 }
