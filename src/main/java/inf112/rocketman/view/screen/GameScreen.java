@@ -22,13 +22,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         controller.handleInput();
-        if (controller.getState() == GameState.PAUSE) {
-            controller.getView().render(controller.getViewableModel());
-
-            game.getPauseScreen().render(delta);
-        } else {
-            controller.render();
-        }
+        controller.render();
     }
 
     @Override public void resize(int width, int height) { controller.resize(width, height); }

@@ -6,9 +6,9 @@ public class RandomLazerFactory implements LazerFactory {
     Random random = new Random();
 
     @Override
-    public Lazer newLazer(float worldWidth, float worldHeight, float margin) {
-        float randY = random.nextFloat(0 + margin, worldHeight - margin);
+    public Lazer newLazer(float worldWidth, float worldHeight, float ground, float margin) {
         float lazerHeight = worldHeight / 15;
+        float randY = random.nextFloat(ground + margin + lazerHeight, worldHeight - margin - lazerHeight);
         return new Lazer(worldWidth - margin - worldWidth, randY, worldWidth, lazerHeight, 0, 0f);
     }
 }
