@@ -119,6 +119,10 @@ public class TPowah {
         return polygon;
     }
 
+    public boolean onGround() {
+        return vy == GROUND_Y;
+    }
+
     public float getY() {return bounds.y;}
 
     public float getX() {return bounds.x;}

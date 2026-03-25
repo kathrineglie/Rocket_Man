@@ -1,22 +1,29 @@
 package inf112.rocketman.controller;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import inf112.rocketman.model.GameState;
+import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
 
 public class RocketManController {
 
     private RocketManView view;
-    private ControllableRocketManModel controllableModel;
-    private ViewableRocketManModel viewableModel;
+    private final ControllableRocketManModel controllableModel;
+    private final ViewableRocketManModel viewableModel;
 
     private boolean jetpackPlaying = false;
     private long jetpackSoundId = -1;
-    private static final String JETPACK_SOUND = "Sounds/Teleport/MP3/Teleport.mp3";
+    private boolean gameOverSoundPlayed = false;
+    private static final String MUSIC = "Sounds/music.mp3";
+    private static final String JETPACK_SOUND = "Sounds/jetpack.mp3";
+    private static final String COIN_SOUND = "Sounds/coin.mp3";
+    private static final String POWERUP_SOUND ="Sounds/powerup.mp3";
+    private static final String BIRD_SOUND = "Sounds/bird.mp3";
+    private static final String GAME_OVER = "Sounds/game_over.mp3";
+    private static final String MEOW_END_SONG = "Sounds/MeowMeow.mp3";
 
     public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {
         this.controllableModel = controllableRocketManModel;
@@ -26,24 +33,69 @@ public class RocketManController {
     public void create() {
         view = new RocketManView();
         view.create(controllableModel.getWorldWidth(), controllableModel.getWorldHeight());
+        view.playExclusiveMusic(MUSIC);
     }
 
 
     public void render() {
         float dt = Gdx.graphics.getDeltaTime();
-        boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);
-
-        boolean input;
-        if (viewableModel.hasBirdPowerUp()) {
-            input = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
-        } else {
-            input = Gdx.input.isKeyPressed(Input.Keys.SPACE);
-        }
+        boolean input = getMovementInput();
 
         controllableModel.update(dt, input);
 
+        handleFrameSounds();
+
         view.render(viewableModel);
     }
+
+    private boolean getMovementInput() {
+        if (viewableModel.hasBirdPowerUp()) {
+            return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        }
+        return Gdx.input.isKeyPressed(Input.Keys.SPACE);
+    }
+
+    private void handleFrameSounds() {
+        GameState state = controllableModel.getGameState();
+
+        if (state == GameState.GAME_OVER) {
+            handleGameOverSounds();
+            return;
+        }
+
+        handleCollectibleSounds();
+    }
+
+    private void handleGameOverSounds() {
+        stopJetpackIfPlaying();
+
+        if (!gameOverSoundPlayed) {
+            view.stopAllMusic();
+            view.playSound(GAME_OVER);
+            view.playExclusiveMusic(MEOW_END_SONG);
+            gameOverSoundPlayed = true;
+        }
+    }
+
+    private void handleCollectibleSounds() {
+        if (viewableModel.didCollectPowerUpThisFrame()) {
+            view.playSound(POWERUP_SOUND);
+        }
+
+        if (viewableModel.didCollectCoinThisFrame()) {
+            view.playSound(COIN_SOUND);
+        }
+    }
+
+    private void stopJetpackIfPlaying() {
+        if (jetpackPlaying) {
+            view.stopSound(JETPACK_SOUND, jetpackSoundId);
+            jetpackPlaying = false;
+            jetpackSoundId = -1;
+        }
+    }
+
+
 
     public void resize(int width, int height) {
         view.resize(width, height);
@@ -68,14 +120,24 @@ public class RocketManController {
 
     private void handleHomeScreenInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            view.stopAllMusic();
+            view.playExclusiveMusic(MUSIC);
+            resetSoundState();
             controllableModel.startGame();
         }
     }
 
     private void handlePlayingInput() {
+        handlePauseButtonInput();
+        handleJetpackInput();
+        handleBirdInput();
+    }
+
+    private void handlePauseButtonInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             controllableModel.pauseGame();
         }
+
         if (Gdx.input.justTouched()) {
             float mouseX = Gdx.input.getX();
             float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
@@ -86,32 +148,55 @@ public class RocketManController {
             if (Math.abs(mouseX - pauseX) < 50 && Math.abs(mouseY - pauseY) < 50) {
                 controllableModel.pauseGame();
             }
-
-        }
-
-        boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.SPACE);
-
-        if (spaceHeld && !jetpackPlaying){
-            jetpackSoundId = view.playSound(JETPACK_SOUND);
-            jetpackPlaying = true;
-        } else if (!spaceHeld && jetpackPlaying){
-            view.stopSound(JETPACK_SOUND, jetpackSoundId);
-            jetpackPlaying = false;
-            jetpackSoundId =-1;
         }
     }
+
+
+    private void handleJetpackInput() {
+        boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        PowerUpType powerUpType = viewableModel.getPlayer().getActivePowerUp();
+
+        if (spaceHeld && !jetpackPlaying && powerUpType == PowerUpType.NORMAL) {
+            jetpackSoundId = view.loopSound(JETPACK_SOUND);
+            jetpackPlaying = true;
+        } else if ((!spaceHeld || powerUpType != PowerUpType.NORMAL) && jetpackPlaying) {
+            stopJetpackIfPlaying();
+        }
+    }
+
+    private void handleBirdInput() {
+        boolean spaceClicked = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        PowerUpType powerUpType = viewableModel.getPlayer().getActivePowerUp();
+
+        if (powerUpType == PowerUpType.BIRD && spaceClicked) {
+            view.playSound(BIRD_SOUND);
+        }
+    }
+
+    private void resetSoundState() {
+        gameOverSoundPlayed = false;
+        jetpackPlaying = false;
+        jetpackSoundId = -1;
+    }
+
 
     private void handlePauseInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
             controllableModel.resumeGame();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            view.stopMusic(MEOW_END_SONG);
+            view.playMusic(MUSIC);
+            gameOverSoundPlayed = false;
             controllableModel.goToHomescreen();
         }
     }
 
     private void handleGameOverInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            view.stopAllMusic();
+            view.playExclusiveMusic(MUSIC);
+            gameOverSoundPlayed = false;
             controllableModel.goToHomescreen();
         }
     }

@@ -1,6 +1,7 @@
 package inf112.rocketman.view.assets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,6 +16,7 @@ import java.util.Map;
 public class RocketManAssets implements TextureProvider {
     private Map<String, Texture> textures = new HashMap<>();
     private Map<String, Sound> sounds = new HashMap<>();
+    private Map<String, Music> music = new HashMap<>();
     private BitmapFont font;
     private BitmapFont titleFont;
 
@@ -32,8 +34,9 @@ public class RocketManAssets implements TextureProvider {
         generator.dispose();
 
 
-        preloadTextures(List.of("TPowah/TPowah.png", "TPowah/TPowahFlames.png", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning.png", "PowerUps/Bird.png", "PowerUps/Box.png","Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png", "Obstacles/flame.png", "TCoin.png"));
-        preloadSounds(List.of("Sounds/Teleport/MP3/Teleport.mp3"));
+        preloadTextures(List.of("TPowah/jetpack.png", "TPowah/jetpack_flames.png", "TPowah/run1", "TPowah/run2", "TPowah/run3", "TPowah/run4", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning.png", "PowerUps/bird.png", "PowerUps/birdUP.png", "PowerUps/Box.png","Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png", "Obstacles/flame.png", "TCoin.png"));
+        preloadSounds(List.of("Sounds/jetpack.mp3", "Sounds/coin.mp3", "Sounds/powerup.mp3", "Sounds/bird.mp3", "Sounds/game_over.mp3"));
+        preloadMusic(List.of("Sounds/music.mp3", "Sounds/MeowMeow.mp3"));
     }
 
     private void preloadTextures(List<String> names) {
@@ -45,6 +48,12 @@ public class RocketManAssets implements TextureProvider {
     private void preloadSounds(List<String> names){
         for(String soundName : names){
             getSound(soundName);
+        }
+    }
+
+    private void preloadMusic(List<String> names) {
+        for (String musicName : names) {
+            getMusic(musicName);
         }
     }
 
@@ -65,7 +74,7 @@ public class RocketManAssets implements TextureProvider {
     public Texture getTexture(String name) {
         if (!textures.containsKey(name)) {
             FileHandle file = Gdx.files.internal(name);
-            if (file != null) {
+            if (file.exists()) {
                 textures.put(name, new Texture(file));
             } else {
                 textures.put(name, null);
@@ -77,7 +86,7 @@ public class RocketManAssets implements TextureProvider {
     private Sound getSound(String name){
         if (!sounds.containsKey(name)){
             FileHandle file = Gdx.files.internal(name);
-            if (file != null) {
+            if (file.exists()) {
                 sounds.put(name, Gdx.audio.newSound(file));
             } else {
                 sounds.put(name, null);
@@ -85,6 +94,35 @@ public class RocketManAssets implements TextureProvider {
         }
         return sounds.get(name);
     }
+
+    private Music getMusic(String name) {
+        if (!music.containsKey(name)) {
+            FileHandle file = Gdx.files.internal(name);
+            if (file.exists()) {
+                Music m = Gdx.audio.newMusic(file);
+                m.setLooping(true);
+                music.put(name, m);
+            } else {
+                music.put(name, null);
+            }
+        }
+        return music.get(name);
+    }
+
+    public void stopAllMusic() {
+        music.values().forEach(m -> {
+            if (m != null) {
+                m.stop();
+            }
+        });
+    }
+
+    public void playExclusiveMusic(String musicName) {
+        stopAllMusic();
+        playMusic(musicName);
+    }
+
+
 
     public BitmapFont getFont(){
         return font;
@@ -106,6 +144,30 @@ public class RocketManAssets implements TextureProvider {
         }
     }
 
+    public void playMusic(String musicName) {
+        Music m = getMusic(musicName);
+        if (m != null && !m.isPlaying()) {
+            m.setLooping(true);
+            m.setVolume(0.1f);
+            m.play();
+        }
+    }
+
+    public void stopMusic(String musicName) {
+        Music m = getMusic(musicName);
+        if (m != null) {
+            m.stop();
+        }
+    }
+
+    public long loopSound(String soundName){
+        Sound s = getSound(soundName);
+        if (s != null) {
+            return s.loop(3f);
+        }
+        return -1;
+    }
+
     public void dispose(){
         sounds.values().forEach(sou -> {
             if (sou != null)
@@ -115,6 +177,12 @@ public class RocketManAssets implements TextureProvider {
             if (tex != null)
                 tex.dispose();
         });
+
+        music.values().forEach(m -> {
+            if (m != null)
+                m.dispose();
+        });
+
         if (font != null){
             font.dispose();
         }

@@ -42,7 +42,15 @@ public interface ViewableRocketManModel {
      *
      * @return true if the rocket is thrusting, false otherwise.
      */
-    boolean isMovingUp();
+    boolean usingJetpack();
+
+    /**
+     * Checks if the player is currently on the ground
+     *
+     * @return true if the player is on the ground
+     */
+    boolean onGround();
+
 
     PowerUp getPowerUp();
 
@@ -53,5 +61,9 @@ public interface ViewableRocketManModel {
     int getCoinCount();
 
     int getGameScore();
+
+    boolean didCollectPowerUpThisFrame();
+
+    boolean didCollectCoinThisFrame();
 }
 

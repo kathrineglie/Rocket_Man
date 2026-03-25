@@ -56,26 +56,26 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    80,6%
+    54,8%
   </span>
   <span class="absValue">
-    (25/31)
+    (17/31)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    67,6%
+    31%
   </span>
   <span class="absValue">
-    (48/71)
+    (22/71)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    78,5%
+    60,6%
   </span>
   <span class="absValue">
-    (113/144)
+    (86/142)
   </span>
 </td>
 </tr>
@@ -189,9 +189,9 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        checkPowerUpCollision();</b>
 <b class="fc">&nbsp;        handleObstacleCollision();</b>
 <b class="fc">&nbsp;        updateCoins(dt);</b>
-<b class="fc">&nbsp;        if (gameTimer &lt;= 0f) {</b>
-<b class="fc">&nbsp;            gameScore++;</b>
-<b class="fc">&nbsp;            gameTimer = gameScoreTimer;</b>
+<b class="pc">&nbsp;        if (gameTimer &lt;= 0f) {</b>
+<b class="nc">&nbsp;            gameScore++;</b>
+<b class="nc">&nbsp;            gameTimer = gameScoreTimer;</b>
 &nbsp;        } else {
 <b class="fc">&nbsp;            gameTimer -= dt;</b>
 &nbsp;        }
@@ -218,20 +218,20 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        Rectangle playerHitbox = player.getHitBox();</b>
 &nbsp;
 <b class="fc">&nbsp;        Iterator&lt;IObstacle&gt; iterator = obstacles.iterator();</b>
-<b class="fc">&nbsp;        while (iterator.hasNext()) {</b>
-<b class="fc">&nbsp;            IObstacle obstacle = iterator.next();</b>
-<b class="fc">&nbsp;            if (isNonActiveLazer(obstacle)) {</b>
+<b class="pc">&nbsp;        while (iterator.hasNext()) {</b>
+<b class="nc">&nbsp;            IObstacle obstacle = iterator.next();</b>
+<b class="nc">&nbsp;            if (isNonActiveLazer(obstacle)) {</b>
 &nbsp;                continue;
 &nbsp;            }
 &nbsp;
-<b class="fc">&nbsp;            if (!(obstacle instanceof Flame)) {</b>
-<b class="fc">&nbsp;                Rectangle obstacleHitbox = obstacle.getHitBox();</b>
+<b class="nc">&nbsp;            if (!(obstacle instanceof Flame)) {</b>
+<b class="nc">&nbsp;                Rectangle obstacleHitbox = obstacle.getHitBox();</b>
 &nbsp;
-<b class="pc">&nbsp;                if (obstacleHitbox == null) {</b>
+<b class="nc">&nbsp;                if (obstacleHitbox == null) {</b>
 &nbsp;                    continue;
 &nbsp;                }
 &nbsp;
-<b class="pc">&nbsp;                if (playerHitbox.overlaps(obstacleHitbox)) {</b>
+<b class="nc">&nbsp;                if (playerHitbox.overlaps(obstacleHitbox)) {</b>
 <b class="nc">&nbsp;                    if (player.getActivePowerUp() == PowerUpType.BIRD) {</b>
 <b class="nc">&nbsp;                        deactivateBirdPowerUp();</b>
 <b class="nc">&nbsp;                        iterator.remove();</b>
@@ -244,7 +244,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;                    return;
 &nbsp;                }
 &nbsp;            } else {
-<b class="fc">&nbsp;                handleFlameCollision(obstacle);</b>
+<b class="nc">&nbsp;                handleFlameCollision(obstacle);</b>
 &nbsp;            }
 &nbsp;        }
 &nbsp;    }
@@ -254,13 +254,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;     * @param obstacle
 &nbsp;     */
 &nbsp;    private void handleFlameCollision(IObstacle obstacle) {
-<b class="pc">&nbsp;        if (!(obstacle instanceof Flame)) {</b>
+<b class="nc">&nbsp;        if (!(obstacle instanceof Flame)) {</b>
 &nbsp;            return;
 &nbsp;        }
 &nbsp;
-<b class="fc">&nbsp;        Polygon polyHitBox = player.getPolyHitBox();</b>
+<b class="nc">&nbsp;        Polygon polyHitBox = player.getPolyHitBox();</b>
 &nbsp;
-<b class="pc">&nbsp;        if (Intersector.overlapConvexPolygons(((Flame) obstacle).getPolygon(), polyHitBox)) {</b>
+<b class="nc">&nbsp;        if (Intersector.overlapConvexPolygons(((Flame) obstacle).getPolygon(), polyHitBox)) {</b>
 <b class="nc">&nbsp;            if (player.getActivePowerUp() == PowerUpType.BIRD) {</b>
 <b class="nc">&nbsp;                deactivateBirdPowerUp();</b>
 &nbsp;            } else {
@@ -272,7 +272,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public boolean isNonActiveLazer(IObstacle obstacle) {
-<b class="pc">&nbsp;        return obstacle instanceof Lazer &amp;&amp; ((Lazer) obstacle).getProgressionLevel() != 3;</b>
+<b class="nc">&nbsp;        return obstacle instanceof Lazer &amp;&amp; ((Lazer) obstacle).getProgressionLevel() != 3;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    private void updateCoins(float dt) {
@@ -282,12 +282,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="nc">&nbsp;            coinTimer = coinSpwanTimer;</b>
 &nbsp;        }
 <b class="fc">&nbsp;        Iterator&lt;Coin&gt; iterator = coinList.iterator();</b>
-<b class="fc">&nbsp;        while (iterator.hasNext()) {</b>
-<b class="fc">&nbsp;            Coin coin = iterator.next();</b>
-<b class="fc">&nbsp;            coin.update(dt);</b>
-<b class="pc">&nbsp;            if (getPlayerHitbox().overlaps(coin.getHitbox())) {</b>
-<b class="fc">&nbsp;                iterator.remove();</b>
-<b class="fc">&nbsp;                coinCount += 1;</b>
+<b class="pc">&nbsp;        while (iterator.hasNext()) {</b>
+<b class="nc">&nbsp;            Coin coin = iterator.next();</b>
+<b class="nc">&nbsp;            coin.update(dt);</b>
+<b class="nc">&nbsp;            if (getPlayerHitbox().overlaps(coin.getHitbox())) {</b>
+<b class="nc">&nbsp;                iterator.remove();</b>
+<b class="nc">&nbsp;                coinCount += 1;</b>
 &nbsp;                continue;
 &nbsp;            }
 <b class="nc">&nbsp;            if (coin.isOfScreen(worldWidth, worldHeight)) {</b>
@@ -298,7 +298,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;
 &nbsp;    public List&lt;Coin&gt; getCoinList() {
-<b class="fc">&nbsp;        return coinList;</b>
+<b class="nc">&nbsp;        return coinList;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    /**
@@ -309,7 +309,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    private void updateObstacle(float dt) {
 <b class="fc">&nbsp;        obstacleTimer -= dt;</b>
 &nbsp;
-<b class="fc">&nbsp;        if (obstacleTimer &lt;= 0) {</b>
+<b class="pc">&nbsp;        if (obstacleTimer &lt;= 0) {</b>
 <b class="fc">&nbsp;            obstacles.add(getRandomObstacle());</b>
 <b class="fc">&nbsp;            obstacleTimer = OBSTACLE_SPAWN_INTERVAL;</b>
 &nbsp;        }
@@ -320,7 +320,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;            obstacle.update(dt);</b>
 &nbsp;
 <b class="pc">&nbsp;            if (obstacle instanceof Rocket &amp;&amp; obstacle.isOfScreen(worldWidth, worldHeight)) {</b>
-<b class="nc">&nbsp;                iterator.remove();</b>
+<b class="fc">&nbsp;                iterator.remove();</b>
 &nbsp;            }
 <b class="pc">&nbsp;            if (obstacle instanceof Lazer &amp;&amp; ((Lazer) obstacle).getProgressionLevel() == 4) {</b>
 <b class="nc">&nbsp;                iterator.remove();</b>
@@ -340,8 +340,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        int randNum = random.nextInt(1, 4);</b>
 <b class="pc">&nbsp;        return switch (randNum) {</b>
 <b class="fc">&nbsp;            case 1 -&gt; rocketFactory.newRocket(worldWidth, worldHeight, MARGIN);</b>
-<b class="fc">&nbsp;            case 2 -&gt; lazerFactory.newLazer(worldWidth, worldHeight, MARGIN);</b>
-<b class="fc">&nbsp;            case 3 -&gt; flameFactory.newFlame(worldWidth, worldHeight, MARGIN, BG_SPEED);</b>
+<b class="nc">&nbsp;            case 2 -&gt; lazerFactory.newLazer(worldWidth, worldHeight, MARGIN);</b>
+<b class="nc">&nbsp;            case 3 -&gt; flameFactory.newFlame(worldWidth, worldHeight, MARGIN, BG_SPEED);</b>
 <b class="nc">&nbsp;            default -&gt; throw new RuntimeException(&quot;No object was chosen. The random number was: &quot; + randNum);</b>
 &nbsp;        };
 &nbsp;    }
@@ -404,11 +404,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @Override
 &nbsp;    public float getBackgroundScrollX() {
-<b class="fc">&nbsp;        return bgScrollX;</b>
+<b class="nc">&nbsp;        return bgScrollX;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public Rectangle getPlayerHitbox() {
-<b class="fc">&nbsp;        return player.getHitBox();</b>
+<b class="nc">&nbsp;        return player.getHitBox();</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @Override
@@ -423,7 +423,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @Override
 &nbsp;    public boolean hasBirdPowerUp() {
-<b class="fc">&nbsp;        return player.getActivePowerUp() == PowerUpType.BIRD;</b>
+<b class="nc">&nbsp;        return player.getActivePowerUp() == PowerUpType.BIRD;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;
@@ -446,8 +446,6 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;        player.setVy(0);</b>
 &nbsp;
 <b class="fc">&nbsp;        gameState = GameState.PLAYING;</b>
-<b class="fc">&nbsp;        gameScore = 0;</b>
-<b class="fc">&nbsp;        coinCount = 0;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @Override
@@ -477,12 +475,12 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @Override
 &nbsp;    public int getGameScore() {
-<b class="fc">&nbsp;         return gameScore;</b>
+<b class="nc">&nbsp;         return gameScore;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    @Override
 &nbsp;    public int getCoinCount() {
-<b class="fc">&nbsp;         return coinCount;</b>
+<b class="nc">&nbsp;         return coinCount;</b>
 &nbsp;    }
 &nbsp;}
 </code>
@@ -508,7 +506,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2026-03-18 14:27</div>
+    <div style="float:right;">generated on 2026-03-18 13:47</div>
 </div>
 </body>
 </html>
