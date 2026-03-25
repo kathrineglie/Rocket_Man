@@ -11,5 +11,5 @@ public interface FlameFactory {
      * @param vx // The speed of the background
      * @return
      */
-    Flame newFlame(float worldWidth, float worldHeight, float margin, float vx);
+    Flame newFlame(float worldWidth, float worldHeight, float margin, float vx, float ground);
 } 
