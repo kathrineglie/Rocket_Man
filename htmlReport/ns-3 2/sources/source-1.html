@@ -1,0 +1,290 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > RocketManController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inf112.rocketman.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: RocketManController (inf112.rocketman.controller)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RocketManController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/54)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RocketManController$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/55)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inf112.rocketman.controller;
+&nbsp;
+&nbsp;import com.badlogic.gdx.Game;
+&nbsp;import com.badlogic.gdx.Gdx;
+&nbsp;import com.badlogic.gdx.Input;
+&nbsp;
+&nbsp;import inf112.rocketman.model.GameState;
+&nbsp;import inf112.rocketman.view.RocketManView;
+&nbsp;import inf112.rocketman.view.ViewableRocketManModel;
+&nbsp;
+&nbsp;public class RocketManController {
+&nbsp;
+&nbsp;    private RocketManView view;
+&nbsp;    private ControllableRocketManModel controllableModel;
+&nbsp;    private ViewableRocketManModel viewableModel;
+&nbsp;
+<b class="nc">&nbsp;    private boolean jetpackPlaying = false;</b>
+<b class="nc">&nbsp;    private long jetpackSoundId = -1;</b>
+&nbsp;    private static final String JETPACK_SOUND = &quot;Sounds/Teleport/MP3/Teleport.mp3&quot;;
+&nbsp;
+<b class="nc">&nbsp;    public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {</b>
+<b class="nc">&nbsp;        this.controllableModel = controllableRocketManModel;</b>
+<b class="nc">&nbsp;        this.viewableModel = viewableModel;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void create() {
+<b class="nc">&nbsp;        view = new RocketManView();</b>
+<b class="nc">&nbsp;        view.create(controllableModel.getWorldWidth(), controllableModel.getWorldHeight());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public void render() {
+<b class="nc">&nbsp;        float dt = Gdx.graphics.getDeltaTime();</b>
+<b class="nc">&nbsp;        boolean space = Gdx.input.isKeyPressed(Input.Keys.SPACE);</b>
+&nbsp;
+&nbsp;        boolean input;
+<b class="nc">&nbsp;        if (viewableModel.hasBirdPowerUp()) {</b>
+<b class="nc">&nbsp;            input = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            input = Gdx.input.isKeyPressed(Input.Keys.SPACE);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        controllableModel.update(dt, input);</b>
+&nbsp;
+<b class="nc">&nbsp;        view.render(viewableModel);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void resize(int width, int height) {
+<b class="nc">&nbsp;        view.resize(width, height);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void dispose() {
+<b class="nc">&nbsp;        view.dispose();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public  void handleInput() {
+<b class="nc">&nbsp;        GameState currentState = controllableModel.getGameState();</b>
+&nbsp;
+<b class="nc">&nbsp;        switch (currentState) {</b>
+<b class="nc">&nbsp;            case HOME_SCREEN -&gt; handleHomeScreenInput();</b>
+<b class="nc">&nbsp;            case PLAYING -&gt; handlePlayingInput();</b>
+<b class="nc">&nbsp;            case PAUSE -&gt; handlePauseInput();</b>
+<b class="nc">&nbsp;            case GAME_OVER -&gt; handleGameOverInput();</b>
+<b class="nc">&nbsp;            case INSTRUCTIONS -&gt; handleInstructionInput();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleHomeScreenInput() {
+<b class="nc">&nbsp;        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {</b>
+<b class="nc">&nbsp;            controllableModel.startGame();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handlePlayingInput() {
+<b class="nc">&nbsp;        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {</b>
+<b class="nc">&nbsp;            controllableModel.pauseGame();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (Gdx.input.justTouched()) {</b>
+<b class="nc">&nbsp;            float mouseX = Gdx.input.getX();</b>
+<b class="nc">&nbsp;            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();</b>
+&nbsp;
+<b class="nc">&nbsp;            float pauseX = controllableModel.getWorldWidth() - 60;</b>
+<b class="nc">&nbsp;            float pauseY = controllableModel.getWorldHeight() - 60;</b>
+&nbsp;
+<b class="nc">&nbsp;            if (Math.abs(mouseX - pauseX) &lt; 50 &amp;&amp; Math.abs(mouseY - pauseY) &lt; 50) {</b>
+<b class="nc">&nbsp;                controllableModel.pauseGame();</b>
+&nbsp;            }
+&nbsp;
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.SPACE);</b>
+&nbsp;
+<b class="nc">&nbsp;        if (spaceHeld &amp;&amp; !jetpackPlaying){</b>
+<b class="nc">&nbsp;            jetpackSoundId = view.playSound(JETPACK_SOUND);</b>
+<b class="nc">&nbsp;            jetpackPlaying = true;</b>
+<b class="nc">&nbsp;        } else if (!spaceHeld &amp;&amp; jetpackPlaying){</b>
+<b class="nc">&nbsp;            view.stopSound(JETPACK_SOUND, jetpackSoundId);</b>
+<b class="nc">&nbsp;            jetpackPlaying = false;</b>
+<b class="nc">&nbsp;            jetpackSoundId =-1;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handlePauseInput() {
+<b class="nc">&nbsp;        if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {</b>
+<b class="nc">&nbsp;            controllableModel.resumeGame();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {</b>
+<b class="nc">&nbsp;            controllableModel.goToHomescreen();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleGameOverInput() {
+<b class="nc">&nbsp;        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {</b>
+<b class="nc">&nbsp;            controllableModel.goToHomescreen();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private void handleInstructionInput() {
+<b class="nc">&nbsp;        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {</b>
+<b class="nc">&nbsp;            controllableModel.goToHomescreen();</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public RocketManView getView() {
+<b class="nc">&nbsp;        return view;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public GameState getState() {
+<b class="nc">&nbsp;        return controllableModel.getGameState();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void showInstruction() {
+<b class="nc">&nbsp;        controllableModel.showInstructions();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ViewableRocketManModel getViewableModel() {
+<b class="nc">&nbsp;        return viewableModel;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-03-18 14:27</div>
+</div>
+</body>
+</html>

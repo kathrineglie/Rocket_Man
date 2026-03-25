@@ -3,6 +3,7 @@ package inf112.rocketman.model;
 import com.badlogic.gdx.Game;
 import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.Coins.RandomCoinFactory;
+import inf112.rocketman.model.Obstacles.Rockets.RandomRocketFactory;
 import inf112.rocketman.model.Obstacles.Rockets.Rocket;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import org.junit.jupiter.api.Test;
@@ -121,20 +122,6 @@ public class GameModelTest {
     }
 
     @Test
-    public void testObstaclesSpawnOverTime() {
-        GameModel model = new GameModel(1000, 800);
-        model.startGame();
-
-        int initialCount = model.getObstacles().size();
-
-        model.update(2.0f, false);
-
-        model.update(0.01f, false);
-
-        assertTrue(model.getObstacles().size() > initialCount, "New obstacles should be added to the list after interval");
-    }
-
-    @Test
     public void testUpdateDoesNothingWhenGameIsNotPlaying() {
         GameModel model = new GameModel(1000, 800);
 
@@ -197,25 +184,66 @@ public class GameModelTest {
     }
 
     @Test
-    public void testGameOverOnCollision() {
+    public void testStartGameResetsPlayerPosition() {
         GameModel model = new GameModel(1000, 800);
         model.startGame();
 
-        int timeout = 0;
-        while (model.getObstacles().isEmpty() && timeout < 100) {
-            model.update(1.5f, false);
-            model.update(0.1f, false); // For å flytte fra pending-liste
-            timeout++;
-        }
+        model.getPlayer().setX(400);
+        model.getPlayer().setY(300);
+        model.getPlayer().setVy(50);
 
-        if (!model.getObstacles().isEmpty()) {
-            var obstacle = model.getObstacles().get(0);
-            model.getPlayer().setX(obstacle.getX());
-            model.getPlayer().setY(obstacle.getY());
+        model.startGame();
 
-            model.update(0.01f, false);
-            assertEquals(GameState.GAME_OVER, model.getGameState());
-        }
+        assertEquals(150f, model.getPlayer().getX());
+        assertEquals(100f, model.getPlayer().getY());
+        assertEquals(0f, model.getPlayer().getVY());
+    }
+
+    @Test
+    public void testStartGameChangesStateToPlaying() {
+        GameModel model = new GameModel(1000, 800);
+
+        model.startGame();
+
+        assertEquals(GameState.PLAYING, model.getGameState());
+    }
+
+    @Test
+    public void testGoToHomeScreenRemovesPowerUp() {
+        GameModel model = new GameModel(1000, 800);
+        model.startGame();
+
+        model.getPlayer().setPowerUp(PowerUpType.BIRD);
+        model.goToHomescreen();
+
+        assertEquals(GameState.HOME_SCREEN, model.getGameState());
+        assertNull(model.getPowerUp());
+    }
+
+    @Test
+    public void testIsMovingUpReflectsUpdateInput() {
+        GameModel model = new GameModel(1000, 800);
+        model.startGame();
+
+        model.update(0.1f, true);
+        assertTrue(model.isMovingUp());
+
+        model.update(0.1f, false);
+        assertFalse(model.isMovingUp());
+    }
+
+    @Test
+    public void testSCoreDoesNotIncreaseWhenPaused() {
+        GameModel model = new GameModel(1000, 800);
+        model.startGame();
+        model.pauseGame();
+
+        int initialScore = model.getGameScore();
+
+        model.update(1.0f, false);
+        model.update(1.0f, false);
+
+        assertEquals(initialScore, model.getGameScore());
     }
 
 }

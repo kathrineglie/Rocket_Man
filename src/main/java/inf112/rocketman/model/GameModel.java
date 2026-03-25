@@ -395,4 +395,5 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public int getCoinCount() {
          return coinCount;
     }
+
 }
