@@ -29,6 +29,7 @@ import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.model.PowerUps.RandomPowerUpFactory;
 import inf112.rocketman.view.ViewableRocketManModel;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,6 +44,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private boolean usingJetpack;
     private final Random random = new Random();
     private static final float MARGIN = 5f;
+    private static final float BG_SPEED = -120f;
 
     private final float worldHeight;
     private final float worldWidth;
@@ -116,51 +118,19 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
         collectedPowerUpThisFrame = false;
         collectedCoinThisFrame = false;
-
-        updateDifficulty(dt);
         updateBackground(dt);
         updateObstacle(dt);
         updatePowerUp(dt);
         checkPowerUpCollision();
         handleObstacleCollision();
         updateCoins(dt);
-
-
-//        if (gameTimer <= 0f) {
-//            distanceMeters++;
-//            gameTimer = gameScoreTimer;
-//        } else {
-//            gameTimer -= dt;
-//        }
-    }
-
-    private void updateObstacleTimers(float dt){
-        flameTimer -= dt;
-        lazerTimer -=dt;
-        rocketTimer -=dt;
-    }
-
-    private void updateDifficulty(float dt){
-        distanceMeters += Math.abs(currentScrollSpeed) * dt / 100f;
-        currentDifficultySettings = difficultyManager.getSettings(distanceMeters);
-        currentScrollSpeed = currentDifficultySettings.scrollSpeed();
-        updateExistingObstacleSpeeds();
-    }
-
-    private void updateExistingObstacleSpeeds(){
-        for (IObstacle obstacle : obstacles){
-            if (obstacle instanceof Flame flame){
-                flame.setSpeed(currentScrollSpeed);
-            }
-            if (obstacle instanceof Rocket rocket){
-                rocket.setSpeed(currentScrollSpeed);
-            }
-        }
-        for (Coin coin : coinList){
-            coin.setSpeed(currentScrollSpeed);
+        if (gameTimer <= 0f) {
+            gameScore++;
+            gameTimer = gameScoreTimer;
+        } else {
+            gameTimer -= dt;
         }
     }
-
 
     private void checkPowerUpCollision() {
         if (powerUp == null) {
@@ -197,13 +167,13 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 }
 
                 if (playerHitbox.overlaps(obstacleHitbox)) {
-                    if (player.hasActivePowerUp()) {
-                        deactivatePowerUp();
+                    if (player.getActivePowerUp() == PowerUpType.BIRD) {
+                        deactivateBirdPowerUp();
                         iterator.remove();
                     } else {
 
                         gameState = GameState.GAME_OVER;
-                        distanceMeters = 0;
+                        gameScore = 0;
                         coinCount = 0;
                     }
                     return;
@@ -232,7 +202,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 deactivateBirdPowerUp();
             } else {
                 gameState = GameState.GAME_OVER;
-                distanceMeters = 0;
+                gameScore = 0;
                 coinCount = 0;
             }
             return true;
@@ -243,7 +213,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private void updateCoins(float dt) {
         coinTimer -= dt;
         if (coinTimer <= 0) {
-            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, GROUND, MARGIN, currentScrollSpeed));
+            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, GROUND, MARGIN, BG_SPEED));
             coinTimer = random.nextFloat(3f, 10f);
         }
         Iterator<Coin> iterator = coinList.iterator();
@@ -267,38 +237,18 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return coinList;
     }
 
-    private int getActiveObstacleCount(){
-        int count = 0;
-
-        for(IObstacle obstacle : obstacles){
-            if (obstacle instanceof Lazer lazer){
-                if (lazer.getProgressionLevel() == 3){
-                    count++;
-                }
-            } else {
-                count++;
-            }
-        }
-        return count;
-    }
-
     /**
      * Checks if the obstacles are off-screen and removes them if they are
      *
      * @param dt
      */
     private void updateObstacle(float dt) {
-        updateObstacleTimers(dt);
-        trySpawnObstacle();
+        obstacleTimer -= dt;
 
-//        obstacleTimer -= dt;
-//
-//        if (obstacleTimer <= 0 && getActiveObstacleCount() < currentDifficultySettings.maxObstacles()) {
-//            spawnRandomPattern();
-//            obstacleTimer = currentSpawnInterval;
-//            //obstacles.add(getRandomObstacle());
-//            obstacleTimer = currentSpawnInterval;
-//        }
+        if (obstacleTimer <= 0) {
+            obstacles.add(getRandomObstacle());
+            obstacleTimer = OBSTACLE_SPAWN_INTERVAL;
+        }
 
         Iterator<IObstacle> iterator = obstacles.iterator();
         while (iterator.hasNext()) {
@@ -317,129 +267,51 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
-//    /**
-//     * This method gets a random obstacle of the ones listed in the cases
-//     *
-//     * @return returns a random obstacle of the specified obstacles
-//     */
-//    private Obstacle getRandomObstacle() {
-//        int randNum = random.nextInt(1, 4);
-//        return switch (randNum) {
-//            case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, MARGIN);
-//            case 2 -> lazerFactory.newLazer(worldWidth, worldHeight, MARGIN);
-//            case 3 -> flameFactory.newFlame(worldWidth, worldHeight, MARGIN, currentBackgroundSpeed);
-//            default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
-//        };
-//    }
+    /**
+     * This method gets a random obstacle of the ones listed in the cases
+     *
+     * @return returns a random obstacle of the specified obstacles
+     */
+    private Obstacle getRandomObstacle() {
+        int randNum = random.nextInt(1, 4);
 
-//    private void spawnRandomPattern(){
-//        List<PatternType> allowedPatterns = currentDifficultySettings.allowedPatterns();
-//        PatternType chosen = allowedPatterns.get(random.nextInt(allowedPatterns.size()));
-//
-//        switch (chosen){
-//            case FLAME -> obstacles.add(flameFactory.newFlame(worldWidth, worldHeight, MARGIN, currentScrollSpeed));
-//            case LAZER -> obstacles.add(lazerFactory.newLazer(worldWidth, worldHeight, MARGIN));
-//            case ROCKET -> obstacles.add(rocketFactory.newRocket(worldWidth, worldHeight, MARGIN));
-//
-//        }
-//    }
-
-//    /**
-//     * This method gets a random obstacle of the ones listed in the cases
-//     *
-//     * @return returns a random obstacle of the specified obstacles
-//     */
-//    private Obstacle getRandomObstacle() {
-//        int randNum = random.nextInt(1, 4);
-//
-//        return switch (randNum) {
-//            case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);
-//            case 2 -> {
-//                Lazer lazer = getNonOverlappingLazer();
-//                if (lazer != null) {
-//                    yield lazer;
-//                } else {
-//                    yield rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);}
-//            }
-//            case 3 -> flameFactory.newFlame(worldWidth, worldHeight, GROUND, MARGIN, BG_SPEED);
-//            default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
-//        };
-//    }
-
-    private void trySpawnObstacle(){
-        if (getActiveObstacleCount() >= currentDifficultySettings.maxObstacles()){
-            return;
-        }
-
-        List<PatternType> possible = new ArrayList<>();
-
-        for (PatternType pattern : currentDifficultySettings.allowedPatterns()){
-            switch (pattern){
-                case FLAME -> {
-                    if (flameTimer <= 0f){
-                        possible.add(pattern);
-                    }
-                }
-                case LAZER -> {
-                    if (lazerTimer <= 0f){
-                        possible.add(pattern);
-                    }
-                }
-                case ROCKET ->  {
-                    if (rocketTimer <= 0f){
-                        possible.add(pattern);
-                    }
-                }
+        return switch (randNum) {
+            case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);
+            case 2 -> {
+                Lazer lazer = getNonOverlappingLazer();
+                if (lazer != null) {
+                    yield lazer;
+                } else {
+                    yield rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);}
             }
-        }
-
-        if (possible.isEmpty()){
-            return;
-        }
-
-        PatternType chosen = possible.get(random.nextInt(possible.size()));
-
-        switch (chosen){
-            case FLAME -> {
-                obstacles.add(flameFactory.newFlame(worldWidth, worldHeight, MARGIN, GROUND, currentScrollSpeed));
-                flameTimer = currentDifficultySettings.flameSpawnInterval();
-            }
-            case LAZER -> {
-                obstacles.add(lazerFactory.newLazer(worldWidth, worldHeight, GROUND,  MARGIN));
-                lazerTimer = currentDifficultySettings.lazerSpawnInterval();
-            }
-            case ROCKET -> {
-                obstacles.add(rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN));
-                rocketTimer = currentDifficultySettings.rocketSpawnInterval();
-            }
-
-        }
+            case 3 -> flameFactory.newFlame(worldWidth, worldHeight, GROUND, MARGIN, BG_SPEED);
+            default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
+        };
     }
 
+    private boolean canSpawnLazer(Lazer newLazer) {
+        for (IObstacle obstacle : obstacles) {
+            if (obstacle instanceof Lazer existingLazer) {
+                if (existingLazer.getProgressionLevel() != 4) {
+                    float yDistance = Math.abs(existingLazer.getY() - newLazer.getY());
+                    if (yDistance < MIN_LAZER_VERTICAL_DISTANCE) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
 
-//    private boolean canSpawnLazer(Lazer newLazer) {
-//        for (IObstacle obstacle : obstacles) {
-//            if (obstacle instanceof Lazer existingLazer) {
-//                if (existingLazer.getProgressionLevel() != 4) {
-//                    float yDistance = Math.abs(existingLazer.getY() - newLazer.getY());
-//                    if (yDistance < MIN_LAZER_VERTICAL_DISTANCE) {
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
-//        return true;
-//    }
-//
-//    private Lazer getNonOverlappingLazer() {
-//        for (int i = 0; i < 10; i ++) {
-//            Lazer candidate = lazerFactory.newLazer(worldWidth, worldHeight, GROUND, MARGIN);
-//            if (canSpawnLazer(candidate)) {
-//                return candidate;
-//            }
-//        }
-//        return null;
-//    }
+    private Lazer getNonOverlappingLazer() {
+        for (int i = 0; i < 10; i ++) {
+            Lazer candidate = lazerFactory.newLazer(worldWidth, worldHeight, GROUND, MARGIN);
+            if (canSpawnLazer(candidate)) {
+                return candidate;
+            }
+        }
+        return null;
+    }
 
     /**
      * Gets a list of the obstacles
@@ -471,7 +343,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
-
     private void deactivateBirdPowerUp(){
          player.setPowerUp(PowerUpType.NORMAL);
          player.setVy(0);
@@ -479,7 +350,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
 
     private void updateBackground(float dt) {
-        bgScrollX += currentScrollSpeed * dt;
+        bgScrollX += BG_SPEED * dt;
         if (worldWidth > 0) {
             bgScrollX = bgScrollX % worldWidth;
         } else {
@@ -546,7 +417,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         player.setVy(0);
 
         gameState = GameState.PLAYING;
-        distanceMeters = 0;
+        gameScore = 0;
         coinCount = 0;
     }
 
@@ -555,7 +426,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         obstacles.clear();
         powerUp = null;
         gameState = GameState.HOME_SCREEN;
-        distanceMeters = 0;
+        gameScore = 0;
     }
 
     @Override
@@ -577,7 +448,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public int getGameScore() {
-         return (int) distanceMeters;
+         return gameScore;
     }
 
     @Override
