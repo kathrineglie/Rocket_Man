@@ -23,6 +23,7 @@ public class PlayerRenderer {
 
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> birdAnimation;
+    private final Animation<TextureRegion> robotAnimation;
 
 
     public PlayerRenderer(TextureProvider textures){
@@ -36,8 +37,13 @@ public class PlayerRenderer {
 
         birdAnimation = new Animation<>(0.2f,
                 new TextureRegion(textures.getTexture("PowerUps/bird.png")),
-                new TextureRegion(textures.getTexture("PowerUps/birdUP.png"))
-                );
+                new TextureRegion(textures.getTexture("PowerUps/birdUP.png")));
+
+        robotAnimation = new Animation<>(0.2f,
+                new TextureRegion(textures.getTexture("PowerUps/run1.png")),
+                new TextureRegion(textures.getTexture("PowerUps/run2.png")),
+                new TextureRegion(textures.getTexture("PowerUps/run3.png")),
+                new TextureRegion(textures.getTexture("PowerUps/run4.png")));
     }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model){
@@ -50,9 +56,18 @@ public class PlayerRenderer {
 
         if (player.getActivePowerUp() == PowerUpType.BIRD) {
             region = birdAnimation.getKeyFrame(stateTime, true);
-        } else if (model.usingJetpack()){
+        } else if (player.getActivePowerUp() == PowerUpType.ROBOT) {
+            if (player.onGround()) {
+                region = robotAnimation.getKeyFrame(stateTime,true);
+            } else if (player.getMovementInput()){
+                playerImg = "PowerUps/fly_flame.png";
+            } else {
+                playerImg = "PowerUps/fly.png";
+            }
+        }
+        else if (model.usingJetpack()){
             playerImg = "TPowah/jetpack_flames.png";
-        } else if (model.onGround()) {
+        } else if (player.onGround()) {
             region = runAnimation.getKeyFrame(stateTime, true);
         } else {
             playerImg = "TPowah/jetpack.png";

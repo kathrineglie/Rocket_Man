@@ -134,6 +134,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         } else {
             gameTimer -= dt;
         }
+        obstacles.clear();
     }
 
     private void checkPowerUpCollision() {

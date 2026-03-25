@@ -1,5 +1,7 @@
 package inf112.rocketman.model.PowerUps;
 
+import com.badlogic.gdx.math.Interpolation;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,7 +31,7 @@ public class RandomPowerUpFactory implements PowerUpFactory{
                 availableTypes.add(type);
             }
         }
-
-        return availableTypes.get(random.nextInt(availableTypes.size()));
+         return PowerUpType.ROBOT;
+        //return availableTypes.get(random.nextInt(availableTypes.size()));
     }
 }

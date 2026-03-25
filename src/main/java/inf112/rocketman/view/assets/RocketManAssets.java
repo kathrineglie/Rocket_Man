@@ -34,7 +34,7 @@ public class RocketManAssets implements TextureProvider {
         generator.dispose();
 
 
-        preloadTextures(List.of("TPowah/jetpack.png", "TPowah/jetpack_flames.png", "TPowah/run1", "TPowah/run2", "TPowah/run3", "TPowah/run4", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning.png", "PowerUps/bird.png", "PowerUps/birdUP.png", "PowerUps/Box.png","Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png", "Obstacles/flame.png", "TCoin.png"));
+        preloadTextures(List.of("TPowah/jetpack.png", "TPowah/jetpack_flames.png", "TPowah/run1", "TPowah/run2", "TPowah/run3", "TPowah/run4", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning.png", "PowerUps/bird.png", "PowerUps/birdUP.png", "PowerUps/Box.png","Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png", "Obstacles/flame.png", "TCoin.png", "PowerUps/run1.png", "PowerUps/run2.png", "PowerUps/run3.png", "PowerUps/run4.png", "PowerUps/fly.png", "PowerUps/fly_flame.png"));
         preloadSounds(List.of("Sounds/jetpack.mp3", "Sounds/coin.mp3", "Sounds/powerup.mp3", "Sounds/bird.mp3", "Sounds/game_over.mp3"));
         preloadMusic(List.of("Sounds/music.mp3", "Sounds/MeowMeow.mp3"));
     }

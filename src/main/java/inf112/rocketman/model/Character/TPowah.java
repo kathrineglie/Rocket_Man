@@ -22,6 +22,7 @@ public class TPowah {
     private boolean robotIsJumping = false;
     private boolean robotNeedsRelease = false;
     private float robotJumpTime = 0f;
+    private boolean movementInput = false;
 
     private static final float ROBOT_BOOST = 50f;
     private static final float ROBOT_MIN_JUMP = 400f;
@@ -37,6 +38,7 @@ public class TPowah {
     }
 
     public void update(float dt, boolean movementInput, float worldHeight) {
+        this.movementInput = movementInput;
         if (activePowerUp == PowerUpType.BIRD) {
             updateBird(dt, movementInput, worldHeight);
         } else if (activePowerUp == PowerUpType.ROBOT) {
@@ -113,6 +115,10 @@ public class TPowah {
             bounds.y = worldHeight - bounds.height;
             vy = 0;
         }
+    }
+
+    public boolean getMovementInput() {
+        return movementInput;
     }
 
     public void setPowerUp(PowerUpType powerUp){
