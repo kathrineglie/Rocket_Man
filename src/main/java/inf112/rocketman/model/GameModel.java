@@ -38,7 +38,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private static final float PLAYER_Y = 120f;
     private static final float GROUND = 120f;
     private boolean usingJetpack;
-
+    private Random random = new Random();
     private static final float MARGIN = 5f;
     private static final float BG_SPEED = -120f;
 
@@ -54,12 +54,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final LazerFactory lazerFactory = new RandomLazerFactory();
     private final FlameFactory flameFactory = new RandomFlameFactory();
     private final PowerUpFactory powerUpFactory = new RandomPowerUpFactory();
-    private CoinFactory coinFactory = new RandomCoinFactory();
+    private final CoinFactory coinFactory = new RandomCoinFactory();
 
     private float obstacleTimer = 0f;
     private static final float OBSTACLE_SPAWN_INTERVAL = 1.5f;
     private float coinTimer = 10f;
-    private float coinSpwanTimer = 10f;
     private int coinCount = 0;
     List<Coin> coinList = new ArrayList<>();
 
@@ -191,11 +190,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     private void updateCoins(float dt) {
-
         coinTimer -= dt;
         if (coinTimer <= 0) {
             coinList.add(coinFactory.newCoin(worldWidth, worldHeight, GROUND, MARGIN, BG_SPEED));
-            coinTimer = coinSpwanTimer;
+            coinTimer = random.nextFloat(3f, 10f);
         }
         Iterator<Coin> iterator = coinList.iterator();
         while (iterator.hasNext()) {
