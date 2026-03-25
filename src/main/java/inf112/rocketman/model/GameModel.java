@@ -26,6 +26,7 @@ import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.model.PowerUps.RandomPowerUpFactory;
 import inf112.rocketman.view.ViewableRocketManModel;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -58,6 +59,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private float obstacleTimer = 0f;
     private static final float OBSTACLE_SPAWN_INTERVAL = 1.5f;
+    private static final float MIN_LAZER_VERTICAL_DISTANCE = 80f;
     private float coinTimer = 10f;
     private int coinCount = 0;
     List<Coin> coinList = new ArrayList<>();
@@ -252,14 +254,44 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * @return returns a random obstacle of the specified obstacles
      */
     private Obstacle getRandomObstacle() {
-        Random rand = new Random();
-        int randNum = rand.nextInt(1, 4);
+        int randNum = random.nextInt(1, 4);
+
         return switch (randNum) {
             case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);
-            case 2 -> lazerFactory.newLazer(worldWidth, worldHeight, GROUND, MARGIN);
+            case 2 -> {
+                Lazer lazer = getNonOverlappingLazer();
+                if (lazer != null) {
+                    yield lazer;
+                } else {
+                    yield rocketFactory.newRocket(worldWidth, worldHeight, GROUND, MARGIN);}
+            }
             case 3 -> flameFactory.newFlame(worldWidth, worldHeight, GROUND, MARGIN, BG_SPEED);
             default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
         };
+    }
+
+    private boolean canSpawnLazer(Lazer newLazer) {
+        for (IObstacle obstacle : obstacles) {
+            if (obstacle instanceof Lazer existingLazer) {
+                if (existingLazer.getProgressionLevel() != 4) {
+                    float yDistance = Math.abs(existingLazer.getY() - newLazer.getY());
+                    if (yDistance < MIN_LAZER_VERTICAL_DISTANCE) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private Lazer getNonOverlappingLazer() {
+        for (int i = 0; i < 10; i ++) {
+            Lazer candidate = lazerFactory.newLazer(worldWidth, worldHeight, GROUND, MARGIN);
+            if (canSpawnLazer(candidate)) {
+                return candidate;
+            }
+        }
+        return null;
     }
 
     /**
