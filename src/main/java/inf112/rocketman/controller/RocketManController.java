@@ -142,7 +142,7 @@ public class RocketManController {
             var mousePos = view.getMouseWorldPosition();
 
             float pauseX = controllableModel.getWorldWidth() - 60;
-            float pauseY = controllableModel.getWorldHeight() - 60;
+            float pauseY = controllableModel.getWorldHeight() - 100;
 
             if (Math.abs(mousePos.x - pauseX) < 50 && Math.abs(mousePos.y - pauseY) < 50) {
                 controllableModel.pauseGame();

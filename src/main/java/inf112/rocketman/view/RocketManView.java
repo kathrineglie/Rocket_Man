@@ -91,7 +91,7 @@ public class RocketManView {
 		BitmapFont mainFont = assets.getFont();
 		mainFont.getData().setScale(2.5f);
 		float pauseX = (float) (worldWidth() - 60);
-		float pauseY = (float) (worldHeight() - 60);
+		float pauseY = (float) (worldHeight() - 100);
 		assets.getFont().draw(batch, "||", pauseX, pauseY);
 		mainFont.getData().setScale(1.0f);
 
