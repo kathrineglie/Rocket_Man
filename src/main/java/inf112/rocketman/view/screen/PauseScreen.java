@@ -17,7 +17,9 @@ public class PauseScreen extends AbstractMenuScreen {
 
     @Override
     public void render(float v) {
-        //ScreenUtils.clear(0,0,0.2f,1);
+        controller.handleInput();
+
+        controller.getView().render(controller.getViewableModel());
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);

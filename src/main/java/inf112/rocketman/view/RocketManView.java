@@ -5,8 +5,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
+
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import inf112.rocketman.view.assets.RocketManAssets;
 import inf112.rocketman.view.rendering.*;
@@ -97,6 +101,12 @@ public class RocketManView {
 
 	public RocketManAssets getAssets() {
 		return assets;
+	}
+
+	public Vector2 getMouseWorldPosition() {
+		Vector3 mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+		viewport.unproject(mouse);
+		return new Vector2(mouse.x, mouse.y);
 	}
 
 	public long playSound(String name){
