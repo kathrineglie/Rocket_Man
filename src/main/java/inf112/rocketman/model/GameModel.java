@@ -419,6 +419,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return collectedCoinThisFrame;
     }
 
-
+    public boolean isMovingUp() {
+         return usingJetpack;
+    }
 
 }
