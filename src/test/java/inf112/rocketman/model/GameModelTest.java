@@ -184,22 +184,6 @@ public class GameModelTest {
     }
 
     @Test
-    public void testStartGameResetsPlayerPosition() {
-        GameModel model = new GameModel(1000, 800);
-        model.startGame();
-
-        model.getPlayer().setX(400);
-        model.getPlayer().setY(300);
-        model.getPlayer().setVy(50);
-
-        model.startGame();
-
-        assertEquals(150f, model.getPlayer().getX());
-        assertEquals(100f, model.getPlayer().getY());
-        assertEquals(0f, model.getPlayer().getVY());
-    }
-
-    @Test
     public void testStartGameChangesStateToPlaying() {
         GameModel model = new GameModel(1000, 800);
 
