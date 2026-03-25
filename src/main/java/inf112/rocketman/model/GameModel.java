@@ -8,9 +8,6 @@ import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.Coins.CoinFactory;
 import inf112.rocketman.model.Coins.RandomCoinFactory;
-import inf112.rocketman.model.Difficulty.DifficultyManager;
-import inf112.rocketman.model.Difficulty.DifficultySettings;
-import inf112.rocketman.model.Difficulty.PatternType;
 import inf112.rocketman.model.Obstacles.Flames.Flame;
 import inf112.rocketman.model.Obstacles.Flames.FlameFactory;
 import inf112.rocketman.model.Obstacles.Flames.RandomFlameFactory;
@@ -79,9 +76,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private boolean collectedPowerUpThisFrame = false;
     private boolean collectedCoinThisFrame = false;
 
-    private final DifficultyManager difficultyManager;
-    private float patternTimer = 2.0f;
-    private DifficultySettings currentDifficultySettings;
     private float currentSpawnInterval = 1.5f;
     private float currentScrollSpeed = -120f;
     //private static final float MAX_SCROLL_SPEED = 260f;
@@ -96,10 +90,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight);
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
-        this.difficultyManager = new DifficultyManager(20f, 1.3f, -120f, 0.1f, -260f, 1.8f, 3.0f, 4.5f, 8);
-        this.currentDifficultySettings = difficultyManager.getSettings(0f);
-        this.currentScrollSpeed = currentDifficultySettings.scrollSpeed();
-        this.currentSpawnInterval = currentDifficultySettings.flameSpawnInterval();
     }
 
     /**
