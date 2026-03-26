@@ -43,4 +43,6 @@ public class Coin {
     public float getHeight() {
         return height;
     }
+
+    public void setVX(float bgSpeed) {this.vx = bgSpeed; }
 }
