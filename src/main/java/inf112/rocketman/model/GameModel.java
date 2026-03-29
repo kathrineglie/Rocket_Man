@@ -1,6 +1,5 @@
 package inf112.rocketman.model;
 
-
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -107,7 +106,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     /**
-     * Updates all of the characters, the background, the gamestate. Everything that has to do with the gamelogic
+     * Updates all of the characters, the background, the game state. Everything that has to do with the game logic
      *
      * @param dt The delta dime (seconds) since last update.
      * @param movingUpward True if the player is currently applying thrust to the rocket.
@@ -138,6 +137,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
+    /**
+     * Checks if the player overlaps with the powerup box
+     */
     private void checkPowerUpCollision() {
         if (powerUp == null) {
             return;
@@ -193,6 +195,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
+    /**
+     * Resets the game after colliding with an obstacle without having a powerup
+     */
     private void resetGame() {
         gameState = GameState.GAME_OVER;
         player.setPowerUp(PowerUpType.NORMAL);
@@ -205,7 +210,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     /**
      * Handles collision for flame object seperate since it is a polygon
-     * @param obstacle
+     *
+     * @param obstacle An object that the player can collide with
      */
     private boolean flameCollision(IObstacle obstacle) {
         if (!(obstacle instanceof Flame)) {
@@ -302,6 +308,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             }
         }
     }
+
+    /**
+     * Increases the speed of the game as well as increasing level which adds more obstacles as well as make them sapwn more frequently
+     *
+     */
     private void increaseDifficulty() {
         obstacleSpawnInterval = (float) Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleSpawnInterval - 0.4);
         bgSpeed = (float) Math.max(MAX_BG_SPEED, bgSpeed - 50);
@@ -314,8 +325,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                 obstacle.setVX(rocketSpeed);
             }
         }
-
-
 
         difficulty ++;
     }
@@ -351,6 +360,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
         };
     }
+
 
     private boolean canSpawnLazer(Lazer newLazer) {
         for (IObstacle obstacle : obstacles) {
@@ -407,12 +417,19 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
+    /**
+     * Deactivates the current powerup
+     */
     private void deactivatePowerUp(){
          player.setPowerUp(PowerUpType.NORMAL);
          player.setVy(0);
     }
 
-
+    /**
+     * Updates the background to the delta time
+     *
+     * @param dt
+     */
     private void updateBackground(float dt) {
         bgScrollX += bgSpeed * dt;
         if (worldWidth > 0) {
