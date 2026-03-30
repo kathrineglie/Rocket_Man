@@ -1,6 +1,8 @@
 package inf112.rocketman;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import inf112.rocketman.controller.RocketManController;
@@ -18,7 +20,8 @@ public class Main extends Game {
 
     @Override
     public void create() {
-        GameModel model = new GameModel(1200, 800);
+        Preferences highscores = Gdx.app.getPreferences("Highscores");
+        GameModel model = new GameModel(1200, 800,highscores);
 
         controller = new RocketManController(model, model);
         controller.create();

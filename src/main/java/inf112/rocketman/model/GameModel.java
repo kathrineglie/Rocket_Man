@@ -94,10 +94,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float lazerTimer = 0f;
     private float rocketTimer = 0f;
 
-    private Preferences highscores = Gdx.app.getPreferences("Highscores");
+    private final Preferences highscores;
     private String playerName = "";
 
-    public GameModel(float worldWidth, float worldHeight) {
+    public GameModel(float worldWidth, float worldHeight, Preferences highscores) {
         float pWidth = worldWidth/13;
         float pHeight= worldHeight/7;
         player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight, GROUND);
@@ -105,6 +105,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
+        this.highscores = highscores;
 
     }
 
