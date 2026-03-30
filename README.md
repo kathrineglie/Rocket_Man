@@ -1,6 +1,6 @@
-# *README template* (← TODO: replace with name of your project)
-*TODO: If you want you can include "badges" with current test status, etc here – see bottom of Settings → CI/CD Settings → General for examples. Also, you might want to have a lead paragraph / tagline / very short introduction so it's immediately obvious what the project is about.*
+# *README If-me-and-the-gang-pull-up* 
 
+Rocket Man is a side-scrolling game where you play as *TPowah* and try to survive as long as possible in a dangerous world full of obstacles.
 *TODO: Other useful stuff to include:*
 * **Project description** – what it is, why you made it, etc
 * **Installation and Running** – Explain how to install / clone+compile project, and how to run it. Also, any requirements (e.g., Java version), additional dependencies that must be installed, how to run tests, etc. See/copy text above.
@@ -43,5 +43,4 @@
 * `src/main/resources/Sounds` - Have used "Teleport" from "Sounds" by phoenix1291 (CC0) 
   * Source: https://opengameart.org/content/sound-effects-mini-pack15
 
-*(You should probably delete these if you don't need them! If possible, include link to where you found them. Many resources come with instructions on how to cite properly.)*
 
