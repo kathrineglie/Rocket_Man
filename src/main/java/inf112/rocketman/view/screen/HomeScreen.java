@@ -1,6 +1,8 @@
 package inf112.rocketman.view.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -8,10 +10,15 @@ import com.badlogic.gdx.utils.TimeUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
-public class HomeScreen extends AbstractMenuScreen {
+public class HomeScreen extends AbstractMenuScreen implements InputProcessor {
+
+    private String playerName = "";
 
     public HomeScreen(Main game, RocketManController controller) {
+
         super(game, controller);
+        Gdx.input.setInputProcessor(this);
+
     }
 
     @Override
@@ -57,9 +64,58 @@ public class HomeScreen extends AbstractMenuScreen {
             }
         }
 
+        GlyphLayout nameLayout = new GlyphLayout(smallFont, "Name: " +playerName);
+        smallFont.draw(batch,nameLayout, width / 2f - nameLayout.width / 2f, height / 2f + 40);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !playerName.isBlank()) {
+            playerName = playerName.stripTrailing();
+            controller.startGame(playerName);
+        }
+
         batch.end();
 
         controller.handleInput();
 
     }
+
+    @Override
+    public boolean keyTyped(char character) {
+        if (character == '\b') {
+            if (!playerName.isEmpty()) {
+                playerName = playerName.substring(0, playerName.length() - 1);
+            }
+            return true;
+        }
+
+        if (character == '\r' || character == '\n') {
+            return true;
+        }
+
+        if (Character.isLetterOrDigit(character)) {
+            if (playerName.length() < 12) {
+                playerName += character;
+            }
+            return true;
+        }
+
+        if (character == ' ') {
+            if (!playerName.isEmpty() && !playerName.endsWith(" ") && playerName.length() < 12) {
+                playerName += character;
+            }
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override public boolean keyDown(int keycode) { return false; }
+    @Override public boolean keyUp(int keycode) { return false; }
+    @Override public boolean touchDown(int screenX, int screenY, int pointer, int button) { return false; }
+    @Override public boolean touchUp(int screenX, int screenY, int pointer, int button) { return false; }
+    @Override public boolean touchCancelled(int screenX, int screenY, int pointer, int button) { return false; }
+    @Override public boolean touchDragged(int screenX, int screenY, int pointer) { return false; }
+    @Override public boolean mouseMoved(int screenX, int screenY) { return false; }
+    @Override public boolean scrolled(float amountX, float amountY) { return false; }
+
+
 }

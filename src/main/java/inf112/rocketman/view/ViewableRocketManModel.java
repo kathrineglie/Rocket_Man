@@ -7,6 +7,7 @@ import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.PowerUps.PowerUp;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * A read-only interface representing the parts of the rocketMan game model
@@ -65,5 +66,12 @@ public interface ViewableRocketManModel {
     boolean didCollectPowerUpThisFrame();
 
     boolean didCollectCoinThisFrame();
+
+    /**
+     * returns the highscore preference as a sorted list
+     * @return sorted highscore list
+     */
+    List<Map.Entry<String,Integer>> getSortedHighScoreList();
+
 }
 

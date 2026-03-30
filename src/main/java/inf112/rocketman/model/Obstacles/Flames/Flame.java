@@ -2,7 +2,6 @@ package inf112.rocketman.model.Obstacles.Flames;
 import java.util.Iterator;
 
 import com.badlogic.gdx.math.Polygon;
-import inf112.rocketman.grid.GridCell;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.Obstacles.Obstacle;
 

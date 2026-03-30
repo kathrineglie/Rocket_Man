@@ -1,5 +1,7 @@
 package inf112.rocketman.model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -26,10 +28,7 @@ import inf112.rocketman.model.PowerUps.RandomPowerUpFactory;
 import inf112.rocketman.view.ViewableRocketManModel;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
     private final TPowah player;
@@ -95,7 +94,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float lazerTimer = 0f;
     private float rocketTimer = 0f;
 
-    public GameModel(float worldWidth, float worldHeight) {
+    private final Preferences highscores;
+    private String playerName = "";
+
+    public GameModel(float worldWidth, float worldHeight, Preferences highscores) {
         float pWidth = worldWidth/13;
         float pHeight= worldHeight/7;
         player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight, GROUND);
@@ -103,6 +105,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
+        this.highscores = highscores;
+
     }
 
     /**
@@ -136,6 +140,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             gameTimer -= dt;
         }
     }
+
+    @Override
+    public void setPlayerName(String playerName){
+        this.playerName = playerName;
+    }
+
 
     /**
      * Checks if the player overlaps with the powerup box
@@ -200,6 +210,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      */
     private void resetGame() {
         gameState = GameState.GAME_OVER;
+        updateHighscores(playerName);
+
         player.setPowerUp(PowerUpType.NORMAL);
         bgSpeed = START_BG_SPEED;
         obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
@@ -207,6 +219,60 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         coinCount = 0;
         difficulty = 1;
     }
+
+
+
+    /**
+     * Updates the saved highscores
+     * This method should make sure that
+     * the preference @highScores contain the 5 best scores seen so far
+     *
+     */
+    private void updateHighscores(String playerName){
+        Map<String, ?> allScores = highscores.get();
+
+        int oldScore = highscores.getInteger(playerName, 0);
+        if (gameScore <= oldScore && allScores.containsKey(playerName)){
+            return;
+        }
+
+        if (allScores.size() < 5){
+            highscores.putInteger(playerName, gameScore);
+            highscores.flush();
+            return;
+        }
+
+        String playerWithLowestScore = null;
+        int lowestScore = Integer.MAX_VALUE;
+
+        for (String key : allScores.keySet()){
+            int score = highscores.getInteger(key);
+            if (score < lowestScore){
+                lowestScore = score;
+                playerWithLowestScore = key;
+            }
+        }
+
+        if (gameScore > lowestScore){
+            highscores.remove(playerWithLowestScore);
+            highscores.putInteger(playerName, gameScore);
+            highscores.flush();
+        }
+    }
+
+    @Override
+    public List<Map.Entry<String,Integer>> getSortedHighScoreList(){
+        List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>();
+
+        for (String key : highscores.get().keySet()){
+            sortedScores.add(Map.entry(key, highscores.getInteger(key)));
+        }
+
+        sortedScores.sort((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()));
+
+        return sortedScores;
+    }
+
 
     /**
      * Handles collision for flame object seperate since it is a polygon
@@ -438,6 +504,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             bgScrollX = 0;
         }
     }
+
 
     @Override
     public float getWorldHeight(){
