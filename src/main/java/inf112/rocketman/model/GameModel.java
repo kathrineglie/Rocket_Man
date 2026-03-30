@@ -95,6 +95,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private float rocketTimer = 0f;
 
     private Preferences highscores = Gdx.app.getPreferences("Highscores");
+    private String playerName = "";
 
     public GameModel(float worldWidth, float worldHeight) {
         float pWidth = worldWidth/13;
@@ -138,6 +139,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             gameTimer -= dt;
         }
     }
+
+    @Override
+    public void setPlayerName(String playerName){
+        this.playerName = playerName;
+    }
+
 
     /**
      * Checks if the player overlaps with the powerup box
@@ -202,7 +209,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      */
     private void resetGame() {
         gameState = GameState.GAME_OVER;
-        updateHighscores();
+        updateHighscores(playerName);
 
         player.setPowerUp(PowerUpType.NORMAL);
         bgSpeed = START_BG_SPEED;
@@ -211,6 +218,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         coinCount = 0;
         difficulty = 1;
     }
+
+
 
     /**
      * Updates the saved highscores

@@ -61,4 +61,9 @@ public interface ControllableRocketManModel {
 
     void showInstructions();
 
+    /**
+     * Sets the name of the player that is currently playing
+     */
+    void setPlayerName(String playerName);
+
 }
