@@ -81,18 +81,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private PowerUp powerUp;
     private float powerUpTimer = 0f;
-    private static final float POWER_UP_SPAWN_INTERVAL = 8f;
+    private static final float MIN_POWER_UP_SPAWN_INTERVAL = 8f;
+    private static final float MAX_POWER_UP_SPAWN_INTERVAL = 30f;
 
     private boolean collectedPowerUpThisFrame = false;
     private boolean collectedCoinThisFrame = false;
-
-    private float currentSpawnInterval = 1.5f;
-    private float currentScrollSpeed = -120f;
-    //private static final float MAX_SCROLL_SPEED = 260f;
-
-    private float flameTimer = 0f;
-    private float lazerTimer = 0f;
-    private float rocketTimer = 0f;
 
     private final Preferences highscores;
     private String playerName = "";
@@ -106,6 +99,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
         this.highscores = highscores;
+
+        this.powerUpTimer = getRandomPowerUpSpawnInterval();
 
     }
 
@@ -148,6 +143,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
 
     /**
+     *Returns a random delay before the next power-up can spawn
+     * @return a random spawn interval between the minimum and maximum limit
+     */
+    private float getRandomPowerUpSpawnInterval(){
+        return random.nextFloat(MIN_POWER_UP_SPAWN_INTERVAL, MAX_POWER_UP_SPAWN_INTERVAL);
+    }
+
+    /**
      * Checks if the player overlaps with the powerup box
      */
     private void checkPowerUpCollision() {
@@ -161,6 +164,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             collectedPowerUpThisFrame = true;
             player.setVy(0);
             powerUp = null;
+            powerUpTimer = getRandomPowerUpSpawnInterval();
+            obstacles.clear();
         }
     }
 
@@ -461,6 +466,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return obstacles;
      }
 
+    /**
+     * Updates the power-up system by counting down the spawn timer,
+     * spawning a new power-up, and moving or removing the current one.
+     *
+     * @param dt the time since the last frame
+     */
     private void updatePowerUp(float dt){
         if (player.getActivePowerUp() != PowerUpType.NORMAL) {
             return;
@@ -470,7 +481,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
         if (powerUp == null && powerUpTimer <= 0){
             powerUp = powerUpFactory.newPowerUp(worldWidth, worldHeight, GROUND, MARGIN, bgSpeed);
-            powerUpTimer = POWER_UP_SPAWN_INTERVAL;
+            powerUpTimer = getRandomPowerUpSpawnInterval();
         }
 
         if (powerUp != null) {
@@ -482,6 +493,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             }
         }
     }
+
 
     /**
      * Deactivates the current powerup
