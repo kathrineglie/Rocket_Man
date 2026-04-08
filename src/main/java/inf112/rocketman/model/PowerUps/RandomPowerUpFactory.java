@@ -27,7 +27,7 @@ public class RandomPowerUpFactory implements PowerUpFactory{
         List<PowerUpType> availableTypes = new ArrayList<>();
 
         for (PowerUpType type : types) {
-            if (type != PowerUpType.NORMAL) {
+            if (type != PowerUpType.NORMAL && type !=PowerUpType.BIRD) {
                 availableTypes.add(type);
             }
         }
