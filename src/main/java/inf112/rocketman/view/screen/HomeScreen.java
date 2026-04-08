@@ -10,13 +10,15 @@ import com.badlogic.gdx.utils.TimeUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
-public class HomeScreen extends AbstractMenuScreen implements InputProcessor {
+public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen implements InputProcessor {
 
     private String playerName = "";
+    private final RocketManController controller;
 
     public HomeScreen(Main game, RocketManController controller) {
 
         super(game, controller);
+        this.controller = controller;
         Gdx.input.setInputProcessor(this);
 
     }
