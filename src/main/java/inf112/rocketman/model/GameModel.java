@@ -620,7 +620,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * Trigger game over manually for testing of highscores.
      */
     protected void triggerGameOver(){
-        initGameState();
+        handleGameOver();
     }
 
     @Override
