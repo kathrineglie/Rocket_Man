@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.PowerUps.PowerUpFactory;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 
-public class TPowah {
+public class TPowah implements ITPowah  {
     private static final int HITBOX_OFFSET = 10;
 
     private final Rectangle bounds;
@@ -39,6 +39,7 @@ public class TPowah {
         this.ground = ground;
     }
 
+    @Override
     public void update(float dt, boolean movementInput, float worldHeight) {
         this.movementInput = movementInput;
         if (activePowerUp == PowerUpType.BIRD) {
@@ -155,28 +156,22 @@ public class TPowah {
         return movementInput;
     }
 
+    @Override
     public void setPowerUp(PowerUpType powerUp){
         this.activePowerUp = powerUp;
     }
 
+    @Override
     public PowerUpType getActivePowerUp(){
         return activePowerUp;
     }
 
-    /**
-     * The actual size of the character
-     *
-     * @return
-     */
+    @Override
     public Rectangle getBounds() {
         return bounds;
     }
 
-    /**
-     * Returns the hitbox for the character which is a bit smaller due to hitbox offset
-     *
-     * @return
-     */
+    @Override
     public Rectangle getHitBox() {
         return new Rectangle(bounds.getX() + HITBOX_OFFSET,
                 bounds.getY() + HITBOX_OFFSET,
@@ -184,11 +179,7 @@ public class TPowah {
                 bounds.getHeight() - HITBOX_OFFSET*2);
     }
 
-    /**
-     * Returns the hitbox as a polygon
-     *
-     * @return the hitbox for the player as a polygon
-     */
+    @Override
     public Polygon getPolyHitBox() {
         float[] vertices = new float[] {
                 0, 0,
@@ -202,39 +193,52 @@ public class TPowah {
         return polygon;
     }
 
+    @Override
     public boolean hasPowerUp() {
         return activePowerUp != PowerUpType.NORMAL;
     }
 
+    @Override
     public boolean onGround() {
         return bounds.y == ground;
     }
 
+    @Override
     public boolean onCeiling() {
         return bounds.y == ceiling;
     }
 
+    @Override
     public boolean isGoingUp() {
         return vy > 5f;
     }
 
+    @Override
     public boolean isGoingDown() {
         return vy < -5f;
     }
 
+    @Override
     public float getY() {return bounds.y;}
 
+    @Override
     public float getX() {return bounds.x;}
 
+    @Override
     public float getVY() {return vy;}
 
+    @Override
     public float getWidth() {return bounds.width;}
 
+    @Override
     public float getHeight() {return bounds.height; }
 
+    @Override
     public void setX(float x) {this.bounds.x = x; }
 
+    @Override
     public void setY(float y) {this.bounds.y = y; }
 
+    @Override
     public void setVy(float vy) {this.vy = vy;}
 }
