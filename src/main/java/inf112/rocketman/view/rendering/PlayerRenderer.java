@@ -27,37 +27,56 @@ public class PlayerRenderer {
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> birdAnimation;
     private final Animation<TextureRegion> robotAnimation;
+    private final Animation<TextureRegion> runAnimationPirate;
+    private final Animation<TextureRegion> birdAnimationPirate;
 
-
-    public PlayerRenderer(TextureProvider textures){
+    public PlayerRenderer(TextureProvider textures) {
         this.textures = textures;
 
-        runAnimation = new Animation<>(0.1f,
-                new TextureRegion(textures.getTexture("TPowah/run1.png")),
-                new TextureRegion(textures.getTexture("TPowah/run2.png")),
-                new TextureRegion(textures.getTexture("TPowah/run3.png")),
-                new TextureRegion(textures.getTexture("TPowah/run4.png")));
+        runAnimationPirate = new Animation<>(0.1f,
+                new TextureRegion(textures.getTexture("TPowah/run1pirate.png")),
+                new TextureRegion(textures.getTexture("TPowah/run2pirate.png")),
+                new TextureRegion(textures.getTexture("TPowah/run3pirate.png")),
+                new TextureRegion(textures.getTexture("TPowah/run2pirate.png")));
 
-        birdAnimation = new Animation<>(0.2f,
-                new TextureRegion(textures.getTexture("PowerUps/bird.png")),
-                new TextureRegion(textures.getTexture("PowerUps/birdUP.png")));
+        birdAnimationPirate = new Animation<>(0.2f,
+                new TextureRegion(textures.getTexture("PowerUps/bird_pirate.png")),
+                new TextureRegion(textures.getTexture("PowerUps/birdUp_pirate.png")));
 
         robotAnimation = new Animation<>(0.2f,
                 new TextureRegion(textures.getTexture("PowerUps/run1.png")),
                 new TextureRegion(textures.getTexture("PowerUps/run2.png")),
                 new TextureRegion(textures.getTexture("PowerUps/run3.png")),
                 new TextureRegion(textures.getTexture("PowerUps/run4.png")));
-    }
+
+        runAnimation = new Animation<>(0.1f,
+                    new TextureRegion(textures.getTexture("TPowah/run1.png")),
+                    new TextureRegion(textures.getTexture("TPowah/run2.png")),
+                    new TextureRegion(textures.getTexture("TPowah/run3.png")),
+                    new TextureRegion(textures.getTexture("TPowah/run4.png")));
+
+        birdAnimation = new Animation<>(0.2f,
+                new TextureRegion(textures.getTexture("PowerUps/bird.png")),
+                new TextureRegion(textures.getTexture("PowerUps/birdUP.png")));
+
+        }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model){
         TPowah player = model.getPlayer();
         TextureRegion region = null;
         String playerImg = null;
-        
-        stateTime += Gdx.graphics.getDeltaTime();
+        boolean hasPirateHat = model.hasPirateHat();
 
+
+        boolean spacePressed = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+
+        stateTime += Gdx.graphics.getDeltaTime();
         if (player.getActivePowerUp() == PowerUpType.BIRD) {
-            region = birdAnimation.getKeyFrame(stateTime, true);
+            if (hasPirateHat) {
+                region = birdAnimationPirate.getKeyFrame(stateTime, true);
+            } else {
+                region = birdAnimation.getKeyFrame(stateTime, true);
+            }
         } else if (player.getActivePowerUp() == PowerUpType.ROBOT) {
             if (player.onGround()) {
                 region = robotAnimation.getKeyFrame(stateTime,true);
@@ -68,11 +87,23 @@ public class PlayerRenderer {
             }
         }
         else if (model.usingJetpack()){
-            playerImg = "TPowah/jetpack_flames.png";
+            if (hasPirateHat) {
+                playerImg = "TPowah/jetpack_flames_pirate.png";
+            } else {
+                playerImg = "TPowah/jetpack_flames.png";
+            }
         } else if (player.onGround()) {
-            region = runAnimation.getKeyFrame(stateTime, true);
+            if (hasPirateHat) {
+                region = runAnimationPirate.getKeyFrame(stateTime, true);
+            } else {
+                region = runAnimation.getKeyFrame(stateTime, true);
+            }
         } else {
-            playerImg = "TPowah/jetpack.png";
+            if (hasPirateHat) {
+                playerImg = "TPowah/run2pirate.png";
+            } else {
+                playerImg = "TPowah/jetpack.png";
+            }
         }
 
         if (region != null) {

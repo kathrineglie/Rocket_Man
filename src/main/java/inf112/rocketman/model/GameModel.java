@@ -34,8 +34,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final float margin;
 
     private GameState gameState = GameState.HOME_SCREEN;
-    private final Preferences highscores;
-
     private String playerName = "";
 
     private final TPowah player;
@@ -91,7 +89,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private boolean collectedPowerUpThisFrame = false;
     private boolean collectedCoinThisFrame = false;
 
-    public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores) {
+    private PlayerProgressManager progressManager;
+
+    private static boolean pirateHat = false;
+
+    public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
         float pHeight= worldHeight/7;
         player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight, GROUND);
@@ -100,9 +102,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
         this.margin = margin;
-        this.highscores = highscores;
+
+        this.progressManager = new PlayerProgressManager(highscores, coins);
 
         this.powerUpTimer = getRandomPowerUpSpawnInterval();
+
     }
 
     /**
@@ -111,7 +115,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * @param dt  dt time passed since the last frame
      * @param movingUpward True if the player is currently applying thrust to the rocket.
      */
-    public  void update (float dt, boolean movingUpward) {
+    public void update (float dt, boolean movingUpward) {
         if (gameState != GameState.PLAYING){
             return;
         }
@@ -135,11 +139,15 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         } else {
             scoreTickTimer -= dt;
         }
+        int coins = progressManager.getCoins(playerName);
+        if (coins + coinCount >= 10) {
+            pirateHat = true;
+        }
     }
 
     @Override
-    public void setPlayerName(String playerName){
-        this.playerName = playerName;
+    public void setPlayerName(String name){
+        this.playerName = name;
     }
 
 
@@ -197,7 +205,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
                         obstacles.clear();
                         return;
                     } else {
-                        gameState = GameState.GAME_OVER;
+                        handleGameOver();
                     }
                     return;
                 }
@@ -218,6 +226,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         obstacles.clear();
         coinList.clear();
 
+        player.setPowerUp(PowerUpType.NORMAL);
+
         bgSpeed = START_BG_SPEED;
         rocketSpeed = START_ROCKET_SPEED;
         bgScrollX = 0f;
@@ -235,64 +245,23 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         gameScore = 0;
         scoreTickTimer = START_GAME_SCORE_TIMER;
         scoreInterval = START_GAME_SCORE_TIMER;
+        coinCount = 0;
+        difficulty = 1;
 
-        player.setPowerUp(PowerUpType.NORMAL);
-        player.setX(PLAYER_X);
-        player.setY(PLAYER_Y);
-        player.setVy(0);
     }
 
 
-
-    /**
-     * Updates the saved highscores
-     * This method makes sure that the preference @highScores contain the 5 best scores seen so far
-     */
-    private void updateHighscores(String playerName){
-        Map<String, ?> allScores = highscores.get();
-
-        int oldScore = highscores.getInteger(playerName, 0);
-        if (gameScore <= oldScore && allScores.containsKey(playerName)){
-            return;
-        }
-
-        if (allScores.size() < 5){
-            highscores.putInteger(playerName, gameScore);
-            highscores.flush();
-            return;
-        }
-
-        String playerWithLowestScore = null;
-        int lowestScore = Integer.MAX_VALUE;
-
-        for (String key : allScores.keySet()){
-            int score = highscores.getInteger(key);
-            if (score < lowestScore){
-                lowestScore = score;
-                playerWithLowestScore = key;
-            }
-        }
-
-        if (gameScore > lowestScore){
-            highscores.remove(playerWithLowestScore);
-            highscores.putInteger(playerName, gameScore);
-            highscores.flush();
-        }
-    }
 
     @Override
-    public List<Map.Entry<String,Integer>> getSortedHighScoreList(){
-        List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>();
-
-        for (String key : highscores.get().keySet()){
-            sortedScores.add(Map.entry(key, highscores.getInteger(key)));
-        }
-
-        sortedScores.sort((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()));
-
-        return sortedScores;
+    public int getSavedCoinsForPlayer(String playerName) {
+        return progressManager.getCoins(playerName);
     }
 
+
+    @Override
+    public List<Map.Entry<String, Integer>> getSortedHighScoreList() {
+        return progressManager.getSortedHighScoreList();
+    }
 
     /**
      * Handles collision for flame object separate since it is a polygon
@@ -310,7 +279,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             if (player.hasPowerUp()) {
                 deactivatePowerUp();
             } else {
-                gameState = GameState.GAME_OVER;
+                handleGameOver();
             }
             return true;
         }
@@ -597,8 +566,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public void startNewGame(){
         initGameState();
         gameState = GameState.PLAYING;
-        gameScore = 0;
-        coinCount = 0;
     }
 
     @Override
@@ -650,4 +617,37 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
          return usingJetpack;
     }
 
+    /**
+     * For use in tests. Sets the games core directly.
+     */
+    protected void setGameScore(int score){
+        this.gameScore = score;
+    }
+
+    /**
+     * Trigger game over manually for testing of highscores.
+     */
+    protected void triggerGameOver(){
+        handleGameOver();
+    }
+
+    @Override
+    public String getPlayerName(){
+        return playerName;
+    }
+
+    /**
+     * Ends the current game and saves the player's progress.
+     */
+    private void handleGameOver() {
+        gameState = GameState.GAME_OVER;
+        progressManager.updateHighscores(playerName, gameScore);
+        progressManager.addCoins(playerName, coinCount);
+    }
+
+
+
+
+
+    public boolean hasPirateHat() { return  pirateHat; }
 }

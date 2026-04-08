@@ -67,11 +67,28 @@ public interface ViewableRocketManModel {
 
     boolean didCollectCoinThisFrame();
 
+    boolean hasPirateHat();
     /**
      * returns the highscore preference as a sorted list
      * @return sorted highscore list
      */
     List<Map.Entry<String,Integer>> getSortedHighScoreList();
+
+
+    /**
+     * Gets the total number of saved coins for the given player.
+     *
+     * @param playerName the name of the player
+     * @return the player's saved coin total
+     */
+    int getSavedCoinsForPlayer(String playerName);
+
+    /**
+     * Gets the name of the current plauer
+     *
+     * @return the current player's name
+     */
+    String getPlayerName();
 
 }
 
