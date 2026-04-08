@@ -42,9 +42,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final Random random = new Random();
     private static final float MARGIN = 5f;
 
-    private final float START_BG_SPEED = -350f;
+    private static final float START_BG_SPEED = -350f;
     private float bgSpeed = START_BG_SPEED;
-    private final float MAX_BG_SPEED = -1200f;
+    private static final float MAX_BG_SPEED = -1200f;
     private float rocketSpeed = -550f;
     private static final float MAX_ROCKET_SPEED = - 1400f;
 
@@ -66,7 +66,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private float obstacleTimer = 0f; // Timer that counts down until the next obstacle can spawn
     private float FINAL_OBSTACLE_SPAWN_INTERVAL = 1f; // The final time it can take between new obstacles to spawn
-    private final float START_OBSTACLE_SPAWN_INTERVAL = 2.5f;
+    private static final float START_OBSTACLE_SPAWN_INTERVAL = 2.5f;
     private float obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
 
     private static final float MIN_LAZER_VERTICAL_DISTANCE = 80f;
@@ -75,7 +75,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     List<Coin> coinList = new ArrayList<>();
 
     private int gameScore = 0;
-    private float distanceMeters = 0f;
     private float gameTimer = 0.1f;
     private float gameScoreTimer = 0.1f;
 
@@ -347,7 +346,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
 
     public List<Coin> getCoinList() {
-        return coinList;
+        return new ArrayList<>(coinList);
     }
 
     /**
@@ -462,7 +461,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * @return
      */
     public List<IObstacle> getObstacles() {
-        return obstacles;
+        return new ArrayList<>(obstacles);
      }
 
     /**

@@ -109,11 +109,12 @@ public class RocketManController {
         GameState currentState = controllableModel.getGameState();
 
         switch (currentState) {
-            //case HOME_SCREEN -> handleHomeScreenInput();
+            case HOME_SCREEN -> handleHomeScreenInput();
             case PLAYING -> handlePlayingInput();
             case PAUSE -> handlePauseInput();
             case GAME_OVER -> handleGameOverInput();
             case INSTRUCTIONS -> handleInstructionInput();
+            default -> throw new IllegalStateException("Unexpected game state: " + currentState);
         }
 
     }
@@ -125,15 +126,15 @@ public class RocketManController {
         controllableModel.setPlayerName(playerName);
         controllableModel.startGame();
     }
-//    private void handleHomeScreenInput() {
-//        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-//            view.stopAllMusic();
-//            view.playExclusiveMusic(MUSIC);
-//            resetSoundState();
-//            controllableModel.startGame();
-//        }
-//
-//    }
+    private void handleHomeScreenInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            view.stopAllMusic();
+            view.playExclusiveMusic(MUSIC);
+            resetSoundState();
+            controllableModel.startGame();
+        }
+
+    }
 
     private void handlePlayingInput() {
         handlePauseButtonInput();
