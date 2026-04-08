@@ -37,7 +37,7 @@ public interface ControllableRocketManModel {
     /**
      * Transitions the game from the menu/home screen to active playing state.
      */
-    void startGame();
+    void startNewGame();
 
     /**
      * Transitions the game back to the home screen.
