@@ -89,6 +89,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private final Preferences highscores;
     private String playerName = "";
+    private static boolean pirateHat = false;
 
     public GameModel(float worldWidth, float worldHeight, Preferences highscores) {
         float pWidth = worldWidth/13;
@@ -218,11 +219,15 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         updateHighscores(playerName);
 
         player.setPowerUp(PowerUpType.NORMAL);
+        if (coinCount > 2) {
+            pirateHat = true;
+        }
         bgSpeed = START_BG_SPEED;
         obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
         gameScore = 0;
         coinCount = 0;
         difficulty = 1;
+
     }
 
 
@@ -629,4 +634,5 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
          return usingJetpack;
     }
 
+    public boolean hasPirateHat() { return  pirateHat; }
 }
