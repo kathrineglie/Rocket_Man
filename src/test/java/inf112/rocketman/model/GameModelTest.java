@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 
 public class GameModelTest {
     private Preferences highscores;
+    private Preferences coins;
 
     /**
      * Sets up a mocked Preferences object before each test.
@@ -39,6 +40,13 @@ public class GameModelTest {
         when(highscores.get()).thenReturn(new java.util.HashMap<>());
         when(highscores.getInteger(anyString(), anyInt())).thenAnswer(invocation -> invocation.getArgument(1));
         when(highscores.getInteger(anyString())).thenReturn(0);
+
+        coins = mock(Preferences.class);
+        when(highscores.get()).thenReturn(new java.util.HashMap<>());
+        when(highscores.getInteger(anyString(), anyInt())).thenAnswer(invocation -> invocation.getArgument(1));
+        when(highscores.getInteger(anyString())).thenReturn(0);
+
+
     }
 
     @Test
@@ -53,7 +61,7 @@ public class GameModelTest {
         when(highscores.getInteger("firstPlace")).thenReturn(200);
         when(highscores.getInteger("secondPlace")).thenReturn(100);
 
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         List<Map.Entry<String, Integer>> sorted = model.getSortedHighScoreList();
 
         assertEquals("firstPlace", sorted.getFirst().getKey());
@@ -68,7 +76,7 @@ public class GameModelTest {
     @Test
     public void testSameNameOnHighscoreBoard(){
         String playerName = "TestPlayer";
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.setPlayerName(playerName);
 
         Map<String, Integer> currentScores = new HashMap<>();
@@ -96,7 +104,7 @@ public class GameModelTest {
 
     @Test
     public void testPauseGameChangesState() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         model.pauseGame();
@@ -106,7 +114,7 @@ public class GameModelTest {
 
     @Test
     public void testResumeGameChangesStateBackToPlaying() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.pauseGame();
 
         model.resumeGame();
@@ -116,7 +124,7 @@ public class GameModelTest {
 
     @Test
     public void testGoToHomeScreen() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
         model.goToHomescreen();
         assertEquals(GameState.HOME_SCREEN, model.getGameState());
@@ -124,14 +132,14 @@ public class GameModelTest {
 
     @Test
     public void testShowInstructions() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.showInstructions();
         assertEquals(GameState.INSTRUCTIONS, model.getGameState());
     }
 
     @Test
     public void testPositionDoesNotChangeWhenPaused() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
         model.pauseGame();
 
@@ -144,7 +152,7 @@ public class GameModelTest {
 
     @Test
     public void testObstaclesClearedOnStartGame() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         model.update(2.0f, false);
@@ -156,13 +164,13 @@ public class GameModelTest {
 
     @Test
     public void testInitialStateIsHomeScreen() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         assertEquals(GameState.HOME_SCREEN, model.getGameState());
     }
 
     @Test
     public void testTogglePauseMultipleTimes() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         model.pauseGame();
@@ -177,7 +185,7 @@ public class GameModelTest {
 
     @Test
     public void testScoreIncreaseOverTime() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         int initialScore = model.getGameScore();
@@ -192,7 +200,7 @@ public class GameModelTest {
 
     @Test
     public void testBackgroundScrolling() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         float initialScroll = model.getBackgroundScrollX();
@@ -206,7 +214,7 @@ public class GameModelTest {
 
     @Test
     public void testUpdateDoesNothingWhenGameIsNotPlaying() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
 
         float initialScroll = model.getBackgroundScrollX();
         model.update(1.0f, false);
@@ -216,7 +224,7 @@ public class GameModelTest {
 
     @Test
     public void testPlayerMovesWhenMovingUpward() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         float initialY = model.getPlayer().getY();
@@ -228,7 +236,7 @@ public class GameModelTest {
 
     @Test
     public void testScoreResetsOnStartGame() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model. startGame();
 
         for(int i = 0; i < 5; i++) {
@@ -244,7 +252,7 @@ public class GameModelTest {
 
     @Test
     public void testBirdPowerUpState() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         assertFalse(model.hasBirdPowerUp(), "Should not have bird power-up at start");
@@ -256,7 +264,7 @@ public class GameModelTest {
 
     @Test
     public void testNoUpdateDuringInstruction() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
         model.showInstructions();
 
@@ -268,7 +276,7 @@ public class GameModelTest {
 
     @Test
     public void testStartGameChangesStateToPlaying() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
 
         model.startGame();
 
@@ -277,7 +285,7 @@ public class GameModelTest {
 
     @Test
     public void testGoToHomeScreenRemovesPowerUp() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         model.getPlayer().setPowerUp(PowerUpType.BIRD);
@@ -289,7 +297,7 @@ public class GameModelTest {
 
     @Test
     public void testIsMovingUpReflectsUpdateInput() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
 
         model.update(0.1f, true);
@@ -301,7 +309,7 @@ public class GameModelTest {
 
     @Test
     public void testSCoreDoesNotIncreaseWhenPaused() {
-        GameModel model = new GameModel(1000, 800, highscores);
+        GameModel model = new GameModel(1000, 800, highscores, coins);
         model.startGame();
         model.pauseGame();
 
