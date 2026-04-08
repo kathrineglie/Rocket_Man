@@ -6,14 +6,13 @@
 * Elise Blekken 
 
 **Hva som har endret seg siden sist**
-Siden forrige innlevering har vi videreutviklet prototypen til et mer komplett og funksjonelt spill. Der vi tidligere   
-hadde en grunnleggende gameplay-loop med jetpack og raketter, har vi nå utvidet spillet med flere mekanikker, mer 
-innhold og bedre brukeropplevelse.
+Siden forrige innlevering har vi videreutviklet spillet med mer funkjsonalitet. Spillet er mer dynamisk med 
+stigende vanskelighetsgrad og to ulike powerups som hjelper spilleren. 
 
-Vi har blant annet implementert coins, et score-system der scoren fungerer som meter/avstand, power-up, lydeffekter
-og flere skjermer. I tillegg har vi forbedret UI og skrevet noen tester for model-logikk.
+De ulike skjermene, som game over skjermen, start skjermen og pause skjermen er utviklet, og en toppliste med 
+scores vises før spilleren starter et nytt spill. 
 
-spillet fremstår nå som langt mer helhetlig enn i forrige innlevering, både med tanke på gameplay, struktur og presentasjon.
+Helheten i spillet er nå bedre enn ved forrige innlevering. 
 
 **Hva som nå fungerer**
 per nå har vi implementert:
@@ -36,9 +35,12 @@ per nå har vi implementert:
   * lyd ved power-up
   * game over-lyd
   * bakgrunnsmusikk
-
-spillet har nå tydligere flyt mellom ulike states og skjermer, og opplevelsen er mer spillbar og intuitivt enn
-tidligere.
+* Vanskelighetsgrad som øker jo lengre man overlever
+* Pause knapp
+* To powerups
+  * Robot som har eget bevegelsesmønster med raketter
+  * Bird som har eget bevegelsesmønster med vinger
+* Navn og high scores som listes opp i startskjermen
 
 **Krav og prioritering** 
 Siden sist har vi prioritert å gå videre fra en enkel prototype til å få på plass flere sentrale spill elementer. 
@@ -48,7 +50,7 @@ sammenhengende.
 vi har prioritert:
 * flere obstacles for å gjøre spillet mer variert
 * score og coins for tydeligere progresjon og belønning
-* power-up for mer variasjon i gameplay
+* power-ups for mer variasjon i gameplay
 * flere skjermer for bedre flyt og brukeropplevelse
 * lyd og UI for å gjøre spillet mer levende
 
@@ -61,7 +63,7 @@ conteoller. Denne oppdelingen har gjort det lettere å utvide spillet med nye fe
 sammen.
 
 UI og design er blitt forbedret. Vi har designet det visuelle uttrykket selv, og i illegg lagt inn en pause skjerm, 
-hjelpeskjerm og game over skjerm.
+hjelpeskjerm, startskjerm og game over skjerm.
 
 **Testing**
 Vi har laget tester, knyttet til:
@@ -97,7 +99,6 @@ commit-meldinger, branches og kvalitetssikring før merging.
 **Neste steg**
 Videre ønsker vi å:
 
-* justere vanskelighetsgrad og progresjon
-* utvide eller forbedre power-up systemet
-* lage flere tester
-* rydde i kode og dokumemntasjon der det trengs
+* Lage flere tester
+* Gjøre coins brukbare
+* Kanskje endre litt på hitboxene for en bedre spillopplevelse

@@ -26,6 +26,7 @@ import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.model.PowerUps.RandomPowerUpFactory;
 import inf112.rocketman.view.ViewableRocketManModel;
 
+import javax.swing.*;
 import java.util.*;
 
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
@@ -360,7 +361,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     public List<Coin> getCoinList() {
-        return coinList;
+        return new ArrayList<>(coinList);
     }
 
     /**
@@ -488,7 +489,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * @return current obstacles active in the game
      */
     public List<IObstacle> getObstacles() {
-        return obstacles;
+        return new ArrayList<>(obstacles);
      }
 
     /**
@@ -597,6 +598,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public void startNewGame(){
         initGameState();
         gameState = GameState.PLAYING;
+        gameScore = 0;
+        coinCount = 0;
     }
 
     @Override

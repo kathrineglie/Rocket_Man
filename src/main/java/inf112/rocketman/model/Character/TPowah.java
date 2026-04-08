@@ -21,7 +21,6 @@ public class TPowah {
 
     private boolean robotIsJumping = false;
     private boolean robotNeedsRelease = false;
-    private float robotJumpTime = 0f;
     private boolean movementInput = false;
 
     private static final float ROBOT_BOOST = 20f;
@@ -91,7 +90,7 @@ public class TPowah {
             vy += Math.min(ROBOT_BOOST, MAX_ROBOT_BOOST);
         }
 
-        if (!movementInput && robotIsJumping || bounds.y + bounds.height == worldHeight ) {
+        if ((!movementInput && robotIsJumping) || Math.abs((bounds.y + bounds.height) - worldHeight) < 0.0001f) {
             robotNeedsRelease = true;
         }
 
