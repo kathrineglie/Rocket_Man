@@ -79,7 +79,9 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
 
         font.setColor(Color.WHITE);
         font.getData().setScale(1.0f);
-        font.draw(batch, "?", qMarkX, qMarkY);
+
+        GlyphLayout questionLayout = new GlyphLayout(font, "?");
+        font.draw(batch, questionLayout, qMarkX, qMarkY);
 
         batch.end();
 
@@ -87,8 +89,8 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
             float mouseX = Gdx.input.getX();
             float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-            if (mouseX > qMarkX - 20 && mouseX < qMarkX + 40
-                    && mouseY > qMarkY - 40 && mouseY < qMarkY + 20) {
+            if (mouseX >= qMarkX && mouseX <= qMarkX + questionLayout.width
+                    && mouseY >= qMarkY - questionLayout.height && mouseY <= qMarkY) {
                 controller.showInstruction();
             }
 
