@@ -87,10 +87,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private boolean collectedPowerUpThisFrame = false;
     private boolean collectedCoinThisFrame = false;
 
-    private final Preferences highscores;
+    private PlayerProgressManager progressManager;
     private String playerName = "";
 
-    public GameModel(float worldWidth, float worldHeight, Preferences highscores) {
+    public GameModel(float worldWidth, float worldHeight, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
         float pHeight= worldHeight/7;
         player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight, GROUND);
@@ -98,7 +98,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
-        this.highscores = highscores;
+        this.progressManager = new PlayerProgressManager(highscores, coins);
 
         this.powerUpTimer = getRandomPowerUpSpawnInterval();
 
@@ -110,7 +110,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * @param dt The delta dime (seconds) since last update.
      * @param movingUpward True if the player is currently applying thrust to the rocket.
      */
-    public  void update (float dt, boolean movingUpward) {
+    public void update (float dt, boolean movingUpward) {
         if (gameState != GameState.PLAYING){
             return;
         }
@@ -215,68 +215,81 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      */
     private void resetGame() {
         gameState = GameState.GAME_OVER;
-        updateHighscores(playerName);
+        progressManager.updateHighscores(playerName, gameScore);
+        progressManager.addCoins(playerName, coinCount);
 
         player.setPowerUp(PowerUpType.NORMAL);
         bgSpeed = START_BG_SPEED;
         obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
-        gameScore = 0;
-        coinCount = 0;
         difficulty = 1;
     }
 
-
-
-    /**
-     * Updates the saved highscores
-     * This method should make sure that
-     * the preference @highScores contain the 5 best scores seen so far
-     *
-     */
-    private void updateHighscores(String playerName){
-        Map<String, ?> allScores = highscores.get();
-
-        int oldScore = highscores.getInteger(playerName, 0);
-        if (gameScore <= oldScore && allScores.containsKey(playerName)){
-            return;
-        }
-
-        if (allScores.size() < 5){
-            highscores.putInteger(playerName, gameScore);
-            highscores.flush();
-            return;
-        }
-
-        String playerWithLowestScore = null;
-        int lowestScore = Integer.MAX_VALUE;
-
-        for (String key : allScores.keySet()){
-            int score = highscores.getInteger(key);
-            if (score < lowestScore){
-                lowestScore = score;
-                playerWithLowestScore = key;
-            }
-        }
-
-        if (gameScore > lowestScore){
-            highscores.remove(playerWithLowestScore);
-            highscores.putInteger(playerName, gameScore);
-            highscores.flush();
-        }
+    @Override
+    public int getSavedCoinsForPlayer(String playerName) {
+        return progressManager.getCoins(playerName);
     }
+
 
     @Override
-    public List<Map.Entry<String,Integer>> getSortedHighScoreList(){
-        List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>();
-
-        for (String key : highscores.get().keySet()){
-            sortedScores.add(Map.entry(key, highscores.getInteger(key)));
-        }
-
-        sortedScores.sort((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()));
-
-        return sortedScores;
+    public List<Map.Entry<String, Integer>> getSortedHighScoreList() {
+        return progressManager.getSortedHighScoreList();
     }
+
+
+
+
+
+
+//    /**
+//     * Updates the saved highscores
+//     * This method should make sure that
+//     * the preference @highScores contain the 5 best scores seen so far
+//     *
+//     */
+//    private void updateHighscores(String playerName){
+//        Map<String, ?> allScores = highscores.get();
+//
+//        int oldScore = highscores.getInteger(playerName, 0);
+//        if (gameScore <= oldScore && allScores.containsKey(playerName)){
+//            return;
+//        }
+//
+//        if (allScores.size() < 5){
+//            highscores.putInteger(playerName, gameScore);
+//            highscores.flush();
+//            return;
+//        }
+//
+//        String playerWithLowestScore = null;
+//        int lowestScore = Integer.MAX_VALUE;
+//
+//        for (String key : allScores.keySet()){
+//            int score = highscores.getInteger(key);
+//            if (score < lowestScore){
+//                lowestScore = score;
+//                playerWithLowestScore = key;
+//            }
+//        }
+//
+//        if (gameScore > lowestScore){
+//            highscores.remove(playerWithLowestScore);
+//            highscores.putInteger(playerName, gameScore);
+//            highscores.flush();
+//        }
+//    }
+
+//    @Override
+//    public List<Map.Entry<String,Integer>> getSortedHighScoreList(){
+//        List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>();
+//
+//        for (String key : highscores.get().keySet()){
+//            sortedScores.add(Map.entry(key, highscores.getInteger(key)));
+//        }
+//
+//        sortedScores.sort((e1, e2) -> Integer.compare(e2.getValue(), e1.getValue()));
+//
+//        return sortedScores;
+//    }
 
 
     /**
@@ -575,9 +588,18 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         player.setY(PLAYER_Y);
         player.setVy(0);
 
-        gameState = GameState.PLAYING;
+        bgSpeed = START_BG_SPEED;
+        obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
+        difficulty = 1;
+
+        obstacleTimer = 0f;
+        coinTimer = 10f;
+        gameTimer = 0.1f;
+        bgScrollX = 0f;
+
         gameScore = 0;
         coinCount = 0;
+        gameState = GameState.PLAYING;
     }
 
     @Override
@@ -628,5 +650,26 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public boolean isMovingUp() {
          return usingJetpack;
     }
+
+    /**
+     * For use in tests. Sets the games core directly.
+     */
+    protected void setGameScore(int score){
+        this.gameScore = score;
+    }
+
+    /**
+     * Trigger game over manually for testing of highscores.
+     */
+    protected void triggerGameOver(){
+        resetGame();
+    }
+
+    @Override
+    public String getPlayerName(){
+        return playerName;
+    }
+
+
 
 }

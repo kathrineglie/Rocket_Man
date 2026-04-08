@@ -11,6 +11,10 @@ import inf112.rocketman.model.PowerUps.PowerUpType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -38,10 +42,57 @@ public class GameModelTest {
     }
 
     @Test
-    public void testHighscoresAreSorted(){}
+    public void testHighscoresAreSorted(){
+        Map<String, Integer> fakeData = new HashMap<>();
+        fakeData.put("thirdPlace", 50);
+        fakeData.put("firstPlace", 200);
+        fakeData.put("secondPlace", 100);
+
+        when(highscores.get()).thenReturn((Map) fakeData);
+        when(highscores.getInteger("thirdPlace")).thenReturn(50);
+        when(highscores.getInteger("firstPlace")).thenReturn(200);
+        when(highscores.getInteger("secondPlace")).thenReturn(100);
+
+        GameModel model = new GameModel(1000, 800, highscores);
+        List<Map.Entry<String, Integer>> sorted = model.getSortedHighScoreList();
+
+        assertEquals("firstPlace", sorted.getFirst().getKey());
+        assertEquals(200, sorted.getFirst().getValue());
+        assertEquals("secondPlace", sorted.get(1).getKey());
+        assertEquals(100, sorted.get(1).getValue());
+        assertEquals("thirdPlace", sorted.get(2).getKey());
+        assertEquals(50, sorted.get(2).getValue());
+
+    }
 
     @Test
-    public void testSameNameOnHighscoreBoard(){}
+    public void testSameNameOnHighscoreBoard(){
+        String playerName = "TestPlayer";
+        GameModel model = new GameModel(1000, 800, highscores);
+        model.setPlayerName(playerName);
+
+        Map<String, Integer> currentScores = new HashMap<>();
+        currentScores.put(playerName, 100);
+
+        when(highscores.get()).thenReturn((Map) currentScores);
+        when(highscores.getInteger(playerName, 0)).thenReturn(100);
+
+        model.setGameScore(50);
+        model.triggerGameOver();
+
+        verify(highscores, never()).putInteger(eq(playerName), anyInt());
+
+        clearInvocations(highscores);
+
+        when(highscores.get()).thenReturn((Map) currentScores);
+        when(highscores.getInteger(playerName, 0)).thenReturn(100);
+
+        model.setGameScore(150);
+        model.triggerGameOver();
+
+        verify(highscores).putInteger(playerName, 150);
+        verify(highscores).flush();
+    }
 
     @Test
     public void testPauseGameChangesState() {

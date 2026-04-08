@@ -21,7 +21,8 @@ public class Main extends Game {
     @Override
     public void create() {
         Preferences highscores = Gdx.app.getPreferences("Highscores");
-        GameModel model = new GameModel(1200, 800,highscores);
+        Preferences coins = Gdx.app.getPreferences("Coins");
+        GameModel model = new GameModel(1200, 800,highscores, coins);
 
         controller = new RocketManController(model, model);
         controller.create();
