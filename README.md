@@ -43,4 +43,17 @@ Rocket Man is a side-scrolling game where you play as *TPowah* and try to surviv
 * `src/main/resources/Sounds` - Have used "Teleport" from "Sounds" by phoenix1291 (CC0) 
   * Source: https://opengameart.org/content/sound-effects-mini-pack15
 
+### Font
+## Inter
+This project uses the **Inter** font.
+* Copyright: Copyright 2020 The Inter Project Authors 
+* Source: Inter by Rasmus Andersson 
+* License: SIL Open Font License, Version 1.1
+
+## Bitcount Prop Double Ink
+* Copyright: Copyright 1980 The Bitcount Project Authors 
+* Designer: Petr van Blokland 
+* Source: Google Fonts / TYPETR Bitcount 
+* License: SIL Open Font License, Version 1.1
+
 
