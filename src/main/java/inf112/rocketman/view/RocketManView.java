@@ -28,6 +28,7 @@ public class RocketManView {
 	private ObstacleRenderer obstacleRenderer;
 	private PowerUpRenderer powerUpRenderer;
 	private CoinRenderer coinRenderer;
+	private HudRenderer hudRenderer;
 
 	public void create(double worldWidth, double worldHeight) {
 		this.viewport = new FitViewport((float) worldWidth, (float) worldHeight);
@@ -42,7 +43,7 @@ public class RocketManView {
 		playerRenderer = new PlayerRenderer(assets);
 		obstacleRenderer = new ObstacleRenderer(assets);
 		powerUpRenderer = new PowerUpRenderer(assets);
-
+		hudRenderer = new HudRenderer(assets);
 
 		Gdx.graphics.setForegroundFPS(60);
 	}
@@ -86,14 +87,8 @@ public class RocketManView {
 		playerRenderer.render(batch, model);
 		obstacleRenderer.render(batch, model);
 		powerUpRenderer.render(batch, model);
-		coinRenderer.render(batch, viewport,model);
-
-		BitmapFont mainFont = assets.getFont();
-		mainFont.getData().setScale(1.25f);
-		float pauseX = (float) (worldWidth() - 60);
-		float pauseY = (float) (worldHeight() - 100);
-		assets.getFont().draw(batch, "||", pauseX, pauseY);
-		mainFont.getData().setScale(1.0f);
+		coinRenderer.render(batch,model);
+		hudRenderer.render(batch, viewport, model);
 
 		batch.end();
 		playerRenderer.renderDebug(batch, model);
