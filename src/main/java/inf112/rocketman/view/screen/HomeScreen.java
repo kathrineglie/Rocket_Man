@@ -13,6 +13,7 @@ import inf112.rocketman.controller.RocketManController;
 public class HomeScreen extends AbstractMenuScreen implements InputProcessor {
 
     private String playerName = "";
+    private boolean editingName = false;
 
     public HomeScreen(Main game, RocketManController controller) {
 
@@ -23,63 +24,89 @@ public class HomeScreen extends AbstractMenuScreen implements InputProcessor {
 
     @Override
     public void render(float delta) {
-
-        ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1); // mørk blå bakgrunn
+        ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1);
 
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
+
+        float titleY = height / 2f + 140;
+        float hintY = height / 2f + 75;
+        float nameY = height / 2f + 20;
+        float startY = height / 2f - 40;
+
+        float boxWidth = 300;
+        float boxHeight = 50;
+        float boxX = width / 2f - boxWidth / 2f;
+        float boxY = nameY - 35;
+
+        float qMarkX = width - 60;
+        float qMarkY = height - 60;
 
         batch.begin();
 
         GlyphLayout titleLayout = new GlyphLayout(font, "ROCKET MAN");
         float titleX = width / 2f - titleLayout.width / 2f;
-        float titleY = height / 2f + 140;
 
-        font.setColor(0,0,0,0.5f);
+        font.setColor(0, 0, 0, 0.5f);
         font.draw(batch, titleLayout, titleX + 2, titleY - 2);
 
         font.setColor(Color.WHITE);
         font.draw(batch, titleLayout, titleX, titleY);
 
+        smallFont.setColor(Color.WHITE);
+
+        if (editingName) {
+            GlyphLayout hintLayout = new GlyphLayout(smallFont, "Press ENTER when done");
+            smallFont.draw(batch, hintLayout, width / 2f - hintLayout.width / 2f, hintY);
+        } else if (playerName.isBlank()) {
+            GlyphLayout hintLayout = new GlyphLayout(smallFont, "Click name to enter your name");
+            smallFont.draw(batch, hintLayout, width / 2f - hintLayout.width / 2f, hintY);
+        }
+        GlyphLayout nameLayout = new GlyphLayout(smallFont, "Name: " + playerName);
+        float nameX = width / 2f - nameLayout.width / 2f;
+        smallFont.draw(batch, nameLayout, nameX, nameY);
+
         float alpha = (float) Math.abs(Math.sin(TimeUtils.millis() / 400.0));
         smallFont.setColor(1, 1, 1, alpha);
-
         GlyphLayout subLayout = new GlyphLayout(smallFont, "Press SPACE to start");
-        smallFont.draw(batch, subLayout, width / 2f - subLayout.width / 2f, height / 2f);
+        smallFont.draw(batch, subLayout, width / 2f - subLayout.width / 2f, startY);
 
-        smallFont.setColor(Color.WHITE);
+        font.setColor(Color.WHITE);
         font.getData().setScale(1.0f);
-
-        float qMarkX = width - 60;
-        float qMarkY = height - 60;
-
         font.draw(batch, "?", qMarkX, qMarkY);
+
+        batch.end();
 
         if (Gdx.input.justTouched()) {
             float mouseX = Gdx.input.getX();
             float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-            if (mouseX > qMarkX - 20 && mouseX < qMarkX + 40 && mouseY > qMarkY - 40 && mouseY < qMarkY + 20) {
+            if (mouseX > qMarkX - 20 && mouseX < qMarkX + 40
+                    && mouseY > qMarkY - 40 && mouseY < qMarkY + 20) {
                 controller.showInstruction();
+            }
+
+            if (mouseX > boxX && mouseX < boxX + boxWidth
+                    && mouseY > boxY && mouseY < boxY + boxHeight) {
+                editingName = true;
+            } else {
+                editingName = false;
             }
         }
 
-        GlyphLayout nameLayout = new GlyphLayout(smallFont, "Name: " +playerName);
-        smallFont.draw(batch,nameLayout, width / 2f - nameLayout.width / 2f, height / 2f + 40);
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !playerName.isBlank()) {
             playerName = playerName.stripTrailing();
+            editingName = false;
             controller.startGame(playerName);
         }
-
-        batch.end();
-
-        controller.handleInput();
-
     }
 
     @Override
     public boolean keyTyped(char character) {
+        if (!editingName) {
+            return false;
+        }
+
         if (character == '\b') {
             if (!playerName.isEmpty()) {
                 playerName = playerName.substring(0, playerName.length() - 1);
@@ -88,6 +115,7 @@ public class HomeScreen extends AbstractMenuScreen implements InputProcessor {
         }
 
         if (character == '\r' || character == '\n') {
+            editingName = false;
             return true;
         }
 

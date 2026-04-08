@@ -127,12 +127,12 @@ public class RocketManController {
         controllableModel.startGame();
     }
     private void handleHomeScreenInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            view.stopAllMusic();
-            view.playExclusiveMusic(MUSIC);
-            resetSoundState();
-            controllableModel.startGame();
-        }
+        //if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        //    view.stopAllMusic();
+        //    view.playExclusiveMusic(MUSIC);
+        //    resetSoundState();
+        //    controllableModel.startGame();
+        //}
 
     }
 
