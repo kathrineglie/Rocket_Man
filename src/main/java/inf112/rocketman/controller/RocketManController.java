@@ -17,6 +17,10 @@ public class RocketManController {
     private boolean jetpackPlaying = false;
     private long jetpackSoundId = -1;
     private boolean gameOverSoundPlayed = false;
+
+    private boolean robotPlaying = false;
+    private long robotSoundId = -1;
+
     private static final String MUSIC = "Sounds/music.mp3";
     private static final String JETPACK_SOUND = "Sounds/jetpack.mp3";
     private static final String COIN_SOUND = "Sounds/coin.mp3";
@@ -24,6 +28,7 @@ public class RocketManController {
     private static final String BIRD_SOUND = "Sounds/bird.mp3";
     private static final String GAME_OVER = "Sounds/game_over.mp3";
     private static final String MEOW_END_SONG = "Sounds/MeowMeow.mp3";
+    private static final String ROBOT_SOUND = "Sounds/robot.mp3";
 
     public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {
         this.controllableModel = controllableRocketManModel;
@@ -68,6 +73,7 @@ public class RocketManController {
 
     private void handleGameOverSounds() {
         stopJetpackIfPlaying();
+        stopRobotIfPlaying();
 
         if (!gameOverSoundPlayed) {
             view.stopAllMusic();
@@ -92,6 +98,14 @@ public class RocketManController {
             view.stopSound(JETPACK_SOUND, jetpackSoundId);
             jetpackPlaying = false;
             jetpackSoundId = -1;
+        }
+    }
+
+    private void stopRobotIfPlaying() {
+        if (robotPlaying) {
+            view.stopSound(ROBOT_SOUND, robotSoundId);
+            robotPlaying = false;
+            robotSoundId = -1;
         }
     }
 
@@ -146,6 +160,7 @@ public class RocketManController {
         handlePauseButtonInput();
         handleJetpackInput();
         handleBirdInput();
+        handleRobotInput();
     }
 
     private void handlePauseButtonInput() {
@@ -187,10 +202,26 @@ public class RocketManController {
         }
     }
 
+    private void handleRobotInput() {
+        boolean spaceHeld = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        PowerUpType powerUpType = viewableModel.getPlayer().getActivePowerUp();
+
+        if (spaceHeld && !robotPlaying && powerUpType == PowerUpType.ROBOT) {
+            robotSoundId = view.loopSound(ROBOT_SOUND);
+            robotPlaying = true;
+        } else if ((!spaceHeld || powerUpType != PowerUpType.ROBOT) && robotPlaying) {
+            view.stopSound(ROBOT_SOUND, robotSoundId);
+            robotPlaying = false;
+            robotSoundId = -1;
+        }
+    }
+
     private void resetSoundState() {
         gameOverSoundPlayed = false;
         jetpackPlaying = false;
         jetpackSoundId = -1;
+        robotPlaying = false;
+        robotSoundId = -1;
     }
 
 
