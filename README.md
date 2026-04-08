@@ -59,17 +59,21 @@ Rocket Man is a side-scrolling game where you play as *TPowah* and try to surviv
         Used as: `game_over.mp3`  
         Source: https://pixabay.com/sound-effects/film-special-effects-game-over-deep-male-voice-clip-352695/
 
-### Font
-## Inter
-This project uses the **Inter** font.
-* Copyright: Copyright 2020 The Inter Project Authors 
-* Source: Inter by Rasmus Andersson 
-* License: SIL Open Font License, Version 1.1
-
-## Bitcount Prop Double Ink
-* Copyright: Copyright 1980 The Bitcount Project Authors 
-* Designer: Petr van Blokland 
-* Source: Google Fonts / TYPETR Bitcount 
-* License: SIL Open Font License, Version 1.1
+* `src/main/resources/Sounds`
+  * The game uses fonts from google fonts:
+    - This project uses the **Inter** font.
+      - Copyright: Copyright 2020 The Inter Project Authors 
+      - Source: Inter by Rasmus Andersson 
+      - License: SIL Open Font License, Version 1.1 
+      - used as font2.ttf 
+      - source: https://fonts.google.com/specimen/Inter?query=inter
+      
+    - This project uses the **Bitcount Prop Double Ink** font. 
+      - Copyright: Copyright 1980 The Bitcount Project Authors 
+      - Designer: Petr van Blokland 
+      - Source: Google Fonts / TYPETR Bitcount 
+      - License: SIL Open Font License, Version 1.1 
+      - used as font.ttf 
+      - source: https://fonts.google.com/specimen/Bitcount+Prop+Double+Ink?query=Bitcount+Prop+Double+Ink&preview.script=Latn
 
 
