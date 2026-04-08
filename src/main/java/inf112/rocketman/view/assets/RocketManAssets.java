@@ -51,7 +51,9 @@ public class RocketManAssets implements TextureProvider {
                 "Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png",
                 "Obstacles/flame.png",
                 "coin.png",
-                "PowerUps/run1.png", "PowerUps/run2.png", "PowerUps/run3.png", "PowerUps/run4.png", "PowerUps/fly.png", "PowerUps/fly_flame.png"));
+                "PowerUps/run1.png", "PowerUps/run2.png", "PowerUps/run3.png", "PowerUps/run4.png", "PowerUps/fly.png", "PowerUps/fly_flame.png",
+                "TPowah/run1pirate.png", "TPowah/run2pirate.png", "TPowah/run3pirate.png", "TPowah/jetpack_flames_pirate.png",
+                "birdUp_pirate.png", "bird_pirate.png"));
 
         preloadSounds(List.of("Sounds/jetpack.mp3", "Sounds/coin.mp3", "Sounds/powerup.mp3", "Sounds/bird.mp3", "Sounds/game_over.mp3"));
         preloadMusic(List.of("Sounds/music.mp3", "Sounds/MeowMeow.mp3"));

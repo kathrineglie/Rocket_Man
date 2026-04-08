@@ -67,6 +67,7 @@ public interface ViewableRocketManModel {
 
     boolean didCollectCoinThisFrame();
 
+    boolean hasPirateHat();
     /**
      * returns the highscore preference as a sorted list
      * @return sorted highscore list

@@ -91,6 +91,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private PlayerProgressManager progressManager;
 
+    private static boolean pirateHat = false;
+
     public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
         float pHeight= worldHeight/7;
@@ -137,11 +139,15 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         } else {
             scoreTickTimer -= dt;
         }
+        int coins = progressManager.getCoins(playerName);
+        if (coins + coinCount >= 10) {
+            pirateHat = true;
+        }
     }
 
     @Override
-    public void setPlayerName(String playerName){
-        this.playerName = playerName;
+    public void setPlayerName(String name){
+        this.playerName = name;
     }
 
 
@@ -220,6 +226,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         obstacles.clear();
         coinList.clear();
 
+        player.setPowerUp(PowerUpType.NORMAL);
+
         bgSpeed = START_BG_SPEED;
         rocketSpeed = START_ROCKET_SPEED;
         bgScrollX = 0f;
@@ -237,12 +245,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         gameScore = 0;
         scoreTickTimer = START_GAME_SCORE_TIMER;
         scoreInterval = START_GAME_SCORE_TIMER;
+        coinCount = 0;
+        difficulty = 1;
 
-        player.setPowerUp(PowerUpType.NORMAL);
-        player.setX(PLAYER_X);
-        player.setY(PLAYER_Y);
-        player.setVy(0);
     }
+
+
 
     @Override
     public int getSavedCoinsForPlayer(String playerName) {
@@ -641,4 +649,5 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
 
 
+    public boolean hasPirateHat() { return  pirateHat; }
 }
