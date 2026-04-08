@@ -54,11 +54,12 @@ public class RocketManController {
     }
 
     private boolean getMovementInput() {
-        if (viewableModel.hasBirdPowerUp()) {
+        if (viewableModel.hasBirdPowerUp() || viewableModel.hasGravitySuitPowerUp()) {
             return Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
         }
         return Gdx.input.isKeyPressed(Input.Keys.SPACE);
     }
+
 
     private void handleFrameSounds() {
         GameState state = controllableModel.getGameState();

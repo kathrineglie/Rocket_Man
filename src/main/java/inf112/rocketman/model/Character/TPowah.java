@@ -1,6 +1,7 @@
 package inf112.rocketman.model.Character;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.PowerUps.PowerUpFactory;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 
 public class TPowah {
@@ -9,6 +10,8 @@ public class TPowah {
     private final Rectangle bounds;
     private float vy = 0;
     private final float ground;
+    private float ceiling;
+
     private PowerUpType activePowerUp = PowerUpType.NORMAL;
 
     private static final float NORMAL_THRUST = 4000f;
@@ -18,6 +21,8 @@ public class TPowah {
     private static final float BIRD_FLAP_STRENGTH = 550f;
     private static final float BIRD_GRAVITY = -1000f;
     private static final float BIRD_MAX_FALL_SPEED = 900f;
+
+    private boolean gravityUp = false;
 
     private boolean robotIsJumping = false;
     private boolean robotNeedsRelease = false;
@@ -40,8 +45,9 @@ public class TPowah {
             updateBird(dt, movementInput, worldHeight);
         } else if (activePowerUp == PowerUpType.ROBOT) {
             updateRobot(dt, movementInput, worldHeight);
-        }
-        else {
+        } else if (activePowerUp == PowerUpType.GRAVITY_SUIT) {
+            updateGravitySuit(dt, movementInput, worldHeight);
+        } else {
             updateNormal(dt, movementInput, worldHeight);
         }
     }
@@ -102,6 +108,37 @@ public class TPowah {
         keepPlayerInsideBounds(worldHeight);
     }
 
+    private void updateGravitySuit(float dt, boolean movementInput, float worldHeight) {
+
+        ceiling = worldHeight - bounds.height;
+        float gravity = -1500;
+
+        if (gravityUp) {
+            vy -= gravity * dt;
+        } else {
+            vy += gravity * dt;
+        }
+
+        bounds.y += vy * dt;
+
+        if (bounds.y <= ground) {
+            bounds.y = ground;
+            vy = 0;
+        }
+
+        if (bounds.y >= ceiling) {
+            bounds.y = ceiling;
+            vy = 0;
+        }
+
+        if (movementInput) {
+            gravityUp = !gravityUp;
+            vy = 0;
+        }
+
+        keepPlayerInsideBounds(worldHeight);
+
+    }
 
     private void keepPlayerInsideBounds(float worldHeight){
         if (bounds.y < ground) {
@@ -171,6 +208,18 @@ public class TPowah {
 
     public boolean onGround() {
         return bounds.y == ground;
+    }
+
+    public boolean onCeiling() {
+        return bounds.y == ceiling;
+    }
+
+    public boolean isGoingUp() {
+        return vy > 5f;
+    }
+
+    public boolean isGoingDown() {
+        return vy < -5f;
     }
 
     public float getY() {return bounds.y;}

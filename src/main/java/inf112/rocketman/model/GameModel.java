@@ -119,6 +119,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         if (gameState != GameState.PLAYING){
             return;
         }
+
         updateDifficulty();
         usingJetpack = movingUpward;
         player.update(dt, usingJetpack, worldHeight);
@@ -238,6 +239,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         coinTimer = 10f;
 
         powerUp = null;
+        powerUpTimer = 2f;
         powerUpTimer = getRandomPowerUpSpawnInterval();
 
         difficulty = 1;
@@ -511,6 +513,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
+    @Override
+    public boolean hasGravitySuitPowerUp() {
+        return PowerUpType.GRAVITY_SUIT == player.getActivePowerUp();
+    }
 
     @Override
     public float getWorldHeight(){

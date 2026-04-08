@@ -7,26 +7,24 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.Character.TPowah;
-import inf112.rocketman.model.Obstacles.Flames.Flame;
-import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
 
-import java.awt.*;
-
 public class PlayerRenderer {
     private final TextureProvider textures;
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     float stateTime;
 
     private final Animation<TextureRegion> runAnimation;
     private final Animation<TextureRegion> birdAnimation;
     private final Animation<TextureRegion> robotAnimation;
+    private final Animation<TextureRegion> gravityAnimationDown;
+    private final Animation<TextureRegion> gravityAnimationUp;
+
     private final Animation<TextureRegion> runAnimationPirate;
     private final Animation<TextureRegion> birdAnimationPirate;
 
@@ -37,29 +35,48 @@ public class PlayerRenderer {
                 new TextureRegion(textures.getTexture("TPowah/run1pirate.png")),
                 new TextureRegion(textures.getTexture("TPowah/run2pirate.png")),
                 new TextureRegion(textures.getTexture("TPowah/run3pirate.png")),
-                new TextureRegion(textures.getTexture("TPowah/run2pirate.png")));
+                new TextureRegion(textures.getTexture("TPowah/run2pirate.png"))
+        );
 
         birdAnimationPirate = new Animation<>(0.2f,
                 new TextureRegion(textures.getTexture("PowerUps/bird_pirate.png")),
-                new TextureRegion(textures.getTexture("PowerUps/birdUp_pirate.png")));
+                new TextureRegion(textures.getTexture("PowerUps/birdUp_pirate.png"))
+        );
 
-        robotAnimation = new Animation<>(0.2f,
+        robotAnimation = new Animation<>(0.1f,
                 new TextureRegion(textures.getTexture("PowerUps/run1.png")),
                 new TextureRegion(textures.getTexture("PowerUps/run2.png")),
                 new TextureRegion(textures.getTexture("PowerUps/run3.png")),
-                new TextureRegion(textures.getTexture("PowerUps/run4.png")));
+                new TextureRegion(textures.getTexture("PowerUps/run4.png"))
+        );
 
         runAnimation = new Animation<>(0.1f,
-                    new TextureRegion(textures.getTexture("TPowah/run1.png")),
-                    new TextureRegion(textures.getTexture("TPowah/run2.png")),
-                    new TextureRegion(textures.getTexture("TPowah/run3.png")),
-                    new TextureRegion(textures.getTexture("TPowah/run4.png")));
+                new TextureRegion(textures.getTexture("TPowah/run1.png")),
+                new TextureRegion(textures.getTexture("TPowah/run2.png")),
+                new TextureRegion(textures.getTexture("TPowah/run3.png")),
+                new TextureRegion(textures.getTexture("TPowah/run4.png"))
+        );
 
         birdAnimation = new Animation<>(0.2f,
                 new TextureRegion(textures.getTexture("PowerUps/bird.png")),
-                new TextureRegion(textures.getTexture("PowerUps/birdUP.png")));
+                new TextureRegion(textures.getTexture("PowerUps/birdUP.png"))
+        );
 
-        }
+
+        gravityAnimationDown = new Animation<>(0.1f,
+                new TextureRegion(textures.getTexture("PowerUps/gravity1.png")),
+                new TextureRegion(textures.getTexture("PowerUps/gravity2.png")),
+                new TextureRegion(textures.getTexture("PowerUps/gravity3.png")),
+                new TextureRegion(textures.getTexture("PowerUps/gravity4.png"))
+        );
+
+        gravityAnimationUp = new Animation<>(0.1f,
+                new TextureRegion(textures.getTexture("PowerUps/gravityUP1.png")),
+                new TextureRegion(textures.getTexture("PowerUps/gravityUP2.png")),
+                new TextureRegion(textures.getTexture("PowerUps/gravityUP3.png")),
+                new TextureRegion(textures.getTexture("PowerUps/gravityUP4.png"))
+        );
+    }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model){
         TPowah player = model.getPlayer();
@@ -85,8 +102,18 @@ public class PlayerRenderer {
             } else {
                 playerImg = "PowerUps/fly.png";
             }
-        }
-        else if (model.usingJetpack()){
+        } else if (player.getActivePowerUp() == PowerUpType.GRAVITY_SUIT) {
+            if (player.onGround()) {
+                region = gravityAnimationDown.getKeyFrame(stateTime, true);
+            } else if (player.onCeiling()) {
+                region = gravityAnimationUp.getKeyFrame(stateTime, true);
+            } else if (player.isGoingDown()){
+                playerImg = "PowerUps/down.png";
+            } else {
+                playerImg = "PowerUps/up.png";
+            }
+
+        } else if (model.usingJetpack()){
             if (hasPirateHat) {
                 playerImg = "TPowah/jetpack_flames_pirate.png";
             } else {
@@ -118,13 +145,13 @@ public class PlayerRenderer {
 
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.GREEN);
-        Rectangle b = player.getBounds();
-        shapeRenderer.rect(b.x, b.y, b.width, b.height);
-
-        shapeRenderer.setColor(Color.RED);
-        Rectangle h = player.getHitBox();
-        shapeRenderer.rect(h.x, h.y, h.width, h.height);
+//        shapeRenderer.setColor(Color.GREEN);
+//        Rectangle b = player.getBounds();
+//        shapeRenderer.rect(b.x, b.y, b.width, b.height);
+//
+//        shapeRenderer.setColor(Color.RED);
+//        Rectangle h = player.getHitBox();
+//        shapeRenderer.rect(h.x, h.y, h.width, h.height);
 
         shapeRenderer.end();
     }

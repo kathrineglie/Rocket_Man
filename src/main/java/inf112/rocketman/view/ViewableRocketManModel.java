@@ -90,5 +90,11 @@ public interface ViewableRocketManModel {
      */
     String getPlayerName();
 
+    /**
+     * Checks if the player has the gravity suit powerup
+     *
+     * @return true if the player has the gravity suit powerup
+     */
+    boolean hasGravitySuitPowerUp();
 }
 

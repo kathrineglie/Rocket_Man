@@ -33,5 +33,6 @@ public class RandomPowerUpFactory implements PowerUpFactory{
         }
 
         return availableTypes.get(random.nextInt(availableTypes.size()));
+
     }
 }
