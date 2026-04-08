@@ -58,6 +58,9 @@ Rocket Man is a side-scrolling game where you play as *TPowah* and try to surviv
       - **"Game Over Deep Male Voice Clip"** by **Universfield**  
         Used as: `game_over.mp3`  
         Source: https://pixabay.com/sound-effects/film-special-effects-game-over-deep-male-voice-clip-352695/
+      - **"Robot power off"** by **freesound_community**  
+        Used as: `robot.mp3`  
+        Source: https://pixabay.com/sound-effects/film-special-effects-robot-power-off-97246/
 
 * `src/main/resources/Sounds`
   * The game uses fonts from google fonts:
