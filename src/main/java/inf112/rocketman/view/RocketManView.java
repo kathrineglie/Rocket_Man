@@ -89,7 +89,7 @@ public class RocketManView {
 		coinRenderer.render(batch, viewport,model);
 
 		BitmapFont mainFont = assets.getFont();
-		mainFont.getData().setScale(2.5f);
+		mainFont.getData().setScale(1.25f);
 		float pauseX = (float) (worldWidth() - 60);
 		float pauseY = (float) (worldHeight() - 100);
 		assets.getFont().draw(batch, "||", pauseX, pauseY);
