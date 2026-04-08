@@ -33,14 +33,47 @@ Rocket Man is a side-scrolling game where you play as *TPowah* and try to surviv
   * mvn clean compile
   * mvn exec:java
 
-
-
 ### Contributors
 * *TODO: did you include code from anyone else? Did you use AI/LLMs to generate or edit the code?*
 
 ### Sound and Graphics
 * `src/main/resources/*` - All illustrations in this folder created by Kathrine Lie
-* `src/main/resources/Sounds` - Have used "Teleport" from "Sounds" by phoenix1291 (CC0) 
-  * Source: https://opengameart.org/content/sound-effects-mini-pack15
+* `src/main/resources/Sounds` 
+    * The game uses audio from Pixabay:
+      - **"Football - Football Soccer Game Music 08 Second"** by **Bomb Sound**  
+        Used as: `music.mp3`  
+        Source: https://pixabay.com/sound-effects/musical-football-football-soccer-game-music-08-second-490554/
+      - **"Rocket Launch"** by **freesound_community**  
+        Used as: `jetpack.mp3`  
+        Source: https://pixabay.com/sound-effects/film-special-effects-rocket-launch-76003/
+      - **"coin"** by **chieuk**  
+        Used as: `coin.mp3`  
+        Source: https://pixabay.com/sound-effects/film-special-effects-coin-257878/
+      - **"Awesome Level Up"** by **Koi Roylers**  
+        Used as: `powerup.mp3`  
+        Source: https://pixabay.com/sound-effects/film-special-effects-awesome-level-up-351714/
+      - **"flapping"** by **freesound_community**  
+        Used as: `bird.mp3`  
+        Source: https://pixabay.com/sound-effects/nature-flapping-39306/
+      - **"Game Over Deep Male Voice Clip"** by **Universfield**  
+        Used as: `game_over.mp3`  
+        Source: https://pixabay.com/sound-effects/film-special-effects-game-over-deep-male-voice-clip-352695/
+
+* `src/main/resources/Sounds`
+  * The game uses fonts from google fonts:
+    - This project uses the **Inter** font.
+      - Copyright: Copyright 2020 The Inter Project Authors 
+      - Source: Inter by Rasmus Andersson 
+      - License: SIL Open Font License, Version 1.1 
+      - used as font2.ttf 
+      - source: https://fonts.google.com/specimen/Inter?query=inter
+      
+    - This project uses the **Bitcount Prop Double Ink** font. 
+      - Copyright: Copyright 1980 The Bitcount Project Authors 
+      - Designer: Petr van Blokland 
+      - Source: Google Fonts / TYPETR Bitcount 
+      - License: SIL Open Font License, Version 1.1 
+      - used as font.ttf 
+      - source: https://fonts.google.com/specimen/Bitcount+Prop+Double+Ink?query=Bitcount+Prop+Double+Ink&preview.script=Latn
 
 
