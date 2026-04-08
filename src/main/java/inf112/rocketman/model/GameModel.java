@@ -381,8 +381,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      */
     private void increaseDifficulty() {
         obstacleSpawnInterval = (float) Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleSpawnInterval - 0.4);
-        bgSpeed = (float) Math.max(MAX_BG_SPEED, bgSpeed - 50);
-        rocketSpeed = (float) Math.max(MAX_ROCKET_SPEED, rocketSpeed - 50);
+        bgSpeed = (float) Math.max(MAX_BG_SPEED, bgSpeed - 70);
+        rocketSpeed = (float) Math.max(MAX_ROCKET_SPEED, rocketSpeed - 70);
 
         for (IObstacle obstacle : obstacles) {
             if (obstacle instanceof Flame) {
@@ -402,7 +402,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         if (gameScore > difficulty * 100 && difficulty != MAX_DIFFICULTY) {
             increaseDifficulty();
         }
-
     }
 
     /**
