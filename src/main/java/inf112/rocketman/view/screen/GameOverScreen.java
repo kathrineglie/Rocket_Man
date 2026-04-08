@@ -10,7 +10,7 @@ import inf112.rocketman.controller.RocketManController;
 import java.util.List;
 import java.util.Map;
 
-public class GameOverScreen extends AbstractMenuScreen{
+public class GameOverScreen extends AbstractMenuScreen {
 
     public GameOverScreen(Main game, RocketManController controller) {
         super(game, controller);
@@ -31,33 +31,52 @@ public class GameOverScreen extends AbstractMenuScreen{
         GlyphLayout layout = new GlyphLayout(font, "GAME OVER");
 
         float titleX = width / 2f - layout.width / 2f;
-        float titleY = height / 2f + 140;
+        float titleY = height - 80;
+        font.draw(batch, layout, titleX, titleY);
 
-        font.draw(batch, layout, titleX, titleY );
         smallFont.setColor(Color.WHITE);
 
-        renderHighScores(width, height);
+        float nextY = renderRunSummary(width, titleY);
+        renderHighScores(width, nextY);
 
-
-
-        float restartY = renderHighScores(width, height);
-
-        GlyphLayout smallLayout = new GlyphLayout(smallFont, "PRESS ENTER TO RESTART");
-        smallFont.draw(batch, smallLayout, width / 2f - smallLayout.width / 2f, restartY);
+        GlyphLayout restartLayout = new GlyphLayout(smallFont, "PRESS ENTER TO RESTART");
+        smallFont.draw(batch, restartLayout, width / 2f - restartLayout.width / 2f, 160);
 
         batch.end();
     }
 
-    private float renderHighScores(float width, float height) {
+    private float renderRunSummary(float width, float gameOverTitleY) {
+        String playerName = controller.getViewableModel().getPlayerName();
+        int distance = controller.getViewableModel().getGameScore();
+        int coinsThisRun = controller.getViewableModel().getCoinCount();
+        int totalCoins = controller.getViewableModel().getSavedCoinsForPlayer(playerName);
+
+        String distanceText = "Distance: " + distance + " m";
+        String coinsThisRunText = "Coins this run: " + coinsThisRun;
+        String totalCoinsText = "Total coins: " + totalCoins;
+
+        float startY = gameOverTitleY - 90;
+        float lineSpacing = 35f;
+
+        GlyphLayout distanceLayout = new GlyphLayout(smallFont, distanceText);
+        GlyphLayout coinsRunLayout = new GlyphLayout(smallFont, coinsThisRunText);
+        GlyphLayout totalCoinsLayout = new GlyphLayout(smallFont, totalCoinsText);
+
+        smallFont.draw(batch, distanceLayout, width / 2f - distanceLayout.width / 2f, startY);
+        smallFont.draw(batch, coinsRunLayout, width / 2f - coinsRunLayout.width / 2f, startY - lineSpacing);
+        smallFont.draw(batch, totalCoinsLayout, width / 2f - totalCoinsLayout.width / 2f, startY - 2 * lineSpacing);
+
+        return startY - 2 * lineSpacing - 100;
+    }
+
+    private float renderHighScores(float width, float startTopY) {
         GlyphLayout scoreTitle = new GlyphLayout(smallFont, "HIGHSCORES:");
-        float titleY = height / 2f + 70;
-        smallFont.draw(batch, scoreTitle, width / 2f - scoreTitle.width / 2f, titleY);
+        smallFont.draw(batch, scoreTitle, width / 2f - scoreTitle.width / 2f, startTopY);
 
         List<Map.Entry<String, Integer>> highScores = controller.getViewableModel().getSortedHighScoreList();
 
-        float startY = titleY - 45;
-        float lineSpacing = 60f;
-
+        float startY = startTopY - 50;
+        float lineSpacing = 35f;
         int numberToShow = Math.min(5, highScores.size());
 
         for (int i = 0; i < numberToShow; i++) {
@@ -69,8 +88,6 @@ public class GameOverScreen extends AbstractMenuScreen{
             smallFont.draw(batch, scoreLayout, width / 2f - scoreLayout.width / 2f, y);
         }
 
-        return startY - numberToShow * lineSpacing - 30;
+        return startY - numberToShow * lineSpacing;
     }
-
-
 }

@@ -12,16 +12,20 @@ import inf112.rocketman.view.screen.*;
 
 public class Main extends Game {
     private RocketManController controller;
+
     private HomeScreen homeScreen;
     private GameScreen gameScreen;
     private InstructionScreen instructionScreen;
     private PauseScreen pauseScreen;
+    private GameOverScreen gameOverScreen;
+
     private GameState lastState = null;
 
     @Override
     public void create() {
         Preferences highscores = Gdx.app.getPreferences("Highscores");
-        GameModel model = new GameModel(1200, 800,highscores);
+        Preferences coins = Gdx.app.getPreferences("Coins");
+        GameModel model = new GameModel(1200, 800, 5,highscores, coins);
 
         controller = new RocketManController(model, model);
         controller.create();
@@ -30,6 +34,7 @@ public class Main extends Game {
         gameScreen = new GameScreen(this,controller);
         instructionScreen = new InstructionScreen(this, controller);
         pauseScreen= new PauseScreen(this, controller);
+        gameOverScreen = new GameOverScreen(this, controller);
 
         setScreen(homeScreen);
         lastState = GameState.HOME_SCREEN;
@@ -44,7 +49,7 @@ public class Main extends Game {
             switch (controller.getState()) {
                 case HOME_SCREEN -> setScreen(homeScreen);
                 case PLAYING -> setScreen(gameScreen);
-                case GAME_OVER -> setScreen(new GameOverScreen(this, controller));
+                case GAME_OVER -> setScreen(gameOverScreen);
                 case INSTRUCTIONS -> setScreen(instructionScreen);
                 case PAUSE -> setScreen(pauseScreen);
             }

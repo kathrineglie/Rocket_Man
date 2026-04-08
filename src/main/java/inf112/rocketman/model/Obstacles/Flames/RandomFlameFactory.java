@@ -6,7 +6,6 @@ import java.util.Random;
 
 public class RandomFlameFactory implements FlameFactory {
     private final Random rand = new Random();
-    private float[] angles = {0f, 90f, 45f, 135f};
 
     @Override
     public Flame newFlame(float worldWidth, float worldHeight, float ground, float margin, float vx) {
