@@ -68,4 +68,26 @@ public class LazerTest {
         lazer.update(2.0f);
         assertEquals(4, lazer.getProgressionLevel());
     }
+
+    @Test
+    void setProgressionLevelTest() {
+        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
+
+        lazer.setProgressionLevel(3);
+        assertEquals(3, lazer.getProgressionLevel());
+
+        lazer.setProgressionLevel(4);
+        assertEquals(4, lazer.getProgressionLevel());
+    }
+
+    @Test
+    void updateMovesLazerWhenFinished() {
+        Lazer lazer = new Lazer(100, 200, 50, 50, 10, -5);
+        lazer.setProgressionLevel(4);
+
+        lazer.update(2.0f);
+
+        assertEquals(120f, lazer.getX(), 0.0001);
+        assertEquals(190f, lazer.getY(), 0.0001);
+    }
 }
