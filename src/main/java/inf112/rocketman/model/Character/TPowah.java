@@ -29,8 +29,6 @@ public class TPowah {
     private static final float ROBOT_GRAVITY = -800f;
     private static final float MAX_ROBOT_BOOST = 30f;
 
-
-
     public TPowah (float x, float y, float width, float height, float ground) {
         this.bounds = new Rectangle(x, y, width, height);
         this.ground = ground;
@@ -157,9 +155,9 @@ public class TPowah {
     public Polygon getPolyHitBox() {
         float[] vertices = new float[] {
                 0, 0,
-                0, bounds.height,
-                bounds.width, bounds.height,
-                bounds.width, 0
+                0, bounds.height - HITBOX_OFFSET * 2,
+                bounds.width - HITBOX_OFFSET * 2, bounds.height- HITBOX_OFFSET * 2,
+                bounds.width - HITBOX_OFFSET * 2, 0
         };
 
         Polygon polygon = new Polygon(vertices);

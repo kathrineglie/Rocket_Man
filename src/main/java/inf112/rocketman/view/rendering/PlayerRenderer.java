@@ -8,12 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.Obstacles.Flames.Flame;
 import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
+
+import java.awt.*;
 
 public class PlayerRenderer {
     private final TextureProvider textures;
@@ -80,9 +83,18 @@ public class PlayerRenderer {
     }
 
     public void renderDebug(SpriteBatch batch, ViewableRocketManModel model) {
+        TPowah player = model.getPlayer();
+
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(Color.GREEN);
+        Rectangle b = player.getBounds();
+        shapeRenderer.rect(b.x, b.y, b.width, b.height);
+
         shapeRenderer.setColor(Color.RED);
+        Rectangle h = player.getHitBox();
+        shapeRenderer.rect(h.x, h.y, h.width, h.height);
+
         shapeRenderer.end();
     }
 }

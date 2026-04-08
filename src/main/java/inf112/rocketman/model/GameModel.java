@@ -26,7 +26,6 @@ import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.model.PowerUps.RandomPowerUpFactory;
 import inf112.rocketman.view.ViewableRocketManModel;
 
-import javax.swing.*;
 import java.util.*;
 
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
@@ -79,10 +78,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private int coinCount = 0;
     private final List<Coin> coinList = new ArrayList<>();
 
-    private static final float START_GAME_SCORE_TIMER = 0.1f;
+    private static final float START_GAME_SCORE_TIMER = 0.3f;
     private int gameScore = 0;
-    private float gameTimer = 0.1f;
-    private float gameScoreTimer = 0.1f;
+    private float scoreTickTimer = START_GAME_SCORE_TIMER;
+    private float scoreInterval = 0.1f;
 
     private PowerUp powerUp;
     private float powerUpTimer = 0f;
@@ -130,11 +129,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         handleObstacleCollision();
         updateCoins(dt);
 
-        if (gameTimer <= 0f) {
+        if (scoreTickTimer <= 0f) {
             gameScore++;
-            gameTimer = gameScoreTimer;
+            scoreTickTimer = scoreInterval;
         } else {
-            gameTimer -= dt;
+            scoreTickTimer -= dt;
         }
     }
 
@@ -234,8 +233,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         difficulty = 1;
 
         gameScore = 0;
-        gameTimer = START_GAME_SCORE_TIMER;
-        gameScoreTimer = START_GAME_SCORE_TIMER;
+        scoreTickTimer = START_GAME_SCORE_TIMER;
+        scoreInterval = START_GAME_SCORE_TIMER;
 
         player.setPowerUp(PowerUpType.NORMAL);
         player.setX(PLAYER_X);
@@ -406,7 +405,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         obstacleSpawnInterval = (float) Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleSpawnInterval - 0.4);
         bgSpeed = (float) Math.max(MAX_BG_SPEED, bgSpeed - 70);
         rocketSpeed = (float) Math.max(MAX_ROCKET_SPEED, rocketSpeed - 70);
-        gameScoreTimer = (float) Math.max(MAX_GAMESCORE_TIMER, gameScore + 0.05);
+        scoreInterval = (float) Math.max(MAX_GAMESCORE_TIMER, scoreInterval - 0.05);
 
         for (IObstacle obstacle : obstacles) {
             if (obstacle instanceof Flame) {
