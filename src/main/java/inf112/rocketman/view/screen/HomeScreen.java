@@ -57,13 +57,9 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
 
         smallFont.setColor(Color.WHITE);
 
-        if (editingName) {
-            GlyphLayout hintLayout = new GlyphLayout(smallFont, "Press ENTER when done");
-            smallFont.draw(batch, hintLayout, width / 2f - hintLayout.width / 2f, hintY);
-        } else if (playerName.isBlank()) {
-            GlyphLayout hintLayout = new GlyphLayout(smallFont, "Click name to enter your name");
-            smallFont.draw(batch, hintLayout, width / 2f - hintLayout.width / 2f, hintY);
-        }
+        GlyphLayout hintLayout = new GlyphLayout(smallFont, "Click name to enter your name");
+        smallFont.draw(batch, hintLayout, width / 2f - hintLayout.width / 2f, hintY);
+
         GlyphLayout nameLayout = new GlyphLayout(smallFont, "Name: " + playerName);
         float nameX = width / 2f - nameLayout.width / 2f;
         smallFont.draw(batch, nameLayout, nameX, nameY);
