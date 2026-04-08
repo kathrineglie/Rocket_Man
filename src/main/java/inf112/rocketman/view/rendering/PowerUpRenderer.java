@@ -19,7 +19,7 @@ public class PowerUpRenderer {
             return;
         }
 
-        Texture texture = textures.getTexture("PowerUps/Box.png");
+        Texture texture = textures.getTexture("PowerUps/box.png");
         batch.draw(texture, powerUp.getX(), powerUp.getY(), powerUp.getWidth(),  powerUp.getHeight());
     }
 

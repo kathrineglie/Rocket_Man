@@ -17,7 +17,7 @@ public class CoinRenderer {
     private final GlyphLayout layout;
 
     public CoinRenderer(RocketManAssets assets) {
-        this.coinTexture = assets.getTexture("TCoin.png");
+        this.coinTexture = assets.getTexture("coin.png");
         this.font = assets.getFont();
         this.layout = new GlyphLayout();
     }
