@@ -19,20 +19,28 @@ public class RocketManAssets implements TextureProvider {
     private Map<String, Music> music = new HashMap<>();
     private BitmapFont font;
     private BitmapFont titleFont;
-
+    
     public void create(){
         font = new BitmapFont();
 
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/font.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        FreeTypeFontGenerator bodyGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/font2.ttf"));
+        FreeTypeFontGenerator titleGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/font.ttf"));
 
-        parameter.size = 90;
-        parameter.magFilter = Texture.TextureFilter.Linear;
-        parameter.minFilter = Texture.TextureFilter.Linear;
-        this.titleFont = generator.generateFont(parameter);
+        FreeTypeFontGenerator.FreeTypeFontParameter bodyParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        bodyParameter.size = 32;
+        bodyParameter.magFilter = Texture.TextureFilter.Linear;
+        bodyParameter.minFilter = Texture.TextureFilter.Linear;
 
-        generator.dispose();
+        FreeTypeFontGenerator.FreeTypeFontParameter titleParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        titleParameter.size = 90;
+        titleParameter.magFilter = Texture.TextureFilter.Linear;
+        titleParameter.minFilter = Texture.TextureFilter.Linear;
 
+        this.font = bodyGenerator.generateFont(bodyParameter);
+        this.titleFont = titleGenerator.generateFont(titleParameter);
+
+        bodyGenerator.dispose();
+        titleGenerator.dispose();
 
         preloadTextures(List.of("TPowah/jetpack.png", "TPowah/jetpack_flames.png", "TPowah/run1", "TPowah/run2", "TPowah/run3", "TPowah/run4", "Background/background.png", "Obstacles/Rocket.png", "Obstacles/warning.png", "PowerUps/bird.png", "PowerUps/birdUP.png", "PowerUps/Box.png","Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png", "Obstacles/flame.png", "TCoin.png", "PowerUps/run1.png", "PowerUps/run2.png", "PowerUps/run3.png", "PowerUps/run4.png", "PowerUps/fly.png", "PowerUps/fly_flame.png"));
         preloadSounds(List.of("Sounds/jetpack.mp3", "Sounds/coin.mp3", "Sounds/powerup.mp3", "Sounds/bird.mp3", "Sounds/game_over.mp3"));
