@@ -50,8 +50,7 @@ public class PlayerRenderer {
         TPowah player = model.getPlayer();
         TextureRegion region = null;
         String playerImg = null;
-
-        boolean spacePressed = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        
         stateTime += Gdx.graphics.getDeltaTime();
 
         if (player.getActivePowerUp() == PowerUpType.BIRD) {

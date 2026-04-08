@@ -114,6 +114,7 @@ public class RocketManController {
             case PAUSE -> handlePauseInput();
             case GAME_OVER -> handleGameOverInput();
             case INSTRUCTIONS -> handleInstructionInput();
+            default -> throw new IllegalStateException("Unexpected game state: " + currentState);
         }
 
     }
