@@ -18,7 +18,7 @@ public class CoinRenderer {
 
     public CoinRenderer(RocketManAssets assets) {
         this.coinTexture = assets.getTexture("TCoin.png");
-        this.font = assets.getTitleFont();
+        this.font = assets.getFont();
         this.layout = new GlyphLayout();
     }
 
@@ -35,7 +35,7 @@ public class CoinRenderer {
     }
 
     private void drawHud(SpriteBatch batch, Viewport viewport, ViewableRocketManModel model) {
-        font.getData().setScale(0.5f);
+        font.getData().setScale(1.25f);
         font.setColor(Color.WHITE);
 
         float margin = 15f;
@@ -48,7 +48,7 @@ public class CoinRenderer {
         float scoreY = worldHeight - margin;
         font.draw(batch, layout, scoreX, scoreY);
 
-        font.setColor(Color.GOLD);
+        font.setColor(Color.ORANGE);
         String coinText = "Coins: " + model.getCoinCount();
         layout.setText(font, coinText);
         float coinX = worldWidth - layout.width - margin;

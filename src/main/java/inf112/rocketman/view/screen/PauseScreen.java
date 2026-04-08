@@ -42,7 +42,7 @@ public class PauseScreen extends AbstractMenuScreen {
         font.setColor(3f, 1, 1, 2f);
         drawCentered(font, "PAUSED", centerX, height / 2f + 100);
 
-        smallFont.getData().setScale(1.8f);
+        smallFont.getData().setScale(1.25f);
         smallFont.setColor(Color.WHITE);
         drawCentered(smallFont, "Press P to resume", centerX, height / 2f);
         drawCentered(smallFont, "Press ESC to QUIT to Menu", centerX, height / 2f - 80);

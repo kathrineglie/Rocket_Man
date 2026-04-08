@@ -30,7 +30,7 @@ public class InstructionScreen extends AbstractMenuScreen {
         drawCentered(font, "HOW TO PLAY", centerX, height - 40);
         font.getData().setScale(1.0f);
 
-        smallFont.getData().setScale(1.0f);
+        smallFont.getData().setScale(0.5f);
         float y = height - 90;
         float lineSpacing = 28f;
         float sectionSpacing = 40f;
