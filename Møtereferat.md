@@ -68,4 +68,8 @@ Forbedret instruksjonsskjermen.
 
 **8. april**
 Alle tilstede.
-Fikset rapport 3.
+Gjorde klar rapport 3.
+Lå til en pirat-hatt som låses opp etter man har samlet coins.
+Laget funksjonalitet som lagrer progresjonen til et username, slik at man kan starte der man slapp sist gang.
+Synkroniserte meter-telleren til vanskelighetsgrader for mer samstemt måling.
+Laget flere tester.

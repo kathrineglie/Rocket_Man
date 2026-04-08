@@ -41,6 +41,9 @@ per nå har vi implementert:
   * Robot som har eget bevegelsesmønster med raketter
   * Bird som har eget bevegelsesmønster med vinger
 * Navn og high scores som listes opp i startskjermen
+* Penger og high scores lagres på navn, slik at spilleren kan åpne spillet på nytt og beholde progresjon
+* Hatter som kan låses opp etter man har samlet en viss mengde coins (Foreløpig kun en pirathatt)
+
 
 **Krav og prioritering** 
 Siden sist har vi prioritert å gå videre fra en enkel prototype til å få på plass flere sentrale spill elementer. 
