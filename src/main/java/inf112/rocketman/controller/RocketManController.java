@@ -29,6 +29,7 @@ public class RocketManController {
     private static final String GAME_OVER = "Sounds/game_over.mp3";
     private static final String MEOW_END_SONG = "Sounds/MeowMeow.mp3";
     private static final String ROBOT_SOUND = "Sounds/robot.mp3";
+    private static final String GRAVITY_SUIT_SOUND = "Sounds/gravity_suit.mp3";
 
     public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {
         this.controllableModel = controllableRocketManModel;
@@ -142,12 +143,6 @@ public class RocketManController {
         controllableModel.startNewGame();
     }
     private void handleHomeScreenInput() {
-        //if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-        //    view.stopAllMusic();
-        //    view.playExclusiveMusic(MUSIC);
-        //    resetSoundState();
-        //    controllableModel.startGame();
-        //}
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             view.stopAllMusic();
             view.playExclusiveMusic(MUSIC);
@@ -162,6 +157,16 @@ public class RocketManController {
         handleJetpackInput();
         handleBirdInput();
         handleRobotInput();
+        handleGravitySuitInput();
+    }
+
+    private void handleGravitySuitInput(){
+        boolean spaceClicked = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        PowerUpType powerUpType = viewableModel.getPlayer().getActivePowerUp();
+
+        if (powerUpType == PowerUpType.GRAVITY_SUIT && spaceClicked) {
+            view.playSound(GRAVITY_SUIT_SOUND);
+        }
     }
 
     private void handlePauseButtonInput() {
