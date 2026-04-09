@@ -1,7 +1,6 @@
 package inf112.rocketman.view;
 
 import com.badlogic.gdx.graphics.Texture;
-import org.w3c.dom.Text;
 
 /**
  * Interface for providing textures to the view components.

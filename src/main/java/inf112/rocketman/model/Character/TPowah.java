@@ -1,7 +1,6 @@
 package inf112.rocketman.model.Character;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import inf112.rocketman.model.PowerUps.PowerUpFactory;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 
 public class TPowah implements ITPowah  {

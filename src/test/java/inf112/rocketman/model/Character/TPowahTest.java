@@ -1,7 +1,6 @@
 package inf112.rocketman.model.Character;
 
 import com.badlogic.gdx.math.Rectangle;
-import inf112.rocketman.model.PowerUps.PowerUp;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import org.junit.jupiter.api.Test;
 

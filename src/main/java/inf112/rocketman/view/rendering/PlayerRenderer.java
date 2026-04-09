@@ -1,13 +1,10 @@
 package inf112.rocketman.view.rendering;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.view.TextureProvider;
@@ -85,8 +82,6 @@ public class PlayerRenderer {
         boolean hasPirateHat = model.hasPirateHat();
 
 
-        boolean spacePressed = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
-
         stateTime += Gdx.graphics.getDeltaTime();
         if (player.getActivePowerUp() == PowerUpType.BIRD) {
             if (hasPirateHat) {
@@ -141,7 +136,7 @@ public class PlayerRenderer {
     }
 
     public void renderDebug(SpriteBatch batch, ViewableRocketManModel model) {
-        TPowah player = model.getPlayer();
+//       TPowah player = model.getPlayer();
 
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);

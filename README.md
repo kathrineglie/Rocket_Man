@@ -108,7 +108,7 @@ as possible while the game gradually becomes more difficult
           Source: https://pixabay.com/sound-effects/film-special-effects-teleport-14639/
 
 * `src/main/resources/Sounds`
-  * The game uses fonts from google fonts:
+  * The game uses fonts from Google fonts:
     - This project uses the **Inter** font.
       - Copyright: Copyright 2020 The Inter Project Authors 
       - Source: Inter by Rasmus Andersson 
