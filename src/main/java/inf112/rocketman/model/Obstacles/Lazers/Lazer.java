@@ -1,7 +1,4 @@
 package inf112.rocketman.model.Obstacles.Lazers;
-import com.badlogic.gdx.math.Rectangle;
-
-import java.util.Iterator;
 
 import inf112.rocketman.model.Obstacles.Obstacle;
 

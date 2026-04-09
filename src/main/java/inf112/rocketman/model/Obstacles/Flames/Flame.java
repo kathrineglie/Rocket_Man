@@ -1,5 +1,4 @@
 package inf112.rocketman.model.Obstacles.Flames;
-import java.util.Iterator;
 
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;

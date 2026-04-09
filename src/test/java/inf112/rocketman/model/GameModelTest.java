@@ -1,12 +1,6 @@
 package inf112.rocketman.model;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import inf112.rocketman.model.Coins.Coin;
-import inf112.rocketman.model.Coins.RandomCoinFactory;
-import inf112.rocketman.model.Obstacles.Rockets.RandomRocketFactory;
-import inf112.rocketman.model.Obstacles.Rockets.Rocket;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,7 +50,7 @@ public class GameModelTest {
         fakeData.put("firstPlace", 200);
         fakeData.put("secondPlace", 100);
 
-        when(highscores.get()).thenReturn((Map) fakeData);
+        doReturn(fakeData).when(highscores).get();
         when(highscores.getInteger("thirdPlace")).thenReturn(50);
         when(highscores.getInteger("firstPlace")).thenReturn(200);
         when(highscores.getInteger("secondPlace")).thenReturn(100);
@@ -82,7 +76,7 @@ public class GameModelTest {
         Map<String, Integer> currentScores = new HashMap<>();
         currentScores.put(playerName, 100);
 
-        when(highscores.get()).thenReturn((Map) currentScores);
+        doReturn(currentScores).when(highscores).get();
         when(highscores.getInteger(playerName, 0)).thenReturn(100);
 
         model.setGameScore(50);
@@ -92,7 +86,7 @@ public class GameModelTest {
 
         clearInvocations(highscores);
 
-        when(highscores.get()).thenReturn((Map) currentScores);
+        doReturn(currentScores).when(highscores).get();
         when(highscores.getInteger(playerName, 0)).thenReturn(100);
 
         model.setGameScore(150);

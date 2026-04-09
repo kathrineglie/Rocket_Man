@@ -3,7 +3,6 @@ package inf112.rocketman.model.Obstacles;
 import com.badlogic.gdx.math.Rectangle;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

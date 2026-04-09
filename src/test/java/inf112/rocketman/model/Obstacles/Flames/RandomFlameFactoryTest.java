@@ -32,12 +32,8 @@ public class RandomFlameFactoryTest {
 
             //Checks that the object does not spawn outside of the screen.
             for (int j = 0; j < vertices.length; j += 2) {
-                float px = vertices[j];
+                //float px = vertices[j];
                 float py = vertices[j + 1];
-
-
-                System.out.println("Worldheight: " + worldHeight + "Worldwidth: " + worldWidth);
-                System.out.println(("Polygon px: " + px + "Polygon py " + py));
 
                 assertTrue(py >= margin, "py too low: " + py + " margin: " + margin + " worldheight: " + worldHeight);
                 assertTrue(py <= worldHeight - margin, "py too high: " + py + " margin: " + margin + " worldheight: " +worldHeight);

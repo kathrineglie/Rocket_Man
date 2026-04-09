@@ -1,6 +1,5 @@
 package inf112.rocketman.model.PowerUps;
 
-import com.badlogic.gdx.math.Interpolation;
 
 import java.util.ArrayList;
 import java.util.List;
