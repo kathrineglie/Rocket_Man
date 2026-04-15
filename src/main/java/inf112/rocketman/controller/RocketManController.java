@@ -9,6 +9,14 @@ import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
 import inf112.rocketman.view.assets.RocketManAudio;
 
+/**
+ * Controls game flow, input handling, sound triggering, and communication
+ * between the model and the view in RocketMan.
+ *
+ * <p> The controller reads player input, updates the model each frame,
+ * tells the views to render the current state, and uses the audio manager
+ * to play sound effects and music when needed.</p>
+ */
 public class RocketManController {
 
     private final RocketManView view;
@@ -33,6 +41,13 @@ public class RocketManController {
     private static final String ROBOT_SOUND = "Sounds/robot.mp3";
     private static final String GRAVITY_SUIT_SOUND = "Sounds/gravity_suit.mp3";
 
+    /**
+     * Creates a new controller for the RocketMan game
+     * @param controllableRocketManModel the model interface used to update and control the game state
+     * @param viewableModel the model interface used to read game state for rendering and input decisions
+     * @param view the view responsible for rendering the game
+     * @param audio the audio manager responsible for music and sound effects
+     */
     public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel, RocketManView view, RocketManAudio audio) {
         this.controllableModel = controllableRocketManModel;
         this.viewableModel = viewableModel;
@@ -40,11 +55,16 @@ public class RocketManController {
         this.audio = audio;
     }
 
+    /**
+     * Starts the controller by playing the main background music.
+     */
     public void create() {
         audio.playExclusiveMusic(MUSIC);
     }
 
-
+    /**
+     * Updates the game for current frame, handles sounds, and renders the view.
+     */
     public void render() {
         float dt = Gdx.graphics.getDeltaTime();
         boolean input = getMovementInput();
@@ -113,18 +133,27 @@ public class RocketManController {
         }
     }
 
-
-
+    /**
+     * Resizes the game view to match the new window dimensions.
+     *
+     * @param width the new window width
+     * @param height the new window height
+     */
     public void resize(int width, int height) {
         view.resize(width, height);
     }
 
+    /**
+     * Disposes resources used by the controller, including the view and audio manager.
+     */
     public void dispose() {
-
         view.dispose();
         audio.dispose();
     }
 
+    /**
+     * Handles input based on the current game state.
+     */
     public  void handleInput() {
         GameState currentState = controllableModel.getGameState();
 
@@ -139,6 +168,11 @@ public class RocketManController {
 
     }
 
+    /**
+     * Starts a new game for the given player name.
+     *
+     * @param playerName the name of the player starting the game
+     */
     public void startGame(String playerName){
         audio.stopAllMusic();
         audio.playExclusiveMusic(MUSIC);
@@ -146,6 +180,7 @@ public class RocketManController {
         controllableModel.setPlayerName(playerName);
         controllableModel.startNewGame();
     }
+
     private void handleHomeScreenInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             audio.stopAllMusic();
@@ -262,18 +297,36 @@ public class RocketManController {
         }
     }
 
+    /**
+     * Returns the game view used by this controller.
+     *
+     * @return the RocketMan view
+     */
     public RocketManView getView() {
         return view;
     }
 
+    /**
+     * Returns the current game state.
+     *
+     * @return the current game state
+     */
     public GameState getState() {
         return controllableModel.getGameState();
     }
 
+    /**
+     * Switches the game to the instruction screen.
+     */
     public void showInstruction() {
         controllableModel.showInstructions();
     }
 
+    /**
+     * Returns the viewable model used by the controller.
+     *
+     * @return the viewable game model
+     */
     public ViewableRocketManModel getViewableModel() {
         return viewableModel;
     }
