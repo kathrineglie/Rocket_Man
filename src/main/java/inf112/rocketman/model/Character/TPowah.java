@@ -24,14 +24,16 @@ public class TPowah implements ITPowah  {
     private boolean gravityUp = false;
 
     private boolean robotIsJumping = false;
-    private boolean robotNeedsRelease = false;
+    private boolean robotGoingDown = false;
     private boolean movementInput = false;
 
     private static final float ROBOT_BOOST = 20f;
     private static final float ROBOT_MIN_JUMP = 200f;
     private static final float ROBOT_SLOW_GRAVITY = -100f;
     private static final float ROBOT_GRAVITY = -800f;
-    private static final float MAX_ROBOT_BOOST = 30f;
+
+    private static final float GRAVITY_SUIT_GRAVITY = -1500;
+
 
     public TPowah (float x, float y, float width, float height, float ground) {
         this.bounds = new Rectangle(x, y, width, height);
@@ -82,23 +84,23 @@ public class TPowah implements ITPowah  {
     private void updateRobot(float dt, boolean movementInput, float worldHeight) {
         if (!movementInput && onGround()) {
             robotIsJumping = false;
-            robotNeedsRelease = false;
+            robotGoingDown = false;
         }
 
-        if (movementInput && onGround() && !robotIsJumping && !robotNeedsRelease) {
+        if (movementInput && onGround() && !robotIsJumping && !robotGoingDown) {
             vy = ROBOT_MIN_JUMP;
             robotIsJumping = true;
         }
 
-        if (movementInput && !onGround() && robotIsJumping && !robotNeedsRelease) {
-            vy += Math.min(ROBOT_BOOST, MAX_ROBOT_BOOST);
+        if (movementInput && !onGround() && robotIsJumping && !robotGoingDown) {
+            vy += ROBOT_BOOST;
         }
 
         if ((!movementInput && robotIsJumping) || Math.abs((bounds.y + bounds.height) - worldHeight) < 0.0001f) {
-            robotNeedsRelease = true;
+            robotGoingDown = true;
         }
 
-        if (movementInput && robotNeedsRelease && robotIsJumping) {
+        if (movementInput && robotGoingDown && robotIsJumping) {
             vy  += ROBOT_SLOW_GRAVITY * dt;
         } else {
             vy  += ROBOT_GRAVITY * dt;
@@ -109,27 +111,15 @@ public class TPowah implements ITPowah  {
     }
 
     private void updateGravitySuit(float dt, boolean movementInput, float worldHeight) {
-
         ceiling = worldHeight - bounds.height;
-        float gravity = -1500;
 
         if (gravityUp) {
-            vy -= gravity * dt;
+            vy -= GRAVITY_SUIT_GRAVITY * dt;
         } else {
-            vy += gravity * dt;
+            vy += GRAVITY_SUIT_GRAVITY * dt;
         }
 
         bounds.y += vy * dt;
-
-        if (bounds.y <= ground) {
-            bounds.y = ground;
-            vy = 0;
-        }
-
-        if (bounds.y >= ceiling) {
-            bounds.y = ceiling;
-            vy = 0;
-        }
 
         if (movementInput) {
             gravityUp = !gravityUp;
@@ -137,10 +127,9 @@ public class TPowah implements ITPowah  {
         }
 
         keepPlayerInsideBounds(worldHeight);
-
     }
 
-    private void keepPlayerInsideBounds(float worldHeight){
+    private void keepPlayerInsideBounds(float worldHeight) {
         if (bounds.y < ground) {
             bounds.y = ground;
             vy = 0;
@@ -154,6 +143,35 @@ public class TPowah implements ITPowah  {
     public boolean getMovementInput() {
         return movementInput;
     }
+
+    public boolean getRobotIsJumping() {
+        return robotIsJumping;
+    }
+
+    public boolean getRobotGoingDown() {
+        return robotGoingDown;
+    }
+
+    public float getRobotGravity() {
+        return ROBOT_GRAVITY;
+    }
+
+    public float getRobotMinJump() {
+        return ROBOT_MIN_JUMP;
+    }
+
+    public float getRobotBoost() {
+        return ROBOT_BOOST;
+    }
+
+    public float getCeiling() {
+        return ceiling;
+    }
+
+    public boolean isGravityUp() {
+        return gravityUp;
+    }
+
 
     @Override
     public void setPowerUp(PowerUpType powerUp){
