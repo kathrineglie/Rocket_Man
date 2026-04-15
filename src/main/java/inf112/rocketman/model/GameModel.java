@@ -91,7 +91,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private PlayerProgressManager progressManager;
 
-    private static boolean pirateHat = false;
+    private boolean pirateHat = false;
 
     public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
@@ -150,7 +150,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public void setPlayerName(String name){
         this.playerName = name;
     }
-
 
     /**
      *Returns a random delay before the next power-up can spawn
