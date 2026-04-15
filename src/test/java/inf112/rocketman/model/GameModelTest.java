@@ -1,6 +1,10 @@
 package inf112.rocketman.model;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Coins.Coin;
+import inf112.rocketman.model.PowerUps.PowerUp;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,9 +40,9 @@ public class GameModelTest {
         when(highscores.getInteger(anyString())).thenReturn(0);
 
         coins = mock(Preferences.class);
-        when(highscores.get()).thenReturn(new java.util.HashMap<>());
-        when(highscores.getInteger(anyString(), anyInt())).thenAnswer(invocation -> invocation.getArgument(1));
-        when(highscores.getInteger(anyString())).thenReturn(0);
+        when(coins.get()).thenReturn(new java.util.HashMap<>());
+        when(coins.getInteger(anyString(), anyInt())).thenAnswer(invocation -> invocation.getArgument(1));
+        when(coins.getInteger(anyString())).thenReturn(0);
 
 
     }
@@ -314,5 +318,240 @@ public class GameModelTest {
 
         assertEquals(initialScore, model.getGameScore());
     }
+    @Test
+    void testHasGravitySuitPowerUp() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
 
+        assertFalse(model.hasGravitySuitPowerUp());
+
+        model.getPlayer().setPowerUp(PowerUpType.GRAVITY_SUIT);
+
+        assertTrue(model.hasGravitySuitPowerUp());
+
+    }
+
+    @Test
+    void onGround() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+
+        assertTrue(model.onGround());
+    }
+
+    @Test
+    void testOnGroundBecomesFalseWhenPlayerMovesUp() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        model.update(0.1f, true);
+
+        assertFalse(model.onGround());
+    }
+
+    @Test
+    void testGetWorldDimensions() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+
+        assertEquals(1000f, model.getWorldWidth());
+        assertEquals(800f, model.getWorldHeight());
+    }
+
+    @Test
+    void testInitialCoinCountIsZero() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+
+        assertEquals(0, model.getCoinCount());
+    }
+
+    @Test
+    void testGetPlayerName() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+
+        model.setPlayerName("Bob");
+
+        assertEquals("Bob", model.getPlayerName());
+    }
+
+    @Test
+    void testInitialCollectFalgsAreFalse() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+
+        assertFalse(model.didCollectCoinThisFrame());
+        assertFalse(model.didCollectPowerUpThisFrame());
+    }
+
+    @Test
+    void testDifficultyIncreaseChangesBackgroundSpeed() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        float initialScroll = model.getBackgroundScrollX();
+
+        model.setGameScore(101);
+        model.update(0.1f, false);
+
+        float afterUpdate = model.getBackgroundScrollX();
+
+        assertTrue(afterUpdate < initialScroll);
+    }
+
+    @Test
+    void testGoToHomeScreenClearsObstaclesAndResetsScore() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        model.update(3.0f, false);
+        model.setGameScore(50);
+
+        model.goToHomescreen();
+
+        assertEquals(GameState.HOME_SCREEN, model.getGameState());
+        assertEquals(0, model.getGameScore());
+        assertEquals(0, model.getObstacles().size());
+    }
+
+    @Test
+    void testDifficultyIncreaseMakesBackgroundScrollFaster() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        float scrollBefore = model.getBackgroundScrollX();
+        model.update(0.1f, false);
+        float scrollAfterNormalUpdate = model.getBackgroundScrollX();
+
+        float normalDelta = Math.abs(scrollAfterNormalUpdate - scrollBefore);
+
+        model.setGameScore(101);
+
+        float scrollBeforeDifficultyIncrease = model.getBackgroundScrollX();
+        model.update(0.1f, false);
+        float scrollAfterDifficultyIncrease = model.getBackgroundScrollX();
+
+        float increasedDelta = Math.abs(scrollAfterDifficultyIncrease - scrollBeforeDifficultyIncrease);
+
+        assertTrue(increasedDelta > normalDelta);
+    }
+
+    @Test
+    void testDifficultyIncreaseChangesPrivateFields() throws Exception {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        var difficultyField = GameModel.class.getDeclaredField("difficulty");
+        difficultyField.setAccessible(true);
+
+        var bgSpeedField = GameModel.class.getDeclaredField("bgSpeed");
+        bgSpeedField.setAccessible(true);
+
+        int difficultyBefore = (int) difficultyField.get(model);
+        float bgSpeedBefore = (float) bgSpeedField.get(model);
+
+        model.setGameScore(101);
+        model.update(0.1f, false);
+
+        int difficultyAfter = (int) difficultyField.get(model);
+        float bgSpeedAfter = (float) bgSpeedField.get(model);
+
+        assertEquals(difficultyBefore + 1, difficultyAfter);
+        assertTrue(bgSpeedAfter < bgSpeedBefore);
+    }
+
+    @Test
+    void testPlayerCollectsPowerUpOnCollision() throws Exception {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        Rectangle playerHitbox = model.getPlayerHitbox();
+
+        PowerUp overlappingPowerUp = new PowerUp(
+                playerHitbox.x,
+                playerHitbox.y,
+                30f,
+                30f,
+                0f,
+                PowerUpType.BIRD
+        );
+
+        var powerUpField = GameModel.class.getDeclaredField("powerUp");
+        powerUpField.setAccessible(true);
+        powerUpField.set(model, overlappingPowerUp);
+
+        var method = GameModel.class.getDeclaredMethod("checkPowerUpCollision");
+        method.setAccessible(true);
+        method.invoke(model);
+
+        assertEquals(PowerUpType.BIRD, model.getPlayer().getActivePowerUp());
+        assertTrue(model.didCollectPowerUpThisFrame());
+        assertNull(model.getPowerUp());
+    }
+
+    @Test
+    void testHandleCoinCollisionIncreasesCoinCount() throws Exception {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        Rectangle playerHitbox = model.getPlayerHitbox();
+
+        var constructor = Coin.class.getDeclaredConstructor(float.class, float.class, float.class, float.class, float.class);
+        constructor.setAccessible(true);
+
+        Coin overlappingCoin = constructor.newInstance(
+                playerHitbox.x,
+                playerHitbox.y,
+                20f,
+                20f,
+                0f
+        );
+
+        var method = GameModel.class.getDeclaredMethod("handleCoinCollision", Coin.class);
+        method.setAccessible(true);
+
+        boolean collided = (boolean) method.invoke(model, overlappingCoin);
+
+        assertTrue(collided);
+        assertEquals(1, model.getCoinCount());
+    }
+
+    @Test
+    void testHandleCoinCollisionReturnsFalseWhenNoOverlap() throws Exception {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        var constructor = Coin.class.getDeclaredConstructor(float.class, float.class, float.class, float.class, float.class);
+        constructor.setAccessible(true);
+
+        Coin nonOverlappingCoin = constructor.newInstance(900f, 900f, 20f, 20f, 0f);
+
+        var method = GameModel.class.getDeclaredMethod("handleCoinCollision", Coin.class);
+        method.setAccessible(true);
+
+        boolean collided = (boolean) method.invoke(model, nonOverlappingCoin);
+
+        assertFalse(collided);
+        assertEquals(0, model.getCoinCount());
+    }
+
+    @Test
+    public void testGetSavedCoinsForPlayer() {
+        when(coins.getInteger("Bob", 0)).thenReturn(7);
+
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+
+        int savedCoins = model.getSavedCoinsForPlayer("Bob");
+
+        assertEquals(7, savedCoins);
+    }
+
+    @Test
+    void testGetNonOverlappingLazerReturnsLazerWhenNoOverlap() throws Exception {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+
+        var method = GameModel.class.getDeclaredMethod("getNonOverlappingLazer");
+        method.setAccessible(true);
+
+        Object result = method.invoke(model);
+
+        assertNotNull(result);
+        assertTrue(result instanceof inf112.rocketman.model.Obstacles.Lazers.Lazer);
+    }
 }

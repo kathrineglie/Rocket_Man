@@ -648,9 +648,5 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         progressManager.addCoins(playerName, coinCount);
     }
 
-
-
-
-
     public boolean hasPirateHat() { return  pirateHat; }
 }
