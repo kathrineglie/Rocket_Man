@@ -5,14 +5,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
 public class PauseScreen extends AbstractMenuScreen {
 
-    public PauseScreen(Main game, RocketManController controller) {
-        super(game, controller);
+    private SpriteBatch batch;
+
+    public PauseScreen(Main game, RocketManController controller, SpriteBatch batch) {
+        super(game, controller, batch);
     }
 
     @Override

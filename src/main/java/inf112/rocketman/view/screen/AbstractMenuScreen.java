@@ -16,15 +16,17 @@ public abstract class AbstractMenuScreen implements Screen {
     protected BitmapFont smallFont;
     protected ShapeRenderer shapeRenderer;
 
-    protected AbstractMenuScreen(Main game, RocketManController controller) {
+    protected AbstractMenuScreen(Main game, RocketManController controller, SpriteBatch batch) {
         this.game = game;
         this.controller = controller;
+        this.batch = batch;
     }
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
+        if (shapeRenderer == null){
+            shapeRenderer = new ShapeRenderer();
+        }
         this.font = controller.getView().getAssets().getTitleFont();
         this.smallFont = controller.getView().getAssets().getFont();
     }
@@ -43,8 +45,9 @@ public abstract class AbstractMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        if (batch != null) {
-            batch.dispose();
+        if (shapeRenderer != null){
+            shapeRenderer.dispose();
+            shapeRenderer = null;
         }
     }
 }

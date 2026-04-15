@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import inf112.rocketman.Main;
@@ -16,9 +17,8 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
     private boolean editingName = false;
     private final RocketManController controller;
 
-    public HomeScreen(Main game, RocketManController controller) {
-
-        super(game, controller);
+    public HomeScreen(Main game, RocketManController controller, SpriteBatch batch) {
+        super(game, controller, batch);
         this.controller = controller;
         Gdx.input.setInputProcessor(this);
 

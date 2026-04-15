@@ -4,14 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
 public class InstructionScreen extends AbstractMenuScreen {
+    private SpriteBatch batch;
 
-    public InstructionScreen(Main game, RocketManController controller) {
-        super(game, controller);
+    public InstructionScreen(Main game, RocketManController controller, SpriteBatch batch) {
+        super(game, controller, batch);
     }
 
     @Override

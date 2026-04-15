@@ -3,6 +3,7 @@ package inf112.rocketman.view.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
@@ -12,8 +13,8 @@ import java.util.Map;
 
 public class GameOverScreen extends AbstractMenuScreen {
 
-    public GameOverScreen(Main game, RocketManController controller) {
-        super(game, controller);
+    public GameOverScreen(Main game, RocketManController controller, SpriteBatch batch) {
+        super(game, controller, batch);
     }
 
     @Override

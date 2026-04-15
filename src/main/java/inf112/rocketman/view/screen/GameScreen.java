@@ -5,17 +5,14 @@ import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
 public class GameScreen implements Screen {
-    //private final Main game;
-    private RocketManController controller;
+    private final RocketManController controller;
 
-    public GameScreen(Main game, RocketManController controller) {
-        //this.game = game;
+    public GameScreen(RocketManController controller) {
         this.controller = controller;
     }
 
     @Override
     public void show() {
-        //controller.create();
     }
 
     @Override

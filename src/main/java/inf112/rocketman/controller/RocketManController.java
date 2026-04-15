@@ -31,14 +31,13 @@ public class RocketManController {
     private static final String ROBOT_SOUND = "Sounds/robot.mp3";
     private static final String GRAVITY_SUIT_SOUND = "Sounds/gravity_suit.mp3";
 
-    public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel) {
+    public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel, RocketManView view) {
         this.controllableModel = controllableRocketManModel;
         this.viewableModel = viewableModel;
+        this.view = view;
     }
 
     public void create() {
-        view = new RocketManView();
-        view.create(controllableModel.getWorldWidth(), controllableModel.getWorldHeight());
         view.playExclusiveMusic(MUSIC);
     }
 
