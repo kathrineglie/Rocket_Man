@@ -1,17 +1,13 @@
 package inf112.rocketman.model;
 
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.Coins.CoinManager;
 import inf112.rocketman.model.Coins.RandomCoinFactory;
 import inf112.rocketman.model.Obstacles.*;
-import inf112.rocketman.model.Obstacles.Flames.Flame;
 import inf112.rocketman.model.Obstacles.IObstacle;
-import inf112.rocketman.model.Obstacles.Lazers.Lazer;
 import inf112.rocketman.model.Obstacles.ObstacleManager;
 import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.PowerUps.*;
@@ -38,10 +34,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private boolean usingJetpack;
 
-    private final IRandomObstacleFactory obstacleFactory = new RandomObstacleFactory();
-
-    private final List<IObstacle> obstacles = new ArrayList<>();
-
     private static final float START_BG_SPEED = -350f;
     private float bgSpeed = START_BG_SPEED;
     private float bgScrollX = 0f;
@@ -59,6 +51,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final CoinManager coinManager = new CoinManager(new RandomCoinFactory());
     private final PowerUpManager powerUpManager = new PowerUpManager(new RandomPowerUpFactory());
     private final ObstacleManager obstacleManager = new ObstacleManager(new RandomObstacleFactory());
+    private ObstacleCollisionManager collisionManager;
 
     public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
@@ -70,8 +63,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         this.worldHeight = worldHeight;
         this.margin = margin;
 
+        this.collisionManager = new ObstacleCollisionManager(player, obstacleManager);
         this.progressManager = new PlayerProgressManager(highscores, coins);
-
     }
 
     /**
@@ -97,7 +90,13 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             obstacleManager.clear();
         }
 
-        handleObstacleCollision();
+        boolean objectCollision = collisionManager.handleObstacleCollision();
+        if (objectCollision && !player.hasPowerUp()) {
+            handleGameOver();
+        } else if (objectCollision && player.hasPowerUp()){
+            obstacleManager.clear();
+            player.setPowerUp(PowerUpType.NORMAL);
+        }
 
         coinManager.update(dt, getPlayerHitbox(), worldWidth, worldHeight, GROUND, margin, bgSpeed);
 
@@ -113,48 +112,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     @Override
     public void setPlayerName(String name){
         this.playerName = name;
-    }
-
-
-    /**
-     * Handles collision of the different objects and powerups
-     */
-    private void handleObstacleCollision() {
-        Rectangle playerHitbox = player.getHitBox();
-
-        Iterator<IObstacle> iterator = obstacleManager.getObstacleListReference().iterator();
-        while (iterator.hasNext()) {
-            IObstacle obstacle = iterator.next();
-            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3) {
-                continue;
-            }
-
-            if (!(obstacle instanceof Flame)) {
-                Rectangle obstacleHitbox = obstacle.getHitBox();
-
-                if (obstacleHitbox == null) {
-                    continue;
-                }
-
-                if (playerHitbox.overlaps(obstacleHitbox)) {
-                    if (player.hasPowerUp()) {
-                        deactivatePowerUp();
-                        iterator.remove();
-                        obstacleManager.clear();
-                        return;
-                    } else {
-                        handleGameOver();
-                    }
-                    return;
-                }
-            } else {
-                if (flameCollision(obstacle)) {
-                    iterator.remove();
-                    obstacleManager.clear();
-                    return;
-                }
-            }
-        }
     }
 
     /**
@@ -190,29 +147,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     @Override
     public List<Map.Entry<String, Integer>> getSortedHighScoreList() {
         return progressManager.getSortedHighScoreList();
-    }
-
-    /**
-     * Handles collision for flame object separate since it is a polygon
-     *
-     * @param obstacle An object that the player can collide with
-     */
-    private boolean flameCollision(IObstacle obstacle) {
-        if (!(obstacle instanceof Flame)) {
-            return false;
-        }
-
-        Polygon polyHitBox = player.getPolyHitBox();
-
-        if (Intersector.overlapConvexPolygons(((Flame) obstacle).getPolygon(), polyHitBox)) {
-            if (player.hasPowerUp()) {
-                deactivatePowerUp();
-            } else {
-                handleGameOver();
-            }
-            return true;
-        }
-        return false;
     }
 
 
@@ -261,13 +195,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return obstacleManager.getObstacles();
      }
 
-    /**
-     * Deactivates the current powerup
-     */
-    private void deactivatePowerUp(){
-         player.setPowerUp(PowerUpType.NORMAL);
-         player.setVy(0);
-    }
 
     /**
      * Updates the background to the delta time
