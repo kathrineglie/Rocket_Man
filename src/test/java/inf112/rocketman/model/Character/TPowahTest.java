@@ -159,26 +159,6 @@ public class TPowahTest {
     }
 
 //    @Test
-//    public void testUpdateRobotOnGroundNoMovementInput() {
-//        player.setPowerUp(PowerUpType.ROBOT);
-//
-//        assertFalse(player.getRobotIsJumping());
-//        assertFalse(player.getRobotGoingDown());
-//        assertTrue(player.onGround());
-//
-//        player.update(0.1f, false, 1000);
-//
-//        assertFalse(player.getRobotIsJumping());
-//        assertFalse(player.getRobotGoingDown());
-//
-//        float expectedY = 30f;
-//        float expectedVY = 0f;
-//
-//        assertEquals(expectedY, player.getY());
-//        assertEquals(expectedVY, player.getVY());
-//    }
-
-//    @Test
 //    public void testRobotIsJumping() {
 //        player.setPowerUp(PowerUpType.ROBOT);
 //        player.update(0.1f, true, 1000);

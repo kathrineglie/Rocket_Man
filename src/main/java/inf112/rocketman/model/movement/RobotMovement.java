@@ -55,4 +55,12 @@ public class RobotMovement implements MovementBehavior{
         player.setY(player.getY() + player.getVY() * dt);
         player.keepPlayerInsideBounds(worldHeight);
     }
+
+    public boolean getRobotIsJumping() {
+        return robotIsJumping;
+    }
+
+    public boolean getRobotIsGoingDown() {
+        return getRobotIsGoingDown();
+    }
 }
