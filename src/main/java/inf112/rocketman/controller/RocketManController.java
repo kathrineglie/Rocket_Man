@@ -7,10 +7,12 @@ import inf112.rocketman.model.GameState;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
+import inf112.rocketman.view.assets.RocketManAudio;
 
 public class RocketManController {
 
-    private RocketManView view;
+    private final RocketManView view;
+    private final RocketManAudio audio;
     private final ControllableRocketManModel controllableModel;
     private final ViewableRocketManModel viewableModel;
 
@@ -31,14 +33,15 @@ public class RocketManController {
     private static final String ROBOT_SOUND = "Sounds/robot.mp3";
     private static final String GRAVITY_SUIT_SOUND = "Sounds/gravity_suit.mp3";
 
-    public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel, RocketManView view) {
+    public RocketManController(ControllableRocketManModel controllableRocketManModel, ViewableRocketManModel viewableModel, RocketManView view, RocketManAudio audio) {
         this.controllableModel = controllableRocketManModel;
         this.viewableModel = viewableModel;
         this.view = view;
+        this.audio = audio;
     }
 
     public void create() {
-        view.playExclusiveMusic(MUSIC);
+        audio.playExclusiveMusic(MUSIC);
     }
 
 
@@ -77,26 +80,26 @@ public class RocketManController {
         stopRobotIfPlaying();
 
         if (!gameOverSoundPlayed) {
-            view.stopAllMusic();
-            view.playSound(GAME_OVER);
-            view.playExclusiveMusic(MEOW_END_SONG);
+            audio.stopAllMusic();
+            audio.playSound(GAME_OVER);
+            audio.playExclusiveMusic(MEOW_END_SONG);
             gameOverSoundPlayed = true;
         }
     }
 
     private void handleCollectibleSounds() {
         if (viewableModel.didCollectPowerUpThisFrame()) {
-            view.playSound(POWERUP_SOUND);
+            audio.playSound(POWERUP_SOUND);
         }
 
         if (viewableModel.didCollectCoinThisFrame()) {
-            view.playSound(COIN_SOUND);
+            audio.playSound(COIN_SOUND);
         }
     }
 
     private void stopJetpackIfPlaying() {
         if (jetpackPlaying) {
-            view.stopSound(JETPACK_SOUND, jetpackSoundId);
+            audio.stopSound(JETPACK_SOUND, jetpackSoundId);
             jetpackPlaying = false;
             jetpackSoundId = -1;
         }
@@ -104,7 +107,7 @@ public class RocketManController {
 
     private void stopRobotIfPlaying() {
         if (robotPlaying) {
-            view.stopSound(ROBOT_SOUND, robotSoundId);
+            audio.stopSound(ROBOT_SOUND, robotSoundId);
             robotPlaying = false;
             robotSoundId = -1;
         }
@@ -117,7 +120,9 @@ public class RocketManController {
     }
 
     public void dispose() {
+
         view.dispose();
+        audio.dispose();
     }
 
     public  void handleInput() {
@@ -135,16 +140,16 @@ public class RocketManController {
     }
 
     public void startGame(String playerName){
-        view.stopAllMusic();
-        view.playExclusiveMusic(MUSIC);
+        audio.stopAllMusic();
+        audio.playExclusiveMusic(MUSIC);
         resetSoundState();
         controllableModel.setPlayerName(playerName);
         controllableModel.startNewGame();
     }
     private void handleHomeScreenInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            view.stopAllMusic();
-            view.playExclusiveMusic(MUSIC);
+            audio.stopAllMusic();
+            audio.playExclusiveMusic(MUSIC);
             resetSoundState();
             controllableModel.startNewGame();
         }
@@ -164,7 +169,7 @@ public class RocketManController {
         PowerUpType powerUpType = viewableModel.getPlayer().getActivePowerUp();
 
         if (powerUpType == PowerUpType.GRAVITY_SUIT && spaceClicked) {
-            view.playSound(GRAVITY_SUIT_SOUND);
+            audio.playSound(GRAVITY_SUIT_SOUND);
         }
     }
 
@@ -191,7 +196,7 @@ public class RocketManController {
         PowerUpType powerUpType = viewableModel.getPlayer().getActivePowerUp();
 
         if (spaceHeld && !jetpackPlaying && powerUpType == PowerUpType.NORMAL) {
-            jetpackSoundId = view.loopSound(JETPACK_SOUND);
+            jetpackSoundId = audio.loopSound(JETPACK_SOUND);
             jetpackPlaying = true;
         } else if ((!spaceHeld || powerUpType != PowerUpType.NORMAL) && jetpackPlaying) {
             stopJetpackIfPlaying();
@@ -203,7 +208,7 @@ public class RocketManController {
         PowerUpType powerUpType = viewableModel.getPlayer().getActivePowerUp();
 
         if (powerUpType == PowerUpType.BIRD && spaceClicked) {
-            view.playSound(BIRD_SOUND);
+            audio.playSound(BIRD_SOUND);
         }
     }
 
@@ -212,10 +217,10 @@ public class RocketManController {
         PowerUpType powerUpType = viewableModel.getPlayer().getActivePowerUp();
 
         if (spaceHeld && !robotPlaying && powerUpType == PowerUpType.ROBOT) {
-            robotSoundId = view.loopSound(ROBOT_SOUND);
+            robotSoundId = audio.loopSound(ROBOT_SOUND);
             robotPlaying = true;
         } else if ((!spaceHeld || powerUpType != PowerUpType.ROBOT) && robotPlaying) {
-            view.stopSound(ROBOT_SOUND, robotSoundId);
+            audio.stopSound(ROBOT_SOUND, robotSoundId);
             robotPlaying = false;
             robotSoundId = -1;
         }
@@ -235,8 +240,8 @@ public class RocketManController {
             controllableModel.resumeGame();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            view.stopMusic(MEOW_END_SONG);
-            view.playMusic(MUSIC);
+            audio.stopMusic(MEOW_END_SONG);
+            audio.playMusic(MUSIC);
             gameOverSoundPlayed = false;
             controllableModel.goToHomescreen();
         }
@@ -244,8 +249,8 @@ public class RocketManController {
 
     private void handleGameOverInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            view.stopAllMusic();
-            view.playExclusiveMusic(MUSIC);
+            audio.stopAllMusic();
+            audio.playExclusiveMusic(MUSIC);
             gameOverSoundPlayed = false;
             controllableModel.goToHomescreen();
         }
