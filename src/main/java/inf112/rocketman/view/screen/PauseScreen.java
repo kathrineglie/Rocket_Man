@@ -5,28 +5,33 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
 public class PauseScreen extends AbstractMenuScreen {
 
-    public PauseScreen(Main game, RocketManController controller) {
-        super(game, controller);
+
+    public PauseScreen(Main game, RocketManController controller, SpriteBatch batch) {
+        super(game, controller, batch);
     }
 
     @Override
     public void render(float v) {
         controller.handleInput();
-
         controller.getView().render(controller.getViewableModel());
+
+        viewport.apply();
+        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
+        batch.setProjectionMatrix(viewport.getCamera().combined);
 
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(0,0,0,0.5f);
-        shapeRenderer.rect(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        shapeRenderer.rect(0,0,viewport.getWorldWidth(), viewport.getWorldHeight());
         shapeRenderer.end();
 
         Gdx.gl.glDisable(GL20.GL_BLEND);
@@ -46,7 +51,7 @@ public class PauseScreen extends AbstractMenuScreen {
         smallFont.setColor(Color.WHITE);
         drawCentered(smallFont, "Press P to resume", centerX, height / 2f);
         drawCentered(smallFont, "Press ESC to QUIT to Menu", centerX, height / 2f - 80);
-        drawCentered(smallFont, "Sore: " + score + "M", centerX, height / 2f - 140);
+        drawCentered(smallFont, "Score: " + score + "M", centerX, height / 2f - 140);
         drawCentered(smallFont, "Coins: " + coins, centerX, height / 2f - 190);
         batch.end();
 

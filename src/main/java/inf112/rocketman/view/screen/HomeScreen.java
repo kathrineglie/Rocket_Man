@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import inf112.rocketman.Main;
@@ -14,22 +16,26 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
 
     private String playerName = "";
     private boolean editingName = false;
-    private final RocketManController controller;
 
-    public HomeScreen(Main game, RocketManController controller) {
+    public HomeScreen(Main game, RocketManController controller, SpriteBatch batch) {
+        super(game, controller, batch);
+    }
 
-        super(game, controller);
-        this.controller = controller;
+    @Override
+    public void show(){
+        super.show();
         Gdx.input.setInputProcessor(this);
-
     }
 
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1);
 
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
+        viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
+
+        float width = viewport.getWorldWidth();
+        float height = viewport.getWorldHeight();
 
         float titleY = height / 2f + 140;
         float hintY = height / 2f + 75;
@@ -87,15 +93,17 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
 
         if (Gdx.input.justTouched()) {
             float mouseX = Gdx.input.getX();
-            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+            float mouseY = Gdx.input.getY();
 
-            if (mouseX >= qMarkX && mouseX <= qMarkX + questionLayout.width
-                    && mouseY >= qMarkY - questionLayout.height && mouseY <= qMarkY) {
+            Vector2 worldPos = viewport.unproject(new Vector2(mouseX, mouseY));
+
+            if (worldPos.x >= qMarkX && worldPos.x <= qMarkX + questionLayout.width
+                    && worldPos.y >= qMarkY - questionLayout.height && worldPos.y <= qMarkY) {
                 controller.showInstruction();
             }
 
-            if (mouseX > boxX && mouseX < boxX + boxWidth
-                    && mouseY > boxY && mouseY < boxY + boxHeight) {
+            if (worldPos.x > boxX && worldPos.x < boxX + boxWidth
+                    && worldPos.y > boxY && worldPos.y < boxY + boxHeight) {
                 editingName = true;
             } else {
                 editingName = false;

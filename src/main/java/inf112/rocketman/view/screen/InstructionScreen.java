@@ -4,23 +4,27 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
 public class InstructionScreen extends AbstractMenuScreen {
 
-    public InstructionScreen(Main game, RocketManController controller) {
-        super(game, controller);
+    public InstructionScreen(Main game, RocketManController controller, SpriteBatch batch) {
+        super(game, controller, batch);
     }
 
     @Override
     public void render(float v) {
         ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1);
+
+        viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
+        float width = viewport.getWorldWidth();
+        float height = viewport.getWorldHeight();
         float centerX = width / 2f;
 
         font.setColor(Color.WHITE);
