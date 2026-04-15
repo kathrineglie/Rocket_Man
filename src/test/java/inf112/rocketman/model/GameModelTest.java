@@ -554,4 +554,43 @@ public class GameModelTest {
         assertNotNull(result);
         assertTrue(result instanceof inf112.rocketman.model.Obstacles.Lazers.Lazer);
     }
+
+    @Test
+    void testGetCoinListIsEmptyAtStart() {
+        GameModel model = new GameModel(1000, 800, 5,highscores, coins);
+
+        assertTrue(model.getCoinList().isEmpty());
+    }
+
+    @Test
+    void testGetCoinListReturnsNewList() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+
+        List<Coin> coins1 = model.getCoinList();
+        List<Coin> coins2 = model.getCoinList();
+
+        assertNotSame(coins1, coins2);
+    }
+
+    @Test
+    void testUsingJetpackBecomesTrueMovingUp() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        model.update(0.1f, true);
+
+        assertTrue(model.usingJetpack());
+    }
+
+    @Test
+    void testUsingJetpackBecomesFalseWhenNotMovingUp() {
+        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+        model.startNewGame();
+
+        model.update(0.1f, true);
+        model.update(0.1f, false);
+
+        assertFalse(model.usingJetpack());
+    }
+
 }
