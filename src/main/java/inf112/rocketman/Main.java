@@ -31,7 +31,7 @@ public class Main extends Game {
         Preferences highscores = Gdx.app.getPreferences("Highscores");
         Preferences coins = Gdx.app.getPreferences("Coins");
 
-        GameModel model = new GameModel(1200, 800, 0,highscores, coins);
+        GameModel model = new GameModel(1200, 800, 5,highscores, coins);
         RocketManView view = new RocketManView();
         view.create(model.getWorldWidth(), model.getWorldHeight());
 

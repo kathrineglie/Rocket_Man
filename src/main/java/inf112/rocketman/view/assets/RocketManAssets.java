@@ -43,17 +43,17 @@ public class RocketManAssets implements TextureProvider {
         titleGenerator.dispose();
 
         preloadTextures(List.of(
-                "TPowah/jetpack.png", "TPowah/jetpack_flames.png", "TPowah/run1", "TPowah/run2", "TPowah/run3", "TPowah/run4",
+                "TPowah/jetpack.png", "TPowah/jetpack_flames.png", "TPowah/run1.png", "TPowah/run2.png", "TPowah/run3.png", "TPowah/run4.png",
                 "Background/background.png",
                 "Obstacles/Rocket.png", "Obstacles/warning.png",
                 "PowerUps/bird.png", "PowerUps/birdUP.png",
                 "PowerUps/box.png",
                 "Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png",
                 "Obstacles/flame.png",
-                "coin.png",
+                "Obstacles/coin.png",
                 "PowerUps/run1.png", "PowerUps/run2.png", "PowerUps/run3.png", "PowerUps/run4.png", "PowerUps/fly.png", "PowerUps/fly_flame.png",
                 "TPowah/run1pirate.png", "TPowah/run2pirate.png", "TPowah/run3pirate.png", "TPowah/jetpack_flames_pirate.png",
-                "birdUp_pirate.png", "bird_pirate.png",
+                "PowerUps/birdUp_pirate.png", "PowerUps/bird_pirate.png",
                 "PowerUps/gravity1.png", "PowerUps/gravity2.png", "PowerUps/gravity3.png", "PowerUps/gravity4.png",
                 "PowerUps/gravityUP1.png", "PowerUps/gravityUP2.png", "PowerUps/gravityUP3.png", "PowerUps/gravityUP4.png",
                 "PowerUps/up.png", "PowerUps/down.png"
@@ -101,7 +101,7 @@ public class RocketManAssets implements TextureProvider {
             if (file.exists()) {
                 textures.put(name, new Texture(file));
             } else {
-                textures.put(name, null);
+                throw new IllegalStateException("Texture file not found: " + name);
             }
         }
         return textures.get(name);
