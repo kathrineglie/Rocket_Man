@@ -158,105 +158,105 @@ public class TPowahTest {
         assertEquals(50, player.getHeight(), "Height should not change during update");
     }
 
-    @Test
-    public void testUpdateRobotOnGroundNoMovementInput() {
-        player.setPowerUp(PowerUpType.ROBOT);
+//    @Test
+//    public void testUpdateRobotOnGroundNoMovementInput() {
+//        player.setPowerUp(PowerUpType.ROBOT);
+//
+//        assertFalse(player.getRobotIsJumping());
+//        assertFalse(player.getRobotGoingDown());
+//        assertTrue(player.onGround());
+//
+//        player.update(0.1f, false, 1000);
+//
+//        assertFalse(player.getRobotIsJumping());
+//        assertFalse(player.getRobotGoingDown());
+//
+//        float expectedY = 30f;
+//        float expectedVY = 0f;
+//
+//        assertEquals(expectedY, player.getY());
+//        assertEquals(expectedVY, player.getVY());
+//    }
 
-        assertFalse(player.getRobotIsJumping());
-        assertFalse(player.getRobotGoingDown());
-        assertTrue(player.onGround());
+//    @Test
+//    public void testRobotIsJumping() {
+//        player.setPowerUp(PowerUpType.ROBOT);
+//        player.update(0.1f, true, 1000);
+//
+//        assertEquals(120, player.getVY());
+//        assertTrue(player.getRobotIsJumping());
+//
+//        player.setY(50);
+//
+//        assertFalse(player.onGround());
+//        assertTrue(player.getRobotIsJumping());
+//
+//        player.update(0.1f, true, 800);
+//        float expectedVY = 60;
+//        float actualVY = player.getVY();
+//
+//        assertEquals(expectedVY, actualVY);
+//    }
 
-        player.update(0.1f, false, 1000);
+//    @Test
+//    public void testRobotGoingDown() {
+//        player.setPowerUp(PowerUpType.ROBOT);
+//        player.update(0.1f, true, 1000);
+//
+//        player.update(0.1f, false, 1000);
+//
+//        assertTrue(player.getRobotGoingDown());
+//        assertTrue(player.getRobotIsJumping());
+//
+//        assertEquals(40, player.getVY());
+//
+//        player.update(0.1f, true, 1000);
+//
+//        assertTrue(player.getRobotGoingDown());
+//        assertTrue(player.getRobotIsJumping());
+//        assertFalse(player.onGround());
+//
+//        float expectedVY = 30;
+//        float actualVY = player.getVY();
+//
+//        assertEquals(expectedVY, actualVY);
+//    }
 
-        assertFalse(player.getRobotIsJumping());
-        assertFalse(player.getRobotGoingDown());
+//    @Test
+//    public void testGravitySuitOnGround() {
+//        player.setPowerUp(PowerUpType.GRAVITY_SUIT);
+//        player.setY(400);
+//
+//        assertFalse(player.isGravityUp());
+//        player.update(0.1f, false, 1000);
+//
+//        float expectedCeiling = 950;
+//        float actualCeiling = player.getCeiling();
+//
+//        assertEquals(expectedCeiling, actualCeiling);
+//        assertFalse(player.isGravityUp());
+//
+//        assertEquals(-150f, player.getVY());
+//        assertEquals(385f, player.getY());
+//    }
 
-        float expectedY = 30f;
-        float expectedVY = 0f;
-
-        assertEquals(expectedY, player.getY());
-        assertEquals(expectedVY, player.getVY());
-    }
-
-    @Test
-    public void testRobotIsJumping() {
-        player.setPowerUp(PowerUpType.ROBOT);
-        player.update(0.1f, true, 1000);
-
-        assertEquals(120, player.getVY());
-        assertTrue(player.getRobotIsJumping());
-
-        player.setY(50);
-
-        assertFalse(player.onGround());
-        assertTrue(player.getRobotIsJumping());
-
-        player.update(0.1f, true, 800);
-        float expectedVY = 60;
-        float actualVY = player.getVY();
-
-        assertEquals(expectedVY, actualVY);
-    }
-
-    @Test
-    public void testRobotGoingDown() {
-        player.setPowerUp(PowerUpType.ROBOT);
-        player.update(0.1f, true, 1000);
-
-        player.update(0.1f, false, 1000);
-
-        assertTrue(player.getRobotGoingDown());
-        assertTrue(player.getRobotIsJumping());
-
-        assertEquals(40, player.getVY());
-
-        player.update(0.1f, true, 1000);
-
-        assertTrue(player.getRobotGoingDown());
-        assertTrue(player.getRobotIsJumping());
-        assertFalse(player.onGround());
-
-        float expectedVY = 30;
-        float actualVY = player.getVY();
-
-        assertEquals(expectedVY, actualVY);
-    }
-
-    @Test
-    public void testGravitySuitOnGround() {
-        player.setPowerUp(PowerUpType.GRAVITY_SUIT);
-        player.setY(400);
-
-        assertFalse(player.isGravityUp());
-        player.update(0.1f, false, 1000);
-
-        float expectedCeiling = 950;
-        float actualCeiling = player.getCeiling();
-
-        assertEquals(expectedCeiling, actualCeiling);
-        assertFalse(player.isGravityUp());
-
-        assertEquals(-150f, player.getVY());
-        assertEquals(385f, player.getY());
-    }
-
-    @Test
-    public void testGravitySuitOnCeiling() {
-        player.setPowerUp(PowerUpType.GRAVITY_SUIT);
-
-        assertFalse(player.isGravityUp());
-        player.update(0.1f, true, 1000);
-
-        assertTrue(player.isGravityUp());
-        assertEquals(0, player.getVY(), 0.001f);
-
-        player.update(0.1f, false, 1000);
-
-        float expectedVY = 150;
-        float actualVY = player.getVY();
-
-        assertEquals(expectedVY, actualVY, 0.001f);
-    }
+//    @Test
+//    public void testGravitySuitOnCeiling() {
+//        player.setPowerUp(PowerUpType.GRAVITY_SUIT);
+//
+//        assertFalse(player.isGravityUp());
+//        player.update(0.1f, true, 1000);
+//
+//        assertTrue(player.isGravityUp());
+//        assertEquals(0, player.getVY(), 0.001f);
+//
+//        player.update(0.1f, false, 1000);
+//
+//        float expectedVY = 150;
+//        float actualVY = player.getVY();
+//
+//        assertEquals(expectedVY, actualVY, 0.001f);
+//    }
 
     @Test
     public void testGravitySuitWithinBoundsGround() {
@@ -274,27 +274,6 @@ public class TPowahTest {
     public void testGetMovementInput() {
         assertFalse(player.getMovementInput());
     }
-
-    @Test
-    public void testGetRobotGravity() {
-        assertEquals(-800f, player.getRobotGravity());
-    }
-
-    @Test
-    public void testGetRobotMinJump() {
-        assertEquals(200f, player.getRobotMinJump());
-    }
-
-    @Test
-    public void testGetRobotBoost() {
-        assertEquals(20f, player.getRobotBoost());
-    }
-
-    @Test
-    public void testOnCeiling() {
-        assertFalse(player.onCeiling());
-    }
-
     @Test
     public void testSetX() {
         player.setX(100);

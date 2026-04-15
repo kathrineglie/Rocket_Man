@@ -65,13 +65,6 @@ public interface ITPowah {
     boolean onGround();
 
     /**
-     * Checks if the character is currently on the ceiling
-     *
-     * @return true if the character is on the ceiling
-     */
-    boolean onCeiling();
-
-    /**
      * Checks if the character is going down
      *
      * @return true if the character is going down
