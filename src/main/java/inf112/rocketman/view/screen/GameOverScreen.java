@@ -3,6 +3,7 @@ package inf112.rocketman.view.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
@@ -12,8 +13,8 @@ import java.util.Map;
 
 public class GameOverScreen extends AbstractMenuScreen {
 
-    public GameOverScreen(Main game, RocketManController controller) {
-        super(game, controller);
+    public GameOverScreen(Main game, RocketManController controller, SpriteBatch batch) {
+        super(game, controller, batch);
     }
 
     @Override
@@ -22,10 +23,12 @@ public class GameOverScreen extends AbstractMenuScreen {
 
         ScreenUtils.clear(0.2f, 0.05f, 0.05f, 1);
 
+        viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
+        float width = viewport.getWorldWidth();
+        float height = viewport.getWorldHeight();
 
         font.setColor(Color.RED);
         GlyphLayout layout = new GlyphLayout(font, "GAME OVER");
