@@ -7,7 +7,7 @@ public class Rocket extends Obstacle {
     private static boolean active = false;
     private float spawnTimer = 1.5f;
 
-    protected Rocket(float x, float y, float width, float height, float vx, float vy) {
+    public Rocket(float x, float y, float width, float height, float vx, float vy) {
         super(x, y, width, height, vx, vy);
     }
 

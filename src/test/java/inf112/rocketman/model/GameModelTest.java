@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 public class GameModelTest {
     private Preferences highscores;
     private Preferences coins;
+    private GameModel model;
 
     /**
      * Sets up a mocked Preferences object before each test.
@@ -43,6 +44,8 @@ public class GameModelTest {
         when(coins.get()).thenReturn(new java.util.HashMap<>());
         when(coins.getInteger(anyString(), anyInt())).thenAnswer(invocation -> invocation.getArgument(1));
         when(coins.getInteger(anyString())).thenReturn(0);
+
+        model = new GameModel(1000, 800, 5, highscores, coins);
 
 
     }
@@ -593,4 +596,14 @@ public class GameModelTest {
         assertFalse(model.usingJetpack());
     }
 
+    @Test
+    public void testPirateHat() {
+        when(coins.getInteger("Bob", 0)).thenReturn(50);
+
+        model = new GameModel(1000, 800, 5, highscores, coins);
+        model.setPlayerName("Bob");
+        model.startNewGame();
+        model.update(0.1f, true);
+        assertTrue(model.hasPirateHat());
+    }
 }
