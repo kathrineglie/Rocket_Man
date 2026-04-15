@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.Coins.CoinFactory;
+import inf112.rocketman.model.Coins.CoinManager;
 import inf112.rocketman.model.Coins.RandomCoinFactory;
 import inf112.rocketman.model.Obstacles.Flames.Flame;
 import inf112.rocketman.model.Obstacles.Flames.FlameFactory;
@@ -54,7 +55,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final LazerFactory lazerFactory = new RandomLazerFactory();
     private final FlameFactory flameFactory = new RandomFlameFactory();
     private final PowerUpFactory powerUpFactory = new RandomPowerUpFactory();
-    private final CoinFactory coinFactory = new RandomCoinFactory();
 
     private static final float START_BG_SPEED = -350f;
     private float bgSpeed = START_BG_SPEED;
@@ -72,9 +72,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private static final float START_OBSTACLE_SPAWN_INTERVAL = 2.5f;
     private float obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
 
-    private float coinTimer = 10f;
-    private int coinCount = 0;
-    private final List<Coin> coinList = new ArrayList<>();
+
 
     private static final float START_GAME_SCORE_TIMER = 0.3f;
     private int gameScore = 0;
@@ -87,11 +85,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private static final float MAX_POWER_UP_SPAWN_INTERVAL = 30f;
 
     private boolean collectedPowerUpThisFrame = false;
-    private boolean collectedCoinThisFrame = false;
 
     private PlayerProgressManager progressManager;
 
     private boolean pirateHat = false;
+
+    private final CoinManager coinManager = new CoinManager(new RandomCoinFactory());
 
     public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
@@ -125,14 +124,15 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         player.update(dt, usingJetpack, worldHeight);
 
         collectedPowerUpThisFrame = false;
-        collectedCoinThisFrame = false;
+
         updateBackground(dt);
         updateObstacle(dt);
         updatePowerUp(dt);
 
         checkPowerUpCollision();
         handleObstacleCollision();
-        updateCoins(dt);
+
+        coinManager.update(dt, getPlayerHitbox(), worldWidth, worldHeight, GROUND, margin, bgSpeed);
 
         if (scoreTickTimer <= 0f) {
             gameScore++;
@@ -140,8 +140,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         } else {
             scoreTickTimer -= dt;
         }
+
         int coins = progressManager.getCoins(playerName);
-        if (coins + coinCount >= 10) {
+        if (coins + coinManager.getCoinCount() >= 10) {
             pirateHat = true;
         }
     }
@@ -224,7 +225,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      */
     private void initGameState() {
         obstacles.clear();
-        coinList.clear();
+        coinManager.reset();
 
         player.setPowerUp(PowerUpType.NORMAL);
 
@@ -235,8 +236,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
         obstacleTimer = 0f;
 
-        coinTimer = 10f;
-
         powerUp = null;
         powerUpTimer = 2f;
         powerUpTimer = getRandomPowerUpSpawnInterval();
@@ -246,7 +245,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         gameScore = 0;
         scoreTickTimer = START_GAME_SCORE_TIMER;
         scoreInterval = START_GAME_SCORE_TIMER;
-        coinCount = 0;
         difficulty = 1;
     }
 
@@ -284,51 +282,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return false;
     }
 
-    /**
-     * Updates coins
-     *
-     * @param dt dt time passed since the last frame
-     */
-    private void updateCoins(float dt) {
-        coinTimer -= dt;
-        if (coinTimer <= 0) {
-            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, GROUND, margin, (float) bgSpeed));
-            coinTimer = random.nextFloat(3f, 10f);
-        }
-        Iterator<Coin> iterator = coinList.iterator();
-        while (iterator.hasNext()) {
-            Coin coin = iterator.next();
-            coin.update(dt);
-            coin.setVX(bgSpeed);
 
-            if (handleCoinCollision(coin)) {
-                iterator.remove();
-            }
-
-            if (coin.isOfScreen(worldHeight, margin)) {
-                iterator.remove();
-            }
-        }
-    }
-
-    /**
-     * Handles the collision of a coin and the player.
-     *
-     * @param coin takes a coin in and checks if it overlaps with the player hitbox
-     * @return true if the coin and player hitbox overlaps
-     */
-    private boolean handleCoinCollision(Coin coin) {
-        if (getPlayerHitbox().overlaps(coin.getHitbox())) {
-            collectedCoinThisFrame = true;
-            coinCount += 1;
-            return true;
-        }
-        return false;
-    }
-
+    @Override
     public List<Coin> getCoinList() {
-        return new ArrayList<>(coinList);
+        return coinManager.getCoinList();
     }
+
 
     /**
      * Checks if the obstacles are off-screen and removes them if they are
@@ -602,8 +561,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public int getCoinCount() {
-         return coinCount;
+        return coinManager.getCoinCount();
     }
+
 
     @Override
     public boolean didCollectPowerUpThisFrame() {
@@ -612,7 +572,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public boolean didCollectCoinThisFrame() {
-        return collectedCoinThisFrame;
+        return coinManager.didCollectCoinThisFrame();
     }
 
     public boolean isMovingUp() {
@@ -644,7 +604,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private void handleGameOver() {
         gameState = GameState.GAME_OVER;
         progressManager.updateHighscores(playerName, gameScore);
-        progressManager.addCoins(playerName, coinCount);
+        progressManager.addCoins(playerName, coinManager.getCoinCount());
     }
 
     public boolean hasPirateHat() { return  pirateHat; }
