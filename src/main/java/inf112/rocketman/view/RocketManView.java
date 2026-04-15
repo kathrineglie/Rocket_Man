@@ -73,7 +73,8 @@ public class RocketManView {
 	 * @param model
 	 */
 	public void render(ViewableRocketManModel model) {
-		ScreenUtils.clear(Color.WHITE);
+		Color background = new Color(246f/255f, 136f/255f, 197f/255f, 1f);
+		ScreenUtils.clear(background);
 
 		viewport.apply();
 		viewport.getCamera().update();
