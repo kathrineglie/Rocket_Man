@@ -98,7 +98,16 @@ public class TPowah implements ITPowah  {
      * @return true if the player is on the ceiling
      */
     public boolean onCeiling(float worldHeight) {
-        return (bounds.y == worldHeight - bounds.height);
+        return Math.abs(bounds.y - (worldHeight - bounds.height)) < 0.001f;
+    }
+
+    /**
+     * Gets the current movement behavior depending on the powerup that is active
+     *
+     * @return a certain movement matching the powerup
+     */
+    public MovementBehavior getMovementBehavior() {
+        return movementBehavior;
     }
 
     @Override

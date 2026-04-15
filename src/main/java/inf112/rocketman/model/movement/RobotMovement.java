@@ -61,6 +61,6 @@ public class RobotMovement implements MovementBehavior{
     }
 
     public boolean getRobotIsGoingDown() {
-        return getRobotIsGoingDown();
+        return robotGoingDown;
     }
 }

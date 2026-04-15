@@ -39,4 +39,8 @@ public class GravitySuitMovement implements MovementBehavior{
 
         player.keepPlayerInsideBounds(worldHeight);
     }
+
+    public boolean isGravityUp() {
+        return gravityUp;
+    }
 }
