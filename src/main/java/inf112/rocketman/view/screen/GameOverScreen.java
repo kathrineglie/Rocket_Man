@@ -23,10 +23,12 @@ public class GameOverScreen extends AbstractMenuScreen {
 
         ScreenUtils.clear(0.2f, 0.05f, 0.05f, 1);
 
+        viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
+        float width = viewport.getWorldWidth();
+        float height = viewport.getWorldHeight();
 
         font.setColor(Color.RED);
         GlyphLayout layout = new GlyphLayout(font, "GAME OVER");

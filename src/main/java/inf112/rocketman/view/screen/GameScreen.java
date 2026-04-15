@@ -22,7 +22,9 @@ public class GameScreen implements Screen {
     }
 
     @Override public void resize(int width, int height) { controller.resize(width, height); }
-    @Override public void dispose() { controller.dispose(); }
+    @Override public void dispose() {
+        //controller.dispose();
+    }
     @Override public void pause() {}
     @Override public void resume() {}
     @Override public void hide() {}

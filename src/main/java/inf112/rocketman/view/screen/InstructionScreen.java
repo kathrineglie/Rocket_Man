@@ -10,7 +10,6 @@ import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
 public class InstructionScreen extends AbstractMenuScreen {
-    private SpriteBatch batch;
 
     public InstructionScreen(Main game, RocketManController controller, SpriteBatch batch) {
         super(game, controller, batch);
@@ -19,10 +18,13 @@ public class InstructionScreen extends AbstractMenuScreen {
     @Override
     public void render(float v) {
         ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1);
+
+        viewport.apply();
+        batch.setProjectionMatrix(viewport.getCamera().combined);
         batch.begin();
 
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
+        float width = viewport.getWorldWidth();
+        float height = viewport.getWorldHeight();
         float centerX = width / 2f;
 
         font.setColor(Color.WHITE);
