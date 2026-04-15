@@ -249,10 +249,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         scoreInterval = START_GAME_SCORE_TIMER;
         coinCount = 0;
         difficulty = 1;
-
     }
-
-
 
     @Override
     public int getSavedCoinsForPlayer(String playerName) {
