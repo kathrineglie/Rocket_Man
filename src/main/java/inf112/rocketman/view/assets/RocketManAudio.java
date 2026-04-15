@@ -10,8 +10,8 @@ import java.util.Map;
 import com.badlogic.gdx.files.FileHandle;
 
 public class RocketManAudio {
-    private Map<String, Sound> sounds = new HashMap<>();
-    private Map<String, Music> music = new HashMap<>();
+    private final Map<String, Sound> sounds = new HashMap<>();
+    private final Map<String, Music> music = new HashMap<>();
 
     public void create() {
         preloadSounds(List.of(
@@ -62,7 +62,7 @@ public class RocketManAudio {
                 m.setLooping(true);
                 music.put(name, m);
             } else {
-                throw new IllegalStateException("Music file not found" + name);
+                throw new IllegalStateException("Music file not found: " + name);
             }
         }
         return music.get(name);

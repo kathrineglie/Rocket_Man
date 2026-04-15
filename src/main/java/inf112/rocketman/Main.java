@@ -10,6 +10,7 @@ import inf112.rocketman.controller.RocketManController;
 import inf112.rocketman.model.GameModel;
 import inf112.rocketman.model.GameState;
 import inf112.rocketman.view.RocketManView;
+import inf112.rocketman.view.assets.RocketManAudio;
 import inf112.rocketman.view.screen.*;
 
 public class Main extends Game {
@@ -35,7 +36,10 @@ public class Main extends Game {
         RocketManView view = new RocketManView();
         view.create(model.getWorldWidth(), model.getWorldHeight());
 
-        controller = new RocketManController(model, model, view);
+        RocketManAudio audio = new RocketManAudio();
+        audio.create();
+
+        controller = new RocketManController(model, model, view, audio);
         controller.create();
 
         homeScreen = new HomeScreen(this, controller, batch);

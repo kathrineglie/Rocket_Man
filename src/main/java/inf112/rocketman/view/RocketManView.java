@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import inf112.rocketman.view.assets.RocketManAssets;
-import inf112.rocketman.view.assets.RocketManAudio;
 import inf112.rocketman.view.rendering.*;
 
 
@@ -21,7 +20,6 @@ public class RocketManView {
 	private ShapeRenderer shape; // used for drawing shapes
 
 	private RocketManAssets assets;
-	private RocketManAudio audio;
 
 	private BackgroundRenderer backgroundRenderer;
 	private PlayerRenderer playerRenderer;
@@ -38,9 +36,6 @@ public class RocketManView {
 		assets = new RocketManAssets();
 		assets.create();
 
-		audio = new RocketManAudio();
-		audio.create();
-
 		coinRenderer = new CoinRenderer(assets);
 		backgroundRenderer = new BackgroundRenderer(assets);
 		playerRenderer = new PlayerRenderer(assets);
@@ -56,7 +51,6 @@ public class RocketManView {
 		batch.dispose();
 		shape.dispose();
 		assets.dispose();
-		audio.dispose();
 	}
 
 	/**
@@ -109,34 +103,6 @@ public class RocketManView {
 		return new Vector2(mouse.x, mouse.y);
 	}
 
-	public long playSound(String name){
-		return audio.playSound(name);
-	}
-
-	public long loopSound(String name) {
-		return audio.loopSound(name);
-	}
-
-	public void playMusic(String name) {
-		audio.playMusic(name);
-	}
-
-	public void stopMusic(String name) {
-		audio.stopMusic(name);
-	}
-
-	public void stopAllMusic() {
-		audio.stopAllMusic();
-	}
-
-	public void playExclusiveMusic(String name) {
-		audio.playExclusiveMusic(name);
-	}
-
-	public void stopSound(String name, long id){
-		audio.stopSound(name, id);
-	}
-
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
 	}
@@ -156,6 +122,5 @@ public class RocketManView {
 	public float getWorldHeight(){
 		return viewport.getWorldHeight();
 	}
-
 
 }
