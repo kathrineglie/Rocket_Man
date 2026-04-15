@@ -92,4 +92,8 @@ public class CoinManager {
     public boolean didCollectCoinThisFrame() {
         return collectedCoinThisFrame;
     }
+
+    protected void addCoinForTesting(Coin coin) {
+        coinList.add(coin);
+    }
 }

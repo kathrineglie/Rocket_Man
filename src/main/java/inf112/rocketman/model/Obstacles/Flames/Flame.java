@@ -8,7 +8,7 @@ public class Flame extends Obstacle {
     private float angle;
     private Polygon polygon;
 
-    protected Flame(float x, float y, float width, float length, float vx, float vy, float angle) {
+    public Flame(float x, float y, float width, float length, float vx, float vy, float angle) {
         super(x, y, width, length, vx, vy);
         this.angle = angle;
 
@@ -36,6 +36,7 @@ public class Flame extends Obstacle {
         polygon.setPosition(this.x - width/2f, this.y - height/2f);
         polygon.setRotation(angle);
     }
+
 
     public float getAngle() {
         return angle;

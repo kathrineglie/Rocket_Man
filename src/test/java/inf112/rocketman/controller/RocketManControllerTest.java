@@ -2,6 +2,7 @@ package inf112.rocketman.controller;
 
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
+import inf112.rocketman.view.assets.RocketManAudio;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,14 +16,16 @@ public class RocketManControllerTest {
     private ViewableRocketManModel viewModel;
     private RocketManView view;
     private RocketManController controller;
+    private RocketManAudio audio;
 
     @BeforeEach
     void setUp(){
         model = mock(ControllableRocketManModel.class);
         viewModel = mock(ViewableRocketManModel.class);
         view = mock(RocketManView.class);
+        audio = mock(RocketManAudio.class);
 
-        controller = new RocketManController(model, viewModel, view);
+        controller = new RocketManController(model, viewModel, view, audio);
     }
 
     @Test
@@ -31,7 +34,7 @@ public class RocketManControllerTest {
 
         verify(model).setPlayerName("Bob");
         verify(model).startNewGame();
-        verify(view).playExclusiveMusic(anyString());
+        verify(audio).playExclusiveMusic(anyString());
     }
 
 

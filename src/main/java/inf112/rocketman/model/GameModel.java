@@ -8,13 +8,11 @@ import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.Coins.CoinManager;
 import inf112.rocketman.model.Coins.RandomCoinFactory;
+import inf112.rocketman.model.Obstacles.*;
 import inf112.rocketman.model.Obstacles.Flames.Flame;
-import inf112.rocketman.model.Obstacles.Flames.RandomFlameFactory;
 import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Obstacles.Lazers.Lazer;
-import inf112.rocketman.model.Obstacles.Lazers.RandomLazerFactory;
 import inf112.rocketman.model.Obstacles.ObstacleManager;
-import inf112.rocketman.model.Obstacles.Rockets.RandomRocketFactory;
 import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.PowerUps.*;
 import inf112.rocketman.view.ViewableRocketManModel;
@@ -40,6 +38,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     private boolean usingJetpack;
 
+    private final IRandomObstacleFactory obstacleFactory = new RandomObstacleFactory();
+
+    private final List<IObstacle> obstacles = new ArrayList<>();
+
     private static final float START_BG_SPEED = -350f;
     private float bgSpeed = START_BG_SPEED;
     private float bgScrollX = 0f;
@@ -56,7 +58,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final PlayerProgressManager progressManager;
     private final CoinManager coinManager = new CoinManager(new RandomCoinFactory());
     private final PowerUpManager powerUpManager = new PowerUpManager(new RandomPowerUpFactory());
-    private final ObstacleManager obstacleManager = new ObstacleManager(new RandomRocketFactory(), new RandomLazerFactory(), new RandomFlameFactory());
+    private final ObstacleManager obstacleManager = new ObstacleManager(new RandomObstacleFactory());
 
     public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
@@ -110,7 +112,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public void setPlayerName(String name){
-
         this.playerName = name;
     }
 
@@ -232,8 +233,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
         float newSpawnInterval = Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleManager.getObstacleSpawnInterval() - 0.4f);
         obstacleManager.setObstacleSpawnInterval(newSpawnInterval);
-        bgSpeed = (float) Math.max(MAX_BG_SPEED, bgSpeed - 70);
-        rocketSpeed = (float) Math.max(MAX_ROCKET_SPEED, rocketSpeed - 70);
+        bgSpeed = Math.max(MAX_BG_SPEED, bgSpeed - 70);
+        rocketSpeed =  Math.max(MAX_ROCKET_SPEED, rocketSpeed - 70);
         scoreInterval = (float) Math.max(MAX_GAMESCORE_TIMER, scoreInterval - 0.05);
 
         obstacleManager.updateObstacleSpeeds(bgSpeed, rocketSpeed);
@@ -250,7 +251,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         }
     }
 
-
     /**
      * Gets a list of the obstacles
      *
@@ -260,7 +260,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public List<IObstacle> getObstacles() {
         return obstacleManager.getObstacles();
      }
-
 
     /**
      * Deactivates the current powerup
@@ -379,7 +378,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public int getCoinCount() {
         return coinManager.getCoinCount();
     }
-
 
     @Override
     public boolean didCollectPowerUpThisFrame() {

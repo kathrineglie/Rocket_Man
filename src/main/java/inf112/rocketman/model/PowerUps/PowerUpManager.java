@@ -124,4 +124,8 @@ public class PowerUpManager {
     public boolean didCollectPowerUpThisFrame() {
         return collectedPowerUpThisFrame;
     }
+
+    protected void setPowerUpForTesting(PowerUp powerUp) {
+        this.powerUp = powerUp;
+    }
 }

@@ -103,34 +103,6 @@ public class RocketManView {
 		return new Vector2(mouse.x, mouse.y);
 	}
 
-	public long playSound(String name){
-		return assets.playSound(name);
-	}
-
-	public long loopSound(String name) {
-		return assets.loopSound(name);
-	}
-
-	public void playMusic(String name) {
-		assets.playMusic(name);
-	}
-
-	public void stopMusic(String name) {
-		assets.stopMusic(name);
-	}
-
-	public void stopAllMusic() {
-		assets.stopAllMusic();
-	}
-
-	public void playExclusiveMusic(String name) {
-		assets.playExclusiveMusic(name);
-	}
-
-	public void stopSound(String name, long id){
-		assets.stopSound(name, id);
-	}
-
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
 	}
@@ -150,6 +122,5 @@ public class RocketManView {
 	public float getWorldHeight(){
 		return viewport.getWorldHeight();
 	}
-
 
 }
