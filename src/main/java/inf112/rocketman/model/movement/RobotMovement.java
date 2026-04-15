@@ -2,6 +2,12 @@ package inf112.rocketman.model.movement;
 
 import inf112.rocketman.model.Character.TPowah;
 
+/**
+ * This class updates the character when space is pressed only when it is on the ground or falling down.
+ * This movement is like a jump and it will jump higher when space is pressed for a longer amount of time.
+ * If you hold in space while the character is going down, it will slow down the gravity.
+ * If space is not pressed while going down, the gravity will be the normal gravity.
+ */
 public class RobotMovement implements MovementBehavior{
 
     private boolean robotIsJumping = false;
@@ -12,6 +18,14 @@ public class RobotMovement implements MovementBehavior{
     private static final float ROBOT_SLOW_GRAVITY = -100f;
     private static final float ROBOT_GRAVITY = -800f;
 
+    /**
+     * Updates the player using the robot movement as explained above
+     *
+     * @param player the character you are playing with
+     * @param dt time passed since the last frame
+     * @param movementInput the input from the player. True if space is pressed
+     * @param worldHeight the height of the game
+     */
     @Override
     public void update(TPowah player, float dt, boolean movementInput, float worldHeight) {
         if (!movementInput && player.onGround()) {

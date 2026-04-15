@@ -83,10 +83,20 @@ public class TPowah implements ITPowah  {
         return polygon;
     }
 
+    /**
+     * Gets the current movement input from the player
+     * @return true if the player has pressed or is holding space
+     */
     public boolean getMovementInput() {
         return movementInput;
     }
 
+    /**
+     * Checks if the player is on the ceiling
+     *
+     * @param worldHeight the height of the game
+     * @return true if the player is on the ceiling
+     */
     public boolean onCeiling(float worldHeight) {
         return (bounds.y == worldHeight - bounds.height);
     }
