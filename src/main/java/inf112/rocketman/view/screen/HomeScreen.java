@@ -36,8 +36,6 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
 
         float width = viewport.getWorldWidth();
         float height = viewport.getWorldHeight();
-//        float width = Gdx.graphics.getWidth();
-//        float height = Gdx.graphics.getHeight();
 
         float titleY = height / 2f + 140;
         float hintY = height / 2f + 75;
@@ -110,18 +108,6 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
             } else {
                 editingName = false;
             }
-
-//            if (mouseX >= qMarkX && mouseX <= qMarkX + questionLayout.width
-//                    && mouseY >= qMarkY - questionLayout.height && mouseY <= qMarkY) {
-//                controller.showInstruction();
-//            }
-//
-//            if (mouseX > boxX && mouseX < boxX + boxWidth
-//                    && mouseY > boxY && mouseY < boxY + boxHeight) {
-//                editingName = true;
-//            } else {
-//                editingName = false;
-//            }
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !playerName.isBlank()) {
