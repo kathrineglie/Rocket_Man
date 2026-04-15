@@ -8,17 +8,10 @@ import inf112.rocketman.controller.ControllableRocketManModel;
 import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.Coins.CoinFactory;
 import inf112.rocketman.model.Coins.RandomCoinFactory;
+import inf112.rocketman.model.Obstacles.*;
 import inf112.rocketman.model.Obstacles.Flames.Flame;
-import inf112.rocketman.model.Obstacles.Flames.FlameFactory;
-import inf112.rocketman.model.Obstacles.Flames.RandomFlameFactory;
-import inf112.rocketman.model.Obstacles.IObstacle;
 import inf112.rocketman.model.Obstacles.Lazers.Lazer;
-import inf112.rocketman.model.Obstacles.Lazers.LazerFactory;
-import inf112.rocketman.model.Obstacles.Lazers.RandomLazerFactory;
-import inf112.rocketman.model.Obstacles.Obstacle;
-import inf112.rocketman.model.Obstacles.Rockets.RandomRocketFactory;
 import inf112.rocketman.model.Obstacles.Rockets.Rocket;
-import inf112.rocketman.model.Obstacles.Rockets.RocketFactory;
 import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.PowerUps.PowerUp;
 import inf112.rocketman.model.PowerUps.PowerUpFactory;
@@ -50,9 +43,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final Random random = new Random();
 
     private final List<IObstacle> obstacles = new ArrayList<>();
-    private final RocketFactory rocketFactory = new RandomRocketFactory();
-    private final LazerFactory lazerFactory = new RandomLazerFactory();
-    private final FlameFactory flameFactory = new RandomFlameFactory();
+    private final IRandomObstacleFactory obstacleFactory = new RandomObstacleFactory();
     private final PowerUpFactory powerUpFactory = new RandomPowerUpFactory();
     private final CoinFactory coinFactory = new RandomCoinFactory();
 
@@ -403,14 +394,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         int randNum = random.nextInt(0, Math.min(difficulty, NUM_OBSTACLES));
 
         return switch (randNum) {
-            case 0 -> flameFactory.newFlame(worldWidth, worldHeight, GROUND, margin, (float) bgSpeed);
-            case 1 -> rocketFactory.newRocket(worldWidth, worldHeight, GROUND, margin, rocketSpeed);
+            case 0 -> obstacleFactory.newObstacle(ObstacleType.FLAME ,worldWidth, worldHeight, GROUND, margin, (float) bgSpeed);
+            case 1 -> obstacleFactory.newObstacle(ObstacleType.ROCKET,worldWidth, worldHeight, GROUND, margin, rocketSpeed);
             case 2 -> {
                 Lazer lazer = getNonOverlappingLazer();
                 if (lazer != null) {
                     yield lazer;
                 } else {
-                    yield rocketFactory.newRocket(worldWidth, worldHeight, GROUND, margin, rocketSpeed);}
+                    yield obstacleFactory.newObstacle(ObstacleType.LAZER ,worldWidth, worldHeight, GROUND, margin, rocketSpeed);}
             }
             default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
         };
@@ -439,11 +430,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      * @return a new overlapping lazer or null if it could not make a lazer that was not overlapping
      */
     private Lazer getNonOverlappingLazer() {
-        Lazer candidate;
+        Obstacle candidate;
         for (int i = 0; i < MAX_LAZER_SPAWN_ATTEMPTS; i++) {
-            candidate = lazerFactory.newLazer(worldWidth, worldHeight, GROUND, margin);
-            if (canSpawnLazer(candidate)) {
-                return candidate;
+            candidate = obstacleFactory.newObstacle(ObstacleType.LAZER, worldWidth, worldHeight, GROUND, margin, 0);
+            if (canSpawnLazer((Lazer) candidate)) {
+                return (Lazer) candidate;
             }
         }
         return null;
