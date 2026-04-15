@@ -3,55 +3,51 @@ package inf112.rocketman.model;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
-import inf112.rocketman.model.Coins.Coin;
-import inf112.rocketman.model.Coins.CoinManager;
-import inf112.rocketman.model.Coins.RandomCoinFactory;
+import inf112.rocketman.model.Coins.*;
 import inf112.rocketman.model.Obstacles.*;
-import inf112.rocketman.model.Obstacles.IObstacle;
-import inf112.rocketman.model.Obstacles.ObstacleManager;
 import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.PowerUps.*;
 import inf112.rocketman.view.ViewableRocketManModel;
 
 import java.util.*;
 
+/**
+ * The game model is responsible for managing the overall game state and logic.
+ *
+ * This class updates the player, obstacles, coins, powerups and difficulty progression for the game.
+ * It also handles the different game states and when to switch between the different ones.
+ * This includes starting, pausing and ending the game
+ *
+ * The game model acts as the central controller for the game logic, while delegating specific
+ * responsibilities to the dedicated manager classes.
+ */
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
     private final float worldHeight;
     private final float worldWidth;
     private final float margin;
 
     private GameState gameState = GameState.HOME_SCREEN;
+
     private String playerName = "";
 
     private final TPowah player;
-
-    private int difficulty = 1;
-    private static final int MAX_DIFFICULTY = 5;
-
+    private boolean usingJetpack;
     private static final float PLAYER_X = 150f;
     private static final float PLAYER_Y = 120f;
     private static final float GROUND = 120f;
 
-    private boolean usingJetpack;
-
-    private static final float START_BG_SPEED = -350f;
-    private float bgSpeed = START_BG_SPEED;
     private float bgScrollX = 0f;
 
-    private static final float START_ROCKET_SPEED = -550;
-    private float rocketSpeed = START_ROCKET_SPEED;
-    private static final float MAX_ROCKET_SPEED = - 1400f;
-
     private static final float START_GAME_SCORE_TIMER = 0.3f;
-    private int gameScore = 0;
     private float scoreTickTimer = START_GAME_SCORE_TIMER;
-    private float scoreInterval = 0.1f;
+    private int gameScore = 0;
 
     private final PlayerProgressManager progressManager;
+    private final DifficultyManager difficultyManager;
+    private final ObstacleCollisionManager collisionManager;
     private final CoinManager coinManager = new CoinManager(new RandomCoinFactory());
     private final PowerUpManager powerUpManager = new PowerUpManager(new RandomPowerUpFactory());
     private final ObstacleManager obstacleManager = new ObstacleManager(new RandomObstacleFactory());
-    private ObstacleCollisionManager collisionManager;
 
     public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
@@ -63,14 +59,15 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         this.worldHeight = worldHeight;
         this.margin = margin;
 
+        this.difficultyManager = new DifficultyManager(obstacleManager);
         this.collisionManager = new ObstacleCollisionManager(player, obstacleManager);
         this.progressManager = new PlayerProgressManager(highscores, coins);
     }
 
     /**
-     * Updates all of the characters, the background, the game state. Everything that has to do with the game logic
+     * Updates the character, the background, the game state. Everything that has to do with the game logic
      *
-     * @param dt  dt time passed since the last frame
+     * @param dt  the time passed since the last frame (delta time)
      * @param movingUpward True if the player is currently applying thrust to the rocket.
      */
     public void update (float dt, boolean movingUpward) {
@@ -78,35 +75,110 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             return;
         }
 
-        updateDifficulty();
+        difficultyManager.updateDifficulty(gameScore);
+
         usingJetpack = movingUpward;
         player.update(dt, usingJetpack, worldHeight);
 
         updateBackground(dt);
-        obstacleManager.update(dt, worldWidth, worldHeight, GROUND, margin, difficulty, bgSpeed, rocketSpeed);
-        powerUpManager.update(dt, player, worldWidth, worldHeight, GROUND, margin, bgSpeed);
+        updateObstacles(dt);
+        updatePowerUps(dt);
+        handlePowerUpCollection();
+        handleObstacleHit();
+        updateCoins(dt);
+        updateScore(dt);
+    }
 
-        if (powerUpManager.checkCollision(player)){
-            obstacleManager.clear();
-        }
-
+    /**
+     * Manages what should happen if there is a collision between the obstacles and the player
+     * This does nothing if there is no collision between the player and an obstacle
+     */
+    private void handleObstacleHit() {
         boolean objectCollision = collisionManager.handleObstacleCollision();
         if (objectCollision && !player.hasPowerUp()) {
             handleGameOver();
         } else if (objectCollision && player.hasPowerUp()){
             obstacleManager.clear();
             player.setPowerUp(PowerUpType.NORMAL);
+            player.setVy(0);
         }
+    }
 
-        coinManager.update(dt, getPlayerHitbox(), worldWidth, worldHeight, GROUND, margin, bgSpeed);
-
+    /**
+     * This updates the score for the current game session
+     * The score will update faster when the difficulty increases.
+     * When the difficulty increases, the score interval will decrease in the difficulty manager
+     *
+     * @param dt the time passed since the last frame (delta time)
+     */
+    private void updateScore(float dt) {
         if (scoreTickTimer <= 0f) {
             gameScore++;
-            scoreTickTimer = scoreInterval;
+            scoreTickTimer = difficultyManager.getScoreInterval();
         } else {
             scoreTickTimer -= dt;
         }
+    }
 
+    /**
+     * Updates the obstacles to the background
+     *
+     * @param dt the time passed since the last frame (delta time)
+     */
+    private void updateObstacles(float dt) {
+        obstacleManager.update(
+                dt,
+                worldWidth,
+                worldHeight,
+                GROUND,
+                margin,
+                difficultyManager.getDifficulty(),
+                difficultyManager.getBgSpeed(),
+                difficultyManager.getRocketSpeed()
+        );
+    }
+
+    /**
+     * Updates the powerups to the background
+     *
+     * @param dt the time passed since the last frame (delta time)
+     */
+    private void updatePowerUps(float dt) {
+        powerUpManager.update(
+                dt,
+                player,
+                worldWidth,
+                worldHeight,
+                GROUND,
+                margin,
+                difficultyManager.getBgSpeed()
+        );
+    }
+
+    /**
+     * Updates the coins to the background
+     *
+     * @param dt the time passed since the last frame (delta time)
+     */
+    private void updateCoins(float dt) {
+        coinManager.update(
+                dt,
+                getPlayerHitbox(),
+                worldWidth,
+                worldHeight,
+                GROUND,
+                margin,
+                difficultyManager.getBgSpeed());
+
+    }
+
+    /**
+     * Checks if the player is collecting a powerup box
+     */
+    private void handlePowerUpCollection() {
+        if (powerUpManager.checkCollision(player)){
+            obstacleManager.clear();
+        }
     }
 
     @Override
@@ -115,27 +187,21 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     /**
-     * Initaliesed the game and resets variables.
+     * Resets the game to its initial state
      */
-    private void initGameState() {
+    private void resetGameState() {
         coinManager.reset();
         obstacleManager.reset();
+        powerUpManager.reset();
 
         player.setPowerUp(PowerUpType.NORMAL);
 
-        bgSpeed = START_BG_SPEED;
-        rocketSpeed = START_ROCKET_SPEED;
         bgScrollX = 0f;
-
-
-        powerUpManager.reset();
-
-        difficulty = 1;
 
         gameScore = 0;
         scoreTickTimer = START_GAME_SCORE_TIMER;
-        scoreInterval = START_GAME_SCORE_TIMER;
-        difficulty = 1;
+
+        difficultyManager.resetDifficulty();
     }
 
     @Override
@@ -143,46 +209,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return progressManager.getCoins(playerName);
     }
 
-
     @Override
     public List<Map.Entry<String, Integer>> getSortedHighScoreList() {
         return progressManager.getSortedHighScoreList();
     }
 
-
     @Override
     public List<Coin> getCoinList() {
         return coinManager.getCoinList();
-    }
-
-
-    /**
-     * Increases the speed of the game as well as increasing level which adds more obstacles as well as make them sapwn more frequently
-     */
-    private void increaseDifficulty() {
-        // The final time it can take between new obstacles to spawn
-        float FINAL_OBSTACLE_SPAWN_INTERVAL = 1f;
-        float MAX_BG_SPEED = -1200f;
-        float MAX_GAMESCORE_TIMER = 0.4f;
-
-        float newSpawnInterval = Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleManager.getObstacleSpawnInterval() - 0.4f);
-        obstacleManager.setObstacleSpawnInterval(newSpawnInterval);
-        bgSpeed = Math.max(MAX_BG_SPEED, bgSpeed - 70);
-        rocketSpeed =  Math.max(MAX_ROCKET_SPEED, rocketSpeed - 70);
-        scoreInterval = (float) Math.max(MAX_GAMESCORE_TIMER, scoreInterval - 0.05);
-
-        obstacleManager.updateObstacleSpeeds(bgSpeed, rocketSpeed);
-
-        difficulty ++;
-    }
-
-    /**
-     * Updates the obstacle timer depending on how far you are in the game
-     */
-    private void updateDifficulty() {
-        if (gameScore > difficulty * 100 && difficulty != MAX_DIFFICULTY) {
-            increaseDifficulty();
-        }
     }
 
     /**
@@ -197,12 +231,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
 
     /**
-     * Updates the background to the delta time
+     * Updates the background scroll based on the elapsed time
      *
-     * @param dt
+     * @param dt the time passed since the last frame (delta time)
      */
     private void updateBackground(float dt) {
-        bgScrollX += bgSpeed * dt;
+        bgScrollX += difficultyManager.getBgSpeed() * dt;
         if (worldWidth > 0) {
             bgScrollX = bgScrollX % worldWidth;
         } else {
@@ -230,6 +264,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return bgScrollX;
     }
 
+    /**
+     * Gets the hitbox of the current player.
+     *
+     * @return a hitbox of the current player
+     */
     public Rectangle getPlayerHitbox() {
         return player.getHitBox();
     }
@@ -243,7 +282,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public boolean hasBirdPowerUp() {
         return player.getActivePowerUp() == PowerUpType.BIRD;
     }
-
 
     @Override
     public TPowah getPlayer() {
@@ -267,7 +305,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public void startNewGame(){
-        initGameState();
+        resetGameState();
         gameState = GameState.PLAYING;
     }
 
@@ -316,6 +354,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return coinManager.didCollectCoinThisFrame();
     }
 
+    /**
+     * Checks if the player is currently moving up or is using the jetpack at the movement
+     *
+     * @return true if the character is using the jetpack or moving upwards
+     */
     public boolean isMovingUp() {
          return usingJetpack;
     }
@@ -323,19 +366,19 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     /**
      * For use in tests. Sets the games core directly.
      */
-    protected void setGameScore(int score){
+    protected void setGameScore(int score) {
         this.gameScore = score;
     }
 
     /**
      * Trigger game over manually for testing of highscores.
      */
-    protected void triggerGameOver(){
+    protected void triggerGameOver() {
         handleGameOver();
     }
 
     @Override
-    public String getPlayerName(){
+    public String getPlayerName() {
         return playerName;
     }
 

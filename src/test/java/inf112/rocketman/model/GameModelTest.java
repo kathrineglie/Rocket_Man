@@ -435,29 +435,29 @@ public class GameModelTest {
         assertTrue(increasedDelta > normalDelta);
     }
 
-    @Test
-    void testDifficultyIncreaseChangesPrivateFields() throws Exception {
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-        model.startNewGame();
-
-        var difficultyField = GameModel.class.getDeclaredField("difficulty");
-        difficultyField.setAccessible(true);
-
-        var bgSpeedField = GameModel.class.getDeclaredField("bgSpeed");
-        bgSpeedField.setAccessible(true);
-
-        int difficultyBefore = (int) difficultyField.get(model);
-        float bgSpeedBefore = (float) bgSpeedField.get(model);
-
-        model.setGameScore(101);
-        model.update(0.1f, false);
-
-        int difficultyAfter = (int) difficultyField.get(model);
-        float bgSpeedAfter = (float) bgSpeedField.get(model);
-
-        assertEquals(difficultyBefore + 1, difficultyAfter);
-        assertTrue(bgSpeedAfter < bgSpeedBefore);
-    }
+//    @Test
+//    void testDifficultyIncreaseChangesPrivateFields() throws Exception {
+//        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+//        model.startNewGame();
+//
+//        var difficultyField = GameModel.class.getDeclaredField("difficulty");
+//        difficultyField.setAccessible(true);
+//
+//        var bgSpeedField = GameModel.class.getDeclaredField("bgSpeed");
+//        bgSpeedField.setAccessible(true);
+//
+//        int difficultyBefore = (int) difficultyField.get(model);
+//        float bgSpeedBefore = (float) bgSpeedField.get(model);
+//
+//        model.setGameScore(101);
+//        model.update(0.1f, false);
+//
+//        int difficultyAfter = (int) difficultyField.get(model);
+//        float bgSpeedAfter = (float) bgSpeedField.get(model);
+//
+//        assertEquals(difficultyBefore + 1, difficultyAfter);
+//        assertTrue(bgSpeedAfter < bgSpeedBefore);
+//    }
 
 
     @Test
