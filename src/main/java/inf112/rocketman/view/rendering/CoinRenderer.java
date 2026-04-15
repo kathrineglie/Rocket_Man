@@ -12,7 +12,7 @@ public class CoinRenderer {
     private final Texture coinTexture;
 
     public CoinRenderer(RocketManAssets assets) {
-        this.coinTexture = assets.getTexture("coin.png");
+        this.coinTexture = assets.getTexture("Obstacles/coin.png");
     }
 
     public void render(SpriteBatch batch, ViewableRocketManModel model) {
