@@ -2,6 +2,12 @@ package inf112.rocketman.model.Obstacles;
 
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * Interface for obstacles in the game world.
+ *
+ * <p>An obstacle has a position, size, velocity, and a hitbox,
+ * and can be updated and checked against the screen bounds.</p>
+ */
 public interface IObstacle {
 
     /**
@@ -27,18 +33,53 @@ public interface IObstacle {
      */
     boolean isOfScreen(float worldWidth, float worldHeight);
 
+    /**
+     * Returns the obstacle offset.
+     *
+     * @return the obstacle offset
+     */
     float getOffSet();
 
+    /**
+     * Returns the x-coordinate of the obstacle.
+     *
+     * @return the x-coordinate
+     */
     float getX();
 
+    /**
+     * Returns the y-coordinate of the obstacle.
+     *
+     * @return the y-coordinate
+     */
     float getY();
 
+    /**
+     * Returns the width of the obstacle.
+     *
+     * @return the obstacle width
+     */
     float getWidth();
 
+    /**
+     * Returns the height of the obstacle.
+     *
+     * @return the obstacle height
+     */
     float getHeight();
 
+    /**
+     * Returns the horizontal velocity of the obstacle.
+     *
+     * @return the horizontal velocity
+     */
     float getVX();
 
+    /**
+     * Sets the horizontal velocity of the obstacle.
+     *
+     * @param bgSpeed the new horizontal velocity
+     */
     void setVX(float bgSpeed);
 
 }

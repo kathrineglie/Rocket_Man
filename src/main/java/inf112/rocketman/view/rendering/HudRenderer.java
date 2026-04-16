@@ -8,14 +8,32 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.rocketman.view.ViewableRocketManModel;
 import inf112.rocketman.view.assets.RocketManAssets;
 
+/**
+ * Renders the heads-up display (HUD) for the game.
+ *
+ * <p>The HUD shows information such as score, coin count, and the pause symbol.</p>
+ */
 public class HudRenderer {
     private final BitmapFont font;
     private final GlyphLayout layout;
 
+    /**
+     * Creates a new HUD renderer.
+     *
+     * @param assets the asset manager used to access the font
+     */
     public HudRenderer(RocketManAssets assets) {
         this.font = assets.getFont();
         this.layout = new GlyphLayout();
     }
+
+    /**
+     * Renders the HUD.
+     *
+     * @param batch the sprite batch used for drawing
+     * @param viewport the viewport defining the visible world size
+     * @param model the viewable game model providing HUD values.
+     */
     public void render(SpriteBatch batch, Viewport viewport, ViewableRocketManModel model) {
         drawHud(batch, viewport, model);
     }

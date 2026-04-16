@@ -2,6 +2,9 @@ package inf112.rocketman.model.Coins;
 
 import java.util.Random;
 
+/**
+ * A coin factory that creates coins with random vertical positions.
+ */
 public class RandomCoinFactory implements  CoinFactory {
     Random random = new Random();
 

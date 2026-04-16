@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Creates power-ups with random types and spawn positions.
+ */
 public class RandomPowerUpFactory implements PowerUpFactory{
 
     private final Random random = new Random();

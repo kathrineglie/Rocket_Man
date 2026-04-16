@@ -10,6 +10,12 @@ import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
 
+/**
+ * Renders the player character in the game.
+ *
+ * <p>This renderer selects the correct animation or texture based  on the
+ * player's state, active power-up, and cosmetic settings.</p>
+ */
 public class PlayerRenderer {
     private final TextureProvider textures;
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
@@ -25,6 +31,11 @@ public class PlayerRenderer {
     private final Animation<TextureRegion> runAnimationPirate;
     private final Animation<TextureRegion> birdAnimationPirate;
 
+    /**
+     * Creates a new player renderer.
+     *
+     * @param textures the texture provider used to access player textures
+     */
     public PlayerRenderer(TextureProvider textures) {
         this.textures = textures;
 
@@ -75,6 +86,12 @@ public class PlayerRenderer {
         );
     }
 
+    /**
+     * Renders the player using the correct animation frame or texture.
+     *
+     * @param batch the sprite batch used for drawing
+     * @param model the viewable game model containing player state
+     */
     public void render(SpriteBatch batch, ViewableRocketManModel model){
         TPowah player = model.getPlayer();
         TextureRegion region = null;
@@ -135,6 +152,14 @@ public class PlayerRenderer {
         }
     }
 
+    /**
+     * Renders debug information for the player.
+     *
+     * <p>This can be used for draw hitboxes or other debugging visuals.</p>
+     *
+     * @param batch the sprite batch used for drawing
+     * @param model the viewable game model containing player data
+     */
     public void renderDebug(SpriteBatch batch, ViewableRocketManModel model) {
 //       TPowah player = model.getPlayer();
 

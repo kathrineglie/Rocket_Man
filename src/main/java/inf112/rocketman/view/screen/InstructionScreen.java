@@ -9,12 +9,30 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
+/**
+ * Screen that displays instructions for how to play the game.
+ *
+ * <p>This screen shows the controls, obstacles, power-ups, coins,
+ * and the main goal of RocketMan.</p>
+ */
 public class InstructionScreen extends AbstractMenuScreen {
 
+    /**
+     * Creates a new instruction screen.
+     *
+     * @param game the main game instance
+     * @param controller the game controller
+     * @param batch the sprite batch used for drawing
+     */
     public InstructionScreen(Main game, RocketManController controller, SpriteBatch batch) {
         super(game, controller, batch);
     }
 
+    /**
+     * Renders the instruction screen.
+     *
+     * @param v The time in seconds since the last render.
+     */
     @Override
     public void render(float v) {
         ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1);

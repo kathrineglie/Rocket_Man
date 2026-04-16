@@ -12,21 +12,42 @@ import com.badlogic.gdx.utils.TimeUtils;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
+/**
+ * Home screen of the game.
+ *
+ * <p>This screen lets the player enter a name, start a new game,
+ * and open the instruction screen.</p>
+ */
 public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen implements InputProcessor {
 
     private String playerName = "";
     private boolean editingName = false;
 
+    /**
+     * Creates a new home screen.
+     *
+     * @param game the main game instance
+     * @param controller the game controller
+     * @param batch the sprite batch used for drawing
+     */
     public HomeScreen(Main game, RocketManController controller, SpriteBatch batch) {
         super(game, controller, batch);
     }
 
+    /**
+     * Shows the home screen and sets this screen as the active input processor.
+     */
     @Override
     public void show(){
         super.show();
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Renders teh home screen and handles meny interaction.
+     *
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0.05f, 0.05f, 0.1f, 1);
@@ -117,6 +138,12 @@ public class HomeScreen extends inf112.rocketman.view.screen.AbstractMenuScreen 
         }
     }
 
+    /**
+     * Handles typed input while the player is editing their name.
+     *
+     * @param character the typed character
+     * @return true if the input was handled, false otherwise
+     */
     @Override
     public boolean keyTyped(char character) {
         if (!editingName) {

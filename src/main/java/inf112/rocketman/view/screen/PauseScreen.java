@@ -10,13 +10,30 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
+/**
+ * Screen shown when the game is paused.
+ *
+ * <p>This screen renders the current game view with a dark overlay
+ * and displays pause-related information and controls.</p>
+ */
 public class PauseScreen extends AbstractMenuScreen {
 
-
+    /**
+     * Creates a new pause screen.
+     *
+     * @param game the main game instance
+     * @param controller the game controller
+     * @param batch the sprite batch used for drawing
+     */
     public PauseScreen(Main game, RocketManController controller, SpriteBatch batch) {
         super(game, controller, batch);
     }
 
+    /**
+     * Renders the pause screen.
+     *
+     * @param v The time in seconds since the last render.
+     */
     @Override
     public void render(float v) {
         controller.handleInput();

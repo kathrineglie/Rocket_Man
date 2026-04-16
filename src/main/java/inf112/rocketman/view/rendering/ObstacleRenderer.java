@@ -9,13 +9,30 @@ import inf112.rocketman.model.Obstacles.Rockets.Rocket;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
 
+/**
+ * Renders obstacle objects in the game world.
+ *
+ * <p>This renderer draws different obstacle types using the correct texture
+ * and visual representation.</p>
+ */
 public class ObstacleRenderer {
     private final TextureProvider textures;
 
+    /**
+     * Creates a new obstacle renderer.
+     *
+     * @param textures the texture provider used to access obstacle textures
+     */
     public ObstacleRenderer(TextureProvider textures){
         this.textures = textures;
     }
 
+    /**
+     * Renders all obstacles currently visible in the model.
+     *
+     * @param batch the sprite batch used for drawing
+     * @param model the viewable game model containing the obstacles
+     */
     public void render(SpriteBatch batch, ViewableRocketManModel model){
         for (IObstacle obstacle : model.getObstacles()) {
             if (obstacle instanceof Rocket rocket) {

@@ -13,6 +13,12 @@ import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.assets.RocketManAudio;
 import inf112.rocketman.view.screen.*;
 
+/**
+ * Main entry point for the RocketMan game.
+ *
+ * <p>This class sets up the model, view, controller, and screens,
+ * and switches between screens based on the current game state.</p>
+ */
 public class Main extends Game {
     private SpriteBatch batch;
     private RocketManController controller;
@@ -25,6 +31,10 @@ public class Main extends Game {
 
     private GameState lastState = null;
 
+    /**
+     * Initializes the game, including the model, view, audio manager,
+     * controller, and all screens.
+     */
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -53,6 +63,10 @@ public class Main extends Game {
 
     }
 
+    /**
+     * Initializes the game, including the model, view, audio manager,
+     * controller, and all screens.
+     */
     public void render() {
 
         GameState current = controller.getState();
@@ -70,10 +84,19 @@ public class Main extends Game {
         super.render();
     }
 
+    /**
+     * Initializes the game, including the model, view, audio manager,
+     * controller, and all screens.
+     */
     public PauseScreen getPauseScreen() {
         return pauseScreen;
     }
 
+    /**
+     * Launches the RocketMan desktop application.
+     *
+     * @param args command-line arguments
+     */
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("RocketMan");

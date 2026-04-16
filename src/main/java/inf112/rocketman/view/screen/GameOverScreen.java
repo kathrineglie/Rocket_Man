@@ -11,12 +11,30 @@ import inf112.rocketman.controller.RocketManController;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Screen shown when the game is over.
+ *
+ * <p>This screen displays a game over message, a summary of the current run,
+ * the saved highscores, and input for restarting the game.</p>
+ */
 public class GameOverScreen extends AbstractMenuScreen {
 
+    /**
+     * Creates a new game over screen.
+     *
+     * @param game the main game instance
+     * @param controller the game controller
+     * @param batch the sprite batch used for drawing
+     */
     public GameOverScreen(Main game, RocketManController controller, SpriteBatch batch) {
         super(game, controller, batch);
     }
 
+    /**
+     * Renders the game over screen.
+     *
+     * @param v The time in seconds since the last render.
+     */
     @Override
     public void render(float v) {
         controller.handleInput();

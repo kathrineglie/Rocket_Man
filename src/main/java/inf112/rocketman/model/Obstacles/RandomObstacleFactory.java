@@ -9,6 +9,7 @@ import java.util.Random;
 
 public class RandomObstacleFactory implements IRandomObstacleFactory {
     private final Random random = new Random();
+
     @Override
     public Obstacle newObstacle(ObstacleType type, float worldWidth, float worldHeight, float ground, float margin, float vx) {
         if (type == ObstacleType.ROCKET) {

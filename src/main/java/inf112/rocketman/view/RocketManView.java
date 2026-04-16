@@ -13,7 +13,12 @@ import com.badlogic.gdx.math.Vector3;
 import inf112.rocketman.view.assets.RocketManAssets;
 import inf112.rocketman.view.rendering.*;
 
-
+/**
+ * Main view class for RocketMan.
+ *
+ * <p>This class manages the viewport, graphical assets, and renderers used
+ * to draw the game world</p>
+ */
 public class RocketManView {
     private Viewport viewport; // defines screen / world size, aspect ratio and camera
 	private SpriteBatch batch; // used for drawing images / textures
@@ -28,6 +33,12 @@ public class RocketManView {
 	private CoinRenderer coinRenderer;
 	private HudRenderer hudRenderer;
 
+	/**
+	 * Initializes the view, its viewport, rendering objects, and graphical assets.
+	 *
+	 * @param worldWidth the width of the game world
+	 * @param worldHeight the height of the game world
+	 */
 	public void create(double worldWidth, double worldHeight) {
 		this.viewport = new FitViewport((float) worldWidth, (float) worldHeight);
 		this.batch = new SpriteBatch();
@@ -46,7 +57,9 @@ public class RocketManView {
 		Gdx.graphics.setForegroundFPS(60);
 	}
 
-
+	/**
+	 * Disposes the rendering resources and graphical assets used by the view.
+	 */
 	public void dispose() {
 		batch.dispose();
 		shape.dispose();
@@ -54,23 +67,9 @@ public class RocketManView {
 	}
 
 	/**
-	 * Example:
+	 * Renders the current game state.
 	 *
-	 * {@snippet :
-	 * appView.render(painter -> {
-	 * 	painter.draw(x, y, w, h, tex1);
-	 * 	painter.draw(x, y, w, h, tex2);
-	 * });
-	 * }
-	 *
-	 * TODO: probably easier to just accept a list of objects to draw.
-	 *
-	 * See lectures for better examples.
-	 *
-	 * Doing it this way has the advantage of making sure that SpriteBatch's begin()
-	 * and end() methods are called properly.
-	 *
-	 * @param model
+	 * @param model the viewable game model containing the objects to draw
 	 */
 	public void render(ViewableRocketManModel model) {
 		Color background = new Color(246f/255f, 136f/255f, 197f/255f, 1f);
@@ -93,32 +92,68 @@ public class RocketManView {
 		playerRenderer.renderDebug(batch, model);
 	}
 
+	/**
+	 * Returns the graphical assets used by the view.
+	 *
+	 * @return the RocketMan assets
+	 */
 	public RocketManAssets getAssets() {
 		return assets;
 	}
 
+	/**
+	 * Returns the current mouse position in world coordinates.
+	 *
+	 * @return the mouse position in world coordinates
+	 */
 	public Vector2 getMouseWorldPosition() {
 		Vector3 mouse = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 		viewport.unproject(mouse);
 		return new Vector2(mouse.x, mouse.y);
 	}
 
+	/**
+	 * Updates the viewport to match the new window size.
+	 *
+	 * @param width the new window width
+	 * @param height the new window height
+	 */
 	public void resize(int width, int height) {
 		viewport.update(width, height, true);
 	}
 
+	/**
+	 * Returns the width of the game world.
+	 *
+	 * @return the world width
+	 */
 	public double worldWidth() {
 		return viewport.getWorldWidth();
 	}
 
+	/**
+	 * Returns the height of the game world.
+	 *
+	 * @return the world height
+	 */
 	public double worldHeight() {
 		return viewport.getWorldHeight();
 	}
 
+	/**
+	 * Returns the width of the game world.
+	 *
+	 * @return the world width
+	 */
 	public float getWorldWidth(){
 		return viewport.getWorldWidth();
 	}
 
+	/**
+	 * Returns the height of the game world.
+	 *
+	 * @return the world height
+	 */
 	public float getWorldHeight(){
 		return viewport.getWorldHeight();
 	}
