@@ -134,5 +134,7 @@ public interface ViewableRocketManModel {
      * @return true if the player has the gravity suit powerup
      */
     boolean hasGravitySuitPowerUp();
+
+    float getWorldHeight();
 }
 

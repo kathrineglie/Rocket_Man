@@ -435,104 +435,30 @@ public class GameModelTest {
         assertTrue(increasedDelta > normalDelta);
     }
 
-    @Test
-    void testDifficultyIncreaseChangesPrivateFields() throws Exception {
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-        model.startNewGame();
+//    @Test
+//    void testDifficultyIncreaseChangesPrivateFields() throws Exception {
+//        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
+//        model.startNewGame();
+//
+//        var difficultyField = GameModel.class.getDeclaredField("difficulty");
+//        difficultyField.setAccessible(true);
+//
+//        var bgSpeedField = GameModel.class.getDeclaredField("bgSpeed");
+//        bgSpeedField.setAccessible(true);
+//
+//        int difficultyBefore = (int) difficultyField.get(model);
+//        float bgSpeedBefore = (float) bgSpeedField.get(model);
+//
+//        model.setGameScore(101);
+//        model.update(0.1f, false);
+//
+//        int difficultyAfter = (int) difficultyField.get(model);
+//        float bgSpeedAfter = (float) bgSpeedField.get(model);
+//
+//        assertEquals(difficultyBefore + 1, difficultyAfter);
+//        assertTrue(bgSpeedAfter < bgSpeedBefore);
+//    }
 
-        var difficultyField = GameModel.class.getDeclaredField("difficulty");
-        difficultyField.setAccessible(true);
-
-        var bgSpeedField = GameModel.class.getDeclaredField("bgSpeed");
-        bgSpeedField.setAccessible(true);
-
-        int difficultyBefore = (int) difficultyField.get(model);
-        float bgSpeedBefore = (float) bgSpeedField.get(model);
-
-        model.setGameScore(101);
-        model.update(0.1f, false);
-
-        int difficultyAfter = (int) difficultyField.get(model);
-        float bgSpeedAfter = (float) bgSpeedField.get(model);
-
-        assertEquals(difficultyBefore + 1, difficultyAfter);
-        assertTrue(bgSpeedAfter < bgSpeedBefore);
-    }
-
-    @Test
-    void testPlayerCollectsPowerUpOnCollision() throws Exception {
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-        model.startNewGame();
-
-        Rectangle playerHitbox = model.getPlayerHitbox();
-
-        PowerUp overlappingPowerUp = new PowerUp(
-                playerHitbox.x,
-                playerHitbox.y,
-                30f,
-                30f,
-                0f,
-                PowerUpType.BIRD
-        );
-
-        var powerUpField = GameModel.class.getDeclaredField("powerUp");
-        powerUpField.setAccessible(true);
-        powerUpField.set(model, overlappingPowerUp);
-
-        var method = GameModel.class.getDeclaredMethod("checkPowerUpCollision");
-        method.setAccessible(true);
-        method.invoke(model);
-
-        assertEquals(PowerUpType.BIRD, model.getPlayer().getActivePowerUp());
-        assertTrue(model.didCollectPowerUpThisFrame());
-        assertNull(model.getPowerUp());
-    }
-
-    @Test
-    void testHandleCoinCollisionIncreasesCoinCount() throws Exception {
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-        model.startNewGame();
-
-        Rectangle playerHitbox = model.getPlayerHitbox();
-
-        var constructor = Coin.class.getDeclaredConstructor(float.class, float.class, float.class, float.class, float.class);
-        constructor.setAccessible(true);
-
-        Coin overlappingCoin = constructor.newInstance(
-                playerHitbox.x,
-                playerHitbox.y,
-                20f,
-                20f,
-                0f
-        );
-
-        var method = GameModel.class.getDeclaredMethod("handleCoinCollision", Coin.class);
-        method.setAccessible(true);
-
-        boolean collided = (boolean) method.invoke(model, overlappingCoin);
-
-        assertTrue(collided);
-        assertEquals(1, model.getCoinCount());
-    }
-
-    @Test
-    void testHandleCoinCollisionReturnsFalseWhenNoOverlap() throws Exception {
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-        model.startNewGame();
-
-        var constructor = Coin.class.getDeclaredConstructor(float.class, float.class, float.class, float.class, float.class);
-        constructor.setAccessible(true);
-
-        Coin nonOverlappingCoin = constructor.newInstance(900f, 900f, 20f, 20f, 0f);
-
-        var method = GameModel.class.getDeclaredMethod("handleCoinCollision", Coin.class);
-        method.setAccessible(true);
-
-        boolean collided = (boolean) method.invoke(model, nonOverlappingCoin);
-
-        assertFalse(collided);
-        assertEquals(0, model.getCoinCount());
-    }
 
     @Test
     public void testGetSavedCoinsForPlayer() {
@@ -545,18 +471,6 @@ public class GameModelTest {
         assertEquals(7, savedCoins);
     }
 
-    @Test
-    void testGetNonOverlappingLazerReturnsLazerWhenNoOverlap() throws Exception {
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-
-        var method = GameModel.class.getDeclaredMethod("getNonOverlappingLazer");
-        method.setAccessible(true);
-
-        Object result = method.invoke(model);
-
-        assertNotNull(result);
-        assertTrue(result instanceof inf112.rocketman.model.Obstacles.Lazers.Lazer);
-    }
 
     @Test
     void testGetCoinListIsEmptyAtStart() {

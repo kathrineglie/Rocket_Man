@@ -1,88 +1,53 @@
 package inf112.rocketman.model;
 
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
-import inf112.rocketman.model.Coins.Coin;
-import inf112.rocketman.model.Coins.CoinFactory;
-import inf112.rocketman.model.Coins.RandomCoinFactory;
+import inf112.rocketman.model.Coins.*;
 import inf112.rocketman.model.Obstacles.*;
-import inf112.rocketman.model.Obstacles.Flames.Flame;
-import inf112.rocketman.model.Obstacles.Lazers.Lazer;
-import inf112.rocketman.model.Obstacles.Rockets.Rocket;
 import inf112.rocketman.model.Character.TPowah;
-import inf112.rocketman.model.PowerUps.PowerUp;
-import inf112.rocketman.model.PowerUps.PowerUpFactory;
-import inf112.rocketman.model.PowerUps.PowerUpType;
-import inf112.rocketman.model.PowerUps.RandomPowerUpFactory;
+import inf112.rocketman.model.PowerUps.*;
 import inf112.rocketman.view.ViewableRocketManModel;
 
 import java.util.*;
 
+/**
+ * The game model is responsible for managing the overall game state and logic.
+ *
+ * This class updates the player, obstacles, coins, powerups and difficulty progression for the game.
+ * It also handles the different game states and when to switch between the different ones.
+ * This includes starting, pausing and ending the game
+ *
+ * The game model acts as the central controller for the game logic, while delegating specific
+ * responsibilities to the dedicated manager classes.
+ */
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
     private final float worldHeight;
     private final float worldWidth;
     private final float margin;
 
     private GameState gameState = GameState.HOME_SCREEN;
+
     private String playerName = "";
 
     private final TPowah player;
-
-    private int difficulty = 1;
-    private static final int MAX_DIFFICULTY = 5;
-
+    private boolean usingJetpack;
     private static final float PLAYER_X = 150f;
     private static final float PLAYER_Y = 120f;
     private static final float GROUND = 120f;
 
-    private boolean usingJetpack;
-
-    private final Random random = new Random();
-
-    private final List<IObstacle> obstacles = new ArrayList<>();
-    private final IRandomObstacleFactory obstacleFactory = new RandomObstacleFactory();
-    private final PowerUpFactory powerUpFactory = new RandomPowerUpFactory();
-    private final CoinFactory coinFactory = new RandomCoinFactory();
-
-    private static final float START_BG_SPEED = -350f;
-    private float bgSpeed = START_BG_SPEED;
     private float bgScrollX = 0f;
 
-    private static final float START_ROCKET_SPEED = -550;
-    private float rocketSpeed = START_ROCKET_SPEED;
-    private static final float MAX_ROCKET_SPEED = - 1400f;
-
-
-    private static final int MAX_LAZER_SPAWN_ATTEMPTS = 10;
-
-    private static final int NUM_OBSTACLES = 3;
-    private float obstacleTimer = 0f; // Timer that counts down until the next obstacle can spawn
-    private static final float START_OBSTACLE_SPAWN_INTERVAL = 2.5f;
-    private float obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
-
-    private float coinTimer = 10f;
-    private int coinCount = 0;
-    private final List<Coin> coinList = new ArrayList<>();
-
     private static final float START_GAME_SCORE_TIMER = 0.3f;
-    private int gameScore = 0;
     private float scoreTickTimer = START_GAME_SCORE_TIMER;
-    private float scoreInterval = 0.1f;
+    private int gameScore = 0;
 
-    private PowerUp powerUp;
-    private float powerUpTimer = 0f;
-    private static final float MIN_POWER_UP_SPAWN_INTERVAL = 8f;
-    private static final float MAX_POWER_UP_SPAWN_INTERVAL = 30f;
-
-    private boolean collectedPowerUpThisFrame = false;
-    private boolean collectedCoinThisFrame = false;
-
-    private PlayerProgressManager progressManager;
-
-    private boolean pirateHat = false;
+    private final PlayerProgressManager progressManager;
+    private final DifficultyManager difficultyManager;
+    private final ObstacleCollisionManager collisionManager;
+    private final CoinManager coinManager = new CoinManager(new RandomCoinFactory());
+    private final PowerUpManager powerUpManager = new PowerUpManager(new RandomPowerUpFactory());
+    private final ObstacleManager obstacleManager = new ObstacleManager(new RandomObstacleFactory());
 
     public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
         float pWidth = worldWidth/13;
@@ -94,16 +59,15 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         this.worldHeight = worldHeight;
         this.margin = margin;
 
+        this.difficultyManager = new DifficultyManager(obstacleManager);
+        this.collisionManager = new ObstacleCollisionManager(player, obstacleManager);
         this.progressManager = new PlayerProgressManager(highscores, coins);
-
-        this.powerUpTimer = getRandomPowerUpSpawnInterval();
-
     }
 
     /**
-     * Updates all of the characters, the background, the game state. Everything that has to do with the game logic
+     * Updates the character, the background, the game state. Everything that has to do with the game logic
      *
-     * @param dt  dt time passed since the last frame
+     * @param dt  the time passed since the last frame (delta time)
      * @param movingUpward True if the player is currently applying thrust to the rocket.
      */
     public void update (float dt, boolean movingUpward) {
@@ -111,29 +75,109 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
             return;
         }
 
-        updateDifficulty();
+        difficultyManager.updateDifficulty(gameScore);
+
         usingJetpack = movingUpward;
         player.update(dt, usingJetpack, worldHeight);
 
-        collectedPowerUpThisFrame = false;
-        collectedCoinThisFrame = false;
         updateBackground(dt);
-        updateObstacle(dt);
-        updatePowerUp(dt);
-
-        checkPowerUpCollision();
-        handleObstacleCollision();
+        updateObstacles(dt);
+        updatePowerUps(dt);
+        handlePowerUpCollection();
+        handleObstacleHit();
         updateCoins(dt);
+        updateScore(dt);
+    }
 
+    /**
+     * Manages what should happen if there is a collision between the obstacles and the player
+     * This does nothing if there is no collision between the player and an obstacle
+     */
+    private void handleObstacleHit() {
+        boolean objectCollision = collisionManager.handleObstacleCollision();
+        if (objectCollision && !player.hasPowerUp()) {
+            handleGameOver();
+        } else if (objectCollision && player.hasPowerUp()){
+            obstacleManager.clear();
+            player.setPowerUp(PowerUpType.NORMAL);
+            player.setVy(0);
+        }
+    }
+
+    /**
+     * This updates the score for the current game session
+     * The score will update faster when the difficulty increases.
+     * When the difficulty increases, the score interval will decrease in the difficulty manager
+     *
+     * @param dt the time passed since the last frame (delta time)
+     */
+    private void updateScore(float dt) {
         if (scoreTickTimer <= 0f) {
             gameScore++;
-            scoreTickTimer = scoreInterval;
+            scoreTickTimer = difficultyManager.getScoreInterval();
         } else {
             scoreTickTimer -= dt;
         }
-        int coins = progressManager.getCoins(playerName);
-        if (coins + coinCount >= 10) {
-            pirateHat = true;
+    }
+
+    /**
+     * Updates the obstacles to the background
+     *
+     * @param dt the time passed since the last frame (delta time)
+     */
+    private void updateObstacles(float dt) {
+        obstacleManager.update(
+                dt,
+                worldWidth,
+                worldHeight,
+                GROUND,
+                margin,
+                difficultyManager.getDifficulty(),
+                difficultyManager.getBgSpeed(),
+                difficultyManager.getRocketSpeed()
+        );
+    }
+
+    /**
+     * Updates the powerups to the background
+     *
+     * @param dt the time passed since the last frame (delta time)
+     */
+    private void updatePowerUps(float dt) {
+        powerUpManager.update(
+                dt,
+                player,
+                worldWidth,
+                worldHeight,
+                GROUND,
+                margin,
+                difficultyManager.getBgSpeed()
+        );
+    }
+
+    /**
+     * Updates the coins to the background
+     *
+     * @param dt the time passed since the last frame (delta time)
+     */
+    private void updateCoins(float dt) {
+        coinManager.update(
+                dt,
+                getPlayerHitbox(),
+                worldWidth,
+                worldHeight,
+                GROUND,
+                margin,
+                difficultyManager.getBgSpeed());
+
+    }
+
+    /**
+     * Checks if the player is collecting a powerup box
+     */
+    private void handlePowerUpCollection() {
+        if (powerUpManager.checkCollision(player)){
+            obstacleManager.clear();
         }
     }
 
@@ -143,102 +187,21 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     /**
-     *Returns a random delay before the next power-up can spawn
-     * @return a random spawn interval between the minimum and maximum limit
+     * Resets the game to its initial state
      */
-    private float getRandomPowerUpSpawnInterval(){
-        return random.nextFloat(MIN_POWER_UP_SPAWN_INTERVAL, MAX_POWER_UP_SPAWN_INTERVAL);
-    }
-
-    /**
-     * Checks if the player overlaps with the powerup box
-     */
-    private void checkPowerUpCollision() {
-        if (powerUp == null) {
-            return;
-        }
-
-        Rectangle playerHitbox = player.getHitBox();
-        if (playerHitbox.overlaps(powerUp.getHitBox())) {
-            player.setPowerUp(powerUp.getType());
-            collectedPowerUpThisFrame = true;
-            player.setVy(0);
-            powerUp = null;
-            powerUpTimer = getRandomPowerUpSpawnInterval();
-            obstacles.clear();
-        }
-    }
-
-    /**
-     * Handles collision of the different objects and powerups
-     */
-    private void handleObstacleCollision() {
-        Rectangle playerHitbox = player.getHitBox();
-
-        Iterator<IObstacle> iterator = obstacles.iterator();
-        while (iterator.hasNext()) {
-            IObstacle obstacle = iterator.next();
-            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3) {
-                continue;
-            }
-
-            if (!(obstacle instanceof Flame)) {
-                Rectangle obstacleHitbox = obstacle.getHitBox();
-
-                if (obstacleHitbox == null) {
-                    continue;
-                }
-
-                if (playerHitbox.overlaps(obstacleHitbox)) {
-                    if (player.hasPowerUp()) {
-                        deactivatePowerUp();
-                        iterator.remove();
-                        obstacles.clear();
-                        return;
-                    } else {
-                        handleGameOver();
-                    }
-                    return;
-                }
-            } else {
-                if (flameCollision(obstacle)) {
-                    iterator.remove();
-                    obstacles.clear();
-                    return;
-                }
-            }
-        }
-    }
-
-    /**
-     * Initaliesed the game and resets variables.
-     */
-    private void initGameState() {
-        obstacles.clear();
-        coinList.clear();
+    private void resetGameState() {
+        coinManager.reset();
+        obstacleManager.reset();
+        powerUpManager.reset();
 
         player.setPowerUp(PowerUpType.NORMAL);
 
-        bgSpeed = START_BG_SPEED;
-        rocketSpeed = START_ROCKET_SPEED;
         bgScrollX = 0f;
-
-        obstacleSpawnInterval = START_OBSTACLE_SPAWN_INTERVAL;
-        obstacleTimer = 0f;
-
-        coinTimer = 10f;
-
-        powerUp = null;
-        powerUpTimer = 2f;
-        powerUpTimer = getRandomPowerUpSpawnInterval();
-
-        difficulty = 1;
 
         gameScore = 0;
         scoreTickTimer = START_GAME_SCORE_TIMER;
-        scoreInterval = START_GAME_SCORE_TIMER;
-        coinCount = 0;
-        difficulty = 1;
+
+        difficultyManager.resetDifficulty();
     }
 
     @Override
@@ -246,198 +209,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return progressManager.getCoins(playerName);
     }
 
-
     @Override
     public List<Map.Entry<String, Integer>> getSortedHighScoreList() {
         return progressManager.getSortedHighScoreList();
     }
 
-    /**
-     * Handles collision for flame object separate since it is a polygon
-     *
-     * @param obstacle An object that the player can collide with
-     */
-    private boolean flameCollision(IObstacle obstacle) {
-        if (!(obstacle instanceof Flame)) {
-            return false;
-        }
-
-        Polygon polyHitBox = player.getPolyHitBox();
-
-        if (Intersector.overlapConvexPolygons(((Flame) obstacle).getPolygon(), polyHitBox)) {
-            if (player.hasPowerUp()) {
-                deactivatePowerUp();
-            } else {
-                handleGameOver();
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Updates coins
-     *
-     * @param dt dt time passed since the last frame
-     */
-    private void updateCoins(float dt) {
-        coinTimer -= dt;
-        if (coinTimer <= 0) {
-            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, GROUND, margin, (float) bgSpeed));
-            coinTimer = random.nextFloat(3f, 10f);
-        }
-        Iterator<Coin> iterator = coinList.iterator();
-        while (iterator.hasNext()) {
-            Coin coin = iterator.next();
-            coin.update(dt);
-            coin.setVX(bgSpeed);
-
-            if (handleCoinCollision(coin)) {
-                iterator.remove();
-            }
-
-            if (coin.isOfScreen(worldHeight, margin)) {
-                iterator.remove();
-            }
-        }
-    }
-
-    /**
-     * Handles the collision of a coin and the player.
-     *
-     * @param coin takes a coin in and checks if it overlaps with the player hitbox
-     * @return true if the coin and player hitbox overlaps
-     */
-    private boolean handleCoinCollision(Coin coin) {
-        if (getPlayerHitbox().overlaps(coin.getHitbox())) {
-            collectedCoinThisFrame = true;
-            coinCount += 1;
-            return true;
-        }
-        return false;
-    }
-
+    @Override
     public List<Coin> getCoinList() {
-        return new ArrayList<>(coinList);
-    }
-
-    /**
-     * Checks if the obstacles are off-screen and removes them if they are
-     *
-     * @param dt dt time passed since the last frame
-     */
-    private void updateObstacle(float dt) {
-        obstacleTimer -= dt;
-
-        if (obstacleTimer <= 0) {
-            obstacles.add(getRandomObstacle());
-            obstacleTimer = obstacleSpawnInterval;
-        }
-
-        Iterator<IObstacle> iterator = obstacles.iterator();
-        while (iterator.hasNext()) {
-            IObstacle obstacle = iterator.next();
-            obstacle.update(dt);
-
-            if (obstacle instanceof Rocket && obstacle.isOfScreen(worldWidth, worldHeight)) {
-                iterator.remove();
-            }
-            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() == 4) {
-                iterator.remove();
-            }
-            if (obstacle instanceof Flame && obstacle.isOfScreen(worldWidth, worldHeight)) {
-                iterator.remove();
-            }
-        }
-    }
-
-    /**
-     * Increases the speed of the game as well as increasing level which adds more obstacles as well as make them sapwn more frequently
-     */
-    private void increaseDifficulty() {
-        // The final time it can take between new obstacles to spawn
-        float FINAL_OBSTACLE_SPAWN_INTERVAL = 1f;
-        float MAX_BG_SPEED = -1200f;
-        float MAX_GAMESCORE_TIMER = 0.4f;
-
-        obstacleSpawnInterval = (float) Math.max(FINAL_OBSTACLE_SPAWN_INTERVAL, obstacleSpawnInterval - 0.4);
-        bgSpeed = (float) Math.max(MAX_BG_SPEED, bgSpeed - 70);
-        rocketSpeed = (float) Math.max(MAX_ROCKET_SPEED, rocketSpeed - 70);
-        scoreInterval = (float) Math.max(MAX_GAMESCORE_TIMER, scoreInterval - 0.05);
-
-        for (IObstacle obstacle : obstacles) {
-            if (obstacle instanceof Flame) {
-                obstacle.setVX(bgSpeed);
-            } else if (obstacle instanceof Rocket) {
-                obstacle.setVX(rocketSpeed);
-            }
-        }
-
-        difficulty ++;
-    }
-
-    /**
-     * Updates the obstacle timer depending on how far you are in the game
-     */
-    private void updateDifficulty() {
-        if (gameScore > difficulty * 100 && difficulty != MAX_DIFFICULTY) {
-            increaseDifficulty();
-        }
-    }
-
-    /**
-     * Gets a random obstacle of the ones listed in the cases
-     *
-     * @return returns a random obstacle of the specified obstacles
-     */
-    private Obstacle getRandomObstacle() {
-        int randNum = random.nextInt(0, Math.min(difficulty, NUM_OBSTACLES));
-
-        return switch (randNum) {
-            case 0 -> obstacleFactory.newObstacle(ObstacleType.FLAME ,worldWidth, worldHeight, GROUND, margin, (float) bgSpeed);
-            case 1 -> obstacleFactory.newObstacle(ObstacleType.ROCKET,worldWidth, worldHeight, GROUND, margin, rocketSpeed);
-            case 2 -> {
-                Lazer lazer = getNonOverlappingLazer();
-                if (lazer != null) {
-                    yield lazer;
-                } else {
-                    yield obstacleFactory.newObstacle(ObstacleType.LAZER ,worldWidth, worldHeight, GROUND, margin, rocketSpeed);}
-            }
-            default -> throw new RuntimeException("No object was chosen. The random number was: " + randNum);
-        };
-    }
-
-    /**
-     * Checks if the lazer can be spawned or not. If the new lazer overlaps with existing lazers, it cannot be spawned
-     *
-     * @param newLazer The new potential lazer
-     * @return true if the lazer can be spawned
-     */
-    private boolean canSpawnLazer(Lazer newLazer) {
-        for (IObstacle obstacle : obstacles) {
-            if (obstacle instanceof Lazer currLazer && currLazer.getProgressionLevel() != 4) {
-                if (currLazer.getHitBox().overlaps(newLazer.getHitBox())) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Tries to get a random lazer that is not overlapping with the current lazers in the game
-     *
-     * @return a new overlapping lazer or null if it could not make a lazer that was not overlapping
-     */
-    private Lazer getNonOverlappingLazer() {
-        Obstacle candidate;
-        for (int i = 0; i < MAX_LAZER_SPAWN_ATTEMPTS; i++) {
-            candidate = obstacleFactory.newObstacle(ObstacleType.LAZER, worldWidth, worldHeight, GROUND, margin, 0);
-            if (canSpawnLazer((Lazer) candidate)) {
-                return (Lazer) candidate;
-            }
-        }
-        return null;
+        return coinManager.getCoinList();
     }
 
     /**
@@ -445,54 +224,19 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
      *
      * @return current obstacles active in the game
      */
+    @Override
     public List<IObstacle> getObstacles() {
-        return new ArrayList<>(obstacles);
+        return obstacleManager.getObstacles();
      }
 
+
     /**
-     * Updates the power-up system by counting down the spawn timer,
-     * spawning a new power-up, and moving or removing the current one.
+     * Updates the background scroll based on the elapsed time
      *
-     * @param dt the time since the last frame
-     */
-    private void updatePowerUp(float dt){
-        if (player.getActivePowerUp() != PowerUpType.NORMAL) {
-            return;
-        }
-
-        powerUpTimer -= dt;
-
-        if (powerUp == null && powerUpTimer <= 0){
-            powerUp = powerUpFactory.newPowerUp(worldWidth, worldHeight, GROUND, margin, bgSpeed);
-            powerUpTimer = getRandomPowerUpSpawnInterval();
-        }
-
-        if (powerUp != null) {
-            powerUp.update(dt);
-            powerUp.setVX(bgSpeed);
-
-            if (powerUp.isOfScreen(worldWidth, worldHeight)) {
-                powerUp = null;
-            }
-        }
-    }
-
-
-    /**
-     * Deactivates the current powerup
-     */
-    private void deactivatePowerUp(){
-         player.setPowerUp(PowerUpType.NORMAL);
-         player.setVy(0);
-    }
-
-    /**
-     * Updates the background to the delta time
-     *
-     * @param dt
+     * @param dt the time passed since the last frame (delta time)
      */
     private void updateBackground(float dt) {
-        bgScrollX += bgSpeed * dt;
+        bgScrollX += difficultyManager.getBgSpeed() * dt;
         if (worldWidth > 0) {
             bgScrollX = bgScrollX % worldWidth;
         } else {
@@ -520,20 +264,24 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return bgScrollX;
     }
 
+    /**
+     * Gets the hitbox of the current player.
+     *
+     * @return a hitbox of the current player
+     */
     public Rectangle getPlayerHitbox() {
         return player.getHitBox();
     }
 
     @Override
     public PowerUp getPowerUp() {
-        return powerUp;
+        return powerUpManager.getPowerUp();
     }
 
     @Override
     public boolean hasBirdPowerUp() {
         return player.getActivePowerUp() == PowerUpType.BIRD;
     }
-
 
     @Override
     public TPowah getPlayer() {
@@ -557,14 +305,14 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public void startNewGame(){
-        initGameState();
+        resetGameState();
         gameState = GameState.PLAYING;
     }
 
     @Override
     public void goToHomescreen(){
-        obstacles.clear();
-        powerUp = null;
+        obstacleManager.clear();
+        powerUpManager.clear();
         gameState = GameState.HOME_SCREEN;
         gameScore = 0;
     }
@@ -593,19 +341,24 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public int getCoinCount() {
-         return coinCount;
+        return coinManager.getCoinCount();
     }
 
     @Override
     public boolean didCollectPowerUpThisFrame() {
-        return collectedPowerUpThisFrame;
+        return powerUpManager.didCollectPowerUpThisFrame();
     }
 
     @Override
     public boolean didCollectCoinThisFrame() {
-        return collectedCoinThisFrame;
+        return coinManager.didCollectCoinThisFrame();
     }
 
+    /**
+     * Checks if the player is currently moving up or is using the jetpack at the movement
+     *
+     * @return true if the character is using the jetpack or moving upwards
+     */
     public boolean isMovingUp() {
          return usingJetpack;
     }
@@ -613,19 +366,19 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     /**
      * For use in tests. Sets the games core directly.
      */
-    protected void setGameScore(int score){
+    protected void setGameScore(int score) {
         this.gameScore = score;
     }
 
     /**
      * Trigger game over manually for testing of highscores.
      */
-    protected void triggerGameOver(){
+    protected void triggerGameOver() {
         handleGameOver();
     }
 
     @Override
-    public String getPlayerName(){
+    public String getPlayerName() {
         return playerName;
     }
 
@@ -635,8 +388,10 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private void handleGameOver() {
         gameState = GameState.GAME_OVER;
         progressManager.updateHighscores(playerName, gameScore);
-        progressManager.addCoins(playerName, coinCount);
+        progressManager.addCoins(playerName, coinManager.getCoinCount());
     }
 
-    public boolean hasPirateHat() { return  pirateHat; }
+    public boolean hasPirateHat() {
+        return progressManager.getCoins(playerName) + coinManager.getCoinCount() >= 10;
+    }
 }

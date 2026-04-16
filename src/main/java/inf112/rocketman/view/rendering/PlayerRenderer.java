@@ -117,7 +117,7 @@ public class PlayerRenderer {
         } else if (player.getActivePowerUp() == PowerUpType.GRAVITY_SUIT) {
             if (player.onGround()) {
                 region = gravityAnimationDown.getKeyFrame(stateTime, true);
-            } else if (player.onCeiling()) {
+            } else if (player.onCeiling(model.getWorldHeight())) {
                 region = gravityAnimationUp.getKeyFrame(stateTime, true);
             } else if (player.isGoingDown()){
                 playerImg = "PowerUps/down.png";
