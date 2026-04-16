@@ -51,21 +51,60 @@ public interface ViewableRocketManModel {
      */
     boolean onGround();
 
-
+    /**
+     * Returns the current power-up in the game world.
+     *
+     * @return the current power-up, or {@code null} if no power-up is active
+     */
     PowerUp getPowerUp();
 
+    /**
+     * Returns the current power-up in the game world.
+     *
+     * @return the current power-up, or {@code null} if no power-up is active
+     */
     boolean hasBirdPowerUp();
 
+    /**
+     * Returns the list of coins currently in the game world.
+     *
+     * @return a list of active coins
+     */
     List<Coin> getCoinList();
 
+    /**
+     * Returns the list of coins currently in the game world.
+     *
+     * @return a list of active coins
+     */
     int getCoinCount();
 
+    /**
+     * Returns the current game score.
+     *
+     * @return the current score
+     */
     int getGameScore();
 
+    /**
+     * Checks whether a power-up was collected during the current frame.
+     *
+     * @return true if a power-up was collected this frame, false otherwise
+     */
     boolean didCollectPowerUpThisFrame();
 
+    /**
+     * Checks whether a coin was collected during the current frame.
+     *
+     * @return true if a coin was collected this frame, false otherwise
+     */
     boolean didCollectCoinThisFrame();
 
+    /**
+     * Checks whether the player currently has the pirate hat cosmetic.
+     *
+     * @return true if the player has the pirate hat, false otherwise
+     */
     boolean hasPirateHat();
     /**
      * returns the highscore preference as a sorted list

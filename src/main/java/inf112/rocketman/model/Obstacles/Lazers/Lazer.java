@@ -2,12 +2,28 @@ package inf112.rocketman.model.Obstacles.Lazers;
 
 import inf112.rocketman.model.Obstacles.Obstacle;
 
+/**
+ * Represents a lazer obstacle with multiple progression stages.
+ *
+ * <p>The lazer goes through harmless, warning, and active phases
+ * before it starts moving normally.</p>
+ */
 public class Lazer extends Obstacle {
     private float harmlessLazerCount = 1.5f;
     private float warningLazerCount = 1.5f;
     private float activeLazerCount = 2f;
     private int progression = 1;
 
+    /**
+     * Creates a new laser obstacle.
+     *
+     * @param x the x-coordinate of the lazer
+     * @param y the y-coordinate of the lazer
+     * @param width the width of the lazer
+     * @param height the height of the lazer
+     * @param vx the horizontal velocity
+     * @param vy the vertical velocity
+     */
     public Lazer(float x, float y, float width, float height, float vx, float vy) {
         super(x, y, width, height, vx, vy);
     }
@@ -34,14 +50,29 @@ public class Lazer extends Obstacle {
         }
     }
 
+    /**
+     * Sets the current progression level of the lazer.
+     *
+     * @param level the new progression level
+     */
     public void setProgressionLevel(int level) {
         progression = level;
     }
 
+    /**
+     * Returns the current progression level of the lazer.
+     *
+     * @return the current progression level
+     */
     public int getProgressionLevel() {
         return progression;
     }
 
+    /**
+     * Checks whether the lazer has finished its staged sequence.
+     *
+     * @return true if the lazer has reached its final stage, false otherwise
+     */
     public boolean isFinished() {
         return progression == 4;
     }

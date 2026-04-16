@@ -4,10 +4,27 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.Obstacles.Obstacle;
 
+/**
+ * Represents a flame obstacle in the game.
+ *
+ * <p>A flame has a rotation angle and is represented by a polygon
+ * for positioning and collision-related geometry.</p>
+ */
 public class Flame extends Obstacle {
     private float angle;
     private Polygon polygon;
 
+    /**
+     * Creates a new flame obstacle.
+     *
+     * @param x the x-coordinate of the flame
+     * @param y the y-coordinate of the flame
+     * @param width the width of the flame
+     * @param length the length of the flame
+     * @param vx the horizontal velocity
+     * @param vy the vertical velocity
+     * @param angle the rotation angle of the flame
+     */
     public Flame(float x, float y, float width, float length, float vx, float vy, float angle) {
         super(x, y, width, length, vx, vy);
         this.angle = angle;
@@ -37,11 +54,20 @@ public class Flame extends Obstacle {
         polygon.setRotation(angle);
     }
 
-
+    /**
+     * Returns the rotation angle of the flame.
+     *
+     * @return the flame angle
+     */
     public float getAngle() {
         return angle;
     }
 
+    /**
+     * Returns the polygon representing the flame.
+     *
+     * @return the flame polygon
+     */
     public Polygon getPolygon() {
         return polygon;
     }

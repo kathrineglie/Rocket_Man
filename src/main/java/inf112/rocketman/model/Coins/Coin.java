@@ -50,21 +50,46 @@ public class Coin {
         return (x + width < margin || y < margin || y + height > worldHeight - margin);
     }
 
+    /**
+     * Returns the x-coordinate of the coin.
+     *
+     * @return the x-coordinate
+     */
     public float getX() {
         return x;
     }
 
+    /**
+     * Returns the y-coordinate of the coin.
+     *
+     * @return the y-coordinate
+     */
     public float getY() {
         return y;
     }
 
+    /**
+     * Returns the width of the coin.
+     *
+     * @return the width
+     */
     public float getWidth() {
         return width;
     }
 
+    /**
+     * Returns the height of the coin.
+     *
+     * @return the height
+     */
     public float getHeight() {
         return height;
     }
 
+    /**
+     * Sets the horizontal velocity of the coin.
+     *
+     * @param bgSpeed the new horizontal velocity
+     */
     public void setVX(float bgSpeed) {this.vx = bgSpeed; }
 }

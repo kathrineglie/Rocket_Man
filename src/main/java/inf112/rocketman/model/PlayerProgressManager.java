@@ -6,11 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manages persistent player progress such as saved coins and highscores.
+ *
+ * <p>This class uses {@link Preferences} to store and retrieve player data
+ * between game sessions.</p>
+ */
 public class PlayerProgressManager {
 
     private final Preferences highscores;
     private final Preferences coins;
 
+    /**
+     * Creates a new player progress manager.
+     *
+     * @param highscores the preferences used to store highscores
+     * @param coins the preferences used to store saved coins
+     */
     public PlayerProgressManager(Preferences highscores, Preferences coins){
         this.highscores = highscores;
         this.coins = coins;

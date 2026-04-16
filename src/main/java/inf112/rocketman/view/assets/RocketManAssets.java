@@ -11,11 +11,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manages textures and fonts used by the RocketMan view layer.
+ *
+ * <p>This class loads, stores, and disposes graphical assets such as
+ * textures and fonts.</p>
+ */
 public class RocketManAssets implements TextureProvider {
     private Map<String, Texture> textures = new HashMap<>();
     private BitmapFont font;
     private BitmapFont titleFont;
-    
+
+    /**
+     * Loads fonts and preloads textures used by the game.
+     */
     public void create(){
         font = new BitmapFont();
 
@@ -63,18 +72,15 @@ public class RocketManAssets implements TextureProvider {
         }
     }
 
-    /*
+    /**
      * Example: load textures only once, and save them in a hash map.
-     *
      * You should do the same with sounds and other resources. LibGDX has a built-in
      * AssetManager that can help with this.
-     *
      * If you do new Texture() every time you draw, you'll slow the game down and
      * fill up memory.
      *
-     * @param name
-     *
-     * @return
+     * @param name the file name of the texture
+     * @return the loaded texture
      */
     @Override
     public Texture getTexture(String name) {
@@ -89,10 +95,18 @@ public class RocketManAssets implements TextureProvider {
         return textures.get(name);
     }
 
+    /**
+     * Returns the standard font used in the game.
+     *
+     * @return the standard font
+     */
     public BitmapFont getFont(){
         return font;
     }
 
+    /**
+     * Disposes all loaded textures and fonts
+     */
     public void dispose(){
         textures.values().forEach(tex -> {
             if (tex != null)
@@ -108,6 +122,12 @@ public class RocketManAssets implements TextureProvider {
         }
 
     }
+
+    /**
+     * Returns the title font used in the game.
+     *
+     * @return the title font
+     */
     public BitmapFont getTitleFont() {
         return titleFont;
     }
