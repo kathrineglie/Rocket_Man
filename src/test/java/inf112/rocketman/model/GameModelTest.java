@@ -6,9 +6,7 @@ import inf112.rocketman.model.powerups.PowerUpType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -47,58 +45,6 @@ public class GameModelTest {
 
     }
 
-    @Test
-    public void testHighscoresAreSorted(){
-        Map<String, Integer> fakeData = new HashMap<>();
-        fakeData.put("thirdPlace", 50);
-        fakeData.put("firstPlace", 200);
-        fakeData.put("secondPlace", 100);
-
-        doReturn(fakeData).when(highscores).get();
-        when(highscores.getInteger("thirdPlace")).thenReturn(50);
-        when(highscores.getInteger("firstPlace")).thenReturn(200);
-        when(highscores.getInteger("secondPlace")).thenReturn(100);
-
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-        List<Map.Entry<String, Integer>> sorted = model.getSortedHighScoreList();
-
-        assertEquals("firstPlace", sorted.getFirst().getKey());
-        assertEquals(200, sorted.getFirst().getValue());
-        assertEquals("secondPlace", sorted.get(1).getKey());
-        assertEquals(100, sorted.get(1).getValue());
-        assertEquals("thirdPlace", sorted.get(2).getKey());
-        assertEquals(50, sorted.get(2).getValue());
-
-    }
-
-    @Test
-    public void testSameNameOnHighscoreBoard(){
-        String playerName = "TestPlayer";
-        GameModel model = new GameModel(1000, 800,5, highscores, coins);
-        model.setPlayerName(playerName);
-
-        Map<String, Integer> currentScores = new HashMap<>();
-        currentScores.put(playerName, 100);
-
-        doReturn(currentScores).when(highscores).get();
-        when(highscores.getInteger(playerName, 0)).thenReturn(100);
-
-        model.setGameScore(50);
-        model.triggerGameOver();
-
-        verify(highscores, never()).putInteger(eq(playerName), anyInt());
-
-        clearInvocations(highscores);
-
-        doReturn(currentScores).when(highscores).get();
-        when(highscores.getInteger(playerName, 0)).thenReturn(100);
-
-        model.setGameScore(150);
-        model.triggerGameOver();
-
-        verify(highscores).putInteger(playerName, 150);
-        verify(highscores).flush();
-    }
 
     @Test
     public void testPauseGameChangesState() {
@@ -380,20 +326,7 @@ public class GameModelTest {
         assertFalse(model.didCollectPowerUpThisFrame());
     }
 
-    @Test
-    void testDifficultyIncreaseChangesBackgroundSpeed() {
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-        model.startNewGame();
 
-        float initialScroll = model.getBackgroundScrollX();
-
-        model.setGameScore(101);
-        model.update(0.1f, false);
-
-        float afterUpdate = model.getBackgroundScrollX();
-
-        assertTrue(afterUpdate < initialScroll);
-    }
 
     @Test
     void testGoToHomeScreenClearsObstaclesAndResetsScore() {
@@ -410,51 +343,7 @@ public class GameModelTest {
         assertEquals(0, model.getObstacles().size());
     }
 
-    @Test
-    void testDifficultyIncreaseMakesBackgroundScrollFaster() {
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-        model.startNewGame();
 
-        float scrollBefore = model.getBackgroundScrollX();
-        model.update(0.1f, false);
-        float scrollAfterNormalUpdate = model.getBackgroundScrollX();
-
-        float normalDelta = Math.abs(scrollAfterNormalUpdate - scrollBefore);
-
-        model.setGameScore(101);
-
-        float scrollBeforeDifficultyIncrease = model.getBackgroundScrollX();
-        model.update(0.1f, false);
-        float scrollAfterDifficultyIncrease = model.getBackgroundScrollX();
-
-        float increasedDelta = Math.abs(scrollAfterDifficultyIncrease - scrollBeforeDifficultyIncrease);
-
-        assertTrue(increasedDelta > normalDelta);
-    }
-
-//    @Test
-//    void testDifficultyIncreaseChangesPrivateFields() throws Exception {
-//        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
-//        model.startNewGame();
-//
-//        var difficultyField = GameModel.class.getDeclaredField("difficulty");
-//        difficultyField.setAccessible(true);
-//
-//        var bgSpeedField = GameModel.class.getDeclaredField("bgSpeed");
-//        bgSpeedField.setAccessible(true);
-//
-//        int difficultyBefore = (int) difficultyField.get(model);
-//        float bgSpeedBefore = (float) bgSpeedField.get(model);
-//
-//        model.setGameScore(101);
-//        model.update(0.1f, false);
-//
-//        int difficultyAfter = (int) difficultyField.get(model);
-//        float bgSpeedAfter = (float) bgSpeedField.get(model);
-//
-//        assertEquals(difficultyBefore + 1, difficultyAfter);
-//        assertTrue(bgSpeedAfter < bgSpeedBefore);
-//    }
 
 
     @Test

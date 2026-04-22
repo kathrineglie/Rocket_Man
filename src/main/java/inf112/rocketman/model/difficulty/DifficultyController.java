@@ -34,7 +34,7 @@ public class DifficultyController {
 
     private final ObstacleManager obstacleManager;
 
-    DifficultyController(ObstacleManager obstacleManager) {
+    public DifficultyController(ObstacleManager obstacleManager) {
         this.difficulty = START_DIFFICULTY;
         this.bgSpeed = START_BG_SPEED;
         this.rocketSpeed = START_ROCKET_SPEED;

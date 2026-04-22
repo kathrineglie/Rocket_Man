@@ -16,7 +16,7 @@ public class ObstacleCollisionHandler {
     private final TPowah player;
     private final ObstacleManager obstacleManager;
 
-    ObstacleCollisionHandler(TPowah player, ObstacleManager obstacleManager) {
+    public ObstacleCollisionHandler(TPowah player, ObstacleManager obstacleManager) {
         this.player = player;
         this.obstacleManager = obstacleManager;
     }

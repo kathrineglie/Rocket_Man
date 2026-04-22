@@ -43,7 +43,6 @@ public class Obstacle implements IObstacle {
                 height - 2*HITBOX_OFFSET);
     }
 
-    //
     @Override
     public void update(float dt) {
         x += vx * dt;

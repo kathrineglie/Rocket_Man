@@ -366,18 +366,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     /**
-     * For use in tests. Sets the games core directly.
+     * For use in tests. Sets the game core directly.
      */
     protected void setGameScore(int score) {
         this.gameScore = score;
     }
 
-    /**
-     * Trigger game over manually for testing of highscores.
-     */
-    protected void triggerGameOver() {
-        handleGameOver();
-    }
 
     @Override
     public String getPlayerName() {

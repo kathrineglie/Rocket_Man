@@ -64,9 +64,9 @@ public class Main extends Game {
     }
 
     /**
-     * Initializes the game, including the model, view, audio manager,
-     * controller, and all screens.
+     * Renders the active screen and switches screen when the game state changes.
      */
+    @Override
     public void render() {
 
         GameState current = controller.getState();
@@ -85,8 +85,9 @@ public class Main extends Game {
     }
 
     /**
-     * Initializes the game, including the model, view, audio manager,
-     * controller, and all screens.
+     * Returns the pause screen.
+     *
+     * @return the pause screen
      */
     public PauseScreen getPauseScreen() {
         return pauseScreen;
