@@ -14,7 +14,7 @@ public interface TextureProvider {
      * Implementation should ideally cache textures to avoid redundant
      * disk I/O and memory consumption.
      *
-     * @param name the internal path tp the texture asset (e.g., "Obstacles/Rocket.png")
+     * @param name the internal path tp the texture asset (e.g., "obstacles/Rocket.png")
      * @return the {@link Texture} associated with the given name,
      * or null if the texture could not be found
      */
