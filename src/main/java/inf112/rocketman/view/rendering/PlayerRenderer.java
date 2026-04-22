@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import inf112.rocketman.model.character.TPowah;
+import inf112.rocketman.model.character.ViewableTPowah;
 import inf112.rocketman.model.powerups.PowerUpType;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
@@ -93,7 +94,7 @@ public class PlayerRenderer {
      * @param model the viewable game model containing player state
      */
     public void render(SpriteBatch batch, ViewableRocketManModel model){
-        TPowah player = model.getPlayer();
+        ViewableTPowah player = model.getPlayer();
         TextureRegion region = null;
         String playerImg = null;
         boolean hasPirateHat = model.hasPirateHat();

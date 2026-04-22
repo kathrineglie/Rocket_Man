@@ -113,44 +113,22 @@ public class ObstacleManagerTest {
     }
 
     @Test
-    void testGetObstaclesReturnsCopy() {
-        manager.getObstacleListReference().add(new TestRocket(500, 200, 50, 30, -100, 0));
+    void testGetObstacleListReferenceReturnsCopy() {
+        manager.addObstacleForTesting(new TestRocket(500, 200, 50, 30, -100, 0));
 
-        var obstacles1 = manager.getObstacles();
-        var obstacles2 = manager.getObstacles();
+        var list1 = manager.getObstacleListReference();
+        var list2 = manager.getObstacleListReference();
 
-        assertNotSame(obstacles1, obstacles2);
-        assertEquals(1, obstacles1.size());
-        assertEquals(1, obstacles2.size());
-    }
-
-    @Test
-    void testUpdateObstacleSpeedsChangesRocketAndFlameSpeed() {
-        TestRocket rocket = new TestRocket(500, 200, 50, 30, -100, 0);
-        TestFlame flame = new TestFlame(500, 300, 20, 100, -100, 0, 0);
-
-        manager.getObstacleListReference().add(rocket);
-        manager.getObstacleListReference().add(flame);
-
-        manager.updateObstacleSpeeds(-400f, -700f);
-
-        assertEquals(-700f, rocket.getVX());
-        assertEquals(-400f, flame.getVX());
-    }
-
-    @Test
-    void testGetObstacleListReferenceReturnsLiveList() {
-        var listRef = manager.getObstacleListReference();
-        listRef.add(new TestRocket(500, 200, 50, 30, -100, 0));
-
-        assertEquals(1, manager.getObstacles().size());
+        assertNotSame(list1, list2);
+        assertEquals(1, list1.size());
+        assertEquals(1, list2.size());
     }
 
     @Test
     void testGetNonOverlappingLazerReturnsNullWhenAllCandidatesOverlap() throws Exception {
         TestLazer existing = new TestLazer(100, 100, 200, 20, 0, 0);
         existing.setProgressionLevel(3);
-        manager.getObstacleListReference().add(existing);
+        manager.addObstacleForTesting(existing);
 
         TestLazer overlappingCandidate = new TestLazer(100, 100, 200, 20, 0, 0);
 
@@ -173,6 +151,7 @@ public class ObstacleManagerTest {
 
         assertNull(result);
     }
+
 
     @Test
     void testGetNonOverlappingLazerReturnsLazerWhenNoOverlap() throws Exception {

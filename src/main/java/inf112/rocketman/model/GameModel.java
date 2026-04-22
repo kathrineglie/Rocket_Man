@@ -7,8 +7,10 @@ import inf112.rocketman.model.coins.*;
 import inf112.rocketman.model.difficulty.DifficultyController;
 import inf112.rocketman.model.obstacles.*;
 import inf112.rocketman.model.character.TPowah;
+import inf112.rocketman.model.character.ViewableTPowah;
 import inf112.rocketman.model.powerups.*;
 import inf112.rocketman.model.progress.PlayerProgressManager;
+
 import inf112.rocketman.view.ViewableRocketManModel;
 
 import java.util.*;
@@ -286,7 +288,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     @Override
-    public TPowah getPlayer() {
+    public ViewableTPowah getPlayer() {
         return player;
     }
 
@@ -391,6 +393,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         return progressManager.getCoins(playerName) + coinManager.getCoinCount() >= 10;
     }
 
-
-
+    protected void setPlayerPowerUp(PowerUpType powerUp) {
+        player.setPowerUp(powerUp);
+    }
 }

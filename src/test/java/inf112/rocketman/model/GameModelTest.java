@@ -201,7 +201,7 @@ public class GameModelTest {
 
         assertFalse(model.hasBirdPowerUp(), "Should not have bird power-up at start");
 
-        model.getPlayer().setPowerUp(PowerUpType.BIRD);
+        model.setPlayerPowerUp(PowerUpType.BIRD);
 
         assertTrue(model.hasBirdPowerUp(), "hasBirdPowerUp should return true when player has BIRD type");
     }
@@ -232,7 +232,7 @@ public class GameModelTest {
         GameModel model = new GameModel(1000, 800,5, highscores, coins);
         model.startNewGame();
 
-        model.getPlayer().setPowerUp(PowerUpType.BIRD);
+        model.setPlayerPowerUp(PowerUpType.BIRD);
         model.goToHomescreen();
 
         assertEquals(GameState.HOME_SCREEN, model.getGameState());
@@ -270,8 +270,7 @@ public class GameModelTest {
         model.startNewGame();
 
         assertFalse(model.hasGravitySuitPowerUp());
-
-        model.getPlayer().setPowerUp(PowerUpType.GRAVITY_SUIT);
+        model.setPlayerPowerUp(PowerUpType.GRAVITY_SUIT);
 
         assertTrue(model.hasGravitySuitPowerUp());
 

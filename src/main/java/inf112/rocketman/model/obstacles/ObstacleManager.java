@@ -215,7 +215,7 @@ public class ObstacleManager {
      * @return the obstacle list reference
      */
     public List<IObstacle> getObstacleListReference() {
-        return obstacles;
+        return new ArrayList<>(obstacles);
     }
 
     /**
@@ -235,4 +235,18 @@ public class ObstacleManager {
     public void setObstacleSpawnInterval(float obstacleSpawnInterval) {
         this.obstacleSpawnInterval = obstacleSpawnInterval;
     }
+
+
+    /**
+     * Adds an obstacle directly to the manager.
+     * Intended for use in tests only.
+     *
+     * @param obstacle the obstacle to add
+     */
+    protected void addObstacleForTesting(IObstacle obstacle) {
+        obstacles.add(obstacle);
+    }
+
+
+
 }

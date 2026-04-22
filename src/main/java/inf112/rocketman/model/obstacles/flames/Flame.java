@@ -69,7 +69,11 @@ public class Flame extends Obstacle {
      * @return the flame polygon
      */
     public Polygon getPolygon() {
-        return polygon;
+        Polygon copy = new Polygon(polygon.getVertices().clone());
+        copy.setOrigin(polygon.getOriginX(), polygon.getOriginY());
+        copy.setPosition(polygon.getX(), polygon.getY());
+        copy.setRotation(polygon.getRotation());
+        return copy;
     }
 
 }
