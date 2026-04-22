@@ -18,7 +18,7 @@ import java.util.Map;
  * textures and fonts.</p>
  */
 public class RocketManAssets implements TextureProvider {
-    private Map<String, Texture> textures = new HashMap<>();
+    private final Map<String, Texture> textures = new HashMap<>();
     private BitmapFont font;
     private BitmapFont titleFont;
 
@@ -57,7 +57,7 @@ public class RocketManAssets implements TextureProvider {
                 "obstacles/flame.png",
                 "obstacles/coin.png",
                 "powerups/run1.png", "powerups/run2.png", "powerups/run3.png", "powerups/run4.png", "powerups/fly.png", "powerups/fly_flame.png",
-                "tpowah/run1pirate.png", "tpowah/run2pirate.png", "tpowah/run3pirate.png", "tpowah/jetpack_flames_pirate.png",
+                "tpowah/run1pirate.png", "tpowah/run2pirate.png", "tpowah/run3pirate.png", "tpowah/run4pirate.png", "tpowah/jetpack_flames_pirate.png", "tpowah/jetpack_pirate.png",
                 "powerups/birdUp_pirate.png", "powerups/bird_pirate.png",
                 "powerups/gravity1.png", "powerups/gravity2.png", "powerups/gravity3.png", "powerups/gravity4.png",
                 "powerups/gravityUP1.png", "powerups/gravityUP2.png", "powerups/gravityUP3.png", "powerups/gravityUP4.png",
