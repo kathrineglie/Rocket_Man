@@ -1,6 +1,6 @@
 package inf112.rocketman.model.movement;
 
-import inf112.rocketman.model.Character.TPowah;
+import inf112.rocketman.model.character.TPowah;
 
 /**
  * This class updates the character when space is pressed only when it is on the ground or falling down.

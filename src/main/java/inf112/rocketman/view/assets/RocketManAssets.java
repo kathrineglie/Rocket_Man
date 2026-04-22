@@ -28,8 +28,8 @@ public class RocketManAssets implements TextureProvider {
     public void create(){
         font = new BitmapFont();
 
-        FreeTypeFontGenerator bodyGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/font2.ttf"));
-        FreeTypeFontGenerator titleGenerator = new FreeTypeFontGenerator(Gdx.files.internal("Fonts/font.ttf"));
+        FreeTypeFontGenerator bodyGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/font2.ttf"));
+        FreeTypeFontGenerator titleGenerator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/font.ttf"));
 
         FreeTypeFontGenerator.FreeTypeFontParameter bodyParameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         bodyParameter.size = 32;
@@ -48,20 +48,20 @@ public class RocketManAssets implements TextureProvider {
         titleGenerator.dispose();
 
         preloadTextures(List.of(
-                "TPowah/jetpack.png", "TPowah/jetpack_flames.png", "TPowah/run1.png", "TPowah/run2.png", "TPowah/run3.png", "TPowah/run4.png",
-                "Background/background.png",
-                "Obstacles/Rocket.png", "Obstacles/warning.png",
-                "PowerUps/bird.png", "PowerUps/birdUP.png",
-                "PowerUps/box.png",
-                "Obstacles/activeLazer.png", "Obstacles/harmlessLazer.png", "Obstacles/inactiveLazer.png",
-                "Obstacles/flame.png",
-                "Obstacles/coin.png",
-                "PowerUps/run1.png", "PowerUps/run2.png", "PowerUps/run3.png", "PowerUps/run4.png", "PowerUps/fly.png", "PowerUps/fly_flame.png",
-                "TPowah/run1pirate.png", "TPowah/run2pirate.png", "TPowah/run3pirate.png", "TPowah/jetpack_flames_pirate.png",
-                "PowerUps/birdUp_pirate.png", "PowerUps/bird_pirate.png",
-                "PowerUps/gravity1.png", "PowerUps/gravity2.png", "PowerUps/gravity3.png", "PowerUps/gravity4.png",
-                "PowerUps/gravityUP1.png", "PowerUps/gravityUP2.png", "PowerUps/gravityUP3.png", "PowerUps/gravityUP4.png",
-                "PowerUps/up.png", "PowerUps/down.png"
+                "tpowah/jetpack.png", "tpowah/jetpack_flames.png", "tpowah/run1.png", "tpowah/run2.png", "tpowah/run3.png", "tpowah/run4.png",
+                "background/background.png",
+                "obstacles/Rocket.png", "obstacles/warning.png",
+                "powerups/bird.png", "powerups/birdUP.png",
+                "powerups/box.png",
+                "obstacles/activeLazer.png", "obstacles/harmlessLazer.png", "obstacles/inactiveLazer.png",
+                "obstacles/flame.png",
+                "obstacles/coin.png",
+                "powerups/run1.png", "powerups/run2.png", "powerups/run3.png", "powerups/run4.png", "powerups/fly.png", "powerups/fly_flame.png",
+                "tpowah/run1pirate.png", "tpowah/run2pirate.png", "tpowah/run3pirate.png", "tpowah/jetpack_flames_pirate.png",
+                "powerups/birdUp_pirate.png", "powerups/bird_pirate.png",
+                "powerups/gravity1.png", "powerups/gravity2.png", "powerups/gravity3.png", "powerups/gravity4.png",
+                "powerups/gravityUP1.png", "powerups/gravityUP2.png", "powerups/gravityUP3.png", "powerups/gravityUP4.png",
+                "powerups/up.png", "powerups/down.png"
                 ));
 
     }

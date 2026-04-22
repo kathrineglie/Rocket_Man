@@ -1,9 +1,9 @@
 package inf112.rocketman.view;
 
-import inf112.rocketman.model.Character.ViewableTPowah;
-import inf112.rocketman.model.Coins.Coin;
-import inf112.rocketman.model.Obstacles.IObstacle;
-import inf112.rocketman.model.PowerUps.PowerUp;
+import inf112.rocketman.model.coins.Coin;
+import inf112.rocketman.model.obstacles.IObstacle;
+import inf112.rocketman.model.character.ViewableTPowah;
+import inf112.rocketman.model.powerups.PowerUp;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +32,7 @@ public interface ViewableRocketManModel {
     /**
      * Retrieves the player character object.
      *
-     * @return the {@link TPowah} player instance.
+     * @return the {@link ViewableTPowah} player instance.
      */
     ViewableTPowah getPlayer();
 

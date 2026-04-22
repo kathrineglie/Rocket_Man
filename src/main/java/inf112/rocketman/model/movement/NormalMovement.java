@@ -1,6 +1,6 @@
 package inf112.rocketman.model.movement;
 
-import inf112.rocketman.model.Character.TPowah;
+import inf112.rocketman.model.character.TPowah;
 
 /**
  * This is the normal/default movement of the character without any powerups.

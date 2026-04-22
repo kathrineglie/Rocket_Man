@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
 import inf112.rocketman.model.GameState;
-import inf112.rocketman.model.PowerUps.PowerUpType;
+import inf112.rocketman.model.powerups.PowerUpType;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.ViewableRocketManModel;
 import inf112.rocketman.view.assets.RocketManAudio;
@@ -31,15 +31,15 @@ public class RocketManController {
     private boolean robotPlaying = false;
     private long robotSoundId = -1;
 
-    private static final String MUSIC = "Sounds/music.mp3";
-    private static final String JETPACK_SOUND = "Sounds/jetpack.mp3";
-    private static final String COIN_SOUND = "Sounds/coin.mp3";
-    private static final String POWERUP_SOUND ="Sounds/powerup.mp3";
-    private static final String BIRD_SOUND = "Sounds/bird.mp3";
-    private static final String GAME_OVER = "Sounds/game_over.mp3";
-    private static final String MEOW_END_SONG = "Sounds/MeowMeow.mp3";
-    private static final String ROBOT_SOUND = "Sounds/robot.mp3";
-    private static final String GRAVITY_SUIT_SOUND = "Sounds/gravity_suit.mp3";
+    private static final String MUSIC = "sounds/music.mp3";
+    private static final String JETPACK_SOUND = "sounds/jetpack.mp3";
+    private static final String COIN_SOUND = "sounds/coin.mp3";
+    private static final String POWERUP_SOUND = "sounds/powerup.mp3";
+    private static final String BIRD_SOUND = "sounds/bird.mp3";
+    private static final String GAME_OVER = "sounds/game_over.mp3";
+    private static final String MEOW_END_SONG = "sounds/MeowMeow.mp3";
+    private static final String ROBOT_SOUND = "sounds/robot.mp3";
+    private static final String GRAVITY_SUIT_SOUND = "sounds/gravity_suit.mp3";
 
     /**
      * Creates a new controller for the RocketMan game

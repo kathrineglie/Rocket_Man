@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import inf112.rocketman.model.Character.TPowah;
-import inf112.rocketman.model.Character.ViewableTPowah;
-import inf112.rocketman.model.PowerUps.PowerUpType;
+import inf112.rocketman.model.character.TPowah;
+import inf112.rocketman.model.character.ViewableTPowah;
+import inf112.rocketman.model.powerups.PowerUpType;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
 
@@ -41,49 +41,49 @@ public class PlayerRenderer {
         this.textures = textures;
 
         runAnimationPirate = new Animation<>(0.1f,
-                new TextureRegion(textures.getTexture("TPowah/run1pirate.png")),
-                new TextureRegion(textures.getTexture("TPowah/run2pirate.png")),
-                new TextureRegion(textures.getTexture("TPowah/run3pirate.png")),
-                new TextureRegion(textures.getTexture("TPowah/run2pirate.png"))
+                new TextureRegion(textures.getTexture("tpowah/run1pirate.png")),
+                new TextureRegion(textures.getTexture("tpowah/run2pirate.png")),
+                new TextureRegion(textures.getTexture("tpowah/run3pirate.png")),
+                new TextureRegion(textures.getTexture("tpowah/run2pirate.png"))
         );
 
         birdAnimationPirate = new Animation<>(0.2f,
-                new TextureRegion(textures.getTexture("PowerUps/bird_pirate.png")),
-                new TextureRegion(textures.getTexture("PowerUps/birdUp_pirate.png"))
+                new TextureRegion(textures.getTexture("powerups/bird_pirate.png")),
+                new TextureRegion(textures.getTexture("powerups/birdUp_pirate.png"))
         );
 
         robotAnimation = new Animation<>(0.1f,
-                new TextureRegion(textures.getTexture("PowerUps/run1.png")),
-                new TextureRegion(textures.getTexture("PowerUps/run2.png")),
-                new TextureRegion(textures.getTexture("PowerUps/run3.png")),
-                new TextureRegion(textures.getTexture("PowerUps/run4.png"))
+                new TextureRegion(textures.getTexture("powerups/run1.png")),
+                new TextureRegion(textures.getTexture("powerups/run2.png")),
+                new TextureRegion(textures.getTexture("powerups/run3.png")),
+                new TextureRegion(textures.getTexture("powerups/run4.png"))
         );
 
         runAnimation = new Animation<>(0.1f,
-                new TextureRegion(textures.getTexture("TPowah/run1.png")),
-                new TextureRegion(textures.getTexture("TPowah/run2.png")),
-                new TextureRegion(textures.getTexture("TPowah/run3.png")),
-                new TextureRegion(textures.getTexture("TPowah/run4.png"))
+                new TextureRegion(textures.getTexture("tpowah/run1.png")),
+                new TextureRegion(textures.getTexture("tpowah/run2.png")),
+                new TextureRegion(textures.getTexture("tpowah/run3.png")),
+                new TextureRegion(textures.getTexture("tpowah/run4.png"))
         );
 
         birdAnimation = new Animation<>(0.2f,
-                new TextureRegion(textures.getTexture("PowerUps/bird.png")),
-                new TextureRegion(textures.getTexture("PowerUps/birdUP.png"))
+                new TextureRegion(textures.getTexture("powerups/bird.png")),
+                new TextureRegion(textures.getTexture("powerups/birdUP.png"))
         );
 
 
         gravityAnimationDown = new Animation<>(0.1f,
-                new TextureRegion(textures.getTexture("PowerUps/gravity1.png")),
-                new TextureRegion(textures.getTexture("PowerUps/gravity2.png")),
-                new TextureRegion(textures.getTexture("PowerUps/gravity3.png")),
-                new TextureRegion(textures.getTexture("PowerUps/gravity4.png"))
+                new TextureRegion(textures.getTexture("powerups/gravity1.png")),
+                new TextureRegion(textures.getTexture("powerups/gravity2.png")),
+                new TextureRegion(textures.getTexture("powerups/gravity3.png")),
+                new TextureRegion(textures.getTexture("powerups/gravity4.png"))
         );
 
         gravityAnimationUp = new Animation<>(0.1f,
-                new TextureRegion(textures.getTexture("PowerUps/gravityUP1.png")),
-                new TextureRegion(textures.getTexture("PowerUps/gravityUP2.png")),
-                new TextureRegion(textures.getTexture("PowerUps/gravityUP3.png")),
-                new TextureRegion(textures.getTexture("PowerUps/gravityUP4.png"))
+                new TextureRegion(textures.getTexture("powerups/gravityUP1.png")),
+                new TextureRegion(textures.getTexture("powerups/gravityUP2.png")),
+                new TextureRegion(textures.getTexture("powerups/gravityUP3.png")),
+                new TextureRegion(textures.getTexture("powerups/gravityUP4.png"))
         );
     }
 
@@ -111,9 +111,9 @@ public class PlayerRenderer {
             if (player.onGround()) {
                 region = robotAnimation.getKeyFrame(stateTime,true);
             } else if (player.getMovementInput()){
-                playerImg = "PowerUps/fly_flame.png";
+                playerImg = "powerups/fly_flame.png";
             } else {
-                playerImg = "PowerUps/fly.png";
+                playerImg = "powerups/fly.png";
             }
         } else if (player.getActivePowerUp() == PowerUpType.GRAVITY_SUIT) {
             if (player.onGround()) {
@@ -121,16 +121,16 @@ public class PlayerRenderer {
             } else if (player.onCeiling(model.getWorldHeight())) {
                 region = gravityAnimationUp.getKeyFrame(stateTime, true);
             } else if (player.isGoingDown()){
-                playerImg = "PowerUps/down.png";
+                playerImg = "powerups/down.png";
             } else {
-                playerImg = "PowerUps/up.png";
+                playerImg = "powerups/up.png";
             }
 
         } else if (model.usingJetpack()){
             if (hasPirateHat) {
-                playerImg = "TPowah/jetpack_flames_pirate.png";
+                playerImg = "tpowah/jetpack_flames_pirate.png";
             } else {
-                playerImg = "TPowah/jetpack_flames.png";
+                playerImg = "tpowah/jetpack_flames.png";
             }
         } else if (player.onGround()) {
             if (hasPirateHat) {
@@ -140,9 +140,9 @@ public class PlayerRenderer {
             }
         } else {
             if (hasPirateHat) {
-                playerImg = "TPowah/run2pirate.png";
+                playerImg = "tpowah/run2pirate.png";
             } else {
-                playerImg = "TPowah/jetpack.png";
+                playerImg = "tpowah/jetpack.png";
             }
         }
 
