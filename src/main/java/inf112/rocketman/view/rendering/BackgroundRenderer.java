@@ -38,7 +38,7 @@ public class BackgroundRenderer {
         float x = model.getBackgroundScrollX();
         x = x % worldW;
 
-        Texture bg = textures.getTexture("Background/background.png");
+        Texture bg = textures.getTexture("background/background.png");
         batch.draw(bg, x,0, worldW, worldH);
         batch.draw(bg, x+worldW, 0, worldW, worldH);
     }

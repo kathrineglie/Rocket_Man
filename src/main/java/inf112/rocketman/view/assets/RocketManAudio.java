@@ -23,18 +23,18 @@ public class RocketManAudio {
      */
     public void create() {
         preloadSounds(List.of(
-                "Sounds/jetpack.mp3",
-                "Sounds/coin.mp3",
-                "Sounds/powerup.mp3",
-                "Sounds/bird.mp3",
-                "Sounds/game_over.mp3",
-                "Sounds/robot.mp3",
-                "Sounds/gravity_suit.mp3"
+                "sounds/jetpack.mp3",
+                "sounds/coin.mp3",
+                "sounds/powerup.mp3",
+                "sounds/bird.mp3",
+                "sounds/game_over.mp3",
+                "sounds/robot.mp3",
+                "sounds/gravity_suit.mp3"
         ));
 
         preloadMusic(List.of(
-                "Sounds/music.mp3",
-                "Sounds/MeowMeow.mp3"
+                "sounds/music.mp3",
+                "sounds/MeowMeow.mp3"
         ));
     }
 

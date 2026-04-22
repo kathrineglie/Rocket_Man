@@ -2,7 +2,7 @@ package inf112.rocketman.view.rendering;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.rocketman.model.PowerUps.PowerUp;
+import inf112.rocketman.model.powerups.PowerUp;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
 
@@ -33,7 +33,7 @@ public class PowerUpRenderer {
             return;
         }
 
-        Texture texture = textures.getTexture("PowerUps/box.png");
+        Texture texture = textures.getTexture("powerups/box.png");
         batch.draw(texture, powerUp.getX(), powerUp.getY(), powerUp.getWidth(),  powerUp.getHeight());
     }
 

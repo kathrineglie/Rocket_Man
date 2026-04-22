@@ -1,11 +1,8 @@
 package inf112.rocketman.model;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.math.Rectangle;
-import inf112.rocketman.model.Coins.Coin;
-import inf112.rocketman.model.PowerUps.PowerUp;
-import inf112.rocketman.model.PowerUps.PowerUpType;
+import inf112.rocketman.model.coins.Coin;
+import inf112.rocketman.model.powerups.PowerUpType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

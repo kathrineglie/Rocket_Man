@@ -2,10 +2,10 @@ package inf112.rocketman.view.rendering;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.rocketman.model.Obstacles.Flames.Flame;
-import inf112.rocketman.model.Obstacles.IObstacle;
-import inf112.rocketman.model.Obstacles.Lazers.Lazer;
-import inf112.rocketman.model.Obstacles.Rockets.Rocket;
+import inf112.rocketman.model.obstacles.flames.Flame;
+import inf112.rocketman.model.obstacles.IObstacle;
+import inf112.rocketman.model.obstacles.lazers.Lazer;
+import inf112.rocketman.model.obstacles.rockets.Rocket;
 import inf112.rocketman.view.TextureProvider;
 import inf112.rocketman.view.ViewableRocketManModel;
 
@@ -38,9 +38,9 @@ public class ObstacleRenderer {
             if (obstacle instanceof Rocket rocket) {
                 Texture texture;
                 if (rocket.isActive()) {
-                    texture = textures.getTexture("Obstacles/Rocket.png");
+                    texture = textures.getTexture("obstacles/Rocket.png");
                 } else {
-                    texture = textures.getTexture("Obstacles/warning.png");
+                    texture = textures.getTexture("obstacles/warning.png");
                 }
                 batch.draw(texture, rocket.getX(), rocket.getY(), rocket.getWidth(), rocket.getHeight());
             }
@@ -48,17 +48,17 @@ public class ObstacleRenderer {
             if (obstacle instanceof Lazer lazer) {
                 Texture texture;
                 if (lazer.getProgressionLevel() == 1) {
-                    texture = textures.getTexture("Obstacles/inactiveLazer.png");
+                    texture = textures.getTexture("obstacles/inactiveLazer.png");
                 } else if (lazer.getProgressionLevel() == 2) {
-                    texture = textures.getTexture("Obstacles/harmlessLazer.png");
+                    texture = textures.getTexture("obstacles/harmlessLazer.png");
                 } else {
-                    texture = textures.getTexture("Obstacles/activeLazer.png");
+                    texture = textures.getTexture("obstacles/activeLazer.png");
                 }
                 batch.draw(texture, lazer.getX(), lazer.getY(), lazer.getWidth(), lazer.getHeight());
             }
             if (obstacle instanceof Flame flame) {
                 Texture texture;
-                texture = textures.getTexture("Obstacles/flame.png");
+                texture = textures.getTexture("obstacles/flame.png");
 
                 batch.draw(texture,
                         flame.getX() - flame.getWidth()/2f,

@@ -3,10 +3,12 @@ package inf112.rocketman.model;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
-import inf112.rocketman.model.Coins.*;
-import inf112.rocketman.model.Obstacles.*;
-import inf112.rocketman.model.Character.TPowah;
-import inf112.rocketman.model.PowerUps.*;
+import inf112.rocketman.model.coins.*;
+import inf112.rocketman.model.difficulty.DifficultyController;
+import inf112.rocketman.model.obstacles.*;
+import inf112.rocketman.model.character.TPowah;
+import inf112.rocketman.model.powerups.*;
+import inf112.rocketman.model.progress.PlayerProgressManager;
 import inf112.rocketman.view.ViewableRocketManModel;
 
 import java.util.*;
@@ -43,8 +45,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private int gameScore = 0;
 
     private final PlayerProgressManager progressManager;
-    private final DifficultyManager difficultyManager;
-    private final ObstacleCollisionManager collisionManager;
+    private final DifficultyController difficultyManager;
+    private final ObstacleCollisionHandler collisionManager;
     private final CoinManager coinManager = new CoinManager(new RandomCoinFactory());
     private final PowerUpManager powerUpManager = new PowerUpManager(new RandomPowerUpFactory());
     private final ObstacleManager obstacleManager = new ObstacleManager(new RandomObstacleFactory());
@@ -59,8 +61,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         this.worldHeight = worldHeight;
         this.margin = margin;
 
-        this.difficultyManager = new DifficultyManager(obstacleManager);
-        this.collisionManager = new ObstacleCollisionManager(player, obstacleManager);
+        this.difficultyManager = new DifficultyController(obstacleManager);
+        this.collisionManager = new ObstacleCollisionHandler(player, obstacleManager);
         this.progressManager = new PlayerProgressManager(highscores, coins);
     }
 
@@ -394,4 +396,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public boolean hasPirateHat() {
         return progressManager.getCoins(playerName) + coinManager.getCoinCount() >= 10;
     }
+
+
+
 }

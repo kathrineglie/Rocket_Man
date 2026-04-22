@@ -1,7 +1,7 @@
 package inf112.rocketman.model.movement;
 
-import inf112.rocketman.model.Character.TPowah;
-import inf112.rocketman.model.PowerUps.PowerUpType;
+import inf112.rocketman.model.character.TPowah;
+import inf112.rocketman.model.powerups.PowerUpType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

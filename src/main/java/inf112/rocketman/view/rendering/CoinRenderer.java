@@ -3,7 +3,7 @@ package inf112.rocketman.view.rendering;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.rocketman.model.Coins.Coin;
+import inf112.rocketman.model.coins.Coin;
 import inf112.rocketman.view.ViewableRocketManModel;
 import inf112.rocketman.view.assets.RocketManAssets;
 
@@ -20,7 +20,7 @@ public class CoinRenderer {
      * @param assets the asset manager used to load the coin texture
      */
     public CoinRenderer(RocketManAssets assets) {
-        this.coinTexture = assets.getTexture("Obstacles/coin.png");
+        this.coinTexture = assets.getTexture("obstacles/coin.png");
     }
 
     /**
