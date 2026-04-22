@@ -73,3 +73,22 @@ Lå til en pirat-hatt som låses opp etter man har samlet coins.
 Laget funksjonalitet som lagrer progresjonen til et username, slik at man kan starte der man slapp sist gang.
 Synkroniserte meter-telleren til vanskelighetsgrader for mer samstemt måling.
 Laget flere tester.
+
+**15. april**
+Alle tilstede.
+Lagde flere tester til powerUps.
+Forbedret skjermhåndtering og filstruktur.
+Lagde tester til controller.
+Endret bakgrunnsfargen litt. 
+Fjernet kode som var kommentert ut. 
+Gjorde noen endringer i TPowah og lagde tester som testet de. 
+Implementerte en CoinManager klasse som tar av seg litt av logikken til Coin klassen.
+Implementerte en abstrakt fabrikk for Obstacles som erstatter de spesifikke fabrikkene for lazer, flame og rocket
+Flyttet håndtering av lyd ut av assets og inn i en ny klasse, RocketManAudio
+Flyttet noe av logikken ut fra GameModel til to nye klasser, PowerUpManager og ObstacleManager.
+Flyttet movement logikken ut fra TPowah til egne movement klasser i movement-mappen.
+Laget flere javadocs.
+Flyttet håndtering av kollisjoner med obstacles til en egen klasse.
+
+**22. april** 
+
