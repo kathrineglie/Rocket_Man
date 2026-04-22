@@ -55,13 +55,14 @@ public class PauseScreen extends AbstractMenuScreen {
 
         batch.begin();
 
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
+        float width = viewport.getWorldWidth();
+        float height = viewport.getWorldHeight();
         float centerX = width / 2f;
+
         int score = controller.getViewableModel().getGameScore();
         int coins = controller.getViewableModel().getCoinCount();
 
-        font.setColor(3f, 1, 1, 2f);
+        font.setColor(Color.WHITE);
         drawCentered(font, "PAUSED", centerX, height / 2f + 100);
 
         smallFont.getData().setScale(1.25f);
