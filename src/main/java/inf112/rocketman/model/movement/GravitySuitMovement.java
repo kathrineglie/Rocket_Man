@@ -22,8 +22,6 @@ public class GravitySuitMovement implements MovementBehavior{
      */
     @Override
     public void update(TPowah player, float dt, boolean movementInput, float worldHeight) {
-        float ceiling = worldHeight - player.getHeight();
-
         if (gravityUp) {
             player.setVy(player.getVY() - GRAVITY_SUIT_GRAVITY * dt);
         } else {

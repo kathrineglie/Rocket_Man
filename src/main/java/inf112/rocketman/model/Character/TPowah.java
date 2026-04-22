@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.PowerUps.PowerUpType;
 import inf112.rocketman.model.movement.*;
 
-public class TPowah implements ITPowah  {
+public class TPowah implements ITPowah, ViewableTPowah  {
     private static final int HITBOX_OFFSET = 10;
 
     private final Rectangle bounds;
@@ -58,7 +58,7 @@ public class TPowah implements ITPowah  {
 
     @Override
     public Rectangle getBounds() {
-        return bounds;
+        return new Rectangle(bounds);
     }
 
     @Override
@@ -83,20 +83,12 @@ public class TPowah implements ITPowah  {
         return polygon;
     }
 
-    /**
-     * Gets the current movement input from the player
-     * @return true if the player has pressed or is holding space
-     */
+    @Override
     public boolean getMovementInput() {
         return movementInput;
     }
 
-    /**
-     * Checks if the player is on the ceiling
-     *
-     * @param worldHeight the height of the game
-     * @return true if the player is on the ceiling
-     */
+    @Override
     public boolean onCeiling(float worldHeight) {
         return Math.abs(bounds.y - (worldHeight - bounds.height)) < 0.001f;
     }
