@@ -44,7 +44,7 @@ public class PlayerRenderer {
                 new TextureRegion(textures.getTexture("tpowah/run1pirate.png")),
                 new TextureRegion(textures.getTexture("tpowah/run2pirate.png")),
                 new TextureRegion(textures.getTexture("tpowah/run3pirate.png")),
-                new TextureRegion(textures.getTexture("tpowah/run2pirate.png"))
+                new TextureRegion(textures.getTexture("tpowah/run4pirate.png"))
         );
 
         birdAnimationPirate = new Animation<>(0.2f,
@@ -140,7 +140,7 @@ public class PlayerRenderer {
             }
         } else {
             if (hasPirateHat) {
-                playerImg = "tpowah/run2pirate.png";
+                playerImg = "tpowah/jetpack_pirate.png";
             } else {
                 playerImg = "tpowah/jetpack.png";
             }
