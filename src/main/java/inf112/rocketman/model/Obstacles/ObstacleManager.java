@@ -215,7 +215,7 @@ public class ObstacleManager {
      * @return the obstacle list reference
      */
     public List<IObstacle> getObstacleListReference() {
-        return obstacles;
+        return new ArrayList<>(obstacles);
     }
 
     /**

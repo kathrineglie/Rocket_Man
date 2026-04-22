@@ -3,6 +3,7 @@ package inf112.rocketman.model;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.controller.ControllableRocketManModel;
+import inf112.rocketman.model.Character.ViewableTPowah;
 import inf112.rocketman.model.Coins.*;
 import inf112.rocketman.model.Obstacles.*;
 import inf112.rocketman.model.Character.TPowah;
@@ -284,7 +285,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     @Override
-    public TPowah getPlayer() {
+    public ViewableTPowah getPlayer() {
         return player;
     }
 
@@ -393,5 +394,9 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     public boolean hasPirateHat() {
         return progressManager.getCoins(playerName) + coinManager.getCoinCount() >= 10;
+    }
+
+    protected void setPlayerPowerUp(PowerUpType powerUp) {
+        player.setPowerUp(powerUp);
     }
 }

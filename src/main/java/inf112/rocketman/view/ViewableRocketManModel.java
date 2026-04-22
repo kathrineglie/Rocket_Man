@@ -1,8 +1,8 @@
 package inf112.rocketman.view;
 
+import inf112.rocketman.model.Character.ViewableTPowah;
 import inf112.rocketman.model.Coins.Coin;
 import inf112.rocketman.model.Obstacles.IObstacle;
-import inf112.rocketman.model.Character.TPowah;
 import inf112.rocketman.model.PowerUps.PowerUp;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public interface ViewableRocketManModel {
      *
      * @return the {@link TPowah} player instance.
      */
-    TPowah getPlayer();
+    ViewableTPowah getPlayer();
 
     /**
      * Checks if the player is currently activating the rocket's thrust.
