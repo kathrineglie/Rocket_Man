@@ -1,8 +1,8 @@
-# *README If-me-and-the-gang-pull-up* 
+# README If-me-and-the-gang-pull-up* 
 
-Rocket Man is a 2D endless runner game inspired by *Jeppack Joyride* where you play as *TPowah* and try to survive as 
-long as possible in a dangerous world full of obstacles. The player collect coins, use powerups, and survive as long 
-as possible while the game gradually becomes more difficult
+Rocket Man is a 2D endless runner game inspired by *Jetpack Joyride* where you play as *TPowah* and try to survive as 
+long as possible in a dangerous world full of obstacles. The player collects coins, uses powerups, and survive as long 
+as possible while the game gradually becomes more difficult.
 
 ## Credits
 ### Authors
@@ -17,9 +17,9 @@ as possible while the game gradually becomes more difficult
 * Along the way you have to avoid various obstacles, such as lazers, rockets and flames.
 * PowerUps can be attained and used to assist along the dangerous journey.
 * The space bar is used to activate the character's pink jetpack, which propels him upwards.
-* The player can also achive a hat after collecting coins.
-* the game contains leaderboard, and the goal is to be on top of the leaderboard.
-* The first part of the game is easier, and new obstacles types are introduces gradually:
+* The player can also achieve a hat after collecting coins.
+* the game contains a leaderboard, and the goal is to be on top of the leaderboard.
+* The first part of the game is easier, and new obstacle types are introduced gradually:
 
 ## Features
 
@@ -36,7 +36,7 @@ as possible while the game gradually becomes more difficult
 ### Progression
 * Increasing game speed 
 * Gradual introduction of obstacles
-* unlockable hat
+* Unlockable hat
 
 ### Other functionality
 * Coins
@@ -45,8 +45,8 @@ as possible while the game gradually becomes more difficult
 * Name input
 * Saved progression connected to player name
 * Pause screen
-* Game over Screen
-* Instruction Screen
+* Game over screen
+* Instruction screen
 
 ## Controls / How to play
 
@@ -61,25 +61,171 @@ as possible while the game gradually becomes more difficult
 
 ## How to run the game
 
-### requirements:
-* Java 21
-* Maven 
+### Requirements
+- Java 21
+- Maven
 
-### Clone the respository
-* clone the repository from git:
-  * git clone <repository-url>
+### Clone the repository
+Clone the repository from Git:
 
-### compile:
+```bash
+git clone git@git.app.uib.no:inf112/26v/proj/if-me-and-the-gang-pull-up.git
+cd if-me-and-the-gang-pull-up 
+```
+
+### Compile and run:
 * Then you can either run the Main class in a compatible IDE or compile the project using maven commands:
   * mvn clean compile
   * mvn exec:java
 
-### Contributors
+## How to run tests
+Run all tests with Maven:
+
+```bash
+mvn test
+```
+
+Run Spotbugs with:
+
+```bash
+mvn clean compile spotbugs:check
+```
+
+## Architecture
+The project is structured using a model-view-controller inspired design.
+
+### Model
+The model contains the main game state and game logic. This includes:
+* player state
+* game score
+* coins
+* obstacles
+* powerups
+* difficulty progression
+* game state transitions
+
+The central model class is GameModel, which implements both:
+* ViewableRocketManModel
+* ControllableRocketManModel
+
+This allows the controller and view to depend on interfaces instead of directly on the full model
+implementation.
+
+### View
+The view is responsible for rendering the game world and presenting information to the player.
+
+RocketManView manages:
+* viewport and camera
+* graphical assets
+* renderers for background, player, obstacles, powerups, coins and HUD
+* Rendering responsibility is further split into smaller renderer classes.
+
+### Controller
+The controller handles:
+* player input
+* game flow
+* communication between model and view
+* sound triggering
+
+RocketManController reads keyboard and mouse input, updates the model each frame, tells the view to render,
+and coordinates sound effects and music through RocketManAudio.
+
+### Screens
+The game uses separate screen classes to handle different user-facing states:
+* HomeScreen
+* GameScreen
+* InstructionScreen
+* PauseScreen
+* GameOverScreen
+
+These screens are switched in Main based on the current GameState.
+
+Menu-related screens inherit from AbstractMenuScreen, which provides shared setup for:
+* fonts
+* viewport
+* shape renderer
+
+This reduces duplication between screens.
+
+## Important classes
+
+### `Main`
+`Main` is the entry point of the application. It creates the model, view, controller, audio manager, and all screens.
+It also switches between screens depending on the current `GameState`.
+
+This class mainly acts as the overall application coordinator.
+
+### `RocketManController`
+`RocketManController` connects the model and the view. It handles user input, updates the model each frame, tells the 
+view to render the current game state, and coordinates sound effects and music through `RocketManAudio`.
+
+It also manages transitions between different states such as pause, home screen, game over, and instruction screen.
+
+### `GameModel`
+`GameModel` is the central game logic class. It stores and updates the most important parts of the game state, 
+including the player, score, coins, obstacles, powerups, difficulty progression, and game state transitions.
+
+The class delegates specialized responsibilities to helper and manager classes such as:
+- `DifficultyController`
+- `ObstacleManager`
+- `CoinManager`
+- `PowerUpManager`
+- `ObstacleCollisionHandler`
+- `PlayerProgressManager`
+
+Because of this, `GameModel` works as the main logic hub rather than storing every detail in one large class.
+
+### `RocketManView`
+`RocketManView` is responsible for rendering the gameplay view. It creates the viewport, loads graphical assets, 
+and delegates drawing to dedicated renderer classes.
+
+It also provides helper methods such as converting mouse position into world coordinates.
+
+### Screen classes
+The game is divided into separate screen classes that represent the different states the player can move between 
+during the game. These include `HomeScreen`, `GameScreen`, `InstructionScreen`, `PauseScreen`, and `GameOverScreen`.
+
+The active screen is selected in `Main`, which checks the current `GameState` and switches screen when the state 
+changes. This makes it easier to separate gameplay from menus and other interface-related states.
+
+The menu-oriented screens share common setup through `AbstractMenuScreen`, which provides shared handling of fonts, 
+viewport, camera, and rendering utilities. This reduces duplicated code and makes the menu screen structure more 
+consistent.
+
+### Asset and audio handling
+Classes responsible for loading and managing textures, fonts, and audio resources are separated from the main gameplay 
+logic in order to keep responsibilities cleaner.
+
+## Reflections 
+
+### Structure
+We tried to organize the project according to MVC principles.
+The separation is clearest in the following way:
+* game logic is primarily placed in the model
+* rendering is handled by the view and renderer classes
+* input and game flow are handled by the controller
+* different UI/game states are represented through separate screen classes
+
+At the same time, some responsibilities are naturally connected. For example, the controller handles both input and 
+some sound-related coordination, while Main is responsible for switching between screens based on game state.
+
+### Spotbugs
+The SpotBugs report contains several warnings of the types `EI_EXPOSE_REP` and `EI_EXPOSE_REP2`. We are aware of these 
+warnings, but in our case they mainly come from intentional sharing of mutable objects between the model, view, 
+controller, and helper classes.
+
+In this project, such sharing is part of how the game architecture works. For example, the controller needs direct 
+access to the model and view, and rendering classes need access to shared assets such as fonts and textures. 
+We therefore do not consider these warnings to be critical issues that should necessarily be fixed in this project.
+
+## Contributors
 * We have used ChatGPT as a support tool during development, mainly for discussing code structure and graphics-
     related decisions
 
-### Sound and Graphics
+## Sound and Graphics
 * `src/main/resources/*` - All illustrations in this folder created by Kathrine Lie
+
+### Sounds
 * `src/main/resources/Sounds` 
     * The game uses audio from Pixabay:
       - **"Football - Football Soccer Game Music 08 Second"** by **Bomb Sound**  
@@ -107,7 +253,8 @@ as possible while the game gradually becomes more difficult
           Used as: `teleport.mp3`  
           Source: https://pixabay.com/sound-effects/film-special-effects-teleport-14639/
 
-* `src/main/resources/Sounds`
+### Fonts
+* `src/main/resources/Fonts`
   * The game uses fonts from Google fonts:
     - This project uses the **Inter** font.
       - Copyright: Copyright 2020 The Inter Project Authors 
@@ -115,7 +262,7 @@ as possible while the game gradually becomes more difficult
       - License: SIL Open Font License, Version 1.1 
       - used as font2.ttf 
       - source: https://fonts.google.com/specimen/Inter?query=inter
-      
+
     - This project uses the **Bitcount Prop Double Ink** font. 
       - Copyright: Copyright 1980 The Bitcount Project Authors 
       - Designer: Petr van Blokland 
