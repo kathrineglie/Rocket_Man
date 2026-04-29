@@ -55,9 +55,10 @@ public class InstructionScreen extends AbstractMenuScreen {
         smallFont.getData().setScale(0.5f);
         float y = height - 90;
         float lineSpacing = 28f;
-        float sectionSpacing = 40f;
+        float sectionSpacing = 35f;
 
         drawCentered(smallFont, "Rocket Man is a survival game where your goal is to stay alive for as long as possible.", centerX, y);
+
         y -= lineSpacing;
         drawCentered(smallFont, "Avoid obstacles, collect coins, and use power-ups to survive longer.", centerX, y);
 
@@ -66,10 +67,13 @@ public class InstructionScreen extends AbstractMenuScreen {
 
         y -= lineSpacing;
         drawCentered(smallFont, "SPACE - hold to activate the jetpack", centerX, y);
+
         y -= lineSpacing;
         drawCentered(smallFont, "P - pause the game", centerX, y);
+
         y -= lineSpacing;
         drawCentered(smallFont, "ESC - return to the main menu", centerX, y);
+
         y -= lineSpacing;
         drawCentered(smallFont, "ENTER - restart after crashing", centerX, y);
 
@@ -78,8 +82,10 @@ public class InstructionScreen extends AbstractMenuScreen {
 
         y -= lineSpacing;
         drawCentered(smallFont, "Rockets move fast and can quickly end your run.", centerX, y);
+
         y -= lineSpacing;
         drawCentered(smallFont, "Lasers force you to react carefully.", centerX, y);
+
         y -= lineSpacing;
         drawCentered(smallFont, "Flames are dangerous and should be avoided at all costs.", centerX, y);
 
@@ -87,15 +93,25 @@ public class InstructionScreen extends AbstractMenuScreen {
         drawCentered(smallFont, "POWER-UPS", centerX, y);
 
         y -= lineSpacing;
-        drawCentered(smallFont, "Power-ups can give you special abilities.", centerX, y);
+        drawCentered(smallFont, "Power-ups give you special abilities for a short time.", centerX, y);
+
         y -= lineSpacing;
-        drawCentered(smallFont, "The bird power-up changes your movement and can help you escape danger.", centerX, y);
+        drawCentered(smallFont, "Bird makes you fly like Flappy Bird by pressing SPACE.", centerX, y);
+
+        y -= lineSpacing;
+        drawCentered(smallFont, "Gravity Suit moves you between the floor and ceiling.", centerX, y);
+
+        y -= lineSpacing;
+        drawCentered(smallFont, "Robot lets you jump and slowly fall back down with gravity.", centerX, y);
 
         y -= sectionSpacing;
         drawCentered(smallFont, "COINS", centerX, y);
 
         y -= lineSpacing;
-        drawCentered(smallFont, "Coins increase your coin count when collected during gameplay.", centerX, y);
+        drawCentered(smallFont, "Collect coins to increase your coin count.", centerX, y);
+
+        y -= lineSpacing;
+        drawCentered(smallFont, "Collect 10 coins to unlock a COOL hat.", centerX, y);
 
         y -= sectionSpacing;
         drawCentered(smallFont, "GOAL", centerX, y);
