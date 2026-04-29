@@ -101,3 +101,13 @@ Laget flere javadocs.
 Fikset grafikken til karakteren. 
 
 **29. april**
+Alle tilstede.
+Oppdaterte instruksjonsskjermen.
+Oppdaterte ReadME med informasjon til endelig versjon av spillet.
+Fikset mange Sonarqube issues for å forbedre koden. 
+Fikset margin for et bedre estetisk spill. 
+Fikset rendering til highscores. 
+Refaktorerte mye som omhandlet Obstacles for å forhindre hardkodede elementer og splitte logikken for en mindre 
+kognitivt kompleks kode. 
+Laget noen slides til presentasjonen. 
+

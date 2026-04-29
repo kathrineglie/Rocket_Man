@@ -245,9 +245,14 @@ Our recommended way to run all tests is:
 mvn clean test
 ```
 
+### Sonarqube
+We have gone through Sonarqube issues and implemented changes which made our code more secure, clean and effective. 
+This tool helped us clean up code to remove unnecessary public modifiers, public field variables, imports and 
+field overwrites. We have refactored methods with too much cognitive complexity to improve code readability.
+
 ## Contributors
-* We have used ChatGPT as a support tool during development, mainly for discussing code structure and graphics-
-    related decisions
+* We have used ChatGPT as a support tool during development, mainly for discussing code structure and 
+graphics-related decisions
 
 ## Sound and Graphics
 * `src/main/resources/*` - All illustrations in this folder created by Kathrine Lie

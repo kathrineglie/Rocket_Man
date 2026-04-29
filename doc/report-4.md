@@ -5,7 +5,7 @@
 * Sunniva Bratland
 * Elise Blekken
 
-**Hva som har endrte seg siden sist**
+**Hva som har endret seg siden sist**
 
 Siden forrige innlevering har vi ferdigstilt prosjektet og jobbet videre med å forbedre helheten i spillet.
 Der vi i forrige rapport fokuserte på å få på plass mer funksjonalitet og flere spillsystemer, har vi i denne
