@@ -47,9 +47,9 @@ public class RandomObstacleFactory implements IRandomObstacleFactory {
         float randY = random.nextFloat(ground + margin + lazerHeight, worldHeight - margin - lazerHeight);
 
         Rectangle bounds = new Rectangle(
-                worldWidth - margin - worldWidth,
+                margin,
                 randY,
-                worldWidth,
+                worldWidth - 2 * margin,
                 lazerHeight
         );
 
