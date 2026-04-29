@@ -46,7 +46,7 @@ public class Main extends Game {
 
         model = new GameModel(new WorldDimensions(1200, 800), 50,highscores, coins);
         RocketManView view = new RocketManView();
-        view.create(model.getWorldDimensions().worldWidth(), model.getWorldHeight());
+        view.create(model.getWorldDimensions().worldWidth(), model.getWorldDimensions().worldHeight());
 
         RocketManAudio audio = new RocketManAudio();
         audio.create();

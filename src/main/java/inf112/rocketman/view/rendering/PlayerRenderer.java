@@ -139,7 +139,7 @@ public class PlayerRenderer {
             return gravityAnimationDown.getKeyFrame(stateTime, true);
         }
 
-        if (player.onCeiling(model.getWorldHeight())) {
+        if (player.onCeiling(model.getWorldDimensions().worldHeight())) {
             return gravityAnimationUp.getKeyFrame(stateTime, true);
         }
 

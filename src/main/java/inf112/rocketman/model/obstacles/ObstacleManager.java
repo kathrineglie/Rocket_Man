@@ -51,9 +51,9 @@ public class ObstacleManager {
             obstacle.update(dt);
 
             switch (obstacle) {
-                case Rocket rocket when rocket.isOfScreen(dimensions.worldWidth(), dimensions.worldHeight()) -> iterator.remove();
+                case Rocket rocket when rocket.isOfScreen(dimensions) -> iterator.remove();
                 case Lazer lazer when lazer.getProgressionLevel() == 4 -> iterator.remove();
-                case Flame flame when flame.isOfScreen(dimensions.worldWidth(), dimensions.worldHeight()) -> iterator.remove();
+                case Flame flame when flame.isOfScreen(dimensions) -> iterator.remove();
                 default -> {
                 }
             }

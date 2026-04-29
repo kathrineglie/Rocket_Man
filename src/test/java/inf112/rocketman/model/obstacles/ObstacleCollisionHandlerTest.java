@@ -1,6 +1,7 @@
 package inf112.rocketman.model.obstacles;
 
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
 import inf112.rocketman.model.character.TPowah;
 import inf112.rocketman.model.obstacles.lazers.Lazer;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,7 +47,7 @@ class ObstacleCollisionHandlerTest {
     @Test
     void testHandleObstacleCollisionReturnsTrueWhenObstacleOverlaps() {
         Rectangle playerHitbox = new Rectangle(100, 100, 50, 50);
-        TestObstacle obstacle = new TestObstacle(110, 110, 50, 50, 0, 0);
+        TestObstacle obstacle = new TestObstacle(110, 110, 50, 50, 0, 0, 50);
 
         when(player.getHitBox()).thenReturn(playerHitbox);
         when(obstacleManager.getObstacleListReference()).thenReturn(new ArrayList<>(List.of(obstacle)));
@@ -57,7 +58,7 @@ class ObstacleCollisionHandlerTest {
     @Test
     void testInactiveLazerIsIgnored() {
         Rectangle playerHitbox = new Rectangle(100, 100, 50, 50);
-        TestLazer lazer = new TestLazer(100, 100, 50, 50, 0, 0);
+        TestLazer lazer = new TestLazer(100, 100, 50, 50, 0, 0, 50);
         lazer.setProgressionLevel(2);
 
         when(player.getHitBox()).thenReturn(playerHitbox);
@@ -69,7 +70,7 @@ class ObstacleCollisionHandlerTest {
     @Test
     void testActiveLazerCollisionReturnsTrue() {
         Rectangle playerHitbox = new Rectangle(100, 100, 50, 50);
-        TestLazer lazer = new TestLazer(100, 100, 50, 50, 0, 0);
+        TestLazer lazer = new TestLazer(100, 100, 50, 50, 0, 0, 50);
         lazer.setProgressionLevel(3);
 
         when(player.getHitBox()).thenReturn(playerHitbox);
@@ -79,14 +80,14 @@ class ObstacleCollisionHandlerTest {
     }
 
     private static class TestObstacle extends Obstacle {
-        protected TestObstacle(float x, float y, float width, float height, float vx, float vy) {
-            super(x, y, width, height, vx, vy);
+        protected TestObstacle(float x, float y, float width, float height, float vx, float vy, float ground) {
+            super(new Rectangle(x, y, width, height), new Velocity(vx, vy), ground);
         }
     }
 
     private static class TestLazer extends Lazer {
-        protected TestLazer(float x, float y, float width, float height, float vx, float vy) {
-            super(x, y, width, height, vx, vy);
+        protected TestLazer(float x, float y, float width, float height, float vx, float vy, float ground) {
+            super(new Rectangle(x, y, width, height), new Velocity(vx, vy), ground);
         }
     }
 }

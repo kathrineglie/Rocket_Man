@@ -1,5 +1,6 @@
 package inf112.rocketman.model.obstacles;
 
+import inf112.rocketman.model.Velocity;
 import inf112.rocketman.model.WorldDimensions;
 
 /**

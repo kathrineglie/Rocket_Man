@@ -1,6 +1,7 @@
 package inf112.rocketman.model.obstacles;
 
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.WorldDimensions;
 
 /**
  * Interface for obstacles in the game world.
@@ -27,11 +28,10 @@ public interface IObstacle {
     /**
      * Checks if the obstacle is currently on the screen or not.
      *
-     * @param worldWidth width of the game
-     * @param worldHeight height of the game
-     * @return true if the obstacle is on screen and false if it is off screen
+     * @param dimensions the dimensions of the game
+     * @return true if the obstacle is on screen
      */
-    boolean isOfScreen(float worldWidth, float worldHeight);
+    boolean isOfScreen(WorldDimensions dimensions);
 
     /**
      * Returns the obstacle offset.

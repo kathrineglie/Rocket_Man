@@ -40,7 +40,7 @@ public class GameModelTest {
         when(coins.getInteger(anyString(), anyInt())).thenAnswer(invocation -> invocation.getArgument(1));
         when(coins.getInteger(anyString())).thenReturn(0);
 
-        model = new GameModel(new WorldDimensions(100, 800), 5, highscores, coins);
+        model = new GameModel(new WorldDimensions(1000, 800), 5, highscores, coins);
 
 
     }
@@ -247,6 +247,7 @@ public class GameModelTest {
 
         assertEquals(initialScore, model.getGameScore());
     }
+
     @Test
     void testHasGravitySuitPowerUp() {
         model.startNewGame();
@@ -255,7 +256,6 @@ public class GameModelTest {
         model.setPlayerPowerUp(PowerUpType.GRAVITY_SUIT);
 
         assertTrue(model.hasGravitySuitPowerUp());
-
     }
 
     @Test
@@ -279,7 +279,7 @@ public class GameModelTest {
     void testGetWorldDimensions() {
 
         assertEquals(1000f, model.getWorldDimensions().worldWidth());
-        assertEquals(800f, model.getWorldHeight());
+        assertEquals(800f, model.getWorldDimensions().worldHeight());
     }
 
     @Test
@@ -303,8 +303,6 @@ public class GameModelTest {
         assertFalse(model.didCollectPowerUpThisFrame());
     }
 
-
-
     @Test
     void testGoToHomeScreenClearsObstaclesAndResetsScore() {
         model.startNewGame();
@@ -319,9 +317,6 @@ public class GameModelTest {
         assertEquals(0, model.getObstacles().size());
     }
 
-
-
-
     @Test
     void testGetSavedCoinsForPlayer() {
         when(coins.getInteger("Bob", 0)).thenReturn(7);
@@ -331,7 +326,6 @@ public class GameModelTest {
 
         assertEquals(7, savedCoins);
     }
-
 
     @Test
     void testGetCoinListIsEmptyAtStart() {

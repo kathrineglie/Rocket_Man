@@ -57,7 +57,7 @@ public class PowerUpManager {
             powerUp.update(dt);
             powerUp.setVX(bgSpeed);
 
-            if (powerUp.isOfScreen(dimensions.worldWidth(), dimensions.worldHeight())) {
+            if (powerUp.isOfScreen(dimensions)) {
                 powerUp = null;
             }
         }

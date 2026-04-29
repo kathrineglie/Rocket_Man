@@ -1,5 +1,6 @@
 package inf112.rocketman.model.obstacles;
 
+import inf112.rocketman.model.WorldDimensions;
 import inf112.rocketman.model.obstacles.flames.Flame;
 import inf112.rocketman.model.obstacles.lazers.Lazer;
 import inf112.rocketman.model.obstacles.rockets.Rocket;
@@ -26,7 +27,7 @@ class RandomObstacleFactoryTest {
         float margin = 20f;
         float vx = -8f;
 
-        Obstacle rocket = factory.newObstacle(ObstacleType.ROCKET, worldWidth, worldHeight, ground, margin, vx);
+        Obstacle rocket = factory.newObstacle(ObstacleType.ROCKET, new WorldDimensions(worldWidth, worldHeight), ground, margin, vx);
 
         assertNotNull(rocket);
 
@@ -49,7 +50,7 @@ class RandomObstacleFactoryTest {
         float margin = 20f;
         float vx = -8f;
 
-        Obstacle rocket = factory.newObstacle(ObstacleType.ROCKET, worldWidth, worldHeight, ground, margin, vx);
+        Obstacle rocket = factory.newObstacle(ObstacleType.ROCKET, new WorldDimensions(worldWidth, worldHeight), ground, margin, vx);
 
         float rocketHeight = worldHeight / 15f;
         float minY = margin - rocketHeight;
@@ -61,7 +62,7 @@ class RandomObstacleFactoryTest {
 
     @Test
     void newRocketReturnsRocket() {
-        Obstacle rocket = factory.newObstacle(ObstacleType.ROCKET,1000f, 600f, 50f, 20f, -8f);
+        Obstacle rocket = factory.newObstacle(ObstacleType.ROCKET,new WorldDimensions(1000f, 600f), 50f, 20f, -8f);
         assertNotNull(rocket);
         assertInstanceOf(Rocket.class, rocket);
     }
@@ -79,7 +80,7 @@ class RandomObstacleFactoryTest {
         float maxY = worldHeight - margin- rocketHeight;
 
         for (int i = 0; i < 20; i++) {
-            Obstacle rocket = factory.newObstacle(ObstacleType.ROCKET ,worldWidth, worldHeight, ground, margin, vx);
+            Obstacle rocket = factory.newObstacle(ObstacleType.ROCKET , new WorldDimensions(worldWidth, worldHeight), ground, margin, vx);
             assertTrue(rocket.getY() >= minY);
             assertTrue(rocket.getY() <= maxY);
         }
@@ -87,7 +88,7 @@ class RandomObstacleFactoryTest {
 
     @Test
     void newLazerIsNotNull() {
-        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER,800, 600, 50, 5, 0);
+        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER,new WorldDimensions(800, 600), 50, 5, 0);
         assertNotNull(lazer);
         assertInstanceOf(Lazer.class, lazer);
     }
@@ -99,7 +100,7 @@ class RandomObstacleFactoryTest {
         float ground = 100;
         float margin = 50;
 
-        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER, worldWidth, worldHeight, ground, margin, 0);
+        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER, new WorldDimensions(worldWidth, worldHeight), ground, margin, 0);
 
         assertTrue(lazer.getY() >= margin);
         assertTrue(lazer.getY() <= worldHeight - margin);
@@ -109,7 +110,7 @@ class RandomObstacleFactoryTest {
     void newLazerCorrectHeight() {
         float worldHeight = 600;
 
-        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER,800, worldHeight, 100, 50, 0);
+        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER, new WorldDimensions(800, worldHeight), 100, 50, 0);
 
         assertEquals(worldHeight / 15, lazer.getHeight());
     }
@@ -118,7 +119,7 @@ class RandomObstacleFactoryTest {
     void newLazerCorrectWidth() {
         float worldWidth = 800;
 
-        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER, worldWidth, 600, 100, 50, 0);
+        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER, new WorldDimensions(worldWidth, 600), 100, 50, 0);
 
         assertEquals(worldWidth, lazer.getWidth());
     }
@@ -132,7 +133,7 @@ class RandomObstacleFactoryTest {
         float vx = 0.1f;
 
         for (int i = 0; i < 1000; i++) {
-            Flame flame = (Flame) factory.newObstacle(ObstacleType.FLAME,worldWidth, worldHeight, ground, margin, vx);
+            Flame flame = (Flame) factory.newObstacle(ObstacleType.FLAME, new WorldDimensions(worldWidth, worldHeight), ground, margin, vx);
 
             assertNotNull(flame); // Checks that the flame is not null
 

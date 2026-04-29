@@ -1,6 +1,7 @@
 package inf112.rocketman.model.coins;
 
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.WorldDimensions;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
@@ -23,7 +24,7 @@ class CoinManagerTest {
         Coin coin = constructor.newInstance(100f, 100f, 20f, 20f, 0f);
 
         coinManager.addCoinForTesting(coin);
-        coinManager.update(0f, playerHitbox, 1000, 800, 120f, 5f, -350f);
+        coinManager.update(0f, playerHitbox, new WorldDimensions(1000, 800), 120f, 5f, -350f);
 
         assertEquals(1, coinManager.getCoinCount());
         assertTrue(coinManager.didCollectCoinThisFrame());
@@ -43,7 +44,7 @@ class CoinManagerTest {
         Coin coin = constructor.newInstance(900f, 900f, 20f, 20f, 0f);
 
         coinManager.addCoinForTesting(coin);
-        coinManager.update(0f, playerHitbox, 1000, 800, 120f, 5f, -350f);
+        coinManager.update(0f, playerHitbox, new WorldDimensions( 1000, 800), 120f, 5f, -350f);
 
         assertEquals(0, coinManager.getCoinCount());
         assertFalse(coinManager.didCollectCoinThisFrame());

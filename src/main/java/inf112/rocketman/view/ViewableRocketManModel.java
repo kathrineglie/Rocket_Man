@@ -1,5 +1,6 @@
 package inf112.rocketman.view;
 
+import inf112.rocketman.model.WorldDimensions;
 import inf112.rocketman.model.coins.Coin;
 import inf112.rocketman.model.obstacles.IObstacle;
 import inf112.rocketman.model.character.ViewableTPowah;
@@ -135,6 +136,12 @@ public interface ViewableRocketManModel {
      */
     boolean hasGravitySuitPowerUp();
 
+    /**
+     * Gets the dimensions of the game
+     * @return the dimensions of the game
+     */
+
+    WorldDimensions getWorldDimensions();
     /**
      * Returns the height of the game world in world units.
      *

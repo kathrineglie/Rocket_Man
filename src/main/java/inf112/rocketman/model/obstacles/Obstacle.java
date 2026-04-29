@@ -2,6 +2,7 @@ package inf112.rocketman.model.obstacles;
 
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.Velocity;
+import inf112.rocketman.model.WorldDimensions;
 
 /**
  * Represents a general obstacle in the game world.
@@ -64,8 +65,8 @@ public class Obstacle implements IObstacle {
     }
 
     @Override
-    public boolean isOfScreen(float worldWidth, float worldHeight) {
-        return (x + width < 0 || y + height < ground || y > worldHeight);
+    public boolean isOfScreen(WorldDimensions dimensions) {
+        return (x + width < 0 || y + height < ground || y > dimensions.worldHeight());
     }
 
     @Override
