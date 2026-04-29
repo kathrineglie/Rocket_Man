@@ -27,30 +27,34 @@ class TPowahTest {
 
     @Test
     void testPlayerCannotGoBelowGround() {
+        float worldHeight = 800f;
+        float margin = 50f;
+        float ground = 30f;
 
         for (int i = 0; i < 100; i++) {
-            player.update(0.1f, false, 800);
+            player.update(0.1f, false, worldHeight, margin);
         }
 
-        assertEquals(30f, player.getY());
+        assertEquals(ground + margin, player.getY(), 0.01f);
     }
 
     @Test
     void testPlayerCannotGoAboveCeiling() {
         float worldHeight = 800f;
+        float margin = 50f;
 
-        for (int i = 0; i < 50; i ++) {
-            player.update(0.1f, true, worldHeight);
+        for (int i = 0; i < 50; i++) {
+            player.update(0.1f, true, worldHeight, margin);
         }
 
-        float expectedTop = worldHeight - player.getHeight();
+        float expectedTop = worldHeight - margin - player.getHeight();
         assertEquals(expectedTop, player.getY(), 0.01f, "Player should stop at the top of the world");
     }
 
     @Test
     void testVelocityResetsOnGround() {
-        player.update(1.0f, false, 800);
-        player.update(0.01f, true, 800);
+        player.update(1.0f, false, 800, 50);
+        player.update(0.01f, true, 800, 50);
 
         assertTrue(player.getY() > 30f, "Player should lift off immediately if velocity was reset on ground");
     }
@@ -81,7 +85,7 @@ class TPowahTest {
 
     @Test
     void testPlayerSizeIsConstantDuringUpdate() {
-        player.update(0.1f, true, 800);
+        player.update(0.1f, true, 800, 50);
 
         assertEquals(50, player.getWidth(), "Width should not change during update");
         assertEquals(50, player.getHeight(), "Height should not change during update");
@@ -100,15 +104,16 @@ class TPowahTest {
 
     @Test
     void testOnCeiling() {
-        float expected = 950;
+        float worldHeight = 1000f;
+        float margin = 50f;
 
-        player.update(0f, true, 1000);
-        player.setY(expected);
+        player.update(0f, true, worldHeight, margin);
 
-        float actual = player.getY();
+        float expectedTop = worldHeight - margin - player.getHeight();
+        player.setY(expectedTop);
 
-        assertEquals(expected, actual, 0.001f);
-        assertTrue(player.onCeiling(1000));
+        assertEquals(expectedTop, player.getY(), 0.001f);
+        assertTrue(player.onCeiling(worldHeight));
 
     }
 }

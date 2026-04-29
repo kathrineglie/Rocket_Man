@@ -258,6 +258,8 @@ class GameModelTest {
 
     @Test
     void onGround() {
+        model.startNewGame();
+        model.update(0.01f, false);
 
         assertTrue(model.onGround());
     }

@@ -24,7 +24,7 @@ class GravitySuitMovementTest {
         assertFalse(gravity.isGravityUp());
 
         player.setY(400);
-        player.update(0.1f, false, 1000);
+        player.update(0.1f, false, 1000, 50);
 
         assertEquals(-150f, player.getVY());
         assertEquals(385f, player.getY());
@@ -33,12 +33,12 @@ class GravitySuitMovementTest {
     @Test
     void testGravitySuitOnCeiling() {
         assertFalse(gravity.isGravityUp());
-        player.update(0.1f, true, 1000);
+        player.update(0.1f, true, 1000, 50);
 
         assertTrue(gravity.isGravityUp());
         assertEquals(0, player.getVY(), 0.001f);
 
-        player.update(0.1f, false, 1000);
+        player.update(0.1f, false, 1000, 50);
 
         float expectedVY = 150;
         float actualVY = player.getVY();
@@ -50,10 +50,14 @@ class GravitySuitMovementTest {
     void testGravitySuitWithinBoundsGround() {
         assertTrue(player.hasPowerUp());
 
+        float worldHeight = 1000f;
+        float margin = 50f;
+        float ground = 30f;
+
         player.setY(20);
-        player.update(0.1f, false, 1000);
+        player.update(0.1f, false, worldHeight, margin);
 
         assertEquals(0, player.getVY());
-        assertEquals(30, player.getY());
+        assertEquals(ground + margin, player.getY());
     }
 }

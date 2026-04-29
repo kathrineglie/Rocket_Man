@@ -82,7 +82,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         difficultyManager.updateDifficulty(gameScore);
 
         usingJetpack = movingUpward;
-        player.update(dt, usingJetpack, worldHeight);
+        player.update(dt, usingJetpack, worldHeight, margin);
 
         updateBackground(dt);
         updateObstacles(dt);
@@ -236,16 +236,12 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     /**
      * Updates the background scroll based on the elapsed time
+     * and current background speed.
      *
      * @param dt the time passed since the last frame (delta time)
      */
     private void updateBackground(float dt) {
         bgScrollX += difficultyManager.getBgSpeed() * dt;
-        if (worldWidth > 0) {
-            bgScrollX = bgScrollX % worldWidth;
-        } else {
-            bgScrollX = 0;
-        }
     }
 
     @Override
@@ -299,7 +295,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public boolean onGround() {
-        return player.getY() == GROUND;
+        return player.onGround();
     }
 
     @Override
@@ -319,6 +315,11 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         powerUpManager.clear();
         gameState = GameState.HOME_SCREEN;
         gameScore = 0;
+    }
+
+    @Override
+    public float getMargin() {
+        return margin;
     }
 
     @Override

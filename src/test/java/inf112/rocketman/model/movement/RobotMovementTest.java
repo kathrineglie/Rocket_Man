@@ -15,6 +15,7 @@ class RobotMovementTest {
     void setup() {
         player = new TPowah(100, 30, 50, 50, 30);
         player.setPowerUp(PowerUpType.ROBOT);
+        player.update(0f, false, 1000, 50);
         robot = (RobotMovement) player.getMovementBehavior();
     }
 
@@ -26,12 +27,12 @@ class RobotMovementTest {
 
         assertTrue(player.onGround());
 
-        player.update(0.1f, false, 1000);
+        player.update(0.1f, false, 1000, 50);
 
         assertFalse(robot.getRobotIsJumping());
         assertFalse(robot.getRobotIsGoingDown());
 
-        float expectedY = 30f;
+        float expectedY = 80f;
         float expectedVY = 0f;
 
         assertEquals(expectedY, player.getY());
@@ -40,17 +41,17 @@ class RobotMovementTest {
 
     @Test
     void testRobotIsJumping() {
-        player.update(0.1f, true, 1000);
+        player.update(0.1f, true, 1000, 50);
 
         assertEquals(120, player.getVY());
         assertTrue(robot.getRobotIsJumping());
 
-        player.setY(50);
+        player.setY(100);
 
         assertFalse(player.onGround());
         assertTrue(robot.getRobotIsJumping());
 
-        player.update(0.1f, true, 800);
+        player.update(0.1f, true, 800, 50);
         float expectedVY = 60;
         float actualVY = player.getVY();
 
@@ -59,16 +60,16 @@ class RobotMovementTest {
 
     @Test
     void testRobotGoingDown() {
-        player.update(0.1f, true, 1000);
+        player.update(0.1f, true, 1000, 50);
 
-        player.update(0.1f, false, 1000);
+        player.update(0.1f, false, 1000, 50);
 
         assertTrue(robot.getRobotIsGoingDown());
         assertTrue(robot.getRobotIsJumping());
 
         assertEquals(40, player.getVY());
 
-        player.update(0.1f, true, 1000);
+        player.update(0.1f, true, 1000, 50);
 
         assertTrue(robot.getRobotIsGoingDown());
         assertTrue(robot.getRobotIsJumping());

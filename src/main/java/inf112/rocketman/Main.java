@@ -42,7 +42,7 @@ public class Main extends Game {
         Preferences highscores = Gdx.app.getPreferences("Highscores");
         Preferences coins = Gdx.app.getPreferences("Coins");
 
-        GameModel model = new GameModel(1200, 800, 5,highscores, coins);
+        GameModel model = new GameModel(1200, 700, 25,highscores, coins);
         RocketManView view = new RocketManView();
         view.create(model.getWorldWidth(), model.getWorldHeight());
 
@@ -101,7 +101,7 @@ public class Main extends Game {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("RocketMan");
-        config.setWindowedMode(1000, 800);
+        config.setWindowedMode(1200, 700);
 
         new Lwjgl3Application(new Main(), config);
     }

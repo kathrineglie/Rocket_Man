@@ -31,15 +31,28 @@ public class BackgroundRenderer {
      * @param viewPort the viewport defining the visible world size
      * @param model the viewable game model providing background scroll data
      */
-    public void render(SpriteBatch batch, Viewport viewPort, ViewableRocketManModel model){
+    public void render(SpriteBatch batch, Viewport viewPort, ViewableRocketManModel model) {
         float worldW = viewPort.getWorldWidth();
         float worldH = viewPort.getWorldHeight();
+        float margin = model.getMargin();
+
+        float playableW = worldW - 2 * margin;
+        float playableH = worldH - 2 * margin;
 
         float x = model.getBackgroundScrollX();
-        x = x % worldW;
+
+        while (x <= -playableW) {
+            x += playableW;
+        }
+
+        while (x >= playableW) {
+            x -= playableW;
+        }
 
         Texture bg = textures.getTexture("background/background.png");
-        batch.draw(bg, x,0, worldW, worldH);
-        batch.draw(bg, x+worldW, 0, worldW, worldH);
+
+        batch.draw(bg, margin + x - playableW, margin, playableW, playableH);
+        batch.draw(bg, margin + x, margin, playableW, playableH);
+        batch.draw(bg, margin + x + playableW, margin, playableW, playableH);
     }
 }

@@ -17,10 +17,6 @@ import inf112.rocketman.controller.RocketManController;
  * and shape rendering used by menu screens.</p>
  */
 public abstract class AbstractMenuScreen implements Screen {
-
-    protected static final float WORLD_WIDTH = 1200f;
-    protected static final float WORLD_HEIGHT = 800f;
-
     protected final Main game;
     protected final RocketManController controller;
     protected final SpriteBatch batch;
@@ -56,7 +52,11 @@ public abstract class AbstractMenuScreen implements Screen {
             camera = new OrthographicCamera();
         }
         if (viewport == null){
-            viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT, camera);
+            viewport = new FitViewport(
+                    controller.getView().getWorldWidth(),
+                    controller.getView().getWorldHeight(),
+                    camera
+            );
         }
         viewport.apply();
 

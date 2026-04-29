@@ -21,7 +21,7 @@ public class GravitySuitMovement implements MovementBehavior{
      * @param worldHeight the height of the game
      */
     @Override
-    public void update(TPowah player, float dt, boolean movementInput, float worldHeight) {
+    public void update(TPowah player, float dt, boolean movementInput, float worldHeight, float margin) {
         if (gravityUp) {
             player.setVy(player.getVY() - GRAVITY_SUIT_GRAVITY * dt);
         } else {
@@ -35,7 +35,7 @@ public class GravitySuitMovement implements MovementBehavior{
             player.setVy(0);
         }
 
-        player.keepPlayerInsideBounds(worldHeight);
+        player.keepPlayerInsideBounds(worldHeight, margin);
     }
 
     public boolean isGravityUp() {

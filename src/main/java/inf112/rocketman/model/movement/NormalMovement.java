@@ -21,7 +21,7 @@ public class NormalMovement implements MovementBehavior{
      * @param worldHeight the height of the game
      */
     @Override
-    public void update(TPowah player, float dt, boolean movementInput, float worldHeight) {
+    public void update(TPowah player, float dt, boolean movementInput, float worldHeight, float margin) {
         float ay = NORMAL_GRAVITY + (movementInput ? NORMAL_THRUST : 0f);
         player.setVy(player.getVY() + ay * dt);
 
@@ -30,6 +30,6 @@ public class NormalMovement implements MovementBehavior{
 
         player.setY(player.getY() + player.getVY() * dt);
 
-        player.keepPlayerInsideBounds(worldHeight);
+        player.keepPlayerInsideBounds(worldHeight, margin);
     }
 }
