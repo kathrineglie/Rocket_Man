@@ -12,6 +12,7 @@ import inf112.rocketman.model.GameState;
 import inf112.rocketman.view.RocketManView;
 import inf112.rocketman.view.assets.RocketManAudio;
 import inf112.rocketman.view.screen.*;
+import inf112.rocketman.model.WorldDimensions;
 
 /**
  * Main entry point for the RocketMan game.
@@ -20,7 +21,6 @@ import inf112.rocketman.view.screen.*;
  * and switches between screens based on the current game state.</p>
  */
 public class Main extends Game {
-    private SpriteBatch batch;
     private RocketManController controller;
 
     private HomeScreen homeScreen;
@@ -31,20 +31,22 @@ public class Main extends Game {
 
     private GameState lastState = null;
 
+    private static GameModel model;
+
     /**
      * Initializes the game, including the model, view, audio manager,
      * controller, and all screens.
      */
     @Override
     public void create() {
-        batch = new SpriteBatch();
+        SpriteBatch batch = new SpriteBatch();
 
-        Preferences highscores = Gdx.app.getPreferences("Highscores");
+        Preferences highscores = Gdx.app.getPreferences("Highscore");
         Preferences coins = Gdx.app.getPreferences("Coins");
 
-        GameModel model = new GameModel(1200, 700, 25,highscores, coins);
+        model = new GameModel(new WorldDimensions(1200, 800), 50,highscores, coins);
         RocketManView view = new RocketManView();
-        view.create(model.getWorldWidth(), model.getWorldHeight());
+        view.create(model.getWorldDimensions().worldWidth(), model.getWorldHeight());
 
         RocketManAudio audio = new RocketManAudio();
         audio.create();
@@ -101,7 +103,7 @@ public class Main extends Game {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("RocketMan");
-        config.setWindowedMode(1200, 700);
+        config.setWindowedMode((int) model.getWorldDimensions().worldWidth(), (int) model.getWorldDimensions().worldHeight());
 
         new Lwjgl3Application(new Main(), config);
     }

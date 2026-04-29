@@ -185,8 +185,10 @@ public class PlayerRenderer {
      * @param model the viewable game model containing player data
      */
     public void renderDebug(SpriteBatch batch, ViewableRocketManModel model) {
+
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+
         shapeRenderer.end();
     }
 }

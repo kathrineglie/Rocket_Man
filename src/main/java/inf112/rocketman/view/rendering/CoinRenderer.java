@@ -24,7 +24,7 @@ public class CoinRenderer {
     }
 
     /**
-     * Renders all coins currenlty visible in the model.
+     * Renders all coins currently visible in the model.
      *
      * @param batch the sprite batch used for drawing
      * @param model the viewable game model containing the coins

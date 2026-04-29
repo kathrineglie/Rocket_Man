@@ -6,9 +6,9 @@ import inf112.rocketman.model.obstacles.ObstacleManager;
  * This class manages the game's difficulty progression over time
  *
  * It is responsible for increasing difficulty based on the player's current score
- * by adjusting parameteres such as background speed, obstacle speed and score interval
+ * by adjusting parameters such as background speed, obstacle speed and score interval
  *
- * It ensures that the game becomes progressively mroe challenging as well as stopping
+ * It ensures that the game becomes progressively more challenging as well as stopping
  * at a maximum.
  */
 public class DifficultyController {
@@ -51,7 +51,7 @@ public class DifficultyController {
             obstacleManager.setObstacleSpawnInterval(newSpawnInterval);
         bgSpeed = Math.max(MAX_BG_SPEED, bgSpeed - BACKGROUND_SPEED_INCREASE);
         rocketSpeed =  Math.max(MAX_ROCKET_SPEED, rocketSpeed - BACKGROUND_SPEED_INCREASE);
-        scoreInterval = (float) Math.max(MIN_GAME_SCORE_INTERVAL, scoreInterval - SCORE_INTERVAL_DECREASE);
+        scoreInterval = Math.max(MIN_GAME_SCORE_INTERVAL, scoreInterval - SCORE_INTERVAL_DECREASE);
 
         obstacleManager.updateObstacleSpeeds(bgSpeed, rocketSpeed);
         difficulty++;

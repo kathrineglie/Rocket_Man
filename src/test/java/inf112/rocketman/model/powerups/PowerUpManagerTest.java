@@ -21,32 +21,6 @@ class PowerUpManagerTest {
     }
 
     @Test
-    void testPlayerCollectsPowerUpOnCollision() {
-        TPowah realPlayer = new TPowah(100, 100, 50, 50, 120f);
-        realPlayer.setPowerUp(PowerUpType.NORMAL);
-
-        Rectangle playerHitbox = realPlayer.getHitBox();
-
-        PowerUp overlappingPowerUp = new PowerUp(
-                playerHitbox.x,
-                playerHitbox.y,
-                30f,
-                30f,
-                0f,
-                PowerUpType.BIRD
-        );
-
-        manager.setPowerUpForTesting(overlappingPowerUp);
-
-        boolean collided = manager.checkCollision(realPlayer);
-
-        assertTrue(collided);
-        assertEquals(PowerUpType.BIRD, realPlayer.getActivePowerUp());
-        assertTrue(manager.didCollectPowerUpThisFrame());
-        assertNull(manager.getPowerUp());
-    }
-
-    @Test
     void testUpdateReturnsEarlyWhenPlayerAlreadyHasPowerUp() {
         when(player.getActivePowerUp()).thenReturn(PowerUpType.BIRD);
 

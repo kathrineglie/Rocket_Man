@@ -2,6 +2,7 @@ package inf112.rocketman.model.obstacles.flames;
 
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
 import inf112.rocketman.model.obstacles.Obstacle;
 
 /**
@@ -11,33 +12,30 @@ import inf112.rocketman.model.obstacles.Obstacle;
  * for positioning and collision-related geometry.</p>
  */
 public class Flame extends Obstacle {
-    private float angle;
-    private Polygon polygon;
+    private final float angle;
+    private final Polygon polygon;
 
     /**
      * Creates a new flame obstacle.
      *
-     * @param x the x-coordinate of the flame
-     * @param y the y-coordinate of the flame
-     * @param width the width of the flame
-     * @param length the length of the flame
-     * @param vx the horizontal velocity
-     * @param vy the vertical velocity
+     * @param bounds the bounds of the obstacle
+     * @param velocity the velocity of the object
+     * @param ground the ground of the player and the objects
      * @param angle the rotation angle of the flame
      */
-    public Flame(float x, float y, float width, float length, float vx, float vy, float angle) {
-        super(x, y, width, length, vx, vy);
+    public Flame(Rectangle bounds, Velocity velocity, float ground, float angle) {
+        super(bounds, velocity, ground);
         this.angle = angle;
 
         this.polygon = new Polygon(new float[] {
                 0, 0,
-                0, length,
-                width, length,
+                0, bounds.height,
+                width, bounds.height,
                 width, 0
         });
 
-        this.polygon.setOrigin(width/2f, length/2f);
-        this.polygon.setPosition(x - width/2f, y - length/2f);
+        this.polygon.setOrigin(width/2f, bounds.height/2f);
+        this.polygon.setPosition(x - width/2f, y - bounds.height/2f);
         this.polygon.setRotation(angle);
     }
 
@@ -75,5 +73,4 @@ public class Flame extends Obstacle {
         copy.setRotation(polygon.getRotation());
         return copy;
     }
-
 }

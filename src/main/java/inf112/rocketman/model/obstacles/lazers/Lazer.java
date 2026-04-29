@@ -1,5 +1,7 @@
 package inf112.rocketman.model.obstacles.lazers;
 
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
 import inf112.rocketman.model.obstacles.Obstacle;
 
 /**
@@ -17,15 +19,12 @@ public class Lazer extends Obstacle {
     /**
      * Creates a new laser obstacle.
      *
-     * @param x the x-coordinate of the lazer
-     * @param y the y-coordinate of the lazer
-     * @param width the width of the lazer
-     * @param height the height of the lazer
-     * @param vx the horizontal velocity
-     * @param vy the vertical velocity
+     * @param bounds the bounds of the obstacle
+     * @param velocity the velocity of the object
+     * @param ground the ground of the player and the objects
      */
-    public Lazer(float x, float y, float width, float height, float vx, float vy) {
-        super(x, y, width, height, vx, vy);
+    public Lazer(Rectangle bounds, Velocity velocity, float ground) {
+        super(bounds, velocity, ground);
     }
 
     @Override

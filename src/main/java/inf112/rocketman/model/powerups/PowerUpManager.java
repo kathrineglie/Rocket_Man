@@ -1,6 +1,7 @@
 package inf112.rocketman.model.powerups;
 
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.WorldDimensions;
 import inf112.rocketman.model.character.TPowah;
 
 import java.util.Random;
@@ -27,16 +28,14 @@ public class PowerUpManager {
      *
      * @param dt the time since the last frame
      * @param player the player
-     * @param worldWidth world width
-     * @param worldHeight world height
+     * @param dimensions the dimensions of thw world
      * @param ground ground level
      * @param margin screen margin
      * @param bgSpeed current background speed
      */
     public void update(float dt,
                        TPowah player,
-                       float worldWidth,
-                       float worldHeight,
+                       WorldDimensions dimensions,
                        float ground,
                        float margin,
                        float bgSpeed) {
@@ -50,7 +49,7 @@ public class PowerUpManager {
         powerUpTimer -= dt;
 
         if (powerUp == null && powerUpTimer <= 0f) {
-            powerUp = powerUpFactory.newPowerUp(worldWidth, worldHeight, ground, margin, bgSpeed);
+            powerUp = powerUpFactory.newPowerUp(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin, bgSpeed);
             powerUpTimer = getRandomPowerUpSpawnInterval();
         }
 
@@ -58,7 +57,7 @@ public class PowerUpManager {
             powerUp.update(dt);
             powerUp.setVX(bgSpeed);
 
-            if (powerUp.isOfScreen(worldWidth, worldHeight)) {
+            if (powerUp.isOfScreen(dimensions.worldWidth(), dimensions.worldHeight())) {
                 powerUp = null;
             }
         }
