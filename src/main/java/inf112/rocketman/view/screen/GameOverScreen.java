@@ -57,10 +57,10 @@ public class GameOverScreen extends AbstractMenuScreen {
         smallFont.setColor(Color.WHITE);
 
         float nextY = renderRunSummary(width, titleY);
-        renderHighScores(width, nextY);
+        float afterHighScoresY = renderHighScores(width, nextY);
 
         GlyphLayout restartLayout = new GlyphLayout(smallFont, "PRESS ENTER TO RESTART");
-        smallFont.draw(batch, restartLayout, width / 2f - restartLayout.width / 2f, 160);
+        smallFont.draw(batch, restartLayout, width / 2f - restartLayout.width / 2f, afterHighScoresY - 40);
 
         batch.end();
     }
