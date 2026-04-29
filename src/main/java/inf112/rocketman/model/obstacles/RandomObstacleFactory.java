@@ -28,9 +28,9 @@ public class RandomObstacleFactory implements IRandomObstacleFactory {
     }
 
     private Rocket newRocket (float worldWidth, float worldHeight, float ground, float margin, float vx) {
-        float randY = random.nextFloat (margin, worldHeight - margin);
         float rocketHeight = worldHeight / 15;
         float rocketWidth = worldWidth / 10;
+        float randY = random.nextFloat (margin + ground + rocketHeight/2, worldHeight - margin - rocketHeight/2);
 
         Rectangle bounds = new Rectangle(
                 worldWidth - margin - rocketWidth,
@@ -44,7 +44,7 @@ public class RandomObstacleFactory implements IRandomObstacleFactory {
 
     private Lazer newLazer(float worldWidth, float worldHeight, float ground, float margin) {
         float lazerHeight = worldHeight / 15;
-        float randY = random.nextFloat(ground + margin + lazerHeight, worldHeight - margin - lazerHeight);
+        float randY = random.nextFloat(ground + margin + lazerHeight/2, worldHeight - margin - lazerHeight/2);
 
         Rectangle bounds = new Rectangle(
                 margin,
