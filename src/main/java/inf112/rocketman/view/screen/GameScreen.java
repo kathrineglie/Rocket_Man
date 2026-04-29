@@ -1,7 +1,6 @@
 package inf112.rocketman.view.screen;
 
 import com.badlogic.gdx.Screen;
-import inf112.rocketman.Main;
 import inf112.rocketman.controller.RocketManController;
 
 /**
@@ -26,6 +25,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
+        // Required by LibGDX screen interface, not used here
     }
 
     /**
@@ -51,20 +51,27 @@ public class GameScreen implements Screen {
      * Disposes resources used by the game screen.
      */
     @Override public void dispose() {
+        // Required by LibGDX screen interface, not used here
     }
 
     /**
      * Called when the game screen is paused
      */
-    @Override public void pause() {}
+    @Override public void pause() {
+        // Required by LibGDX screen interface, not used here
+    }
 
     /**
      * Called when the game screen resumes after being paused.
      */
-    @Override public void resume() {}
+    @Override public void resume() {
+        // Required by LibGDX screen interface, not used here
+    }
 
     /**
      * Called when this screen is no longer the current screen.
      */
-    @Override public void hide() {}
+    @Override public void hide() {
+        // Required by LibGDX screen interface, not used here
+    }
 }

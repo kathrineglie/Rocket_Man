@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TPowahTest {
+class TPowahTest {
     private TPowah player;
 
     @BeforeEach
@@ -16,7 +16,7 @@ public class TPowahTest {
     }
 
     @Test
-    public void testHitboxIsSmallerThanBounds() {
+    void testHitboxIsSmallerThanBounds() {
         Rectangle bounds = player.getBounds();
         Rectangle hitBox = player.getHitBox();
 
@@ -26,7 +26,7 @@ public class TPowahTest {
     }
 
     @Test
-    public void testPlayerCannotGoBelowGround() {
+    void testPlayerCannotGoBelowGround() {
 
         for (int i = 0; i < 100; i++) {
             player.update(0.1f, false, 800);
@@ -36,7 +36,7 @@ public class TPowahTest {
     }
 
     @Test
-    public void testPlayerCannotGoAboveCeiling() {
+    void testPlayerCannotGoAboveCeiling() {
         float worldHeight = 800f;
 
         for (int i = 0; i < 50; i ++) {
@@ -48,7 +48,7 @@ public class TPowahTest {
     }
 
     @Test
-    public void testVelocityResetsOnGround() {
+    void testVelocityResetsOnGround() {
         player.update(1.0f, false, 800);
         player.update(0.01f, true, 800);
 
@@ -56,14 +56,14 @@ public class TPowahTest {
     }
 
     @Test
-    public void testCollisionDetection() {
+    void testCollisionDetection() {
         Rectangle obstacle = new Rectangle(100, 30, 50, 50);
 
         assertTrue(player.getHitBox().overlaps(obstacle), "Hitbox should overlap with the obstacle");
     }
 
     @Test
-    public void testPowerUpSwitching() {
+    void testPowerUpSwitching() {
         player.setPowerUp(PowerUpType.BIRD);
         assertEquals(PowerUpType.BIRD, player.getActivePowerUp());
 
@@ -72,7 +72,7 @@ public class TPowahTest {
     }
 
     @Test
-    public void testPolyHitBoxFollowsPlayer() {
+    void testPolyHitBoxFollowsPlayer() {
         player.setY(200);
 
         float polyY = player.getPolyHitBox().getY();
@@ -80,7 +80,7 @@ public class TPowahTest {
     }
 
     @Test
-    public void testPlayerSizeIsConstantDuringUpdate() {
+    void testPlayerSizeIsConstantDuringUpdate() {
         player.update(0.1f, true, 800);
 
         assertEquals(50, player.getWidth(), "Width should not change during update");
@@ -88,18 +88,18 @@ public class TPowahTest {
     }
 
     @Test
-    public void testGetMovementInput() {
+    void testGetMovementInput() {
         assertFalse(player.getMovementInput());
     }
 
     @Test
-    public void testSetX() {
+    void testSetX() {
         player.setX(100);
         assertEquals(100, player.getX());
     }
 
     @Test
-    public void testOnCeiling() {
+    void testOnCeiling() {
         float expected = 950;
 
         player.update(0f, true, 1000);

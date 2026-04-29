@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import inf112.rocketman.model.character.TPowah;
 import inf112.rocketman.model.character.ViewableTPowah;
 import inf112.rocketman.model.powerups.PowerUpType;
 import inf112.rocketman.view.TextureProvider;
@@ -87,70 +86,94 @@ public class PlayerRenderer {
         );
     }
 
-    /**
-     * Renders the player using the correct animation frame or texture.
-     *
-     * @param batch the sprite batch used for drawing
-     * @param model the viewable game model containing player state
-     */
-    public void render(SpriteBatch batch, ViewableRocketManModel model){
+    public void render(SpriteBatch batch, ViewableRocketManModel model) {
         ViewableTPowah player = model.getPlayer();
-        TextureRegion region = null;
-        String playerImg = null;
-        boolean hasPirateHat = model.hasPirateHat();
-
-
         stateTime += Gdx.graphics.getDeltaTime();
-        if (player.getActivePowerUp() == PowerUpType.BIRD) {
-            if (hasPirateHat) {
-                region = birdAnimationPirate.getKeyFrame(stateTime, true);
-            } else {
-                region = birdAnimation.getKeyFrame(stateTime, true);
-            }
-        } else if (player.getActivePowerUp() == PowerUpType.ROBOT) {
-            if (player.onGround()) {
-                region = robotAnimation.getKeyFrame(stateTime,true);
-            } else if (player.getMovementInput()){
-                playerImg = "powerups/fly_flame.png";
-            } else {
-                playerImg = "powerups/fly.png";
-            }
-        } else if (player.getActivePowerUp() == PowerUpType.GRAVITY_SUIT) {
-            if (player.onGround()) {
-                region = gravityAnimationDown.getKeyFrame(stateTime, true);
-            } else if (player.onCeiling(model.getWorldHeight())) {
-                region = gravityAnimationUp.getKeyFrame(stateTime, true);
-            } else if (player.isGoingDown()){
-                playerImg = "powerups/down.png";
-            } else {
-                playerImg = "powerups/up.png";
-            }
 
-        } else if (model.usingJetpack()){
-            if (hasPirateHat) {
-                playerImg = "tpowah/jetpack_flames_pirate.png";
-            } else {
-                playerImg = "tpowah/jetpack_flames.png";
-            }
-        } else if (player.onGround()) {
-            if (hasPirateHat) {
-                region = runAnimationPirate.getKeyFrame(stateTime, true);
-            } else {
-                region = runAnimation.getKeyFrame(stateTime, true);
-            }
-        } else {
-            if (hasPirateHat) {
-                playerImg = "tpowah/jetpack_pirate.png";
-            } else {
-                playerImg = "tpowah/jetpack.png";
-            }
-        }
+        TextureRegion region = getPlayerRegion(player, model);
 
         if (region != null) {
             batch.draw(region, player.getX(), player.getY(), player.getWidth(), player.getHeight());
-        } else {
-            batch.draw(textures.getTexture(playerImg), player.getX(), player.getY(), player.getWidth(), player.getHeight());
         }
+    }
+
+    private TextureRegion getPlayerRegion(ViewableTPowah player, ViewableRocketManModel model) {
+        boolean hasPirateHat = model.hasPirateHat();
+
+        if (player.getActivePowerUp() == PowerUpType.BIRD) {
+            return getBirdRegion(hasPirateHat);
+        }
+
+        if (player.getActivePowerUp() == PowerUpType.ROBOT) {
+            return getRobotRegion(player);
+        }
+
+        if (player.getActivePowerUp() == PowerUpType.GRAVITY_SUIT) {
+            return getGravityRegion(player, model);
+        }
+
+        return getNormalRegion(player, model, hasPirateHat);
+    }
+
+    private TextureRegion getBirdRegion(boolean hasPirateHat) {
+        if (hasPirateHat) {
+            return birdAnimationPirate.getKeyFrame(stateTime, true);
+        }
+        return birdAnimation.getKeyFrame(stateTime, true);
+    }
+
+    private TextureRegion getRobotRegion(ViewableTPowah player) {
+        if (player.onGround()) {
+            return robotAnimation.getKeyFrame(stateTime, true);
+        }
+
+        if (player.getMovementInput()) {
+            return new TextureRegion(textures.getTexture("powerups/fly_flame.png"));
+        }
+
+        return new TextureRegion(textures.getTexture("powerups/fly.png"));
+    }
+
+    private TextureRegion getGravityRegion(ViewableTPowah player, ViewableRocketManModel model) {
+        if (player.onGround()) {
+            return gravityAnimationDown.getKeyFrame(stateTime, true);
+        }
+
+        if (player.onCeiling(model.getWorldHeight())) {
+            return gravityAnimationUp.getKeyFrame(stateTime, true);
+        }
+
+        if (player.isGoingDown()) {
+            return new TextureRegion(textures.getTexture("powerups/down.png"));
+        }
+
+        return new TextureRegion(textures.getTexture("powerups/up.png"));
+    }
+
+    private TextureRegion getNormalRegion(
+            ViewableTPowah player,
+            ViewableRocketManModel model,
+            boolean hasPirateHat
+    ) {
+        if (model.usingJetpack()) {
+            return new TextureRegion(textures.getTexture(
+                    hasPirateHat
+                            ? "tpowah/jetpack_flames_pirate.png"
+                            : "tpowah/jetpack_flames.png"
+            ));
+        }
+
+        if (player.onGround()) {
+            return hasPirateHat
+                    ? runAnimationPirate.getKeyFrame(stateTime, true)
+                    : runAnimation.getKeyFrame(stateTime, true);
+        }
+
+        return new TextureRegion(textures.getTexture(
+                hasPirateHat
+                        ? "tpowah/jetpack_pirate.png"
+                        : "tpowah/jetpack.png"
+        ));
     }
 
     /**
@@ -162,18 +185,8 @@ public class PlayerRenderer {
      * @param model the viewable game model containing player data
      */
     public void renderDebug(SpriteBatch batch, ViewableRocketManModel model) {
-//       TPowah player = model.getPlayer();
-
         shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-//        shapeRenderer.setColor(Color.GREEN);
-//        Rectangle b = player.getBounds();
-//        shapeRenderer.rect(b.x, b.y, b.width, b.height);
-//
-//        shapeRenderer.setColor(Color.RED);
-//        Rectangle h = player.getHitBox();
-//        shapeRenderer.rect(h.x, h.y, h.width, h.height);
-
         shapeRenderer.end();
     }
 }

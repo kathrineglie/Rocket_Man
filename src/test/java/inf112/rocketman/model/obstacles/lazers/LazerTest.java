@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LazerTest {
+class LazerTest {
     @Test
     void testLazerNotNull() {
         Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
