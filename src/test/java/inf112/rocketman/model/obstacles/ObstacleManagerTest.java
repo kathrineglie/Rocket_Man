@@ -3,7 +3,6 @@ package inf112.rocketman.model.obstacles;
 import com.badlogic.gdx.math.Rectangle;
 import inf112.rocketman.model.Velocity;
 import inf112.rocketman.model.WorldDimensions;
-import inf112.rocketman.model.obstacles.flames.Flame;
 import inf112.rocketman.model.obstacles.lazers.Lazer;
 import inf112.rocketman.model.obstacles.rockets.Rocket;
 import org.junit.jupiter.api.BeforeEach;
@@ -130,83 +129,83 @@ class ObstacleManagerTest {
         assertEquals(1, list2.size());
     }
 
-//    @Test
-//    void testGetNonOverlappingLazerReturnsNullWhenAllCandidatesOverlap() throws Exception {
-//        TestLazer existing = new TestLazer(100, 100, 200, 20, 0, 0, 50);
-//        existing.setProgressionLevel(3);
-//        manager.addObstacleForTesting(existing);
-//
-//        TestLazer overlappingCandidate = new TestLazer(100, 100, 200, 20, 0, 0, 50);
-//
-//        when(factory.newObstacle(
-//                eq(ObstacleType.LAZER),
-//                any(WorldDimensions.class),
-//                anyFloat(),
-//                anyFloat(),
-//                anyFloat()
-//        )).thenReturn(overlappingCandidate);
-//
-//        var method = ObstacleManager.class.getDeclaredMethod(
-//                "getNonOverlappingLazer",
-//                float.class, float.class, float.class, float.class
-//        );
-//        method.setAccessible(true);
-//
-//        Object result = method.invoke(manager, 1000f, 800f, 120f, 5f);
-//
-//        assertNull(result);
-//    }
+    @Test
+    void testGetNonOverlappingLazerReturnsNullWhenAllCandidatesOverlap() throws Exception {
+        TestLazer existing = new TestLazer(100, 100, 200, 20, 0, 0, 50);
+        existing.setProgressionLevel(3);
+        manager.addObstacleForTesting(existing);
+
+        TestLazer overlappingCandidate = new TestLazer(100, 100, 200, 20, 0, 0, 50);
+
+        when(factory.newObstacle(
+                eq(ObstacleType.LAZER),
+                any(WorldDimensions.class),
+                anyFloat(),
+                anyFloat(),
+                anyFloat()
+        )).thenReturn(overlappingCandidate);
+
+        var method = ObstacleManager.class.getDeclaredMethod(
+                "getNonOverlappingLazer",
+                WorldDimensions.class, float.class, float.class
+        );
+        method.setAccessible(true);
+
+        Object result = method.invoke(manager, new WorldDimensions(1000,800), 120f, 5f);
+
+        assertNull(result);
+    }
 
 
-//    @Test
-//    void testGetNonOverlappingLazerReturnsLazerWhenNoOverlap() throws Exception {
-//        TestLazer candidate = new TestLazer(400, 100, 200, 20, 0, 0, 50);
-//
-//        when(factory.newObstacle(
-//                eq(ObstacleType.LAZER),
-//                new WorldDimensions(anyFloat(), anyFloat()),
-//                anyFloat(),
-//                anyFloat(),
-//                anyFloat()
-//        )).thenReturn(candidate);
-//
-//        var method = ObstacleManager.class.getDeclaredMethod(
-//                "getNonOverlappingLazer",
-//                float.class, float.class, float.class, float.class
-//        );
-//        method.setAccessible(true);
-//
-//        Object result = method.invoke(manager, 1000f, 800f, 120f, 5f);
-//
-//        assertSame(candidate, result);
-//    }
+    @Test
+    void testGetNonOverlappingLazerReturnsLazerWhenNoOverlap() throws Exception {
+        TestLazer candidate = new TestLazer(400, 100, 200, 20, 0, 0, 50);
 
-//    @Test
-//    void testFinishedLazerDoesNotBlockNewLazerSpawn() throws Exception {
-//        TestLazer finishedLazer = new TestLazer(100, 100, 200, 20, 0, 0, 50);
-//        finishedLazer.setProgressionLevel(4);
-//        manager.getObstacleListReference().add(finishedLazer);
-//
-//        TestLazer candidate = new TestLazer(100, 100, 200, 20, 0, 0, 50);
-//
-//        when(factory.newObstacle(
-//                eq(ObstacleType.LAZER),
-//                any(WorldDimensions.class),
-//                anyFloat(),
-//                anyFloat(),
-//                anyFloat()
-//        )).thenReturn(candidate);
-//
-//        var method = ObstacleManager.class.getDeclaredMethod(
-//                "getNonOverlappingLazer",
-//                float.class, float.class, float.class, float.class
-//        );
-//        method.setAccessible(true);
-//
-//        Object result = method.invoke(manager, 1000f, 800f, 120f, 5f);
-//
-//        assertSame(candidate, result);
-//    }
+        when(factory.newObstacle(
+                eq(ObstacleType.LAZER),
+                any(WorldDimensions.class),
+                anyFloat(),
+                anyFloat(),
+                anyFloat()
+        )).thenReturn(candidate);
+
+        var method = ObstacleManager.class.getDeclaredMethod(
+                "getNonOverlappingLazer",
+                WorldDimensions.class, float.class, float.class
+        );
+        method.setAccessible(true);
+
+        Object result = method.invoke(manager, new WorldDimensions(1000,800), 120f, 5f);
+
+        assertSame(candidate, result);
+    }
+
+    @Test
+    void testFinishedLazerDoesNotBlockNewLazerSpawn() throws Exception {
+        TestLazer finishedLazer = new TestLazer(100, 100, 200, 20, 0, 0, 50);
+        finishedLazer.setProgressionLevel(4);
+        manager.getObstacleListReference().add(finishedLazer);
+
+        TestLazer candidate = new TestLazer(100, 100, 200, 20, 0, 0, 50);
+
+        when(factory.newObstacle(
+                eq(ObstacleType.LAZER),
+                any(WorldDimensions.class),
+                anyFloat(),
+                anyFloat(),
+                anyFloat()
+        )).thenReturn(candidate);
+
+        var method = ObstacleManager.class.getDeclaredMethod(
+                "getNonOverlappingLazer",
+                WorldDimensions.class, float.class, float.class
+        );
+        method.setAccessible(true);
+
+        Object result = method.invoke(manager, new WorldDimensions(1000,800), 120f, 5f);
+
+        assertSame(candidate, result);
+    }
 
     private static class TestRocket extends Rocket {
         protected TestRocket(float x, float y, float width, float height, float vx, float vy, float ground) {
@@ -220,9 +219,4 @@ class ObstacleManagerTest {
         }
     }
 
-    private static class TestFlame extends Flame {
-        protected TestFlame(float x, float y, float width, float length, float vx, float vy, float ground, float angle) {
-            super(new Rectangle(x, y, width, length), new Velocity(vx, vy), ground, angle);
-        }
-    }
 }
