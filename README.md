@@ -235,15 +235,15 @@ In this project, such sharing is part of how the game architecture works. For ex
 access to the model and view, and rendering classes need access to shared assets such as fonts and textures. 
 We therefore do not consider these warnings to be critical issues that should necessarily be fixed in this project.
 
-### Mockito
+### 
+When running tests, the output may show a Mockito/ByteBuddy warning about dynamic Java agent loading. 
+This warning is related to how Mockito creates mocks when using newer Java versions. It does not mean that 
+the tests have failed.
+
 When running some tests directly from IntelliJ, the test output may show a Mockito/ByteBuddy warning about dynamic Java
 agent loading. This warning is related to how Mockito creates mocks when tests are started from IntelliJ with newer 
-Java versions. It does not mean that the tests have failed. The tests are successful as long as the process ends with 
-exit code 0.
-Our recommended way to run all tests is:
-```bash
-mvn clean test
-```
+Java versions.
+The tests are successful as long as Maven reports `BUILD SUCCESS`, or IntelliJ ends with exit code `0`.
 
 ### Sonarqube
 We have gone through Sonarqube issues and implemented changes which made our code more secure, clean and effective. 

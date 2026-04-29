@@ -216,10 +216,14 @@ public class RocketManController {
         if (Gdx.input.justTouched()) {
             var mousePos = view.getMouseWorldPosition();
 
-            float pauseX = controllableModel.getWorldDimensions().worldWidth() - 60;
-            float pauseY = controllableModel.getWorldDimensions().worldHeight() - 100;
+            float screenMargin = 20f;
+            float coinY = controllableModel.getWorldDimensions().worldHeight() - 90f;
 
-            if (Math.abs(mousePos.x - pauseX) < 50 && Math.abs(mousePos.y - pauseY) < 50) {
+            float pauseX = controllableModel.getWorldDimensions().worldWidth() - screenMargin - 60f;
+            float pauseY = coinY - 50f;
+
+            if (Math.abs(mousePos.x - pauseX) < 50
+                    && Math.abs(mousePos.y - pauseY) < 50) {
                 controllableModel.pauseGame();
             }
         }
