@@ -10,6 +10,7 @@ public interface MovementBehavior {
      * @param dt time passed since the last frame
      * @param movementInput the input from the player. True if space is pressed
      * @param worldHeight the height of the game
+     * @param margin the distance from the edge of the screen that defines the playable area
      */
-    void update(TPowah player, float dt, boolean movementInput, float worldHeight);
+    void update(TPowah player, float dt, boolean movementInput, float worldHeight, float margin);
 }

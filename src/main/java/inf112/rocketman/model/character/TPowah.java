@@ -16,6 +16,9 @@ public class TPowah implements ITPowah, ViewableTPowah  {
     private MovementBehavior movementBehavior;
     private boolean movementInput = false;
 
+    private float bottomLimit;
+    private float topLimit;
+
 
     public TPowah (float x, float y, float width, float height, float ground) {
         this.bounds = new Rectangle(x, y, width, height);
@@ -24,18 +27,22 @@ public class TPowah implements ITPowah, ViewableTPowah  {
     }
 
     @Override
-    public void update(float dt, boolean movementInput, float worldHeight) {
+    public void update(float dt, boolean movementInput, float worldHeight, float margin) {
         this.movementInput = movementInput;
-        movementBehavior.update(this, dt, movementInput, worldHeight);
+        movementBehavior.update(this, dt, movementInput, worldHeight, margin);
+        keepPlayerInsideBounds(worldHeight, margin);
     }
 
-    public void keepPlayerInsideBounds(float worldHeight) {
-        if (bounds.y < ground) {
-            bounds.y = ground;
+    public void keepPlayerInsideBounds(float worldHeight, float margin) {
+        bottomLimit = ground + margin;
+        topLimit = worldHeight - margin - bounds.height;
+
+        if (bounds.y < bottomLimit) {
+            bounds.y = bottomLimit;
             vy = 0;
         }
-        if (bounds.y > worldHeight - bounds.height) {
-            bounds.y = worldHeight - bounds.height;
+        if (bounds.y > topLimit) {
+            bounds.y = topLimit;
             vy = 0;
         }
     }
@@ -90,7 +97,7 @@ public class TPowah implements ITPowah, ViewableTPowah  {
 
     @Override
     public boolean onCeiling(float worldHeight) {
-        return Math.abs(bounds.y - (worldHeight - bounds.height)) < 0.001f;
+        return Math.abs(bounds.y - topLimit) < 0.001f;
     }
 
     /**
@@ -109,7 +116,7 @@ public class TPowah implements ITPowah, ViewableTPowah  {
 
     @Override
     public boolean onGround() {
-        return bounds.y == ground;
+        return Math.abs(bounds.y - bottomLimit) < 0.001f;
     }
 
     @Override

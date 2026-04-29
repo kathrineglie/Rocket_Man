@@ -27,7 +27,7 @@ public class RobotMovement implements MovementBehavior{
      * @param worldHeight the height of the game
      */
     @Override
-    public void update(TPowah player, float dt, boolean movementInput, float worldHeight) {
+    public void update(TPowah player, float dt, boolean movementInput, float worldHeight, float margin) {
         if (!movementInput && player.onGround()) {
             robotIsJumping = false;
             robotGoingDown = false;
@@ -53,7 +53,7 @@ public class RobotMovement implements MovementBehavior{
         }
 
         player.setY(player.getY() + player.getVY() * dt);
-        player.keepPlayerInsideBounds(worldHeight);
+        player.keepPlayerInsideBounds(worldHeight, margin);
     }
 
     public boolean getRobotIsJumping() {

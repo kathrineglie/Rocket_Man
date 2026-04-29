@@ -21,7 +21,7 @@ public class BirdMovement implements MovementBehavior{
      * @param worldHeight the height of the game
      */
     @Override
-    public void update(TPowah player, float dt, boolean movementInput, float worldHeight) {
+    public void update(TPowah player, float dt, boolean movementInput, float worldHeight, float margin) {
 
         if (movementInput){
             player.setVy(BIRD_FLAP_STRENGTH);
@@ -34,6 +34,6 @@ public class BirdMovement implements MovementBehavior{
         }
 
         player.setY(player.getY() + player.getVY() * dt);
-        player.keepPlayerInsideBounds(worldHeight);
+        player.keepPlayerInsideBounds(worldHeight, margin);
     }
 }

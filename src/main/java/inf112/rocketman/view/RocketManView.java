@@ -89,8 +89,31 @@ public class RocketManView {
 		hudRenderer.render(batch, viewport, model);
 
 		batch.end();
+		drawMargins(model.getMargin());
 		playerRenderer.renderDebug(batch, model);
 	}
+
+	private void drawMargins(float margin) {
+		shape.setProjectionMatrix(viewport.getCamera().combined);
+		shape.begin(ShapeRenderer.ShapeType.Filled);
+
+		shape.setColor(new Color(246f/255f, 136f/255f, 197f/255f, 1f));
+
+		float worldW = viewport.getWorldWidth();
+		float worldH = viewport.getWorldHeight();
+
+		shape.rect(0, 0, margin, worldH);
+
+		shape.rect(worldW - margin, 0, margin, worldH);
+
+		shape.rect(0, 0, worldW, margin);
+
+		shape.rect(0, worldH - margin, worldW, margin);
+
+		shape.end();
+	}
+
+
 
 	/**
 	 * Returns the graphical assets used by the view.

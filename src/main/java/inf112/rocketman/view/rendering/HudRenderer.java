@@ -40,31 +40,31 @@ public class HudRenderer {
 
     private void drawHud(SpriteBatch batch, Viewport viewport, ViewableRocketManModel model) {
         font.getData().setScale(1.25f);
-        font.setColor(Color.WHITE);
 
-        float margin = 15f;
+        float screenMargin = model.getMargin();
+        float padding = 15f;
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
 
+        font.setColor(Color.WHITE);
         String scoreText = "Score: " + model.getGameScore() + "M";
         layout.setText(font, scoreText);
-        float scoreX = worldWidth - layout.width - margin;
-        float scoreY = worldHeight - margin;
+        float scoreX = worldWidth - screenMargin - layout.width - padding;
+        float scoreY = worldHeight - screenMargin - padding;
         font.draw(batch, layout, scoreX, scoreY);
 
         font.setColor(Color.ORANGE);
         String coinText = "Coins: " + model.getCoinCount();
         layout.setText(font, coinText);
-        float coinX = worldWidth - layout.width - margin;
-        float coinY = worldHeight - margin - 40f;
+        float coinX = worldWidth - screenMargin - layout.width - padding;
+        float coinY = scoreY - 40f;
         font.draw(batch, layout, coinX, coinY);
 
-        font.getData().setScale(1.25f);
         font.setColor(Color.WHITE);
-        float pauseX = worldWidth - 60;
-        float pauseY = worldHeight - 100;
+        float pauseX = worldWidth - screenMargin - 60f;
+        float pauseY = coinY - 50f;
         font.draw(batch, "||", pauseX, pauseY);
-        font.getData().setScale(1.0f);
 
+        font.getData().setScale(1.0f);
     }
 }

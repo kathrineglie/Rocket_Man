@@ -12,8 +12,9 @@ public interface ITPowah {
      * @param dt dt time between each frame
      * @param movementInput The controller input
      * @param worldHeight Height of the gameworld. So it is screen height minus the margin
+     * @param margin the distance from the edge of the screen that defines the playable area
      */
-    void update(float dt, boolean movementInput, float worldHeight);
+    void update(float dt, boolean movementInput, float worldHeight, float margin);
 
     /**
      * Gets the correct bounds for the character and is used to draw the character
