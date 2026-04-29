@@ -19,18 +19,24 @@ class BirdMovementTest {
 
     @Test
     void testBirdPowerUpFlap() {
-        player.update(0.1f, true, 800);
+        float worldHeight = 800f;
+        float margin = 50f;
+
+        player.update(0f, false, worldHeight, margin);
+        float initialY = player.getY();
+
+        player.update(0.1f, true, worldHeight, margin);
 
         assertEquals(PowerUpType.BIRD, player.getActivePowerUp());
         assertTrue(player.isGoingUp());
-        assertTrue(player.getY() > 30);
+        assertTrue(player.getY() > initialY);
     }
 
     @Test
     void testUpdateBird() {
         player.setY(800);
         player.setVy(-1000);
-        player.update(0.1f, false, 1000);
+        player.update(0.1f, false, 1000, 50);
 
         assertEquals(-900, player.getVY());
     }
