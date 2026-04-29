@@ -1,5 +1,7 @@
 package inf112.rocketman.model.obstacles.rockets;
 
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
 import inf112.rocketman.model.obstacles.Obstacle;
 
 /**
@@ -16,15 +18,12 @@ public class Rocket extends Obstacle {
     /**
      * Creates a new rocket obstacle.
      *
-     * @param x the x-coordinate of the rocket
-     * @param y the y-coordinate of the rocket
-     * @param width the width of the rocket
-     * @param height the height of the rocket
-     * @param vx the horizontal velocity
-     * @param vy the vertical velocity
+     * @param bounds the bounds of the obstacle
+     * @param velocity the velocity of the object
+     * @param ground the ground of the player and the objects
      */
-    public Rocket(float x, float y, float width, float height, float vx, float vy) {
-        super(x, y, width, height, vx, vy);
+    public Rocket(Rectangle bounds, Velocity velocity, float ground) {
+        super(bounds, velocity, ground);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package inf112.rocketman.model.obstacles;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
+import inf112.rocketman.model.WorldDimensions;
 import inf112.rocketman.model.obstacles.flames.Flame;
 import inf112.rocketman.model.obstacles.lazers.Lazer;
 import inf112.rocketman.model.obstacles.rockets.Rocket;
@@ -11,25 +14,61 @@ public class RandomObstacleFactory implements IRandomObstacleFactory {
     private final Random random = new Random();
 
     @Override
-    public Obstacle newObstacle(ObstacleType type, float worldWidth, float worldHeight, float ground, float margin, float vx) {
+    public Obstacle newObstacle(ObstacleType type, WorldDimensions dimensions, float ground, float margin, float vx) {
         if (type == ObstacleType.ROCKET) {
-            float randY = random.nextFloat(0 + margin, worldHeight - margin);
-            float rocketHeight = worldHeight / 15;
-            float rocketWidth = worldWidth / 10;
-            return new Rocket(worldWidth - margin - rocketWidth, randY - rocketHeight, rocketWidth, rocketHeight, vx, 0f);
+            return newRocket(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin, vx);
         } else if (type == ObstacleType.LAZER) {
-            float lazerHeight = worldHeight / 15;
-            float randY = random.nextFloat(ground + margin + lazerHeight, worldHeight - margin - lazerHeight);
-            return new Lazer(worldWidth - margin - worldWidth, randY, worldWidth, lazerHeight, 0, 0f);
+            return newLazer(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin);
         } else {
-            // Calculates random length of the lazer
-            float minNum = Math.min(worldWidth, worldHeight);
-            float length = random.nextInt((int) minNum/7, (int) minNum/3);
-            float thickness = minNum / 20f;
-            float randAngle = random.nextFloat(360f);
-            float centerX = worldWidth + margin + length; // Spawns the flame outside of the screen
-            float centerY = MathUtils.random(margin + length, worldHeight - margin - length);
-            return new Flame(centerX, centerY, thickness, length, vx, 0, randAngle);
+            return newFlame(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin, vx);
         }
+    }
+
+    private Rocket newRocket (float worldWidth, float worldHeight, float ground, float margin, float vx) {
+        float randY = random.nextFloat (margin, worldHeight - margin);
+        float rocketHeight = worldHeight / 15;
+        float rocketWidth = worldWidth / 10;
+
+        Rectangle bounds = new Rectangle(
+                worldWidth - margin - rocketWidth,
+                randY - rocketHeight,
+                rocketWidth,
+                rocketHeight
+        );
+
+        return new Rocket(bounds, new Velocity(vx, 0f), ground);
+    }
+
+    private Lazer newLazer(float worldWidth, float worldHeight, float ground, float margin) {
+        float lazerHeight = worldHeight / 15;
+        float randY = random.nextFloat(ground + margin + lazerHeight, worldHeight - margin - lazerHeight);
+
+        Rectangle bounds = new Rectangle(
+                worldWidth - margin - worldWidth,
+                randY,
+                worldWidth,
+                lazerHeight
+        );
+
+        return new Lazer(bounds, new Velocity(0f, 0f), ground);
+    }
+
+    private Flame newFlame(float worldWidth, float worldHeight, float ground, float margin, float vx) {
+        float minNum = Math.min(worldWidth, worldHeight);
+        float length = random.nextInt((int) minNum/7, (int) minNum/3);
+        float thickness = minNum / 20f;
+
+        float randAngle = random.nextFloat(360f);
+        float centerX = worldWidth + margin + length; // Spawns the flame outside of the screen so it float naturally onto the screen
+        float centerY = MathUtils.random(margin + length, worldHeight - margin - length);
+
+        Rectangle bounds = new Rectangle(
+                centerX,
+                centerY,
+                thickness,
+                length
+        );
+
+        return new Flame(bounds, new Velocity(vx, 0), 0, randAngle);
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class GameModelTest {
+public class GameModelTest {
     private Preferences highscores;
     private Preferences coins;
     private GameModel model;
@@ -40,14 +40,15 @@ class GameModelTest {
         when(coins.getInteger(anyString(), anyInt())).thenAnswer(invocation -> invocation.getArgument(1));
         when(coins.getInteger(anyString())).thenReturn(0);
 
-        model = new GameModel(1000, 800, 5, highscores, coins);
+        model = new GameModel(new WorldDimensions(1000, 800), 5, highscores, coins);
 
 
     }
 
 
     @Test
-    void testPauseGameChangesState() {
+    public void testPauseGameChangesState() {
+        GameModel model = new GameModel(new WorldDimensions(100, 800),5, highscores, coins);
         model.startNewGame();
 
         model.pauseGame();
@@ -56,7 +57,8 @@ class GameModelTest {
     }
 
     @Test
-    void testResumeGameChangesStateBackToPlaying() {
+    public void testResumeGameChangesStateBackToPlaying() {
+        GameModel model = new GameModel(new WorldDimensions(100, 800),5, highscores, coins);
         model.pauseGame();
 
         model.resumeGame();
@@ -245,6 +247,7 @@ class GameModelTest {
 
         assertEquals(initialScore, model.getGameScore());
     }
+
     @Test
     void testHasGravitySuitPowerUp() {
         model.startNewGame();
@@ -253,7 +256,6 @@ class GameModelTest {
         model.setPlayerPowerUp(PowerUpType.GRAVITY_SUIT);
 
         assertTrue(model.hasGravitySuitPowerUp());
-
     }
 
     @Test
@@ -276,8 +278,8 @@ class GameModelTest {
     @Test
     void testGetWorldDimensions() {
 
-        assertEquals(1000f, model.getWorldWidth());
-        assertEquals(800f, model.getWorldHeight());
+        assertEquals(1000f, model.getWorldDimensions().worldWidth());
+        assertEquals(800f, model.getWorldDimensions().worldHeight());
     }
 
     @Test
@@ -301,8 +303,6 @@ class GameModelTest {
         assertFalse(model.didCollectPowerUpThisFrame());
     }
 
-
-
     @Test
     void testGoToHomeScreenClearsObstaclesAndResetsScore() {
         model.startNewGame();
@@ -317,9 +317,6 @@ class GameModelTest {
         assertEquals(0, model.getObstacles().size());
     }
 
-
-
-
     @Test
     void testGetSavedCoinsForPlayer() {
         when(coins.getInteger("Bob", 0)).thenReturn(7);
@@ -329,7 +326,6 @@ class GameModelTest {
 
         assertEquals(7, savedCoins);
     }
-
 
     @Test
     void testGetCoinListIsEmptyAtStart() {
@@ -367,8 +363,6 @@ class GameModelTest {
     @Test
     void testPirateHat() {
         when(coins.getInteger("Bob", 0)).thenReturn(50);
-
-        model = new GameModel(1000, 800, 5, highscores, coins);
         model.setPlayerName("Bob");
         model.startNewGame();
         model.update(0.1f, true);

@@ -7,7 +7,7 @@ public interface ViewableTPowah {
 
     /**
      * Gets the current X value for the actual bounds and not the hitbox
-     * @return x cooridnate of the character
+     * @return x coordinate of the character
      */
     float getX();
 
@@ -40,7 +40,7 @@ public interface ViewableTPowah {
     Rectangle getHitBox();
 
     /**
-     * Gets the current acive powerup for the player
+     * Gets the current active powerup for the player
      *
      * @return the current powerup
      */

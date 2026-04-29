@@ -1,5 +1,7 @@
 package inf112.rocketman.model.powerups;
 
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
 import inf112.rocketman.model.obstacles.Obstacle;
 
 /**
@@ -13,15 +15,13 @@ public class PowerUp extends Obstacle {
     /**
      * Creates a new power-up
      *
-     * @param x the x-coordinate of the power-up
-     * @param y the y-coordinate of the power-up
-     * @param width the width of the power-up
-     * @param height the height of the power-up
-     * @param vx the horizontal velocity
+     * @param bounds the bounds of the coin
+     * @param velocity the velocity of the powerup box
+     * @param ground the ground of the player and obstacles
      * @param type the type of the power-up
      */
-    public PowerUp(float x, float y, float width, float height, float vx, PowerUpType type) {
-        super(x, y, width, height, vx, 0);
+    public PowerUp(Rectangle bounds, Velocity velocity, float ground, PowerUpType type) {
+        super(bounds, velocity, ground);
         this.type = type;
     }
 

@@ -1,6 +1,7 @@
 package inf112.rocketman.model.coins;
 
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.WorldDimensions;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,16 +31,14 @@ public class CoinManager {
      *
      * @param dt time since last frame
      * @param playerHitbox player hitbox used for collision
-     * @param worldWidth world width
-     * @param worldHeight world height
+     * @param dimensions the dimensions of the world
      * @param ground ground level
      * @param margin margin used for spawning/off-screen checks
      * @param bgSpeed current background speed
      */
     public void update(float dt,
                        Rectangle playerHitbox,
-                       float worldWidth,
-                       float worldHeight,
+                       WorldDimensions dimensions,
                        float ground,
                        float margin,
                        float bgSpeed) {
@@ -48,7 +47,7 @@ public class CoinManager {
 
         coinTimer -= dt;
         if (coinTimer <= 0f) {
-            coinList.add(coinFactory.newCoin(worldWidth, worldHeight, ground, margin, bgSpeed));
+            coinList.add(coinFactory.newCoin(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin, bgSpeed));
             coinTimer = random.nextFloat(MIN_COIN_SPAWN_INTERVAL, MAX_COIN_SPAWN_INTERVAL);
         }
 
@@ -65,7 +64,7 @@ public class CoinManager {
                 continue;
             }
 
-            if (coin.isOfScreen(worldHeight, margin)) {
+            if (coin.isOfScreen(dimensions.worldHeight(), margin)) {
                 iterator.remove();
             }
         }

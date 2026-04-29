@@ -26,8 +26,6 @@ import java.util.*;
  * responsibilities to the dedicated manager classes.
  */
 public class GameModel implements ViewableRocketManModel, ControllableRocketManModel {
-    private final float worldHeight;
-    private final float worldWidth;
     private final float margin;
 
     private GameState gameState = GameState.HOME_SCREEN;
@@ -39,6 +37,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private static final float PLAYER_X = 150f;
     private static final float PLAYER_Y = 120f;
     private static final float GROUND = 120f;
+    private final WorldDimensions dimensions;
 
     private float bgScrollX = 0f;
 
@@ -53,14 +52,13 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private final PowerUpManager powerUpManager = new PowerUpManager(new RandomPowerUpFactory());
     private final ObstacleManager obstacleManager = new ObstacleManager(new RandomObstacleFactory());
 
-    public GameModel(float worldWidth, float worldHeight, float margin, Preferences highscores, Preferences coins) {
-        float pWidth = worldWidth/13;
-        float pHeight= worldHeight/7;
+    public GameModel(WorldDimensions dimensions, float margin, Preferences highscores, Preferences coins) {
+        float pWidth = dimensions.worldWidth()/13;
+        float pHeight= dimensions.worldHeight()/7;
         player = new TPowah(PLAYER_X,PLAYER_Y , pWidth, pHeight, GROUND);
         player.setPowerUp(PowerUpType.NORMAL);
 
-        this.worldWidth = worldWidth;
-        this.worldHeight = worldHeight;
+        this.dimensions = dimensions;
         this.margin = margin;
 
         this.difficultyManager = new DifficultyController(obstacleManager);
@@ -82,7 +80,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         difficultyManager.updateDifficulty(gameScore);
 
         usingJetpack = movingUpward;
-        player.update(dt, usingJetpack, worldHeight, margin);
+        player.update(dt, usingJetpack, dimensions.worldHeight(), margin);
 
         updateBackground(dt);
         updateObstacles(dt);
@@ -132,8 +130,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     private void updateObstacles(float dt) {
         obstacleManager.update(
                 dt,
-                worldWidth,
-                worldHeight,
+                dimensions,
                 GROUND,
                 margin,
                 difficultyManager.getDifficulty(),
@@ -151,8 +148,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         powerUpManager.update(
                 dt,
                 player,
-                worldWidth,
-                worldHeight,
+                dimensions,
                 GROUND,
                 margin,
                 difficultyManager.getBgSpeed()
@@ -168,8 +164,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
         coinManager.update(
                 dt,
                 getPlayerHitbox(),
-                worldWidth,
-                worldHeight,
+                dimensions,
                 GROUND,
                 margin,
                 difficultyManager.getBgSpeed());
@@ -250,13 +245,8 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     }
 
     @Override
-    public float getWorldHeight(){
-        return worldHeight;
-    }
-
-    @Override
-    public float getWorldWidth(){
-        return worldWidth;
+    public WorldDimensions getWorldDimensions() {
+        return dimensions;
     }
 
     @Override
@@ -295,7 +285,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public boolean onGround() {
-        return player.onGround();
+        return player.getY() == GROUND + margin;
     }
 
     @Override
@@ -330,9 +320,6 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
     public void resumeGame(){
          this.gameState = GameState.PLAYING;
     }
-
-    @Override
-    public void endGame(){}
 
     @Override
     public void showInstructions() {

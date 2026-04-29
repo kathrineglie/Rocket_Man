@@ -81,7 +81,7 @@ public interface ITPowah {
 
     /**
      * Gets the current X value for the actual bounds and not the hitbox
-     * @return x cooridnate of the character
+     * @return x coordinate of the character
      */
     float getX();
 

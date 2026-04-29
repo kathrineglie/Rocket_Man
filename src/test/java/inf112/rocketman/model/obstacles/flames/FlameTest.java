@@ -1,39 +1,40 @@
 package inf112.rocketman.model.obstacles.flames;
 
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class FlameTest {
+    private Flame flame;
+
+    @BeforeEach
+    void setup() {
+        flame = new Flame(new Rectangle(100, 200, 20, 30), new Velocity(0, 0),50, 45);
+    }
 
     @Test
     void flameUpdate() {
-        Flame flame = new Flame(100, 200, 20, 30, 50, 0, 0);
-
         flame.update(1f);
 
-        assertEquals(150, flame.getX());
+        assertEquals(100, flame.getX());
         assertEquals(200, flame.getY());
     }
 
     @Test
     void rectangleNull() {
-        Flame flame = new Flame(100, 200, 20, 30, 50, 0, 0);
-
         assertNull(flame.getHitBox());
     }
 
     @Test
     void testPolygonNotNull() {
-        Flame flame = new Flame(100, 200, 20, 30, -50, 0, 0);
-
         assertNotNull(flame.getPolygon());
     }
 
     @Test
     void getAngleTest() {
-        Flame flame = new Flame(100, 200, 20, 30, -50, 0, 45);
-
         assertEquals(45, flame.getAngle());
     }
 }

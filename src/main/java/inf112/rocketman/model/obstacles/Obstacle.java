@@ -1,42 +1,50 @@
 package inf112.rocketman.model.obstacles;
 
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
+import inf112.rocketman.model.WorldDimensions;
 
 /**
  * Represents a general obstacle in the game world.
  *
- * <p>An obstacle has a position, size, velocity, and a rectangular  htibox
+ * <p>An obstacle has a position, size, velocity, and a rectangular  hitbox
  * used for collision detection.</p>
  */
 public class Obstacle implements IObstacle {
-    protected float x, y;
+    protected float x;
+    protected float y;
     protected float width, height;
-    protected float vx, vy; // the velocity of the object
+    protected float vx;
+    protected float vy; // the velocity of the object
     protected float HITBOX_OFFSET = 3;
-    protected float GROUND = 170f;
+    protected float ground;
 
     protected Rectangle hitbox = new Rectangle();
 
     /**
      * Creates a new obstacle with the given position, size, and velocity.
      *
-     * @param x the x-coordinate of the obstacle
-     * @param y the y-coordinate of the obstacle
-     * @param width the width of the obstacle
-     * @param height the height of the obstacle
-     * @param vx the horizontal velocity
-     * @param vy the vertical velocity
+     * @param bounds the bounds for the obstacle
+     * @param velocity the velocity of the obstacle
      */
-    protected Obstacle (float x, float y,
-                     float width, float height,
-                     float vx, float vy) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.vx = vx;
-        this.vy = vy;
+    protected Obstacle (Rectangle bounds, Velocity velocity, float ground) {
+        this.x = bounds.getX();
+        this.y = bounds.getY();
+        this.width = bounds.getWidth();
+        this.height = bounds.getHeight();
+        this.vx = velocity.vx();
+        this.vy = velocity.vy();
+        this.ground = ground;
 
+        updateHitbox();
+
+        this.hitbox.set(x + HITBOX_OFFSET,
+                y + HITBOX_OFFSET,
+                width - 2*HITBOX_OFFSET,
+                height - 2*HITBOX_OFFSET);
+    }
+
+    protected void updateHitbox() {
         this.hitbox.set(x + HITBOX_OFFSET,
                 y + HITBOX_OFFSET,
                 width - 2*HITBOX_OFFSET,
@@ -48,10 +56,7 @@ public class Obstacle implements IObstacle {
         x += vx * dt;
         y += vy * dt;
 
-        hitbox.set(x + HITBOX_OFFSET,
-                y + HITBOX_OFFSET,
-                width - 2*HITBOX_OFFSET,
-                height - 2*HITBOX_OFFSET);
+        updateHitbox();
     }
 
     @Override
@@ -60,8 +65,8 @@ public class Obstacle implements IObstacle {
     }
 
     @Override
-    public boolean isOfScreen(float worldWidth, float worldHeight) {
-        return (x + width < 0 || y + height < GROUND || y > worldHeight);
+    public boolean isOfScreen(WorldDimensions dimensions) {
+        return (x + width < 0 || y + height < ground || y > dimensions.worldHeight());
     }
 
     @Override

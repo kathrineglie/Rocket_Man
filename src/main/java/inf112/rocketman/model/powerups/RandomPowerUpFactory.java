@@ -1,6 +1,9 @@
 package inf112.rocketman.model.powerups;
 
 
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +23,9 @@ public class RandomPowerUpFactory implements PowerUpFactory{
         float y = random.nextFloat(margin + ground, worldHeight - margin - size);
 
         PowerUpType type = getRandomType();
-        return new PowerUp(x,y, size, size, bgSpeed ,type);
+        Rectangle bounds = new Rectangle(x, y, size, size);
+
+        return new PowerUp(bounds, new Velocity(bgSpeed, 0), ground, type);
     }
 
     private PowerUpType getRandomType(){

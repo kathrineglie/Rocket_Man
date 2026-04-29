@@ -1,5 +1,6 @@
 package inf112.rocketman.model.obstacles;
 
+import inf112.rocketman.model.WorldDimensions;
 import inf112.rocketman.model.obstacles.flames.Flame;
 import inf112.rocketman.model.obstacles.lazers.Lazer;
 import inf112.rocketman.model.obstacles.rockets.Rocket;
@@ -29,19 +30,18 @@ public class ObstacleManager {
      * Updates obstacle spawning, movement and cleanup.
      *
      * @param dt time since last frame
-     * @param worldWidth world width
-     * @param worldHeight world height
+     * @param dimensions the dimensions of the world
      * @param ground ground level
      * @param margin margin
      * @param difficulty current difficulty
      * @param bgSpeed current background speed
      * @param rocketSpeed current rocket speed
      */
-    public void update(float dt, float worldWidth, float worldHeight, float ground, float margin, int difficulty, float bgSpeed, float rocketSpeed) {
+    public void update(float dt, WorldDimensions dimensions, float ground, float margin, int difficulty, float bgSpeed, float rocketSpeed) {
         obstacleTimer -= dt;
 
         if (obstacleTimer <= 0f) {
-            obstacles.add(getRandomObstacle(worldWidth, worldHeight, ground, margin, difficulty, bgSpeed, rocketSpeed));
+            obstacles.add(getRandomObstacle(dimensions, ground, margin, difficulty, bgSpeed, rocketSpeed));
             obstacleTimer = obstacleSpawnInterval;
         }
 
@@ -50,12 +50,12 @@ public class ObstacleManager {
             IObstacle obstacle = iterator.next();
             obstacle.update(dt);
 
-            if (obstacle instanceof Rocket && obstacle.isOfScreen(worldWidth, worldHeight)) {
-                iterator.remove();
-            } else if (obstacle instanceof Lazer lazer && lazer.getProgressionLevel() == 4) {
-                iterator.remove();
-            } else if (obstacle instanceof Flame && obstacle.isOfScreen(worldWidth, worldHeight)) {
-                iterator.remove();
+            switch (obstacle) {
+                case Rocket rocket when rocket.isOfScreen(dimensions) -> iterator.remove();
+                case Lazer lazer when lazer.getProgressionLevel() == 4 -> iterator.remove();
+                case Flame flame when flame.isOfScreen(dimensions) -> iterator.remove();
+                default -> {
+                }
             }
         }
     }
@@ -63,8 +63,7 @@ public class ObstacleManager {
     /**
      * Gets a random obstacle based on the current difficulty.
      *
-     * @param worldWidth the width of the game world
-     * @param worldHeight the height of the game world
+     * @param dimensions the dimensions of the world
      * @param ground the ground level
      * @param margin the screen margin
      * @param difficulty the current difficulty level
@@ -72,8 +71,7 @@ public class ObstacleManager {
      * @param rocketSpeed the current rocket speed
      * @return a random obstacle
      */
-    private Obstacle getRandomObstacle(float worldWidth,
-                                       float worldHeight,
+    private Obstacle getRandomObstacle(WorldDimensions dimensions,
                                        float ground,
                                        float margin,
                                        int difficulty,
@@ -85,29 +83,26 @@ public class ObstacleManager {
         return switch (randNum) {
             case 0 -> obstacleFactory.newObstacle(
                     ObstacleType.FLAME,
-                    worldWidth,
-                    worldHeight,
+                    dimensions,
                     ground,
                     margin,
                     bgSpeed
             );
             case 1 -> obstacleFactory.newObstacle(
                     ObstacleType.ROCKET,
-                    worldWidth,
-                    worldHeight,
+                    dimensions,
                     ground,
                     margin,
                     rocketSpeed
             );
             case 2 -> {
-                Lazer lazer = getNonOverlappingLazer(worldWidth, worldHeight, ground, margin);
+                Lazer lazer = getNonOverlappingLazer(dimensions, ground, margin);
                 if (lazer != null) {
                     yield lazer;
                 } else {
                     yield obstacleFactory.newObstacle(
                             ObstacleType.ROCKET,
-                            worldWidth,
-                            worldHeight,
+                            dimensions,
                             ground,
                             margin,
                             rocketSpeed
@@ -138,23 +133,18 @@ public class ObstacleManager {
     /**
      * Tries to create a lazer that does not overlap with existing lazers.
      *
-     * @param worldWidth the width of the game world
-     * @param worldHeight the height of the game world
+     * @param dimensions the dimensions of the world
      * @param ground the ground level
      * @param margin the screen margin
      * @return a non-overlapping lazer, or null if none could be made
      */
-    private Lazer getNonOverlappingLazer(float worldWidth,
-                                         float worldHeight,
-                                         float ground,
-                                         float margin) {
+    private Lazer getNonOverlappingLazer(WorldDimensions dimensions, float ground, float margin) {
         Obstacle candidate;
 
         for (int i = 0; i < MAX_LAZER_SPAWN_ATTEMPTS; i++) {
             candidate = obstacleFactory.newObstacle(
                     ObstacleType.LAZER,
-                    worldWidth,
-                    worldHeight,
+                    dimensions,
                     ground,
                     margin,
                     0
@@ -236,7 +226,6 @@ public class ObstacleManager {
         this.obstacleSpawnInterval = obstacleSpawnInterval;
     }
 
-
     /**
      * Adds an obstacle directly to the manager.
      * Intended for use in tests only.
@@ -246,7 +235,4 @@ public class ObstacleManager {
     protected void addObstacleForTesting(IObstacle obstacle) {
         obstacles.add(obstacle);
     }
-
-
-
 }

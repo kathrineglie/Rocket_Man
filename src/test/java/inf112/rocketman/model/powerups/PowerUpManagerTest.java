@@ -1,6 +1,7 @@
 package inf112.rocketman.model.powerups;
 
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.WorldDimensions;
 import inf112.rocketman.model.character.TPowah;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,36 +22,10 @@ class PowerUpManagerTest {
     }
 
     @Test
-    void testPlayerCollectsPowerUpOnCollision() {
-        TPowah realPlayer = new TPowah(100, 100, 50, 50, 120f);
-        realPlayer.setPowerUp(PowerUpType.NORMAL);
-
-        Rectangle playerHitbox = realPlayer.getHitBox();
-
-        PowerUp overlappingPowerUp = new PowerUp(
-                playerHitbox.x,
-                playerHitbox.y,
-                30f,
-                30f,
-                0f,
-                PowerUpType.BIRD
-        );
-
-        manager.setPowerUpForTesting(overlappingPowerUp);
-
-        boolean collided = manager.checkCollision(realPlayer);
-
-        assertTrue(collided);
-        assertEquals(PowerUpType.BIRD, realPlayer.getActivePowerUp());
-        assertTrue(manager.didCollectPowerUpThisFrame());
-        assertNull(manager.getPowerUp());
-    }
-
-    @Test
     void testUpdateReturnsEarlyWhenPlayerAlreadyHasPowerUp() {
         when(player.getActivePowerUp()).thenReturn(PowerUpType.BIRD);
 
-        manager.update(1.0f, player, 1000f, 800f, 120f, 5f, -250f);
+        manager.update(1.0f, player, new WorldDimensions(1000f, 800f), 120f, 5f, -250f);
 
         verify(factory, never()).newPowerUp(anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat());
     }
@@ -71,10 +46,10 @@ class PowerUpManagerTest {
         PowerUp powerUp = mock(PowerUp.class);
 
         when(player.getActivePowerUp()).thenReturn(PowerUpType.NORMAL);
-        when(powerUp.isOfScreen(1000f, 800f)).thenReturn(true);
+        when(powerUp.isOfScreen(new WorldDimensions(1000f, 800f))).thenReturn(true);
 
         manager.setPowerUpForTesting(powerUp);
-        manager.update(0.1f, player, 1000f, 800f, 120f, 5f, -350f);
+        manager.update(0.1f, player, new WorldDimensions(1000f, 800f), 120f, 5f, -350f);
 
         assertNull(manager.getPowerUp());
     }

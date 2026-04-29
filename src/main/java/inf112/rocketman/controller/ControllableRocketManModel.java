@@ -1,6 +1,7 @@
 package inf112.rocketman.controller;
 
 import inf112.rocketman.model.GameState;
+import inf112.rocketman.model.WorldDimensions;
 
 /**
  * Interface representing the controllable parts of the RocketMan game model.
@@ -25,14 +26,9 @@ public interface ControllableRocketManModel {
     GameState getGameState();
 
     /**
-     * @return The total height of the game world in world units.
+     * @return The world dimensions of the game
      */
-    float getWorldHeight();
-
-    /**
-     * @return The total width of the game world in world units.
-     */
-    float getWorldWidth();
+    WorldDimensions getWorldDimensions();
 
     /**
      * Transitions the game from the menu/home screen to active playing state.
@@ -55,10 +51,8 @@ public interface ControllableRocketManModel {
     void resumeGame();
 
     /**
-     * Signals that the game has ended (e.g., player crashed).
+     * Displays the instructions for the game when called
      */
-    void endGame();
-
     void showInstructions();
 
     /**

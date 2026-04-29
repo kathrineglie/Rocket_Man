@@ -1,19 +1,27 @@
 package inf112.rocketman.model.obstacles.lazers;
 
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class LazerTest {
+    private Lazer lazer;
+
+    @BeforeEach
+    void setup() {
+        lazer = new Lazer(new Rectangle(100, 200, 50, 50), new Velocity(0, 0), 0);
+    }
+
     @Test
     void testLazerNotNull() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
         assertNotNull(lazer);
     }
 
     @Test
     void isFinishedTest() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
         assertFalse(lazer.isFinished());
         lazer.update(1.5f);
         lazer.update(1.5f);
@@ -23,14 +31,12 @@ class LazerTest {
 
     @Test
     void progressionLevel1Test() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
         assertEquals(1, lazer.getProgressionLevel());
         lazer.update(1.4f);
         assertEquals(1, lazer.getProgressionLevel());
     }
     @Test
     void progressionLevel2Test() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
         lazer.update(1.5f);
         assertEquals(2, lazer.getProgressionLevel());
         lazer.update(1.4f);
@@ -39,7 +45,6 @@ class LazerTest {
 
     @Test
     void progressionLevel3Test() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
         lazer.update(1.5f);
         lazer.update(1.5f);
         assertEquals(3, lazer.getProgressionLevel());
@@ -49,7 +54,6 @@ class LazerTest {
 
     @Test
     void progressionLevel4Test() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
         lazer.update(1.5f);
         lazer.update(1.5f);
         lazer.update(2.0f);
@@ -59,7 +63,6 @@ class LazerTest {
 
     @Test
     void testGetProgressionLevel() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
         assertEquals(1, lazer.getProgressionLevel());
         lazer.update(1.5f);
         assertEquals(2, lazer.getProgressionLevel());
@@ -71,8 +74,6 @@ class LazerTest {
 
     @Test
     void setProgressionLevelTest() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 0, 0);
-
         lazer.setProgressionLevel(3);
         assertEquals(3, lazer.getProgressionLevel());
 
@@ -82,12 +83,11 @@ class LazerTest {
 
     @Test
     void updateMovesLazerWhenFinished() {
-        Lazer lazer = new Lazer(100, 200, 50, 50, 10, -5);
         lazer.setProgressionLevel(4);
 
         lazer.update(2.0f);
 
-        assertEquals(120f, lazer.getX(), 0.0001);
-        assertEquals(190f, lazer.getY(), 0.0001);
+        assertEquals(100f, lazer.getX(), 0.0001);
+        assertEquals(200f, lazer.getY(), 0.0001);
     }
 }

@@ -8,8 +8,11 @@ import com.badlogic.gdx.math.Rectangle;
  * <p>A coin has a position, size, velocity, and a hitbox used for collision detection.</p>
  */
 public class Coin {
-    private Rectangle hitbox;
-    private float x, y, width, height, vx;
+    private final Rectangle hitbox;
+    private float x;
+    private final float y;
+    private float vx;
+    private final float width, height;
 
     protected Coin(float x, float y, float width, float height, float vx) {
         this.hitbox = new Rectangle(x,y,width,height);

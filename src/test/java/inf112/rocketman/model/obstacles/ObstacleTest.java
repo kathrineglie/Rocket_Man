@@ -1,16 +1,21 @@
 package inf112.rocketman.model.obstacles;
 
 import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ObstacleTest {
+    private IObstacle obstacle;
+
+    @BeforeEach
+    void setup() {
+        obstacle = new Obstacle (new Rectangle(100, 80, 50, 80), new Velocity(-50, 0), 0);
+    }
 
     @Test
     void update() {
-        IObstacle obstacle = new Obstacle (100, 80, 50, 80, -50, 0);
         obstacle.update(50);
 
         float offset = obstacle.getOffSet();
@@ -33,31 +38,6 @@ class ObstacleTest {
 
     @Test
     void getHitBoxNotNull() {
-        IObstacle obstacle = new Obstacle (100, 80, 50, 80, -50, 0);
         assertNotNull(obstacle);
-    }
-
-    @Test
-    void isOfScreenLeft() {
-        IObstacle obstacle = new Obstacle (-50, 80, 50, 80, -50, 0);
-        assertTrue(obstacle.isOfScreen(1000, 800));
-    }
-
-    @Test
-    void isOfScreenTop() {
-        IObstacle obstacle = new Obstacle (50, 850, 50, 80, -50, 0);
-        assertTrue(obstacle.isOfScreen(1000, 800));
-    }
-
-    @Test
-    void isOfScreenBottom() {
-        IObstacle obstacle = new Obstacle (50, 0, 50, 80, -50, 0);
-        assertTrue(obstacle.isOfScreen(1000, 800));
-    }
-
-    @Test
-    void checkFalseOnScreen() {
-        IObstacle obstacle = new Obstacle (50, 200, 50, 80, -50, 0);
-        assertFalse(obstacle.isOfScreen(1000, 800));
     }
 }

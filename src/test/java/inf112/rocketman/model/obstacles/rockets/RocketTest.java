@@ -1,5 +1,7 @@
 package inf112.rocketman.model.obstacles.rockets;
 
+import com.badlogic.gdx.math.Rectangle;
+import inf112.rocketman.model.Velocity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +13,7 @@ class RocketTest {
     @BeforeEach
     void setUp() {
         Rocket.setState(false);
-        rocket = new Rocket(10f, 20f, 5f, 5f, -3f, 0);
+        rocket = new Rocket(new Rectangle(10f, 20f, 5f, 5f), new Velocity(-3f, 0),0);
     }
 
     @Test
