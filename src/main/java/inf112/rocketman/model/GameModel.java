@@ -285,7 +285,7 @@ public class GameModel implements ViewableRocketManModel, ControllableRocketManM
 
     @Override
     public boolean onGround() {
-        return player.getY() == GROUND;
+        return player.getY() == GROUND + margin;
     }
 
     @Override
