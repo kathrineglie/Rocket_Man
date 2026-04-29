@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -367,5 +368,18 @@ public class GameModelTest {
         model.startNewGame();
         model.update(0.1f, true);
         assertTrue(model.hasPirateHat());
+    }
+
+    @Test
+    void testGetMarginReturnsConstructorMargin() {
+        assertEquals(5f, model.getMargin());
+    }
+
+    @Test
+    void testGetSortedHighScoreListReturnsList() {
+
+        List<Map.Entry<String, Integer>> scores = model.getSortedHighScoreList();
+
+        assertNotNull(scores);
     }
 }
