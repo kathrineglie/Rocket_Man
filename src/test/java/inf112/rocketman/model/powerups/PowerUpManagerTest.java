@@ -53,4 +53,40 @@ class PowerUpManagerTest {
 
         assertNull(manager.getPowerUp());
     }
+
+    @Test
+    void testUpdateSpawnsPowerUpWhenTimerIsFinished() {
+        PowerUp powerUp = mock(PowerUp.class);
+        WorldDimensions dimensions = new WorldDimensions(1000f, 800f);
+
+        when(player.getActivePowerUp()).thenReturn(PowerUpType.NORMAL);
+        when(factory.newPowerUp(anyFloat(), anyFloat(), anyFloat(), anyFloat(), anyFloat()))
+                .thenReturn(powerUp);
+        when(powerUp.isOfScreen(dimensions)).thenReturn(false);
+
+        manager.update(1000f, player, dimensions, 120f, 5f, -350f);
+
+        assertEquals(powerUp, manager.getPowerUp());
+        verify(factory).newPowerUp(1000f, 800f, 120f, 5f, -350f);
+        verify(powerUp).update(1000f);
+        verify(powerUp).setVX(-350f);
+    }
+
+    @Test
+    void testCheckCollisionCollectsPowerUpWhenPlayerOverlaps() {
+        PowerUp powerUp = mock(PowerUp.class);
+
+        when(player.getHitBox()).thenReturn(new Rectangle(0, 0, 50, 50));
+        when(powerUp.getHitBox()).thenReturn(new Rectangle(25, 25, 50, 50));
+        when(powerUp.getType()).thenReturn(PowerUpType.ROBOT);
+
+        manager.setPowerUpForTesting(powerUp);
+
+        assertTrue(manager.checkCollision(player));
+
+        verify(player).setPowerUp(PowerUpType.ROBOT);
+        verify(player).setVy(0);
+        assertTrue(manager.didCollectPowerUpThisFrame());
+        assertNull(manager.getPowerUp());
+    }
 }
