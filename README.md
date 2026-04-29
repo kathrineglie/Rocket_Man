@@ -91,8 +91,25 @@ Run Spotbugs with:
 mvn clean compile spotbugs:check
 ```
 
+## Documentation
+
+Project documentation can be found here:
+
+- [Møte referat](doc/møtereferat.md)
+- [Report 1](doc/report-1.md)
+- [Report 2](doc/report-2.md)
+- [Report 3](doc/report-3.md)
+- [Report 4](doc/report-4.md)
+
 ## Architecture
 The project is structured using a model-view-controller inspired design.
+
+### Class diagram
+The class diagrams for the project can be found here:
+
+- [Model class diagram](doc/class_diagrams/model_diagram.png)
+- [View class diagram](doc/class_diagrams/view_diagram.png)
+- [Controller class diagram](doc/class_diagrams/controller_diagram.png)
 
 ### Model
 The model contains the main game state and game logic. This includes:
