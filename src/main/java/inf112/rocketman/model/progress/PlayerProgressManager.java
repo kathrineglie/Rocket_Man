@@ -60,8 +60,14 @@ public class PlayerProgressManager {
     public void updateHighscores(String playerName, int gameScore){
         Map<String, ?> allScores = highscores.get();
 
+        boolean playerAlreadyInList = allScores.containsKey(playerName);
         int oldScore = highscores.getInteger(playerName, 0);
-        if (gameScore <= oldScore && allScores.containsKey(playerName)){
+
+        if (playerAlreadyInList){
+            if (gameScore > oldScore){
+                highscores.putInteger(playerName, gameScore);
+                highscores.flush();
+            }
             return;
         }
 
