@@ -28,6 +28,11 @@ public class RobotMovement implements MovementBehavior{
      */
     @Override
     public void update(TPowah player, float dt, boolean movementInput, float worldHeight, float margin) {
+        if (player.onCeiling(worldHeight)) {
+            robotGoingDown = true;
+            robotIsJumping = true;
+        }
+
         if (!movementInput && player.onGround()) {
             robotIsJumping = false;
             robotGoingDown = false;
