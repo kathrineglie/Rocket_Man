@@ -91,4 +91,13 @@ Laget flere javadocs.
 Flyttet håndtering av kollisjoner med obstacles til en egen klasse.
 
 **22. april** 
+Alle tilstede.
+Lå til tester til controller.
+Refaktorerte noen package- og klassenavn.
+Fikset noen spotbugs.
+Laget et nytt og forbedret klassediagram.
+Reorganiserte testene til modellen etter litt refaktorering.
+Laget flere javadocs.
+Fikset grafikken til karakteren. 
 
+**29. april**
