@@ -118,10 +118,10 @@ class RandomObstacleFactoryTest {
     @Test
     void newLazerCorrectWidth() {
         float worldWidth = 800;
+        float margin = 50;
+        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER, new WorldDimensions(worldWidth, 600), 100, margin, 0);
 
-        Obstacle lazer = factory.newObstacle(ObstacleType.LAZER, new WorldDimensions(worldWidth, 600), 100, 50, 0);
-
-        assertEquals(worldWidth, lazer.getWidth());
+        assertEquals(worldWidth - 2 * margin, lazer.getWidth());
     }
 
     @Test
