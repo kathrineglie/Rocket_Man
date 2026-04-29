@@ -322,7 +322,6 @@ class GameModelTest {
     void testGetSavedCoinsForPlayer() {
         when(coins.getInteger("Bob", 0)).thenReturn(7);
 
-        GameModel model = new GameModel(1000, 800, 5, highscores, coins);
 
         int savedCoins = model.getSavedCoinsForPlayer("Bob");
 
