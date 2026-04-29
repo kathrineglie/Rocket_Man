@@ -142,12 +142,6 @@ public interface ViewableRocketManModel {
      */
 
     WorldDimensions getWorldDimensions();
-    /**
-     * Returns the height of the game world in world units.
-     *
-     * @return the world height
-     */
-    float getWorldHeight();
 
     /**
      * Returns the margin size used to define the playable area boundaries.

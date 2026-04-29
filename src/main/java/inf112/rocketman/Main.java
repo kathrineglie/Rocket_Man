@@ -31,7 +31,9 @@ public class Main extends Game {
 
     private GameState lastState = null;
 
-    private static GameModel model;
+    private static final float WORLD_WIDTH = 1200;
+    private static final float WORLD_HEIGHT = 800;
+    private static final float MARGIN = 50;
 
     /**
      * Initializes the game, including the model, view, audio manager,
@@ -44,7 +46,7 @@ public class Main extends Game {
         Preferences highscores = Gdx.app.getPreferences("Highscore");
         Preferences coins = Gdx.app.getPreferences("Coins");
 
-        model = new GameModel(new WorldDimensions(1200, 800), 50,highscores, coins);
+        GameModel model = new GameModel(new WorldDimensions(WORLD_WIDTH, WORLD_HEIGHT), MARGIN,highscores, coins);
         RocketManView view = new RocketManView();
         view.create(model.getWorldDimensions().worldWidth(), model.getWorldDimensions().worldHeight());
 
@@ -103,9 +105,8 @@ public class Main extends Game {
     public static void main(String[] args) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("RocketMan");
-        config.setWindowedMode((int) model.getWorldDimensions().worldWidth(), (int) model.getWorldDimensions().worldHeight());
+        config.setWindowedMode((int) WORLD_WIDTH, (int) WORLD_HEIGHT);
 
         new Lwjgl3Application(new Main(), config);
     }
-
 }
