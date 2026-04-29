@@ -29,23 +29,20 @@ public class Lazer extends Obstacle {
 
     @Override
     public void update(float dt) {
-        if (progression == 1) {
-            harmlessLazerCount -= dt;
-            if (harmlessLazerCount <= 0) {
-                progression = 2;
+        switch (progression) {
+            case 1 -> {
+                harmlessLazerCount -= dt;
+                if (harmlessLazerCount <= 0) progression = 2;
             }
-        } else if (progression == 2) {
-            warningLazerCount -= dt;
-            if (warningLazerCount <= 0) {
-                progression = 3;
+            case 2 -> {
+                warningLazerCount -= dt;
+                if (warningLazerCount <= 0) progression = 3;
             }
-        } else if (progression == 3) {
-            activeLazerCount -= dt;
-            if (activeLazerCount <= 0) {
-                progression = 4;
+            case 3 -> {
+                activeLazerCount -= dt;
+                if (activeLazerCount <= 0) progression = 4;
             }
-        } else {
-            super.update(dt);
+            default -> super.update(dt);
         }
     }
 

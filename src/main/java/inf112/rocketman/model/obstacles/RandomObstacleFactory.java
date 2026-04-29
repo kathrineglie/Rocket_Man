@@ -15,13 +15,16 @@ public class RandomObstacleFactory implements IRandomObstacleFactory {
 
     @Override
     public Obstacle newObstacle(ObstacleType type, WorldDimensions dimensions, float ground, float margin, float vx) {
-        if (type == ObstacleType.ROCKET) {
-            return newRocket(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin, vx);
-        } else if (type == ObstacleType.LAZER) {
-            return newLazer(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin);
-        } else {
-            return newFlame(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin, vx);
-        }
+        return switch (type) {
+            case ObstacleType.ROCKET ->
+                    newRocket(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin, vx);
+
+            case ObstacleType.LAZER ->
+                    newLazer(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin);
+
+            case ObstacleType.FLAME ->
+                    newFlame(dimensions.worldWidth(), dimensions.worldHeight(), ground, margin, vx);
+        };
     }
 
     private Rocket newRocket (float worldWidth, float worldHeight, float ground, float margin, float vx) {
@@ -69,6 +72,6 @@ public class RandomObstacleFactory implements IRandomObstacleFactory {
                 length
         );
 
-        return new Flame(bounds, new Velocity(vx, 0), 0, randAngle);
+        return new Flame(bounds, new Velocity(vx, 0), ground, randAngle);
     }
 }

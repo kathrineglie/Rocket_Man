@@ -13,10 +13,11 @@ import inf112.rocketman.model.WorldDimensions;
 public class Obstacle implements IObstacle {
     protected float x;
     protected float y;
-    protected float width, height;
+    protected float width;
+    protected float height;
     protected float vx;
     protected float vy; // the velocity of the object
-    protected float HITBOX_OFFSET = 3;
+    protected static final float HITBOX_OFFSET = 3;
     protected float ground;
 
     protected Rectangle hitbox = new Rectangle();

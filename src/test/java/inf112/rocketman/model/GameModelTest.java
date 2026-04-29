@@ -12,7 +12,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class GameModelTest {
+class GameModelTest {
     private Preferences highscores;
     private Preferences coins;
     private GameModel model;
@@ -46,10 +46,8 @@ public class GameModelTest {
 
     }
 
-
     @Test
-    public void testPauseGameChangesState() {
-        GameModel model = new GameModel(new WorldDimensions(100, 800),5, highscores, coins);
+    void testPauseGameChangesState() {
         model.startNewGame();
 
         model.pauseGame();
@@ -58,8 +56,7 @@ public class GameModelTest {
     }
 
     @Test
-    public void testResumeGameChangesStateBackToPlaying() {
-        GameModel model = new GameModel(new WorldDimensions(100, 800),5, highscores, coins);
+    void testResumeGameChangesStateBackToPlaying() {
         model.pauseGame();
 
         model.resumeGame();
