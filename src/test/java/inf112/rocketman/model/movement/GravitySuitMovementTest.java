@@ -20,7 +20,7 @@ class GravitySuitMovementTest {
 
 
     @Test
-    public void testGravitySuitOnGround() {
+    void testGravitySuitOnGround() {
         assertFalse(gravity.isGravityUp());
 
         player.setY(400);
@@ -31,7 +31,7 @@ class GravitySuitMovementTest {
     }
 
     @Test
-    public void testGravitySuitOnCeiling() {
+    void testGravitySuitOnCeiling() {
         assertFalse(gravity.isGravityUp());
         player.update(0.1f, true, 1000);
 
@@ -47,7 +47,7 @@ class GravitySuitMovementTest {
     }
 
     @Test
-    public void testGravitySuitWithinBoundsGround() {
+    void testGravitySuitWithinBoundsGround() {
         assertTrue(player.hasPowerUp());
 
         player.setY(20);

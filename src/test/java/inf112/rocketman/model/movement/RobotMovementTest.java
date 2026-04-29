@@ -19,7 +19,7 @@ class RobotMovementTest {
     }
 
     @Test
-    public void testUpdateRobotOnGroundNoMovementInput() {
+    void testUpdateRobotOnGroundNoMovementInput() {
 
         assertFalse(robot.getRobotIsJumping());
         assertFalse(robot.getRobotIsGoingDown());
@@ -39,7 +39,7 @@ class RobotMovementTest {
     }
 
     @Test
-    public void testRobotIsJumping() {
+    void testRobotIsJumping() {
         player.update(0.1f, true, 1000);
 
         assertEquals(120, player.getVY());
@@ -58,7 +58,7 @@ class RobotMovementTest {
     }
 
     @Test
-    public void testRobotGoingDown() {
+    void testRobotGoingDown() {
         player.update(0.1f, true, 1000);
 
         player.update(0.1f, false, 1000);

@@ -18,7 +18,7 @@ class BirdMovementTest {
 
 
     @Test
-    public void testBirdPowerUpFlap() {
+    void testBirdPowerUpFlap() {
         player.update(0.1f, true, 800);
 
         assertEquals(PowerUpType.BIRD, player.getActivePowerUp());
@@ -27,7 +27,7 @@ class BirdMovementTest {
     }
 
     @Test
-    public void testUpdateBird() {
+    void testUpdateBird() {
         player.setY(800);
         player.setVy(-1000);
         player.update(0.1f, false, 1000);

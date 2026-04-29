@@ -15,7 +15,7 @@ class NormalMovementTest {
     }
 
     @Test
-    public void testMovementScaleWithDeltaTime() {
+    void testMovementScaleWithDeltaTime() {
         TPowah player1 = new TPowah(100, 400, 50, 50, 50);
         TPowah player2 = new TPowah(100, 400, 50, 50, 50);
 
@@ -29,7 +29,7 @@ class NormalMovementTest {
     }
 
     @Test
-    public void testGravityPullsPlayerDown() {
+    void testGravityPullsPlayerDown() {
         assertFalse(player.hasPowerUp());
         float initialY = 40;
         player.setY(initialY);
@@ -41,7 +41,7 @@ class NormalMovementTest {
     }
 
     @Test
-    public void testTerminalVelocity() {
+    void testTerminalVelocity() {
         for (int i = 0; i < 100; i++) {
             player.update(0.1f, true, 800);
         }
@@ -55,7 +55,7 @@ class NormalMovementTest {
     }
 
     @Test
-    public void testXPositionIsConstant() {
+    void testXPositionIsConstant() {
         player.update(0.1f, true, 800);
         player.update(0.1f, false, 800);
 

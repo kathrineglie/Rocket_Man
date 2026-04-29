@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PowerUpTest {
+class PowerUpTest {
     @Test
     void testNewPowerUpReturnsPowerUp() {
         RandomPowerUpFactory factory = new RandomPowerUpFactory();

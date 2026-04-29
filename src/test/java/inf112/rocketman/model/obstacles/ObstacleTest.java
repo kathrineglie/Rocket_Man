@@ -13,22 +13,22 @@ class ObstacleTest {
         IObstacle obstacle = new Obstacle (100, 80, 50, 80, -50, 0);
         obstacle.update(50);
 
-        float off_set = obstacle.getOffSet();
+        float offset = obstacle.getOffSet();
 
         assertEquals(-2400, obstacle.getX());
         assertEquals(80, obstacle.getY());
 
         Rectangle hitbox = obstacle.getHitBox();
 
-        float excpectedX = -2400f + off_set;
-        float excpectedY = 80f + off_set;
-        float excpectedWidth = 50f - 2* off_set;
-        float excpectedHeight = 80f - 2* off_set;
+        float expectedX = -2400f + offset;
+        float expectedY = 80f + offset;
+        float expectedWidth = 50f - 2* offset;
+        float expectedHeight = 80f - 2* offset;
 
-        assertEquals(excpectedX, hitbox.x);
-        assertEquals(excpectedY, hitbox.y);
-        assertEquals(excpectedWidth, hitbox.getWidth());
-        assertEquals(excpectedHeight, hitbox.getHeight());
+        assertEquals(expectedX, hitbox.x);
+        assertEquals(expectedY, hitbox.y);
+        assertEquals(expectedWidth, hitbox.getWidth());
+        assertEquals(expectedHeight, hitbox.getHeight());
     }
 
     @Test

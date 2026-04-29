@@ -14,7 +14,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-public class PlayerProgressManagerTest {
+class PlayerProgressManagerTest {
 
     private Preferences highscores;
     private Preferences coins;
@@ -33,7 +33,7 @@ public class PlayerProgressManagerTest {
      * or actual saved preferences.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         highscores = mock(Preferences.class);
         when(highscores.get()).thenReturn(new HashMap<>());
         when(highscores.getInteger(anyString(), anyInt())).thenAnswer(invocation -> invocation.getArgument(1));

@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class RandomObstacleFactoryTest {
+class RandomObstacleFactoryTest {
     private RandomObstacleFactory factory;
 
     @BeforeEach
@@ -147,7 +147,6 @@ public class RandomObstacleFactoryTest {
 
             //Checks that the object does not spawn outside of the screen.
             for (int j = 0; j < vertices.length; j += 2) {
-                //float px = vertices[j];
                 float py = vertices[j + 1];
 
                 assertTrue(py >= margin, "py too low: " + py + " margin: " + margin + " worldheight: " + worldHeight);

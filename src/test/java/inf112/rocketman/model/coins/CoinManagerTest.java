@@ -7,7 +7,7 @@ import java.lang.reflect.Constructor;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CoinManagerTest {
+class CoinManagerTest {
 
     @Test
     void testCoinCollisionIncreasesCoinCount() throws Exception {
