@@ -54,8 +54,10 @@ public class ObstacleManager {
                 case Rocket rocket when rocket.isOfScreen(dimensions) -> iterator.remove();
                 case Lazer lazer when lazer.getProgressionLevel() == 4 -> iterator.remove();
                 case Flame flame when flame.isOfScreen(dimensions) -> iterator.remove();
+
                 default -> {
-                }
+                    // nothing happens when none of the obstacles are outside the screen
+                    }
             }
         }
     }
@@ -109,7 +111,7 @@ public class ObstacleManager {
                     );
                 }
             }
-            default -> throw new RuntimeException("No obstacle was chosen. The random number was: " + randNum);
+            default -> throw new IllegalStateException("No obstacle was chosen. The random number was: " + randNum);
         };
     }
 
@@ -121,10 +123,9 @@ public class ObstacleManager {
      */
     private boolean canSpawnLazer(Lazer newLazer) {
         for (IObstacle obstacle : obstacles) {
-            if (obstacle instanceof Lazer currLazer && currLazer.getProgressionLevel() != 4) {
-                if (currLazer.getHitBox().overlaps(newLazer.getHitBox())) {
-                    return false;
-                }
+            if (obstacle instanceof Lazer currLazer && currLazer.getProgressionLevel() != 4
+            && currLazer.getHitBox().overlaps(newLazer.getHitBox())) {
+                return false;
             }
         }
         return true;

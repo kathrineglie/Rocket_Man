@@ -12,7 +12,8 @@ public class Coin {
     private float x;
     private final float y;
     private float vx;
-    private final float width, height;
+    private final float width;
+    private final float height;
 
     protected Coin(float x, float y, float width, float height, float vx) {
         this.hitbox = new Rectangle(x,y,width,height);

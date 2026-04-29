@@ -34,28 +34,31 @@ public class ObstacleCollisionHandler {
             IObstacle obstacle = iterator.next();
 
             // If the lazer is not active, it should just continue.
-            if (obstacle instanceof Lazer && ((Lazer) obstacle).getProgressionLevel() != 3) {
+            if (obstacle instanceof Lazer lazer &&  lazer.getProgressionLevel() != 3) {
                 continue;
+            }
+            Rectangle obstacleHitbox = obstacle.getHitBox();
+
+            if (checkCollision(obstacle, playerHitbox, obstacleHitbox)) {
+                return true;
             }
 
             // If the object is not flame, it checks the collision with rectangles
-            if (!(obstacle instanceof Flame)) {
-                Rectangle obstacleHitbox = obstacle.getHitBox();
-
-                if (obstacleHitbox == null) {
-                    continue;
-                }
-
-                if (playerHitbox.overlaps(obstacleHitbox)) {
-                    return true;
-                }
-            } else {
-                if (flameCollision(obstacle)) {
-                    return true;
-                }
-            }
         }
         return false;
+    }
+
+    private boolean checkCollision(IObstacle obstacle, Rectangle playerHitbox, Rectangle obstacleHitbox) {
+        if (!(obstacle instanceof Flame)) {
+
+            if (obstacleHitbox == null) {
+                return false;
+            }
+
+            return playerHitbox.overlaps(obstacleHitbox);
+        } else {
+            return flameCollision(obstacle);
+        }
     }
 
     /**
