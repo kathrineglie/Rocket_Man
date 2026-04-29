@@ -89,15 +89,6 @@ public class Main extends Game {
     }
 
     /**
-     * Returns the pause screen.
-     *
-     * @return the pause screen
-     */
-    public PauseScreen getPauseScreen() {
-        return pauseScreen;
-    }
-
-    /**
      * Launches the RocketMan desktop application.
      *
      * @param args command-line arguments
