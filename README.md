@@ -235,6 +235,16 @@ In this project, such sharing is part of how the game architecture works. For ex
 access to the model and view, and rendering classes need access to shared assets such as fonts and textures. 
 We therefore do not consider these warnings to be critical issues that should necessarily be fixed in this project.
 
+### Mockito
+When running some tests directly from IntelliJ, the test output may show a Mockito/ByteBuddy warning about dynamic Java
+agent loading. This warning is related to how Mockito creates mocks when tests are started from IntelliJ with newer 
+Java versions. It does not mean that the tests have failed. The tests are successful as long as the process ends with 
+exit code 0.
+Our recommended way to run all tests is:
+```bash
+mvn clean test
+```
+
 ## Contributors
 * We have used ChatGPT as a support tool during development, mainly for discussing code structure and graphics-
     related decisions
