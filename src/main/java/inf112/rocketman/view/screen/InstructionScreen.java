@@ -74,7 +74,7 @@ public class InstructionScreen extends AbstractMenuScreen {
         drawCentered(smallFont, "ESC - return to the main menu", centerX, y);
 
         y -= lineSpacing;
-        drawCentered(smallFont, "ENTER - restart after crashing", centerX, y);
+        drawCentered(smallFont, "ENTER - restart after colliding with an obstacle", centerX, y);
 
         y -= sectionSpacing;
         drawCentered(smallFont, "OBSTACLES", centerX, y);

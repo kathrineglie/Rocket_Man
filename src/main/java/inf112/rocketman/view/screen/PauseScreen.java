@@ -36,6 +36,9 @@ public class PauseScreen extends AbstractMenuScreen {
      */
     @Override
     public void render(float v) {
+        Gdx.gl.glClearColor(0.43f, 0.16f, 0.32f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         controller.handleInput();
         controller.getView().render(controller.getViewableModel());
 
@@ -78,5 +81,11 @@ public class PauseScreen extends AbstractMenuScreen {
     private void drawCentered(BitmapFont font, String text, float centerX, float y) {
         GlyphLayout layout = new GlyphLayout(font, text);
         font.draw(batch, layout, centerX - layout.width / 2f, y);
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        controller.resize(width, height);
     }
 }
