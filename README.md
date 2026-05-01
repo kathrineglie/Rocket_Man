@@ -1,4 +1,4 @@
-# README Rocket-Man* 
+# README Rocket-Man
 
 Rocket Man is a 2D endless runner game inspired by *Jetpack Joyride* where you play as *TPowah* and try to survive as 
 long as possible in a dangerous world full of obstacles. The player collects coins, uses powerups, and survive as long 
