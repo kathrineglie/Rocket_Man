@@ -6,10 +6,10 @@ as possible while the game gradually becomes more difficult.
 
 ## Credits
 ### Authors
-* Kathrine Lie
-* Vegard Slagstad
-* Sunniva Bratland
 * Elise Blekken
+* Kathrine Lie
+* Sunniva Bratland
+* Vegard Slagstad
 
 ## Project description
 * When starting the game, you load into a dangerous world as the character _TPowah_.
